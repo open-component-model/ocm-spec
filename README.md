@@ -1,2 +1,4 @@
-# ocm-spec
-The official Open Component Model Specification
+
+## OCM (Open Container Model)
+
+- [Specification](./doc/proposal) (work in progress)
