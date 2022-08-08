@@ -4,14 +4,14 @@
   - current schema only allows OCI-Ref, this needs to be extensible
   - Should OCI ref be part of this spec?
     
-- Clarify that components are not allowed to have two version with the same number but different formats, e.g. v0.1.0 and 0.1.0
+- Clarify: Components are not allowed to have two version with the same number but different formats, e.g. v0.1.0 and 0.1.0
 
 ## Topics to be added to the Specification
   1. Particular types (which types are supported ?)
   2. Transport (incl. CTF)
   3. Signing (already in progress: https://github.com/gardener/ocm-spec/blob/main/doc/proposal/in-progress/07-signing.md)
 
-## Additional chapters / sections for the Specification
+## Additional sections for the Specification
 - we need namespace structure for 
   - logical types in references
   - access methods/types in references
