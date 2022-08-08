@@ -17,7 +17,8 @@
   - access methods/types in references
   - label names
   - short names allowed for our definitions e.g. ociImage
-  Work on this topic started under https://github.com/gardener/ocm/blob/master/docs/names/README.md, linked from https://github.com/gardener/ocm. Should be moved to the ocm-spec repository and linked properly.
+  
+  - Work on this topic started under https://github.com/gardener/ocm/blob/master/docs/names/README.md, linked from https://github.com/gardener/ocm. Should be moved to the ocm-spec repository and linked properly.
   
 - Add a chapter with terminology (see https://github.com/openservicebrokerapi/servicebroker/blob/v2.16/spec.md#notations-and-terminology)  
   - Terminology section: beside others must describe landscape, component version, snapshot 
