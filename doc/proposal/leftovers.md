@@ -9,7 +9,7 @@
 ## Topics to be added to the Specification
   1. Particular types (which types are supported ?). Backlog Item: https://github.com/gardener/ocm-spec/issues/3
   3. Transport (incl. CTF). Backlog Item: https://github.com/gardener/ocm-spec/issues/4
-  4. Signing (already in progress: https://github.com/gardener/ocm-spec/blob/main/doc/proposal/in-progress/07-signing.md)
+  4. Signing (already in progress: https://github.com/gardener/ocm-spec/blob/main/doc/proposal/in-progress/07-signing.md). Backlog Item: https://github.com/gardener/ocm-spec/issues/5
 
 ## Additional sections for the Specification
 - we need namespace structure for 
