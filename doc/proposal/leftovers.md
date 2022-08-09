@@ -21,12 +21,12 @@
   - Work on this topic started under https://github.com/gardener/ocm/blob/master/docs/names/README.md, linked from https://github.com/gardener/ocm. Should be moved to the ocm-spec repository and linked properly.
   
 - Add a chapter with terminology (see https://github.com/openservicebrokerapi/servicebroker/blob/v2.16/spec.md#notations-and-terminology)  
-  - Terminology section: beside others must describe landscape, component version, snapshot 
-- add complete component descriptor example
+  - Terminology section: beside others must describe landscape, component version, snapshot: Backlog item: https://github.com/gardener/ocm-spec/issues/9
+- Add complete component descriptor example: Backlog item: https://github.com/gardener/ocm-spec/issues/8
 - references in the text to the CD spec for particular entries
 - List with all errors and their semantics
 - Tables for presenting field descriptions (see https://github.com/openservicebrokerapi/servicebroker/blob/v2.16/spec.md)
-- Tables for input export params of functions (see https://github.com/openservicebrokerapi/servicebroker/blob/v2.16/spec.md) 
+- Tables for input export params of functions (see https://github.com/openservicebrokerapi/servicebroker/blob/v2.16/spec.md)
 
 - Use-Cases / Scenarios with diagrams for Component Repos
 - example of local blobs with oci image not good
