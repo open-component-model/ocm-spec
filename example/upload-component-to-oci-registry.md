@@ -3,11 +3,9 @@
 1. Create resources
 1. Create sources
 1. Create a component archive
-1. Download images ( optional )
-1. Prepare for transfer
-1. Create a transport archive
+1. Upload to OCI Registry
 1. Sign it
-1. Transfer the archive, verify, and extract
+1. Download it
 
 ## Resources
 
@@ -147,6 +145,35 @@ pushing 0.0.2
     --public-key=public-key.pem \
     --repo OCIRepository::ghcr.io/sap/ocm-oci-flow \
     ghcr.io/sap/ocm-oci-flow:0.0.2
+applying to version "ghcr.io/sap/ocm-oci-flow:0.0.2"...
+  resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtifactDigest/v1]
+successfully verified ghcr.io/sap/ocm-oci-flow:0.0.2 (digest sha256:6271f39d0d43897cb09a1ffed15b2d43adb11be6fce10367bedb3aee5e6afe88)
+```
+
+### Download it
+
+```bash
+❯ ocm transfer components -t tgz --repo ghcr.io/sap/ocm-oci-flow ghcr.io/sap/ocm-oci-flow:0.0.2 ./ctf.tgz
+transferring version "ghcr.io/sap/ocm-oci-flow:0.0.2"...
+...adding component version...
+1 versions transferred
+```
+
+#### Verify content
+
+```bash
+❯ tar ztf ctf.tgz
+artefact-index.json
+blobs
+blobs/sha256.39c8326c9084f6df25aca718807774f84c9580528a810de40863a36925155e7f
+blobs/sha256.a336ad4250ecc9fe04a89f5caeeb32d4ef6083ebecd41a6ca82f467b3df8c991
+blobs/sha256.a4451b90b165bdd19d271a521d707ce4a7bb91a6c49e707686fb5373913e00c2
+```
+
+#### Verfify signature
+
+```bash
+❯ ocm verify componentversion --signature ww-ocm-sig --public-key=public-key.pem  ./ctf.tgz
 applying to version "ghcr.io/sap/ocm-oci-flow:0.0.2"...
   resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtifactDigest/v1]
 successfully verified ghcr.io/sap/ocm-oci-flow:0.0.2 (digest sha256:6271f39d0d43897cb09a1ffed15b2d43adb11be6fce10367bedb3aee5e6afe88)
