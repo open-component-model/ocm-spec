@@ -3,24 +3,24 @@
 1. Create resources
 1. Create sources
 1. Create a component archive
-1. Download images ( optional )
 1. Prepare for transfer
-1. Create a transport archive
+1. Download resources
 1. Sign it
-1. Transfer the archive, verify, and extract
+1. Create a transport archive
+1. Transfer the archive, verify
 
 Advanced scenarios will include templating from the environment.
 
 ## Resources
 
 ```yaml
-name: 'server'
-version: '0.0.1'
-type: 'ociImage'
-relation: 'external'
+name: server
+version: 0.0.1
+type: ociImage
+relation: external
 access:
-  type: 'ociRegistry'
-  imageReference: 'docker.io/sap/ocm:example-0.0.1'
+  type: ociRegistry
+  imageReference: ghcr.io/yitsushi/hello-world:1.0.7
 ```
 
 ## Sources
@@ -32,7 +32,7 @@ No configured sources.
 ### Create Skeleton
 
 ```bash
-❯ ocm create componentarchive github.com/sap/ocm-basic-flow 0.0.1 sap ocm-basic-flow-ca
+❯ ocm create componentarchive ghcr.io/sap/ocm-ta-flow 0.0.1 sap ocm-ta-flow-ca
 ```
 
 ### Add resources
@@ -40,17 +40,21 @@ No configured sources.
 Resources yaml:
 
 ```yaml
-name: 'server'
-version: '0.0.1'
-type: 'ociImage'
-relation: 'external'
+name: server
+version: 0.0.1
+type: ociImage
+relation: external
 access:
-  type: 'ociRegistry'
-  imageReference: 'docker.io/sap/ocm:example-0.0.1'
+  type: ociRegistry
+  imageReference: ghcr.io/yitsushi/hello-world:1.0.7
 ```
 
 ```bash
-❯ ocm add resources ocm-basic-flow-ca resources.yaml
+❯ ocm add resources ocm-ta-flow-ca resources.yaml
+processing resources.yaml...
+  processing document 1...
+    processing index 0
+found 1 resources
 ```
 
 ### Sign
@@ -65,7 +69,11 @@ Generate a public and private key:
 Sign:
 
 ```bash
-❯ ocm sign componentversions ocm-basic-flow-ca -s sap-ocm-sig -K private-key.pem -k public-key.pem
+❯ ocm sign componentversions ocm-ta-flow-ca \
+    -s ww-ocm-sig -K private-key.pem -k public-key.pem
+applying to version "ghcr.io/sap/ocm-ta-flow:0.0.1"...
+  resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtifactDigest/v1]
+successfully signed ghcr.io/sap/ocm-ta-flow:0.0.1 (digest sha256:a990e44fc567e8668796a1ef343922ce88febb1fc6742518cd0bd12b89faa316)
 ```
 
 ### Prepare for transport
@@ -73,13 +81,13 @@ Sign:
 Create a transport archive skeleton:
 
 ```bash
-❯ ocm create transportarchive --type tgz ocm-basic-flow-ca-ta.tar.gz
+❯ ocm create transportarchive --type tgz ocm-ta-flow-ca-ta.tar.gz
 ```
 
 Transport the componentarchive:
 
 ```bash
-❯ ocm transfer componentarchive ocm-basic-flow-ca ./ocm-basic-flow-ca-ta.tar.gz
+❯ ocm transfer componentarchive ocm-ta-flow-ca ./ocm-ta-flow-ca-ta.tar.gz
 ```
 
 After that we have this directory structure:
@@ -87,30 +95,56 @@ After that we have this directory structure:
 ```bash
 ❯ tree
 .
-├── README.md
-├── component-descriptor.yaml
-├── ocm-basic-flow-ca
+├── ocm-ta-flow-ca
 │   ├── blobs
 │   └── component-descriptor.yaml
-├── ocm-basic-flow-ca-ta.tar.gz
-│   ├── artefact-index.json
-│   └── blobs
-│       ├── sha256.45e384407fa87ef14c9880809ec9dd0e20a281b94a064671b9ea4c68e8dbdedf
-│       ├── sha256.6b323881f7a2b2355cee564f70d5d9312878a86022911598247c0fbc85732991
-│       └── sha256.80a6b7b967519091ea57a644af4a560cd918c68c029c19b9e2eabc0a661564e2
+├── ocm-ta-flow-ca-ta.tar.gz
 ├── private-key.pem
 ├── public-key.pem
-├── resources.yaml
-└── sources.yaml
+└── resources.yaml
 
 
-❯ tar ztf ocm-basic-flow-ca-ta.tar.gz | tree --fromfile .
+❯ tar ztf ocm-ta-flow-ca-ta.tar.gz | tree --fromfile .
 .
 ├── artefact-index.json
 └── blobs
-    ├── sha256.45e384407fa87ef14c9880809ec9dd0e20a281b94a064671b9ea4c68e8dbdedf
-    ├── sha256.6b323881f7a2b2355cee564f70d5d9312878a86022911598247c0fbc85732991
-    └── sha256.80a6b7b967519091ea57a644af4a560cd918c68c029c19b9e2eabc0a661564e2
+    ├── sha256.46f15984e3f2c7d779199e2e649d24d9ad8357404a6195ca73733097c622b5eb
+    ├── sha256.f338df813e8b19652565a4a31407fae7a5a52fb162a6e867c2caab53d77c02cb
+    └── sha256.fe7e84c6587a1a22e05473fa2e215a0e20d21ecc6307106a6d7c5dac1934d048
+```
+
+### Download Resources
+
+If only one resource is defined, we can use this format:
+```bash
+❯ ocm download resources ./ocm-ta-flow-ca -O hello-world.tar.gz
+```
+
+If more then one, or nested, then the `-O` flag has a different behavior and
+will create a directory:
+
+```bash
+❯ ocm download resources ./ocm-ta-flow-ca -O ocm-ta-flow-ca-resources
+```
+
+We can verify the content:
+
+```bash
+❯ tar ztf hello-world.tar.gz
+artefact-descriptor.json
+blobs
+blobs/sha256.2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488
+blobs/sha256.5305f40ab0c9c75856e5ffe193f47253e53696305f0da5ec44dacadec342328d
+blobs/sha256.92360c1eaf0032a860dddb1e3cdc16b27bdfec509c23de434dbe53d3d35bed9d
+blobs/sha256.df9b9388f04ad6279a7410b85cedfdcb2208c0a003da7ab5613af71079148139
+```
+
+#### Add artefact to the component transfer archive
+
+```bash
+❯ ocm oci artefacts transfer ./hello-world.tar.gz ./ocm-ta-flow-ca-ta.tar.gz
+copying :1.0.7 to :1.0.7...
+copied 1 from 1 artefact(s)
 ```
 
 ### Transfer
@@ -123,32 +157,15 @@ it.
 ```bash
 ❯ tree
 .
-├── ocm-basic-flow-ca-ta.tar.gz
+├── ocm-ta-flow-ca-ta.tar.gz
 └── public-key.pem
 ```
 
 We can verify the signing key with:
 
 ```bash
-❯ ocm verify componentversion --signature sap-sig --public-key=public-key.pem ./ocm-basic-flow-ca-ta.tar.gz
-applying to version "github.com/sap/ocm-basic-flow:0.0.1"...
-  resource 0:  "name"="server": digest sha256:48f1d4bb271689c642a9590c8605ac8c70f0a1cae35a7dba809530f9399d6a5c[ociArtifactDigest/v1]
-successfully verified github.com/sap/ocm-basic-flow:0.0.1 (digest sha256:afd21ac4d3a96b5c921143dd31abc1eb30e89e9919edffa11d21b336afdd218d)
-```
-
-#### Extract
-
-```bash
-❯ ocm transfer commontransportarchive ocm-basic-flow-ca-ta.tar.gz ./ocm-basic-flow-ca-new
-transferring component "github.com/sap/ocm-basic-flow"...
-  transferring version "github.com/sap/ocm-basic-flow:0.0.1"...
-    version "github.com/sap/ocm-basic-flow:0.0.1" already present -> skip transport
-
-❯ tree ./ocm-basic-flow-ca-new
-./ocm-basic-flow-ca-new
-├── artefact-index.json
-└── blobs
-    ├── sha256.45e384407fa87ef14c9880809ec9dd0e20a281b94a064671b9ea4c68e8dbdedf
-    ├── sha256.6b323881f7a2b2355cee564f70d5d9312878a86022911598247c0fbc85732991
-    └── sha256.80a6b7b967519091ea57a644af4a560cd918c68c029c19b9e2eabc0a661564e2
+❯ ocm verify componentversion --signature ww-ocm-sig --public-key=public-key.pem  ./ocm-ta-flow-ca-ta.tar.gz
+applying to version "ghcr.io/sap/ocm-ta-flow:0.0.1"...
+  resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtifactDigest/v1]
+successfully verified ghcr.io/sap/ocm-ta-flow:0.0.1 (digest sha256:a990e44fc567e8668796a1ef343922ce88febb1fc6742518cd0bd12b89faa316)
 ```
