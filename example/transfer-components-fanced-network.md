@@ -1,6 +1,4 @@
-# Basic OCM flow
-
-This is a proposition for a basic OCM flow.
+# Transfer Component Behind Fenced Network
 
 1. Create resources
 1. Create sources
