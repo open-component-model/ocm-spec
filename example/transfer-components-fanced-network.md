@@ -147,6 +147,25 @@ copying :1.0.7 to :1.0.7...
 copied 1 from 1 artefact(s)
 ```
 
+#### Advanced SHA256 check
+
+We can verify if all layers of the hello-world image is available inside the
+transfer component archive:
+
+```bash
+❯ tar ztf hello-world.tar.gz | grep "sha256" \
+    | xargs -I {} bash \
+      -c 'hash=$(basename {}); \
+         if tar ztf ocm-ta-flow-ca-ta.tar.gz | grep {} > /dev/null; \
+         then echo "ok: $hash"; \
+         else echo "!!! not found: ${hash}"; \
+         fi'
+ok: sha256.2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488
+ok: sha256.5305f40ab0c9c75856e5ffe193f47253e53696305f0da5ec44dacadec342328d
+ok: sha256.92360c1eaf0032a860dddb1e3cdc16b27bdfec509c23de434dbe53d3d35bed9d
+ok: sha256.df9b9388f04ad6279a7410b85cedfdcb2208c0a003da7ab5613af71079148139
+```
+
 ### Transfer
 
 Once the artifact is copied, we can use OCM to verify its signature, and extract
