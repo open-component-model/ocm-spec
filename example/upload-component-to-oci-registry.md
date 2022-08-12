@@ -3,8 +3,9 @@
 1. Create resources
 1. Create sources
 1. Create a component archive
+1. Sign before
 1. Upload to OCI Registry
-1. Sign it
+1. Sign after (if not before)
 1. Download it
 
 ## Resources
@@ -28,7 +29,14 @@ No configured sources.
 ### Create Skeleton
 
 ```bash
-❯ ocm create componentarchive docker.io/sap/ocm-oci-flow 0.0.2 sap ocm-oci-flow
+❯ ocm create componentarchive github.com/yitsushi/hello-world 1.0.7 yitsushi hello-world-component
+
+```
+#### Generate a public and private key
+
+```bash
+❯ openssl genpkey -algorithm RSA -out ./private-key.pem
+❯ openssl rsa -in ./private-key.pem -pubout > public-key.pem
 ```
 
 ### Add resources
@@ -46,10 +54,25 @@ access:
 ```
 
 ```bash
-❯ ocm add resources ./ocm-oci-flow resources.yaml
+❯ ocm add resources ./hello-world-component resources.yaml
+processing resources.yaml...
+  processing document 1...
+    processing index 0
+found 1 resources
 ```
 
 ### Upload to OCI Registry
+
+We can sign before we upload the component, but we can sign it after upload too.
+
+#### Sign Local Component
+
+```bash
+❯ ocm sign componentversions -s ww-ocm-sig -K private-key.pem -k public-key.pem ./hello-world-component
+applying to version "github.com/yitsushi/hello-world:1.0.7"...
+  resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtifactDigest/v1]
+successfully signed github.com/yitsushi/hello-world:1.0.7 (digest sha256:0452632bf29b38bc8887387019f87d459a9e88c517b744f9e5ad807bc672c479)
+```
 
 #### Login to OCI Registry
 
@@ -68,73 +91,30 @@ docker login ghcr.io
 #### Upload
 
 ```bash
-❯ ocm  transfer componentarchive ./ocm-oci-flow ghcr.io/sap/ocm-oci-flow
-transferring version "ghcr.io/sap/ocm-oci-flow:0.0.2"...
+❯ ocm  transfer componentarchive ./hello-world-component  ghcr.io/sap
+transferring version "github.com/yitsushi/hello-world:1.0.7"...
 INFO[0000] trying next host - response was http.StatusNotFound  host=ghcr.io
 INFO[0001] trying next host - response was http.StatusNotFound  host=ghcr.io
 ...adding component version...
-*** push application/vnd.gardener.cloud.cnudie.component-descriptor.v2+yaml+tar sha256:6fd2a92abaa31ed5c6bc06c22a50a1e44edad4b940cec3b803797dc78e7bfaa8: unknown-sha256:6fd2a92abaa31ed5c6bc06c22a50a1e44edad4b940cec3b803797dc78e7bfaa8
-*** push application/vnd.gardener.cloud.cnudie.component.config.v1+json sha256:6d9117f30e603140e3f04e501456ea6e6c0178af5f417c35b3a36ebcdb955dcd: unknown-sha256:6d9117f30e603140e3f04e501456ea6e6c0178af5f417c35b3a36ebcdb955dcd
-*** push application/vnd.oci.image.manifest.v1+json sha256:36dca94e452f6bbd75c22c3c93590f527e0ecf0ce3f1c4fbe23a97b44aa1a6b1: manifest-sha256:36dca94e452f6bbd75c22c3c93590f527e0ecf0ce3f1c4fbe23a97b44aa1a6b1
-pusher for ghcr.io/sap/ocm-oci-flow/component-descriptors/ghcr.io/sap/ocm-oci-flow:0.0.2
-pushing 0.0.2
-*** push application/vnd.oci.image.manifest.v1+json sha256:36dca94e452f6bbd75c22c3c93590f527e0ecf0ce3f1c4fbe23a97b44aa1a6b1: manifest-sha256:36dca94e452f6bbd75c22c3c93590f527e0ecf0ce3f1c4fbe23a97b44aa1a6b1
+*** push application/vnd.gardener.cloud.cnudie.component-descriptor.v2+yaml+tar sha256:4e972b297e47151dacd2582b9acaf9a94cda0203fe148e81d4e5f59cd7b8710b: unknown-sha256:4e972b297e47151dacd2582b9acaf9a94cda0203fe148e81d4e5f59cd7b8710b
+*** push application/vnd.gardener.cloud.cnudie.component.config.v1+json sha256:2eae2829e60c287ac2dabd3daed4fed9a45a021ebe0c0ff29e9db20b160f3b53: unknown-sha256:2eae2829e60c287ac2dabd3daed4fed9a45a021ebe0c0ff29e9db20b160f3b53
+*** push application/vnd.oci.image.manifest.v1+json sha256:d3418290d87f05f52c1801557c00d3e43eb0bcf1bb960331b3967c639541582f: manifest-sha256:d3418290d87f05f52c1801557c00d3e43eb0bcf1bb960331b3967c639541582f
+pusher for ghcr.io/sap/component-descriptors/github.com/yitsushi/hello-world:1.0.7
+pushing 1.0.7
+*** push application/vnd.oci.image.manifest.v1+json sha256:d3418290d87f05f52c1801557c00d3e43eb0bcf1bb960331b3967c639541582f: manifest-sha256:d3418290d87f05f52c1801557c00d3e43eb0bcf1bb960331b3967c639541582f
 ```
 
-### Sign
-
-#### Generate a public and private key
+#### Sign Remote OCI Registry
 
 ```bash
-❯ openssl genpkey -algorithm RSA -out ./private-key.pem
-❯ openssl rsa -in ./private-key.pem -pubout > public-key.pem
-```
-
-#### Remote OCI Registry
-
-```bash
-❯ ocm sign componentversions \
-    -s ww-ocm-sig \
-    -K private-key.pem -k public-key.pem \
-    --repo ghcr.io/sap/ocm-oci-flow \
-    ghcr.io/sap/ocm-oci-flow:0.0.2
-applying to version "ghcr.io/sap/ocm-oci-flow:0.0.2"...
+❯ ocm sign componentversion \
+    --signature ww-ocm-sig \
+    -k public-key.pem -K private-key.pem \
+    --repo OCIRepository::ghcr.io/sap \
+    github.com/yitsushi/hello-world:1.0.7
+applying to version "github.com/yitsushi/hello-world:1.0.7"...
   resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtifactDigest/v1]
-successfully signed ghcr.io/sap/ocm-oci-flow:0.0.2 (digest sha256:6271f39d0d43897cb09a1ffed15b2d43adb11be6fce10367bedb3aee5e6afe88)
-```
-
-#### From Local Component
-
-**Sign the component**:
-
-```bash
-❯ ocm sign componentversions -s ww-ocm-sig -K private-key.pem -k public-key.pem ./ocm-oci-flow
-applying to version "ghcr.io/sap/ocm-oci-flow:0.0.2"...
-  resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtifactDigest/v1]
-successfully signed ghcr.io/sap/ocm-oci-flow:0.0.2 (digest sha256:6271f39d0d43897cb09a1ffed15b2d43adb11be6fce10367bedb3aee5e6afe88)
-```
-
-**Verify the signature:**
-
-```bash
-❯ ocm verify componentversion --signature ww-ocm-sig --public-key=public-key.pem ./ocm-oci-flow
-applying to version "ghcr.io/sap/ocm-oci-flow:0.0.2"...
-  resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtifactDigest/v1]
-successfully verified ghcr.io/sap/ocm-oci-flow:0.0.2 (digest sha256:6271f39d0d43897cb09a1ffed15b2d43adb11be6fce10367bedb3aee5e6afe88)
-```
-
-#### Upload the signed component
-
-```bash
-❯ ocm  transfer componentarchive ./ocm-oci-flow ghcr.io/sap/ocm-oci-flow
-transferring version "ghcr.io/sap/ocm-oci-flow:0.0.2"...
-...adding component version...
-*** push application/vnd.gardener.cloud.cnudie.component-descriptor.v2+yaml+tar sha256:39c8326c9084f6df25aca718807774f84c9580528a810de40863a36925155e7f: unknown-sha256:39c8326c9084f6df25aca718807774f84c9580528a810de40863a36925155e7f
-*** push application/vnd.gardener.cloud.cnudie.component.config.v1+json sha256:a4451b90b165bdd19d271a521d707ce4a7bb91a6c49e707686fb5373913e00c2: unknown-sha256:a4451b90b165bdd19d271a521d707ce4a7bb91a6c49e707686fb5373913e00c2
-*** push application/vnd.oci.image.manifest.v1+json sha256:a336ad4250ecc9fe04a89f5caeeb32d4ef6083ebecd41a6ca82f467b3df8c991: manifest-sha256:a336ad4250ecc9fe04a89f5caeeb32d4ef6083ebecd41a6ca82f467b3df8c991
-pusher for ghcr.io/sap/ocm-oci-flow/component-descriptors/ghcr.io/sap/ocm-oci-flow:0.0.2
-pushing 0.0.2
-*** push application/vnd.oci.image.manifest.v1+json sha256:a336ad4250ecc9fe04a89f5caeeb32d4ef6083ebecd41a6ca82f467b3df8c991: manifest-sha256:a336ad4250ecc9fe04a89f5caeeb32d4ef6083ebecd41a6ca82f467b3df8c991
+successfully signed github.com/yitsushi/hello-world:1.0.7 (digest sha256:0452632bf29b38bc8887387019f87d459a9e88c517b744f9e5ad807bc672c479)
 ```
 
 #### Verify
@@ -143,18 +123,20 @@ pushing 0.0.2
 ❯ ocm verify componentversion \
     --signature ww-ocm-sig \
     --public-key=public-key.pem \
-    --repo OCIRepository::ghcr.io/sap/ocm-oci-flow \
-    ghcr.io/sap/ocm-oci-flow:0.0.2
-applying to version "ghcr.io/sap/ocm-oci-flow:0.0.2"...
+    --repo OCIRepository::ghcr.io/sap \
+    github.com/yitsushi/hello-world:1.0.7
+applying to version "github.com/yitsushi/hello-world:1.0.7"...
   resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtifactDigest/v1]
-successfully verified ghcr.io/sap/ocm-oci-flow:0.0.2 (digest sha256:6271f39d0d43897cb09a1ffed15b2d43adb11be6fce10367bedb3aee5e6afe88)
+successfully verified github.com/yitsushi/hello-world:1.0.7 (digest sha256:0452632bf29b38bc8887387019f87d459a9e88c517b744f9e5ad807bc672c479)
 ```
 
 ### Download it
 
 ```bash
-❯ ocm transfer components -t tgz --repo ghcr.io/sap/ocm-oci-flow ghcr.io/sap/ocm-oci-flow:0.0.2 ./ctf.tgz
-transferring version "ghcr.io/sap/ocm-oci-flow:0.0.2"...
+❯ ocm transfer components -t tgz \
+    --repo ghcr.io/sap github.com/yitsushi/hello-world:1.0.7 \
+    ./ctf.tgz
+transferring version "github.com/yitsushi/hello-world:1.0.7"...
 ...adding component version...
 1 versions transferred
 ```
@@ -165,16 +147,18 @@ transferring version "ghcr.io/sap/ocm-oci-flow:0.0.2"...
 ❯ tar ztf ctf.tgz
 artefact-index.json
 blobs
-blobs/sha256.39c8326c9084f6df25aca718807774f84c9580528a810de40863a36925155e7f
-blobs/sha256.a336ad4250ecc9fe04a89f5caeeb32d4ef6083ebecd41a6ca82f467b3df8c991
-blobs/sha256.a4451b90b165bdd19d271a521d707ce4a7bb91a6c49e707686fb5373913e00c2
+blobs/sha256.2eae2829e60c287ac2dabd3daed4fed9a45a021ebe0c0ff29e9db20b160f3b53
+blobs/sha256.4e972b297e47151dacd2582b9acaf9a94cda0203fe148e81d4e5f59cd7b8710b
+blobs/sha256.d3418290d87f05f52c1801557c00d3e43eb0bcf1bb960331b3967c639541582f
 ```
 
 #### Verfify signature
 
 ```bash
-❯ ocm verify componentversion --signature ww-ocm-sig --public-key=public-key.pem  ./ctf.tgz
-applying to version "ghcr.io/sap/ocm-oci-flow:0.0.2"...
+❯ ocm verify componentversion \
+    --signature ww-ocm-sig --public-key=public-key.pem \
+    ./ctf.tgz
+applying to version "github.com/yitsushi/hello-world:1.0.7"...
   resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtifactDigest/v1]
-successfully verified ghcr.io/sap/ocm-oci-flow:0.0.2 (digest sha256:6271f39d0d43897cb09a1ffed15b2d43adb11be6fce10367bedb3aee5e6afe88)
+successfully verified github.com/yitsushi/hello-world:1.0.7 (digest sha256:0452632bf29b38bc8887387019f87d459a9e88c517b744f9e5ad807bc672c479)
 ```
