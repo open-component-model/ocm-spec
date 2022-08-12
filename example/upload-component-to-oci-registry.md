@@ -1,4 +1,4 @@
-# Upload OCM Component Archive to an OCI Image
+# Upload OCM Component to an OCI Registry
 
 1. Create resources
 1. Create sources
