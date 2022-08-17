@@ -30,7 +30,29 @@ No configured sources.
 
 ```bash
 ❯ ocm create componentarchive github.com/yitsushi/hello-world 1.0.7 yitsushi hello-world-component
+```
 
+The output is a directory like this:
+
+```
+.
+├── hello-world-component
+│   ├── blobs
+│   └── component-descriptor.yaml
+├── in
+    └── resources.yaml
+```
+
+The file `component-descriptor.yaml` has this content:
+
+```yaml
+component:
+  componentReferences: []
+  name: github.com/yitsushi/hello-world
+  provider: yitsushi
+  repositoryContexts: []
+meta:
+  schemaVersion: v2
 ```
 #### Generate a public and private key
 
@@ -41,16 +63,16 @@ No configured sources.
 
 ### Add resources
 
-Resources yaml:
+Create a file named `resources yaml`:
 
 ```yaml
 name: 'server'
-version: '0.0.2'
+version: '0.0.1'
 type: 'ociImage'
 relation: 'external'
 access:
   type: 'ociRegistry'
-  imageReference: 'ghcr.io/yitsushi/hello-world:1.0.7'
+  imageReference: 'docker.io/sap/ocm:example-0.0.1'
 ```
 
 ```bash
@@ -61,11 +83,37 @@ processing resources.yaml...
 found 1 resources
 ```
 
+The file `component-descriptor.yaml` then has this content:
+
+```yaml
+component:
+  componentReferences: []
+  name: github.com/yitsushi/hello-world
+  provider: yitsushi
+  repositoryContexts: []
+  resources:
+  - access:
+      imageReference: ghcr.io/yitsushi/hello-world:1.0.7
+      type: ociRegistry
+    name: server
+    relation: external
+    type: ociImage
+    version: 0.0.2
+  sources: []
+  version: 1.0.7
+meta:
+  schemaVersion: v2
+```
+### Add sources (optional)
+
+For this example we do not need any sources but you can create a file `sources.yaml` the same way and
+add it to the component-descriptor with `ocm add sources ...`
+
 ### Upload to OCI Registry
 
 We can sign before we upload the component, but we can sign it after upload too.
 
-#### Sign Local Component
+#### Sign Local Component (optional)
 
 ```bash
 ❯ ocm sign componentversions -s ww-ocm-sig -K private-key.pem -k public-key.pem ./hello-world-component
@@ -74,7 +122,45 @@ applying to version "github.com/yitsushi/hello-world:1.0.7"...
 successfully signed github.com/yitsushi/hello-world:1.0.7 (digest sha256:0452632bf29b38bc8887387019f87d459a9e88c517b744f9e5ad807bc672c479)
 ```
 
+The file `component-descriptor.yaml` then has this content:
+
+```yaml
+component:
+  componentReferences: []
+  name: github.com/sap/ocm-basic-flow
+  provider: sap
+  repositoryContexts: []
+  resources:
+  - access:
+      imageReference: ghcr.io/yitsushi/hello-world:1.0.7
+      type: ociRegistry
+    digest:
+      hashAlgorithm: sha256
+      normalisationAlgorithm: ociArtifactDigest/v1
+      value: 2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488
+    name: server
+    relation: external
+    type: ociImage
+    version: 0.0.2
+  sources: []
+  version: 0.0.1
+meta:
+  schemaVersion: v2
+signatures:
+- digest:
+    hashAlgorithm: sha256
+    normalisationAlgorithm: jsonNormalisation/v1
+    value: d0503b73aa55ee9c6cec8d5c342f8333dd4b93490081919e3f07a745318cabfe
+  name: sap-ocm-sig
+  signature:
+    algorithm: RSASSA-PKCS1-V1_5
+    mediaType: application/vnd.ocm.signature.rsa
+    value: 3fba054401ffd9c94942ac4cb10175ce54e081f98413ddff1159f50a36bb7a44e6396f1ca4e847f12518c5aea1c9f3c9096235aacd05753a0d55eaa11bb63b7ae2f61fb182c6753795b1762f84b2eeebf718fb3807938b6ebb414cac21889c24fb401093e33798b47f798241efec9b7b0d45d9aba0cb1aaf0ba9e5207c17e7dbf5274dd4eb670c47c1f258b3c1b4fe2c9e94be8247a658bf64b06523e0c13590308afb1991fefa10c2c0bc3f95c16b035ca54a1529fdba6edbaed40509d975a81367fa71619ab13a2918a66c64bc403f80fdf2839951d2b318990308c35847162958994ebbad3669a00b342563b886b3fc5d026555dfe6d6b6e78479d76e481b
+```
+
 #### Login to OCI Registry
+
+The command-line-client can reuse docker credentials for authenticating against an OCI registry with a correspondig configuration (see `ocm -h` for more information). For doing the upload you will need write access to an OCI registry.
 
 ```bash
 # General format
