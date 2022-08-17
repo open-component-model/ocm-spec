@@ -1,0 +1,1 @@
+# Component Descriptor Serialization Version V2

@@ -1,0 +1,1 @@
+# B.1 `localBlob` &#8212; Repository Local Blob Storage
