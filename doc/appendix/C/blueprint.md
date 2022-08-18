@@ -1,1 +1,0 @@
-# C.4 `blueprint` &#8212; Landscaper Installation Blueprint

@@ -1,1 +1,1 @@
-# D. Label Definitions
+# D. Signature Types

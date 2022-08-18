@@ -1,1 +1,0 @@
-# C.1 `ociImage` &#8212; OCI Image or Image Index
