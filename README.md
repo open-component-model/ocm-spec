@@ -12,7 +12,9 @@ in relation to the packages those delivery artefacts are composed of.
 Compared with other standards like [CyclonDX](https://cyclonedx.org/), this
 makes OCM a simpler model with more detailed and unambiguous specifications
 with respect to delivery and deployment related aspects like transport
-and signing of software artefacts.
+and signing of software artefacts. Further information about artefacts (like
+typical SBOMs) can be added using labels, additional resources or even
+component versions.
 
 It is a completely technology-agnostic model to describe artefacts and
 the technical access to their content. Technology-agnostic means:
@@ -40,6 +42,12 @@ It can be used as a common basis and lingua franca to exchange, access and
 transport delivery artefacts and their grouping in components as well as
 information about these artefacts between different tools, processes and even
 fenced environments.
+
+To support fenced and/or private repository landscapes used to store the
+artefact content, OCM provides a mechanism to transparently adapt access
+information for artefacts during a transport step. Applications
+accessing the component information in a dedicated environment always 
+get the location specific access information valid for the actual environment. 
 
 
 1 [Introduction](doc/introduction/README.md)
@@ -73,6 +81,6 @@ Accompanying to this specification a ready-to-go [reference implementation](http
 is provided, which supports the common environment and access types for objects
 in the Kubernetes ecosystem. A (golang) library provides a framework for
 adding further implementations of the [model extension points](doc/appendix/README.md) under the hood
-of a generic OCM API and a [command line tool](https://github.com/gardener/ocm/blob/main/docs/reference/ocm.md)
-based on this library to support general operations, like composing, transporting and signing of 
-component versions.
+of a generic OCM API, and a [command line tool](https://github.com/gardener/ocm/blob/main/docs/reference/ocm.md)
+based on this library supports general operations, like composing, viewing, 
+transporting and signing of component versions.

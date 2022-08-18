@@ -11,7 +11,7 @@ provided by the Open Component Model.
 [E. Artefact Types](F/README.md) <br>
 [F. Labels](F/README.md) <br>
 
-The specification is based on 2 basic functional extension points:
+The specification is based on 4 basic functional extension points:
 - The storage backend technologies to use to store OCM elements (available
   mapping specifications can be found in [appendix A](A/README.md)).
 - Access to artefact content using different storage technologies. This
