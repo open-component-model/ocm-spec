@@ -1,7 +1,5 @@
 # 2.4.2 Component Descriptor
-Usually, complex software products are divided into logical units, which are called **components** in this specification.
-For example, a software product might consist of three components, a frontend, a backend and some monitoring stack.
-Of course, the software product itself could be seen as a component comprising the other three components.
+Software products are divided into logical units, which are called **components** in this specification. For example, a frontend, a backend and some monitoring stack. The software product itself could be seen as a component comprising the other three components.
 
 As a result of the development phase, **component versions** are created, e.g. when you make a new release of a component.
 
@@ -10,29 +8,17 @@ configuration data etc. Such artifacts are called **resources** in this specific
 
 Resources are usually build from something, e.g. code in a git repo, named **sources** in this specification.
 
-The OCM introduces a so called **Component Descriptor** for every component version, to describe the resources, sources
-and other component versions belonging to a particular component version and how these could be accessed.
+The OCM introduces a so called **Component Descriptor** for every component version, to describe the resources, sources and other component versions belonging to a particular component version and how these could be accessed.
 
-For the three components in our example software product, one *Component Descriptor* exists for every component version,
-e.g. three *Component Descriptor* for the three versions of the frontend, six for the six versions of the backend etc.
+For the three components in our example software product, one *Component Descriptor* exists for every component version, e.g. three *Component Descriptors* for the three versions of the frontend, six for the six versions of the backend etc.
 
-Not all component version combinations of frontend, backend and monitoring are compatible and build a valid product version.
-In order to define reasonable version combinations for our software product, we could use another feature of
-the *Component Descriptor*, which allows the aggregation of component versions.
+Not all component version combinations of frontend, backend and monitoring are compatible and build a valid product version. In order to define reasonable version combinations for our software product, we could use another feature of the *Component Descriptor*, which allows the aggregation of component versions.
 
-For our example we could introduce a component for the overall product. A particular version of this product component
-is again described by a *Component Descriptor*, which contains references to particular *Component Descriptors* for the
-frontend, backend and monitoring.
+For our example we could introduce a component for the overall product. A particular version of this product component is again described by a *Component Descriptor*, which contains references to particular *Component Descriptors* for the frontend, backend and monitoring.
 
-This is only an example how to describe a particular product version with OCM as a component with one
-*Component Descriptor* with references to other *Component Descriptors*, which itself could have such references and so on.
-You are not restricted to this approach, i.e. you could still just maintain a list of component version combinations which
-build a valid product release. But OCM provides you a simple approach to specify what belongs to a product version.
-Starting with the *Component Descriptor* for a product version and following the component references, you could
-collect all artifacts, belonging to this product version.
+This is only one example how to describe a particular product version with OCM as a component with one *Component Descriptor* having references to other *Component Descriptors*, which itself could have such references and so on. You are not restricted to this approach, i.e. you could still just maintain a list of component version combinations which build a valid product release. But OCM provides you a simple approach to specify what belongs to a product version. Starting with the *Component Descriptor* for a product version and following the component references, you could collect all artifacts, belonging to this product version.
 
-*Component Descriptors* are the central concept of OCM. A *Component Descriptor* describes what belongs to a particular
-version of a software component and how to access it. This includes:
+*Component Descriptors* are the central concept of OCM. A *Component Descriptor* describes what belongs to a particular version of a software component and how to access it. This includes:
 
 - resources, i.e. technical artifacts like binaries, docker images, ...
 - sources like code in github
@@ -40,12 +26,9 @@ version of a software component and how to access it. This includes:
 
 ## Component Descriptor Format Specification
 
-A *Component Descriptor* is a [YAML](https://yaml.org/) or [JSON](https://www.json.org/json-en.html) document
-according to this [schema](component-descriptor-v2-schema.yaml). Additional fields are not allowed.
+A *Component Descriptor* is a [YAML](https://yaml.org/) or [JSON](https://www.json.org/json-en.html) document according to this [schema](component-descriptor-v2-schema.yaml). Additional fields are not allowed.
 
-In serialised form, *Component Descriptors* MUST be UTF-8-encoded. Either YAML, or JSON MUST be used. If YAML is used
-as serialisation format, only the subset of features defined by JSON MUST be used, thus allowing conversion to a
-JSON representation.
+In serialised form, *Component Descriptors* MUST be UTF-8-encoded. Either YAML, or JSON MUST be used. If YAML is used as serialisation format, only the subset of features defined by JSON MUST be used, thus allowing conversion to a JSON representation.
 
 YAML is recommended as preferred serialisation format.
 
@@ -127,3 +110,6 @@ Different to strict semver 2.0.0, component versions MAY:
 
 - have an optional v prefix
 - omit the third level (patch-level); if omitted, path-level is implied to equal 0
+
+The inner elements are described in detail in chapter [Types](types.md)
+

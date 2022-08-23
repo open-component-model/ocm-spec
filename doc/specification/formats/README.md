@@ -12,5 +12,5 @@
 - [V3alpha1](compdesc/v3alpha1/README.md)
 
 2.4.3 Normalization
-- Base Format for Normalization (Internal Format)
-- Normalization Procedure and Layout
+- [Base Format for Normalization (Internal Format)](normalization_format.md)
+- [Normalization Procedure and Layout](normalization_procedure.md)
