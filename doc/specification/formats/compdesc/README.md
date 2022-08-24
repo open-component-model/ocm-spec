@@ -1,4 +1,5 @@
-# 2.4.2 Component Descriptor
+# 2.4.3 Component Descriptor Serialization Formats
+
 Software products are divided into logical units, which are called **components** in this specification. For example, a frontend, a backend and some monitoring stack. The software product itself could be seen as a component comprising the other three components.
 
 As a result of the development phase, **component versions** are created, e.g. when you make a new release of a component.
@@ -21,12 +22,12 @@ This is only one example how to describe a particular product version with OCM a
 *Component Descriptors* are the central concept of OCM. A *Component Descriptor* describes what belongs to a particular version of a software component and how to access it. This includes:
 
 - resources, i.e. technical artifacts like binaries, docker images, ...
-- sources like code in github
+- sources like code in GitHub
 - references to other software component versions
 
 ## Component Descriptor Format Specification
 
-A *Component Descriptor* is a [YAML](https://yaml.org/) or [JSON](https://www.json.org/json-en.html) document according to this [schema](component-descriptor-v2-schema.yaml). Additional fields are not allowed.
+A *Component Descriptor* is a [YAML](https://yaml.org/) or [JSON](https://www.json.org/json-en.html) document according to this [schema](v2/json-schema.yaml). Additional fields are not allowed.
 
 In serialised form, *Component Descriptors* MUST be UTF-8-encoded. Either YAML, or JSON MUST be used. If YAML is used as serialisation format, only the subset of features defined by JSON MUST be used, thus allowing conversion to a JSON representation.
 
@@ -111,5 +112,5 @@ Different to strict semver 2.0.0, component versions MAY:
 - have an optional v prefix
 - omit the third level (patch-level); if omitted, path-level is implied to equal 0
 
-The inner elements are described in detail in chapter [Types](types.md)
+The inner elements are described in detail in chapter [Types](../types.md)
 

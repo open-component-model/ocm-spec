@@ -2,7 +2,7 @@
 ## Open Component Model (OCM)
 
 The *Open Component Model (OCM)* is an open standard for a technology-agnostic
-and machine read-able format to describe software-bill-of-deliveries (SBOD) with
+and machine-readable format to describe software-bill-of-deliveries (SBOD) with
 the focus on the software artefacts which have to be delivered for
 software products. 
 
@@ -25,7 +25,12 @@ the technical access to their content. Technology-agnostic means:
 - the model information can be stored using any storage backend technology or
   repository
 
-The only constraint is, that there must be
+The Open Component Model is just an interpretation layer on top of
+existing storage technologies and not an own technical repository. Therefore, it
+does not define an own authentication scheme, it just uses the ones defined
+by the underlying storage technologies.
+
+The only constraint for using backend storage technologies is, that there must be
 - an implementation for accessing artefacts in the desired repository technology
   and map them to a blob format
 - a specification for a [mapping scheme](doc/specification/layer3/README.md)
@@ -58,6 +63,7 @@ get the location specific access information valid for the actual environment.
 2.2 [OCM Operations](doc/specification/layer2/README.md) <br>
 2.3 [Storage Backend Mappings](doc/specification/layer3/README.md) <br>
 2.4 [Formats and Names](doc/specification/formats/README.md) <br>
+2.5 [Denotation Schemes](doc/specification/fdenotations/README.md) <br>
 
 3 [Scenarios](doc/scenarios/README.md) <br>
 

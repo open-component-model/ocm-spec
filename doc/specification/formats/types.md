@@ -1,6 +1,6 @@
 # 2.4.1 Types
 
 ## Repository Types
-## Resource Types
+## Artefact Types
 ## Access Method Types
 ## Label Names
