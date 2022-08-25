@@ -33,10 +33,10 @@ by the underlying storage technologies.
 The only constraint for using backend storage technologies is, that there must be
 - an implementation for accessing artefacts in the desired repository technology
   and map them to a blob format
-- a specification for a [mapping scheme](doc/specification/layer3/README.md)
+- a specification for a [mapping scheme](doc/specification/mapping/README.md)
   describing how to map the elements of the component model to the supported
   elements of the backend technology
-- an [implementation](doc/specification/layer2/README.md) of all the mapping
+- an [implementation](doc/specification/operations/README.md) of all the mapping
   schemes for the storage scenarios used in a dedicated environment.
 
 By providing a globally unique identity scheme for component versions and
@@ -60,8 +60,8 @@ get the location specific access information valid for the actual environment.
 2 [OCM Specification](doc/specification/README.md)
   
 2.1 [OCM Elements](doc/specification/layer1/README.md) <br>
-2.2 [OCM Operations](doc/specification/layer2/README.md) <br>
-2.3 [Storage Backend Mappings](doc/specification/layer3/README.md) <br>
+2.2 [OCM Operations](doc/specification/operations/README.md) <br>
+2.3 [Storage Backend Mappings](doc/specification/mapping/README.md) <br>
 2.4 [Formats and Names](doc/specification/formats/README.md) <br>
 2.5 [Denotation Schemes](doc/specification/fdenotations/README.md) <br>
 

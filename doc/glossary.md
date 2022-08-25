@@ -5,33 +5,33 @@
 ## A
 
 
-#### [Access Method](specification/layer1/README.md#artefact-access)<a id="accmeth"/>
+#### [Access Method](specification/elements/README.md#artefact-access)<a id="accmeth"/>
 a dedicated procedure how to access the content of an [artefact](#artefact) 
 described by a [component version](#compvers). It is formally represented by an
 [access method type](#acctype).
 
-#### [Access Method Operations](specification/layer2/README.md#access-method-operations)<a id="accmethops"/>
+#### [Access Method Operations](specification/operations/README.md#access-method-operations)<a id="accmethops"/>
 the operations an implementation of an [access method](#accmeth) has to support.
 
 #### [Access Method Type](specification/formats/types.md#access-method-types)<a id="acctype"/>
 the type of an [access specification](#accspec) determining the formal procedure
 to use to access the blob content of an [artefact](#artefact).
 
-#### [Access Specification](specification/layer1/README.md#artefact-access)<a id="accspec"/>
+#### [Access Specification](specification/elements/README.md#artefact-access)<a id="accspec"/>
 the specification of the technical access path to the physical blob content of
 an [artefact](#artefact) described by a [component version](#compvers).
 
-#### [Aggregation](specification/layer1/README.md#aggregation)<a id="aggregation"/>
+#### [Aggregation](specification/elements/README.md#aggregation)<a id="aggregation"/>
 the ability of the Open Component Model to compose [component versions](#compvers)
 based on other component versions.
 
-#### [Artefact](specification/layer1/README.md#artefacts)<a id="artefact"/>
+#### [Artefact](specification/elements/README.md#artefacts)<a id="artefact"/>
 some blob content described  by a [component version](#component-version).
 
-#### [Artefact Digest](specification/layer1/README.md#digest-info)<a id="artdigest"/>
+#### [Artefact Digest](specification/elements/README.md#digest-info)<a id="artdigest"/>
 the (logical) digest of an [artefact](#artefact) described by a [component version](#component-version).
 
-#### [Artefact Reference](specification/layer1/README.md#artefact-references)<a id="artref"/>
+#### [Artefact Reference](specification/elements/README.md#artefact-references)<a id="artref"/>
 a relative or absolute reference to an [artefact](#artefact) described by a 
 [component version](#compvers).
 
@@ -42,32 +42,32 @@ the artefact blob.
 
 ## C
 
-#### [Component](specification/layer1/README.md#components)<a id="component"/>
+#### [Component](specification/elements/README.md#components)<a id="component"/>
 an abstract entity describing a dedicated usage context or
 meaning for a provided piece of software.
 
-#### [Component Descriptor](specification/layer1/README.md#component-descriptor)<a id="compdesc"/>
+#### [Component Descriptor](specification/elements/README.md#component-descriptor)<a id="compdesc"/>
 the formal description of a [component version](#compvers).
 
 
-#### [Component Identity](specification/layer1/README.md#components)<a id="compid"/>
+#### [Component Identity](specification/elements/README.md#components)<a id="compid"/>
 the globally unique identity of a [component](#component).
 
-#### [Component Repository](specification/layer1/README.md#repositories)<a id="comprep"/>
+#### [Component Repository](specification/elements/README.md#repositories)<a id="comprep"/>
 an entity able to store and retrieve [component versions](#compvers). See also [Normalization](#norm)
 
-#### [Component Version](specification/layer1/README.md#component-versions)<a id="compvers"/>
+#### [Component Version](specification/elements/README.md#component-versions)<a id="compvers"/>
 a dedicated version of a [component](#component) described by the Open Component Model
 described by a [component descriptor](#compdesc) and retrievable from
 a [component repository](#comprep).
 
-#### [Component Version Digest](specification/layer1/README.md#signatures)<a id="compdigest"/>
+#### [Component Version Digest](specification/elements/README.md#signatures)<a id="compdigest"/>
 the digest of a [component version](#compvers).
 
-#### [Component Version Identity](specification/layer1/README.md#component-versions)<a id="compversid"/>
+#### [Component Version Identity](specification/elements/README.md#component-versions)<a id="compversid"/>
 the globally unique identity of a [component version](#compvers).
 
-#### [Component Version Reference](specification/layer1/README.md#aggregation)<a id="compref"/>
+#### [Component Version Reference](specification/elements/README.md#aggregation)<a id="compref"/>
 a reference to a [component versions](#compvers) in a component version to
 describe an aggregation relationship..
 
@@ -78,7 +78,7 @@ see [artefact digest](#artdigest) or [component version digest](#compdigest).
 
 ## E
 
-#### [Element Identity](specification/layer1/README.md#identities)<a id="elemid"/>
+#### [Element Identity](specification/elements/README.md#identities)<a id="elemid"/>
 the local identity of an element described by a [component version](#compvers).
 There are three classes of identities: [resource](#resource) identities, [source](#source) identities and 
 [reference](#compref) identities.
@@ -95,14 +95,14 @@ see [element identity](#elemid), [component identity](#compid), [component versi
 
 ## L
 
-#### [Labels](specification/layer1/README.md#labels)<a id="labels"/>
+#### [Labels](specification/elements/README.md#labels)<a id="labels"/>
 arbitrary typed information snippets attached to [component versions](#compvers),
 [artefacts](#artefacts) and [references](#compref).
 
 ## M
 
-#### [Mapping](specification/layer2/README.md)<a id="mapping"/>
-the mapping of the [elements](specification/layer1/README.md) of the
+#### [Mapping](specification/operations/README.md)<a id="mapping"/>
+the mapping of the [elements](specification/elements/README.md) of the
 [Open Component Model)](#ocm) onto a dedicated storage backend technology
 described by a [repository type](#repotype).
 
@@ -130,7 +130,7 @@ see [repository operations](#repops), [access methods](#accmeth) and
 a reference to an element of the component model, see [artefact reference](#artref)
 or [component version reference](#compref)
 
-#### [Repository Operations](specification/layer2/README.md#repository-operations)<a id="repops"/>
+#### [Repository Operations](specification/operations/README.md#repository-operations)<a id="repops"/>
 abstract operations that have to be provided by a language binding for a
 [mapping](#mapping) of the [Open Component Model](#ocm) to a dedicated storage
 technology.
@@ -139,16 +139,16 @@ technology.
 the type of a [mapping](#mapping) of the [Open Component Model](#ocm) specification
 to a dedicated storage technology.
 
-#### [Resource](specification/layer1/README.md#resources)<a id="resource"/>
+#### [Resource](specification/elements/README.md#resources)<a id="resource"/>
 a delivery artefact described by a [component version](#compvers). 
 
 ## S
 
-#### [Signature](specification/layer1/README.md#signatures)<a id="signature"/>
+#### [Signature](specification/elements/README.md#signatures)<a id="signature"/>
 a [component version](#compvers) may be signed by an authority, the signature as
 result of such a signing process is stored along with the component version.
 
-#### [Source](specification/layer1/README.md#sources)<a id="source"/>
+#### [Source](specification/elements/README.md#sources)<a id="source"/>
 an artefact described by a [component version](#compvers) containing sources
 used to generate one or more of the described [resources](#resource).
 

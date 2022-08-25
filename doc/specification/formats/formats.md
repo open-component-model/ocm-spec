@@ -7,18 +7,18 @@ of incarnations of such extension points.
 
 ## Repository Specifications
 
-Any [repository](../layer1/README.md#repositories) that can be used to store
+Any [repository](../elements/README.md#repositories) that can be used to store
 content according to the [Open Component Model](../../../README.md) MUST be
 describable by a formal repository specification.
 
 Such a specification is usable by a language binding supporting
 this kind of specification to gain access to this repository.
 In a concrete environment, all repositories are usable, for which an
-implementation of the [abstract model operations](../layer2/README.md#repository-operations)
+implementation of the [abstract model operations](../operations/README.md#repository-operations)
 exist.
 
 Therefore, a repository specification has a type, the [*Repository Type*](types.md#repository-types).
-used to identify the required [mapping](../layer3/README.md) and the
+used to identify the required [mapping](../mapping/README.md) and the
 used specification scheme for an instance of this type holding
 the information required to identify a concrete repository instance.
 
@@ -37,11 +37,11 @@ can be found in [appendix A](../../appendix/A/README.md)
 ## Access Specifications
 
 Access specifications are used to describe the technical access path
-of the content of [artefacts](../layer1/README.md#artefacts) described by a
-[component version](../layer1/README.md#component-versions).
+of the content of [artefacts](../elements/README.md#artefacts) described by a
+[component version](../elements/README.md#component-versions).
 Every access specification has a formal type and type specific attributes.
 The type uniquely specifies the technical procedure how to use the
-attributes and the [repository context](../layer1/README.md#repository-contexts) of
+attributes and the [repository context](../elements/README.md#repository-contexts) of
 the component descriptor containing the access specification
 to retrieve the content of the artefact.
 
@@ -81,7 +81,7 @@ The usage of labels is left to the creator of a component version, therefore
 the set of labels must be extensible and the label name must follow
 a dedicated [naming scheme](types.md#label-names)
 
-A label entry in the [component descriptor](../layer1/README.md#component-descriptor)
+A label entry in the [component descriptor](../elements/README.md#component-descriptor)
 consists of a dedicated set of
 meta attributes with a predefined meaning. While arbitrary values are allowed for the
 label `value`, additional (vendor/user specific) attributes are not

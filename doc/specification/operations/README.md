@@ -1,14 +1,14 @@
 # 2.2 Abstract Operations defined by the Open Component Model
 
 The Open Component Model defines abstract operations that must be available to
-work with a [component repository](../layer1/README.md#repositories) view as
+work with a [component repository](../elements/README.md#repositories) view as
 interpretation layer on-top of dedicated well-known storage subsystems (like an
 OCI registry or an S3 blob store).
 These operations build the first extension point of OCM, which allows to 
 map the OCM functionality onto any blobstore-like storage system.
 
-A second extension point is the [access to artefacts](../layer1/README.md#artefact-access)
-described by a [component version](../layer1/README.md#component-versions).
+A second extension point is the [access to artefacts](../elements/README.md#artefact-access)
+described by a [component version](../elements/README.md#component-versions).
 Such access is described by an [access specification](../formats/formats.md#access-specifications)
 which is specific for a dedicated access method, whose implementation handles the
 technical access to the artefact content. Implementations for those methods must
@@ -43,7 +43,7 @@ The OCM project provides a complete implementation for common OCI registries,
 and mapping specification for S3 and OCI.
 
 Every such binding must support at least the mandatory set of abstract operations
-working with [elements of the component model](../layer1/README.md) (see below).
+working with [elements of the component model](../elements/README.md) (see below).
 
 ### Mandatory Operations
 
@@ -51,7 +51,7 @@ The following operations are mandatory:
 
 - **`UploadComponentDescriptor(ComponentDescriptor-YAML) error`**
 
-  Persist a serialized form of the descriptor of a [component version](../layer1/README.md#component-versions)  with its
+  Persist a serialized form of the descriptor of a [component version](../elements/README.md#component-versions)  with its
   component identity and version name in way so that it is retrievable again using
   this identity.
 
@@ -76,7 +76,7 @@ The following operations are mandatory:
   operation for generating an identity, if it decided to make the object
   externally visible.
 
-  If this is the case, an external [access specification](../layer1/README.md#artefact-access)
+  If this is the case, an external [access specification](../elements/README.md#artefact-access)
   has to be returned. At least a blob identity or an external access specification
   has to be returned for not successful executions.
 

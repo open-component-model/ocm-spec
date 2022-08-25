@@ -1,8 +1,8 @@
 # 2.5 Denotation Schemes
 
 A dedicated language binding typically provides structured elements
-to describe the specification of an OCM [repository](../layer1/README.md#repositories) or
-a [component version](../layer1/README.md#component-versions).
+to describe the specification of an OCM [repository](../elements/README.md#repositories) or
+a [component version](../elements/README.md#component-versions).
 
 Additionally, tools and command line clients may support an appropriate
 textual notation to denote elements to deal with.

@@ -37,13 +37,13 @@ the future).
 Therefore, a component repository is typically an interpretation layer
 on-top of a given well-known storage
 subsystem hosting a content structure adhering to an
-[element mapping specification (layer 3 of this specification)](../layer3/README.md)
+[element mapping specification (layer 3 of this specification)](../mapping/README.md)
 for this kind of storage backend (e.g. OCI). Both, the backend technology as
 well as the mapping scheme is expressed by the [*Repository Type*](../formats/types.md#repository-types)
 
 So, any tool or language binding can map an existing storage technology into an
 OCM repository view by implementing the
-[abstract operations (layer 2 of this specification)](../layer2/README.md))
+[abstract operations (layer 2 of this specification)](../operations/README.md))
 using this specification for the dedicated storage technology.
 
 If required, an own specification for a native OCM repository (similar to the
@@ -277,7 +277,7 @@ Every artefact described by the component version has
   possible for the blob format, the access specification must be able to
   describe an optional media type. Applying an access specification always
   yields a media type. It might be implicitly provided the [implementation of
-  an access method](../layer2/README.md#access-method-operations) or explicitly provided by the
+  an access method](../operations/README.md#access-method-operations) or explicitly provided by the
   access specification.
 - a (optional) digest of the artefact that is immutable during transport steps.
 
@@ -381,13 +381,13 @@ to finally access the content of an artefact.
 The content of a described artefact is accessible by applying its
 global identity triple to the following procedure:
 
-- [lookup](../layer2/README.md#mandatory-operations) of a [component version](#component-versions)) and its
+- [lookup](../operations/README.md#mandatory-operations) of a [component version](#component-versions)) and its
   [component descriptor](#component-descriptor) by using its
   component identity and version name in
   the desired [repository context](#repository-contexts)
 - identify the artefact by its local [identity](#identities) (distinguish between [source](#sources)
   and [resource](#resources))
-- [apply](../layer2/README.md#access-method-operations) the described [access method](#artefact-access)
+- [apply](../operations/README.md#access-method-operations) the described [access method](#artefact-access)
 
 <div align="center"> 
 <img src="ocmresourceaccess.png" alt="Structure of OCM Specification" width="800"/>
@@ -498,7 +498,7 @@ following procedure:
 
 - gain access to the OCM [repository](#repositories) described by the repository context.
 - gain access to the [component version](#component-versions), respectively the [component descriptor](#component-descriptor),
-  by a [lookup operations](../layer2/README.md#mandatory-operations)
+  by a [lookup operations](../operations/README.md#mandatory-operations)
 - follow the [resolution procedure for the relative artefact reference](#artefact-access).
 
 ## Signatures

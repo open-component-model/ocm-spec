@@ -7,18 +7,18 @@ of the described element.
 
 ## Repository Types
 
-Any [repository](../layer1/README.md#repositories) that can be used to store
+Any [repository](../elements/README.md#repositories) that can be used to store
 content according to the [Open Component Model](../../../README.md) must be
 describable by a formal repository specification.
 
 Such a specification is usable by a language binding supporting
 this kind of specification to gain access to this repository.
 In a concrete environment, all repositories are usable, for which an
-implementation of the [abstract model operations](../layer2/README.md#repository-operations)
+implementation of the [abstract model operations](../operations/README.md#repository-operations)
 exists.
 
 Therefore, a repository specification has a type, the *Repository Type*
-used to identify the required [mapping](../layer3/README.md) and the
+used to identify the required [mapping](../mapping/README.md) and the
 used [specification scheme](formats.md#repository-specifications) holding
 the information required to identity a concrete repository instance.
 
@@ -58,8 +58,8 @@ There are two kinds of types:
   
 ## Artefact Types
 
-The [OCM component version](../layer1/README.md#component-versions) describes
-a set of [artefacts](../layer1/README.md#artefacts), their type and
+The [OCM component version](../elements/README.md#component-versions) describes
+a set of [artefacts](../elements/README.md#artefacts), their type and
 meaning with attached meta, and access information.
 
 The formal type of an artefact uniquely specifies the
@@ -67,7 +67,7 @@ logical interpretation of an artefact, its kind, independent of its
 concrete technical representation.
 
 If there are different possible technical representation the
-[access method](../layer1/README.md#artefact-access)
+[access method](../elements/README.md#artefact-access)
 returns the concrete format given by a media type used for the returned blob.
 
 For example, a helm chart (type `helmChart`) can be represented as
@@ -123,10 +123,10 @@ found in [appendix E](../../appendix/E/README.md).
 
 ## Access Method Types
 
-[Access methods](../layer1/README.md#artefact-access) describe (and finally
+[Access methods](../elements/README.md#artefact-access) describe (and finally
 implement) dedicated technical ways how to
-access the blob content of an [artefact](../layer1/README.md#artefacts)
-described by an [OCM component descriptor](../layer1/README.md#component-descriptor).
+access the blob content of an [artefact](../elements/README.md#artefacts)
+described by an [OCM component descriptor](../elements/README.md#component-descriptor).
 
 They are an integral part of the [Open Component Model](../../../README.md). They always
 provide the link between a component version stored in some repository context,

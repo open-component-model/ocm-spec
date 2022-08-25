@@ -1,15 +1,15 @@
 # 2 Open Component Model Specification
 
-2.1 [Model Elements](layer1/README.md)<br>
-2.2 [Model Operations](layer2/README.md)<br>
-2.3 [Storage backend Mappings](layer3/README.md)<br>
+2.1 [Model Elements](elements/README.md)<br>
+2.2 [Model Operations](operations/README.md)<br>
+2.3 [Storage backend Mappings](mapping/README.md)<br>
 2.4 [Formats and Names](formats/README.md)<br>
 2.5 [Extension Points](extensionpoints/README.md)<br>
 
 This specification is divided into three parts:
 
-- Layer 1: The [model elements](layer1/README.md) defined by the Open Component Model
-- Layer 2: The abstract [model operations](layer2/README.md) , which must be provided to
+- Layer 1: The [model elements](elements/README.md) defined by the Open Component Model
+- Layer 2: The abstract [model operations](operations/README.md) , which must be provided to
   interact with those model elements stored in any OCM persistence
 - Layer 3: The [interoperability specifications](iformats/README.md) describing
   how the model elements are mapped to elements of an underlying persistence layer
