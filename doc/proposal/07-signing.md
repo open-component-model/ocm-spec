@@ -5,17 +5,18 @@ In order to add a signature to a component-descriptor, a digest is required at e
 
 ## Digests
 
-Digests are used for componentReferences and resources to indicate a hash for their content.
+Digests are used for `componentReferences` and `resources` to indicate a hash for their content.
 
 Fields:
 digest:
-  - hashAlgorithm: Hash algorithm used, e.g. 'sha256'
-  - normalisationAlgorithm: normalisation Algorithm, defines which subset of the data is used as normalised representation
-  - value: the digest value for the normalised data as defined by normalisationAlgorithm with the hash algorithm defined by hashAlgorithm
+  - `hashAlgorithm`: Hash algorithm used, e.g. 'sha256'
+  - `normalisationAlgorithm`: normalisation algorithm, defines which subset of the data is used as normalised representation
+  - `value`: the digest value for the normalised data as defined by `normalisationAlgorithm` with the hash algorithm defined by hashAlgorithm
 
 ## Signatures
 
 The component descriptor may have a list of signatures on root level. A signature can be identified by its name. It follows this schema:
+
 ```
 signatures:
   - name: name of the signature. Used to identify the signature when verifying.
@@ -26,24 +27,30 @@ signatures:
         mediaType: defines the format of the signature.value field
 ```
 
-## Normalisation CD
+## Normalisation of the component-descriptor
 
-The normalisation of the component-descriptor describes the process of generating a normalised component-descriptor. A normalised component-descriptor is a subset of the component-descriptor of signing-relevant properties. 
+The normalisation of the component-descriptor describes the process of generating a normalised component-descriptor. A normalised component-descriptor is a subset of the component-descriptor containing signing-relevant properties only.
 
 ### Digests in Normalisation
-In the process of normalisation, all component-references and resources must be filled with a digest (excpet resources with access null or access.type = 'None').
-If a digest-containing entry (= component reference or resource) already contain a digest before the normalisation, the process must be aborted if the digest mismatches the calcuated digest for the entry. Such preexisting digest entries can NOT be trusted and they have to be calculated in the process.
+
+In the process of normalisation, all component-references and resources must be filled with a digest (except resources with no access or access.type = 'None').
+If a digest-containing entry (= component reference or resource) already contains a digest before the normalisation, the process must be aborted if the digest mismatches the calculated digest for the entry. Such preexisting digest entries can NOT be trusted and they have to be calculated in the process.
 
 ### Exclude Resource from Normalisation/Signing
+
 If a resource should not be part of the normalisation and later signing, the resource needs a special digest in the following format:
+
+```
 digest:
   hashAlgorithm: NO-DIGEST
   normalisationAlgorithm: EXCLUDE-FROM-SIGNATURE
   value: NO-DIGEST
+```
 
 ### Properties for normalisation
 
 The following properties are part of the normalised component-descriptor:
+
 ```
 meta
     schemaVersion
@@ -66,16 +73,17 @@ component
         name
         version
         extraIdentity
-        type 
+        type
         relation
         digest:
             hashAlgorithm
             normalisationAlgorithm
             value
 ```
+
 Exceptions:
 
-1. If resource.Access is emtpy or resource.access.type is None, no digest field is required. Then, only name, version, extraIdentity, type and relation is used for the normalisation.
+1. If resource.Access is empty or resource.access.type is `None`, no digest field is required. Then, only name, version, extraIdentity, type and relation is used for the normalisation.
 
 ### Properties **NOT** part of normalisation:
 
@@ -94,11 +102,12 @@ signatures
 
 ### Representation
 
-In order to hash a normalised component-descriptor, it has to be transformed into a hashable representation.
+In order to hash a normalised component-descriptor, it has to be transformed into a hash-able representation.
 
-Attributes *MUST* be transformed into list of single attributes (key-value pairs) and ordered alphabetically. This list *MUST* be JSON encoded with disabled HTML Escaping and disabled pretty printing. It *MUST NOT* end with a newline character. A hash algorithm of choice can then be applied on the string 
+Attributes *MUST* be transformed into list of single attributes (key-value pairs) and ordered alphabetically. This list *MUST* be JSON encoded with disabled HTML Escaping and disabled pretty printing. It *MUST NOT* end with a newline character. A hash algorithm of choice can then be applied on the string
 
 Example (pretty printed for readability): *TODO*: update
+
 ```
 [
   {
@@ -191,7 +200,7 @@ Example (pretty printed for readability): *TODO*: update
 
 ### Digester
 
-As described, resources have a digest field to store the content hash. Different resource types will use a different normalisationAlgorithm: 
+As described, resources have a digest field to store the content hash. Different resource types will use a different normalisationAlgorithm:
 
  - `ociArtifactDigest/v1`: uses the hash of the manifest of an oci artifact
  - `genericBlobDigest/v1`: uses the hash of the blob
@@ -207,10 +216,11 @@ After the digest for the normalised component-descriptor is calculated, it can b
 
 ## Verification Algorithm
 
-Verifying a component-descriptor consits of three steps. Failing any step **MUST** fail the validation.
+Verifying a component-descriptor consist of three steps. Failing any step **MUST** fail the validation.
 
 1. Verify the digest of all resources and component references. Recursively follow component references and create an in-memory representation of the referenced component-descriptor by accessing and digesting all resources and references. Do not trust any digest data in child component-descriptors. The digest of the normalised in-memory representation of a component-reference **MUST** match the digest in the root component-descriptor (that contains a signature we verify in the next step).
-```
+
+```go
 func digestForComponentDescriptor(cd) -> digest:
   for reference in cd.component.componentReferences:
     referencedCd = loadCdForReference(reference)
@@ -223,12 +233,14 @@ func digestForComponentDescriptor(cd) -> digest:
   digest = createDigestForNormalisedCd
   return digest
 ```
+
 2. verify the signature, identified by signatureName.
-3. check if calcluated digest of the normalised compponent-descriptor matches the digest in signatures.digest with hashAlgorithm, NormalisationAlgorithm and Value
+3. check if calculated digest of the normalised component-descriptor matches the digest in signatures.digest with hashAlgorithm, NormalisationAlgorithm and Value
 
 ### Verify with RSA
 
 Signature verification with RSASSA-PKCS1-V1_5 requires a Public Key. This is used in step 2 of the verification algorithm.
 
 ### Verify with X509
+
 Signature verification with X509 certificates require a validation of the "signing" certificate and the signature itself. First, the validity of the "signing" certificate is checked with a root CA and a chain of intermediate certificates. Afterwards, the CD signature is verified with the public key in the "signing" certificate.
