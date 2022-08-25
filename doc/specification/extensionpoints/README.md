@@ -1,6 +1,6 @@
 # 2.5 Extension Points for the Open Component Model Specification
 
-The specification described in the former sections open some
+The specification described in the former sections has some open
 extension points.
 These are parts of the [OCM specification](../README.md), which may be extended
 by arbitrary variations. The specification just defines the meaning, syntax

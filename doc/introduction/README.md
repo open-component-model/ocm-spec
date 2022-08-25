@@ -17,7 +17,7 @@ and ineffective.
 
 ## Why is this a huge problem?
 
-Most prominently, with the general un-alignment of how software is defined and managed throughout the whole company,
+Most prominently, with the general un-alignment of how software is defined and managed,
 it is not possible without additional overhead (like setting up even more processes and tools on top) to manage
 the complete lifecycle of all solutions, services or individual deployment artifacts running in any
 given landscape. Even worse, when trying to set up new landscapes, it becomes a nightmare to successfully orchestrate,

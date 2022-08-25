@@ -85,7 +85,7 @@ and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119]
 
 Accompanying to this specification a ready-to-go [reference implementation](https://github.com/gardener/ocm)
 is provided, which supports the common environment and access types for objects
-in the Kubernetes ecosystem. A (golang) library provides a framework for
+in the Kubernetes ecosystem. A (Go) library provides a framework for
 adding further implementations of the [model extension points](doc/appendix/README.md) under the hood
 of a generic OCM API, and a [command line tool](https://github.com/gardener/ocm/blob/main/docs/reference/ocm.md)
 based on this library supports general operations, like composing, viewing, 
