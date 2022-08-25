@@ -1,6 +1,5 @@
 # 2.4 Names and Formats
 
-
 2.4.1 [Types](types.md)
 - [Repository Types](types.md#repository-types)
 - [Artefact Types](types.md#artefact-types)
@@ -8,8 +7,9 @@
 - [Label Names](types.md#label-names)
 
 2.4.2 [Formats](formats.md)
-- [Repository Specifications](formats.md#respository-specifications)
+- [Repository Specifications](formats.md#repository-specifications)
 - [Access Specifications](formats.md#access-specifications)
+- [Label Specifications](formats.md#label-specifications)
 - [Extensions](formats.md#extensions)
 
 2.4.3 [Component Descriptor Serialization Formats](compdesc/README.md)

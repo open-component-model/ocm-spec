@@ -38,7 +38,8 @@ Therefore, a component repository is typically an interpretation layer
 on-top of a given well-known storage
 subsystem hosting a content structure adhering to an
 [element mapping specification (layer 3 of this specification)](../layer3/README.md)
-for this kind of storage backend (e.g. OCI).
+for this kind of storage backend (e.g. OCI). Both, the backend technology as
+well as the mapping scheme is expressed by the [*Repository Type*](../formats/types.md#repository-types)
 
 So, any tool or language binding can map an existing storage technology into an
 OCM repository view by implementing the
@@ -288,24 +289,13 @@ in the component descriptor:
 - **`type`** (required) *string*
 
   The [type of an artefact](../formats/types.md#artefact-types) uniquely specifies the
-  technical interpretation of an artefact, its kind, independent of its
+  logical interpretation of an artefact, its kind, independent of its
   concrete technical representation.
-
-  If there are different possible technical representation the [access method](#artefact-access)
-  returns the concrete format used for the returned blob.
-
-  For example, a helm chart (type `helmChart`) can be represented as
-  OCI artefact or helm chart archive. Nevertheless, the technical meaning is
-  to be a helm chart, even if represented as OCI image. The type `ociImage`
-  describes an object that can be used as container image. So, although the
-  technical representation might in both cases be an OCI image manifest, its
-  semantics and use case is completely different. This is expressed
-  by the chosen type of the artefact, which focuses on the semantics.
 
 - **`labels`** (optional) *[]label*
 
   A list of arbitrary labels described by a formal name with a globally
-  unique meaning (see [label structure](../formats/types.md#label-names)
+  unique meaning (see [label structure](../formats/types.md#label-names))
 
 - **`access`** (required) *access specification*
 
@@ -384,7 +374,9 @@ part of a [Component Version](#component-versions) is expressed by an
 It describes the [type](../formats/types.md#access-method-types) of
 the *access method* and the type-specific access path to the content in the
 [repository context](#repository-contexts) the component descriptor has been
-retrieved from.
+retrieved from. In a concrete execution environment the *Access Method Type*
+is mapped to a concrete access method implementation to execute the procedure
+to finally access the content of an artefact.
 
 The content of a described artefact is accessible by applying its
 global identity triple to the following procedure:

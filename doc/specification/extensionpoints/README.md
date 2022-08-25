@@ -1,8 +1,12 @@
 # 2.5 Extension Points for the Open Component Model Specification
 
 The specification described in the former sections open some
-extension points. Extension points are specifications, which are
-restricted to a minimum set of attributes typically including an arbitrary
+extension points.
+These are parts of the [OCM specification](../README.md), which may be extended
+by arbitrary variations. The specification just defines the meaning, syntax
+and or functional behaviour of such elements.
+The definition of specification description of such elements (if required) is
+restricted to a minimum set of attributes, typically including an arbitrary
 specification type attribute intended to be refined by dedicated type
 incarnations.
 
