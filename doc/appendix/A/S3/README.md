@@ -20,9 +20,9 @@ type: S3/v1
 Artefact namespaces/repositories of the API layer will be mapped to an 
 S3 bucket.
 
-Supported specification version is `v1`.
-
 ### Specification Versions
+
+Supported specification version is `v1`.
 
 #### Version `v1`
 

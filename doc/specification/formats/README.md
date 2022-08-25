@@ -1,5 +1,10 @@
 # 2.4 Names and Formats
 
+This section describes definitions for types of [extension points](../extensionpoints/README.md)
+provided by the [Open Component Model](../../../README.md). This includes
+conventions for used type names as well as constraints and definitions
+for type-specific specification formats.
+
 2.4.1 [Types](types.md)
 - [Repository Types](types.md#repository-types)
 - [Artifact Types](types.md#artifact-types)

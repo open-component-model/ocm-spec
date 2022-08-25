@@ -158,6 +158,11 @@ result of such a signing process is stored along with the component version.
 an artifact described by a [component version](#compvers) containing sources
 used to generate one or more of the described [resources](#resource).
 
+#### Specification Format
+a format definition for the specification of attributes for
+dedicated variants of some [extension points](#ext). See [access methods](#accmeth),
+[repository types](#repotype), and [labels](#label).
+
 ## T
 
 #### [Type](specification/formats/types.md)<a id="type"/>

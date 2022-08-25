@@ -25,9 +25,9 @@ type: CommonTransportFormat/v1
 An OCM repository view will be mapped to a
 filesystem-based representation according to the [Common Transport Format specification](../../common/formatspec.md#common-transport-format).
 
-Supported specification version is `v1`.
-
 ### Specification Versions
+
+Supported specification version is `v1`.
 
 #### Version `v1`
 
