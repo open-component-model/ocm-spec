@@ -73,6 +73,12 @@ describe an aggregation relationship..
 
 ## D
 
+#### [Denotation](specification/denotations/README.md)<a id="denotation"/>
+the possibility to describe identities of [components](#component), 
+[component versions](#compvers),
+[repositories](#comprep) in form of a sole string representation.
+
+
 #### Digest <a id="digest"/>
 see [artifact digest](#artdigest) or [component version digest](#compdigest).
 
