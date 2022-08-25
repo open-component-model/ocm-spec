@@ -2,14 +2,41 @@
 
 Types are used to type variants for [extension points](../extensionpoints/README.md)
 provided by the [Open Component Model](../../../README.md).
-It is used to describe the intended dedicated technical interpretation
+It is used to describe the intended dedicated logical or technical interpretation
 of the described element.
+
+- [Repository Types](#repository-types)
+
+  [OCM repositories](../elements/README.md#repositories) can be described by a
+  repository specification. The repository
+  type determines the field structure of the specification and its technical
+  access procedure.
+
+- [Access Method Types](#access-method-types)
+
+  [Access methods](../elements/README.md#artifact-access) describe dedicated
+  technical ways how to access the blob
+  content of an [artifact](../elements/README.md#artifacts) described by an
+  [OCM component descriptor](../formats/compdesc/README.md). It is evaluated in
+  the storage context used to read the component descriptor containing the
+  access method description.
+
+- [Artifact Types](#artifact-types)
+
+  The OCM component descriptor describes a set of resources, their type and
+  meaning with attached meta and access information.
+
+- [Label Names](#label-names)
+
+  The OCM component descriptor itself, resources, sources  and component version
+  references can be enriched by labels capable to carry values with an
+  arbitrary structure.
 
 ## Repository Types
 
-Any [repository](../elements/README.md#repositories) that can be used to store
-content according to the [Open Component Model](../../../README.md) must be
-describable by a formal repository specification.
+  Any [repository](../elements/README.md#repositories) that can be used to store
+  content according to the [Open Component Model](../../../README.md) must be
+  describable by a formal repository specification.
 
 Such a specification is usable by a language binding supporting
 this kind of specification to gain access to this repository.
@@ -55,71 +82,6 @@ There are two kinds of types:
   ```
   [a-z][a-zA-Z0-9].<DNS domain name>
   ```
-  
-## Artifact Types
-
-The [OCM component version](../elements/README.md#component-versions) describes
-a set of [artifacts](../elements/README.md#artifacts), their type and
-meaning with attached meta, and access information.
-
-The formal type of an artifact uniquely specifies the
-logical interpretation of an artifact, its kind, independent of its
-concrete technical representation.
-
-If there are different possible technical representation the
-[access method](../elements/README.md#artifact-access)
-returns the concrete format given by a media type used for the returned blob.
-
-For example, a helm chart (type `helmChart`) can be represented as
-OCI artifact or helm chart archive. Nevertheless, the technical meaning is
-to be a helm chart, even if represented as OCI image. The type `ociImage`
-describes an object that can be used as container image. So, although the
-technical representation might in both cases be an OCI image manifest, its
-semantics and use case is completely different. This is expressed
-by the chosen type of the artifact, which focuses on the semantics.
-
-The kind and logical interpretation of a technical artifact is basically
-encoded into a dedicated simple string.
-Because the interpretation of an artifact must be the same, independent
-of the provisioning and consumption environment of a component version,
-the artifact type must be globally unique.
-The OCM defines a dedicated naming scheme to guarantee this uniqueness.
-
-There are two kinds of types:
-- centrally defined type names managed by the OCM organization
-
-  These types use flat names following a camel case scheme with
-  the first character in lower case (for example `ociArtefact`).
-
-  Their format is described by the following regexp:
-
-  ```regex
-  [a-z][a-zA-Z0-9]*
-  ```
-
-- vendor specific types
-
-  any organization using the open component model may define dedicated types on
-  their own. Nevertheless, the meaning of those types must be defined.
-  Basically there may be multiple such types provided by different organizations
-  with the same meaning. But we strongly encourage organizations to share
-  such types instead of introducing new type names.
-
-  To support a unique namespace for those type names vendor specific types
-  have to follow a hierarchical naming scheme based on DNS domain names.
-  Every type name has to be preceded by a DNS domain owned by the providing
-  organization (for example `landscaper.gardener.cloud/blueprint`).
-  The local type must follow the above rules for centrally defined type names
-  and is appended, separated by a slash (`/`).
-
-  So, the complete pattern looks as follows:
-
-  ```
-  <DNS domain name>/[a-z][a-zA-Z0-9]*
-  ```
-
-The actually defined central types with their meaning and format can be
-found in [appendix E](../../appendix/E/README.md).
 
 ## Access Method Types
 
@@ -216,6 +178,71 @@ and the blob digest to be able to access the blob.
 
 Centrally defined access methods with their specification versions
 can be found in [appendix B](../../appendix/B/README.md).
+
+## Artifact Types
+
+The [OCM component version](../elements/README.md#component-versions) describes
+a set of [artifacts](../elements/README.md#artifacts), their type and
+meaning with attached meta, and access information.
+
+The formal type of an artifact uniquely specifies the
+logical interpretation of an artifact, its kind, independent of its
+concrete technical representation.
+
+If there are different possible technical representation the
+[access method](../elements/README.md#artifact-access)
+returns the concrete format given by a media type used for the returned blob.
+
+For example, a helm chart (type `helmChart`) can be represented as
+OCI artifact or helm chart archive. Nevertheless, the technical meaning is
+to be a helm chart, even if represented as OCI image. The type `ociImage`
+describes an object that can be used as container image. So, although the
+technical representation might in both cases be an OCI image manifest, its
+semantics and use case is completely different. This is expressed
+by the chosen type of the artifact, which focuses on the semantics.
+
+The kind and logical interpretation of a technical artifact is basically
+encoded into a dedicated simple string.
+Because the interpretation of an artifact must be the same, independent
+of the provisioning and consumption environment of a component version,
+the artifact type must be globally unique.
+The OCM defines a dedicated naming scheme to guarantee this uniqueness.
+
+There are two kinds of types:
+- centrally defined type names managed by the OCM organization
+
+  These types use flat names following a camel case scheme with
+  the first character in lower case (for example `ociArtefact`).
+
+  Their format is described by the following regexp:
+
+  ```regex
+  [a-z][a-zA-Z0-9]*
+  ```
+
+- vendor specific types
+
+  any organization using the open component model may define dedicated types on
+  their own. Nevertheless, the meaning of those types must be defined.
+  Basically there may be multiple such types provided by different organizations
+  with the same meaning. But we strongly encourage organizations to share
+  such types instead of introducing new type names.
+
+  To support a unique namespace for those type names vendor specific types
+  have to follow a hierarchical naming scheme based on DNS domain names.
+  Every type name has to be preceded by a DNS domain owned by the providing
+  organization (for example `landscaper.gardener.cloud/blueprint`).
+  The local type must follow the above rules for centrally defined type names
+  and is appended, separated by a slash (`/`).
+
+  So, the complete pattern looks as follows:
+
+  ```
+  <DNS domain name>/[a-z][a-zA-Z0-9]*
+  ```
+
+The actually defined central types with their meaning and format can be
+found in [appendix E](../../appendix/E/README.md).
 
 ## Label Names
 
