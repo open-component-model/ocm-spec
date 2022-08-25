@@ -37,20 +37,20 @@ can be found in [appendix A](../../appendix/A/README.md)
 ## Access Specifications
 
 Access specifications are used to describe the technical access path
-of the content of [artefacts](../elements/README.md#artefacts) described by a
+of the content of [artifacts](../elements/README.md#artifacts) described by a
 [component version](../elements/README.md#component-versions).
 Every access specification has a formal type and type specific attributes.
 The type uniquely specifies the technical procedure how to use the
 attributes and the [repository context](../elements/README.md#repository-contexts) of
 the component descriptor containing the access specification
-to retrieve the content of the artefact.
+to retrieve the content of the artifact.
 
-There are basically two ways an artefact blob can be stored:
-- `external` access methods allow referring to artefacts in any other
+There are basically two ways an artifact blob can be stored:
+- `external` access methods allow referring to artifacts in any other
   technical repository as long as the access type is supported by the
   used tool set.
 - `internal` access methods ([`localBlob`](../../appendix/B/localBlob.md)).
-  are used to store an artefact together with the component descriptor in an
+  are used to store an artifact together with the component descriptor in an
   OCM repository. These methods must be supported by all OCM repository
   implementations.
 

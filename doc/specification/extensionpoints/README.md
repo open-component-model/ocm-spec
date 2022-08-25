@@ -20,7 +20,7 @@ There are two different kinds of extension points:
 - [functional](functional.md) extension points offer the possibility to
   enrich an implementation of the Open Component Model by technology specific
   parts to support more technology environments, like storage backends for
-  the model information or artefacts described by the model.
+  the model information or artifacts described by the model.
 - [semantic](semantic.md) extension points offer the possibility to
   describe the semantic and/or structure of an element by arbitrary types not
   statically defined as part of the Open Component Model itself.

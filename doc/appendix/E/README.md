@@ -1,4 +1,4 @@
-# E. Artefact Types
+# E. Artifact Types
 
 [1 ociImage](ociImage.md) <br>
 [2 helmChart](helmChart.md) <br>

@@ -21,7 +21,7 @@ The access section looks as follows:
 |  | Value | Description |
 | --- | --- | --- |
 | type | ociRegistry | |
-| imageReference | name followed by tag or digest | reference to the OCI artefact, whereby name, tag and digest are specified [here](https://github.com/opencontainers/distribution-spec/blob/main/spec.md#pull) | 
+| imageReference | name followed by tag or digest | reference to the OCI artifact, whereby name, tag and digest are specified [here](https://github.com/opencontainers/distribution-spec/blob/main/spec.md#pull) | 
 
 An example for a reference to an OCI container image stored in an OCI registry look as follows: 
 

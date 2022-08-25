@@ -56,33 +56,33 @@ There are two kinds of types:
   [a-z][a-zA-Z0-9].<DNS domain name>
   ```
   
-## Artefact Types
+## Artifact Types
 
 The [OCM component version](../elements/README.md#component-versions) describes
-a set of [artefacts](../elements/README.md#artefacts), their type and
+a set of [artifacts](../elements/README.md#artifacts), their type and
 meaning with attached meta, and access information.
 
-The formal type of an artefact uniquely specifies the
-logical interpretation of an artefact, its kind, independent of its
+The formal type of an artifact uniquely specifies the
+logical interpretation of an artifact, its kind, independent of its
 concrete technical representation.
 
 If there are different possible technical representation the
-[access method](../elements/README.md#artefact-access)
+[access method](../elements/README.md#artifact-access)
 returns the concrete format given by a media type used for the returned blob.
 
 For example, a helm chart (type `helmChart`) can be represented as
-OCI artefact or helm chart archive. Nevertheless, the technical meaning is
+OCI artifact or helm chart archive. Nevertheless, the technical meaning is
 to be a helm chart, even if represented as OCI image. The type `ociImage`
 describes an object that can be used as container image. So, although the
 technical representation might in both cases be an OCI image manifest, its
 semantics and use case is completely different. This is expressed
-by the chosen type of the artefact, which focuses on the semantics.
+by the chosen type of the artifact, which focuses on the semantics.
 
-The kind and logical interpretation of a technical artefact is basically
+The kind and logical interpretation of a technical artifact is basically
 encoded into a dedicated simple string.
-Because the interpretation of an artefact must be the same, independent
+Because the interpretation of an artifact must be the same, independent
 of the provisioning and consumption environment of a component version,
-the artefact type must be globally unique.
+the artifact type must be globally unique.
 The OCM defines a dedicated naming scheme to guarantee this uniqueness.
 
 There are two kinds of types:
@@ -123,15 +123,15 @@ found in [appendix E](../../appendix/E/README.md).
 
 ## Access Method Types
 
-[Access methods](../elements/README.md#artefact-access) describe (and finally
+[Access methods](../elements/README.md#artifact-access) describe (and finally
 implement) dedicated technical ways how to
-access the blob content of an [artefact](../elements/README.md#artefacts)
+access the blob content of an [artifact](../elements/README.md#artifacts)
 described by an [OCM component descriptor](../elements/README.md#component-descriptor).
 
 They are an integral part of the [Open Component Model](../../../README.md). They always
 provide the link between a component version stored in some repository context,
 and the technical access of the described resources applicable for this
-context. Therefore, the access specification as well as the method of an artefact
+context. Therefore, the access specification as well as the method of an artifact
 may change when component versions are transported among repository contexts.
 
 In a dedicated context all used access methods must be known by the used tool
@@ -142,7 +142,7 @@ their implementations to support own local environments.
 Because of this extensibility, the names of access methods must be globally
 unique.
 
-Like for [artefact types](#artefact-types), there are two flavors
+Like for [artifact types](#artifact-types), there are two flavors
 of method names:
 
 - centrally provided access methods
@@ -206,10 +206,10 @@ Examples:
 
 If no version is specified, implicitly the version `v1` is assumed.
 
-The access method type is part of the access specification of an artefact
+The access method type is part of the access specification of an artifact
 in the component descriptor. The access method type may define
 additional specification attributes required to finally identify the
-concrete access path to the artefact blob.
+concrete access path to the artifact blob.
 
 For example, the access method `ociBlob` requires the OCI repository reference
 and the blob digest to be able to access the blob.
@@ -238,7 +238,7 @@ the set of labels must be extensible.
 Because of this extensibility, the names of labels must be globally
 unique, also.
 
-Like for [artefact types](#artefact-types) there are two flavors
+Like for [artifact types](#artifact-types) there are two flavors
 of label names:
 
 - labels with a predefined meaning for the component model itself.

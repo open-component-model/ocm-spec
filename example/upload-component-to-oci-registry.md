@@ -118,7 +118,7 @@ We can sign before we upload the component, but we can sign it after upload too.
 ```bash
 ❯ ocm sign componentversions -s ww-ocm-sig -K private-key.pem -k public-key.pem ./hello-world-component
 applying to version "github.com/yitsushi/hello-world:1.0.7"...
-  resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtifactDigest/v1]
+  resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtefactDigest/v1]
 successfully signed github.com/yitsushi/hello-world:1.0.7 (digest sha256:0452632bf29b38bc8887387019f87d459a9e88c517b744f9e5ad807bc672c479)
 ```
 
@@ -199,7 +199,7 @@ pushing 1.0.7
     --repo OCIRepository::ghcr.io/sap \
     github.com/yitsushi/hello-world:1.0.7
 applying to version "github.com/yitsushi/hello-world:1.0.7"...
-  resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtifactDigest/v1]
+  resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtefactDigest/v1]
 successfully signed github.com/yitsushi/hello-world:1.0.7 (digest sha256:0452632bf29b38bc8887387019f87d459a9e88c517b744f9e5ad807bc672c479)
 ```
 
@@ -212,7 +212,7 @@ successfully signed github.com/yitsushi/hello-world:1.0.7 (digest sha256:0452632
     --repo OCIRepository::ghcr.io/sap \
     github.com/yitsushi/hello-world:1.0.7
 applying to version "github.com/yitsushi/hello-world:1.0.7"...
-  resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtifactDigest/v1]
+  resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtefactDigest/v1]
 successfully verified github.com/yitsushi/hello-world:1.0.7 (digest sha256:0452632bf29b38bc8887387019f87d459a9e88c517b744f9e5ad807bc672c479)
 ```
 
@@ -231,7 +231,7 @@ transferring version "github.com/yitsushi/hello-world:1.0.7"...
 
 ```bash
 ❯ tar ztf ctf.tgz
-artefact-index.json
+artifact-index.json
 blobs
 blobs/sha256.2eae2829e60c287ac2dabd3daed4fed9a45a021ebe0c0ff29e9db20b160f3b53
 blobs/sha256.4e972b297e47151dacd2582b9acaf9a94cda0203fe148e81d4e5f59cd7b8710b
@@ -245,6 +245,6 @@ blobs/sha256.d3418290d87f05f52c1801557c00d3e43eb0bcf1bb960331b3967c639541582f
     --signature ww-ocm-sig --public-key=public-key.pem \
     ./ctf.tgz
 applying to version "github.com/yitsushi/hello-world:1.0.7"...
-  resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtifactDigest/v1]
+  resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtefactDigest/v1]
 successfully verified github.com/yitsushi/hello-world:1.0.7 (digest sha256:0452632bf29b38bc8887387019f87d459a9e88c517b744f9e5ad807bc672c479)
 ```

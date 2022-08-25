@@ -95,7 +95,7 @@ A *Component Repository* MUST provide a method to list the uploaded *Component D
 
 ### DeleteComponentDescriptor
 
-A *Component Descriptor* defines the artefacts of a component version and many processes rely on this information.
+A *Component Descriptor* defines the artifacts of a component version and many processes rely on this information.
 Therefore, *Component Descriptors* uploaded to a *Component Repository* SHOULD be immutable. Nevertheless, a
 *Component Repository* MAY provide a method to delete *Component Descriptors*.
 

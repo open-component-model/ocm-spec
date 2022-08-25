@@ -3,24 +3,24 @@
 
 The *Open Component Model (OCM)* is an open standard for a technology-agnostic
 and machine-readable format to describe software-bill-of-deliveries (SBOD) with
-the focus on the software artefacts which have to be delivered for
+the focus on the software artifacts which have to be delivered for
 software products. 
 
 It is explicitly
 not meant to describe the complete bill of material of a software product
-in relation to the packages those delivery artefacts are composed of.
+in relation to the packages those delivery artifacts are composed of.
 Compared with other standards like [CyclonDX](https://cyclonedx.org/), this
 makes OCM a simpler model with more detailed and unambiguous specifications
 with respect to delivery and deployment related aspects like transport
-and signing of software artefacts. Further information about artefacts (like
+and signing of software artifacts. Further information about artifacts (like
 typical SBOMs) can be added using labels, additional resources or even
 component versions.
 
-It is a completely technology-agnostic model to describe artefacts and
+It is a completely technology-agnostic model to describe artifacts and
 the technical access to their content. Technology-agnostic means:
 
-- it can describe any artefact regardless of its technology
-- the artefacts can basically be stored using any storage backend technology or
+- it can describe any artifact regardless of its technology
+- the artifacts can basically be stored using any storage backend technology or
   repository
 - the model information can be stored using any storage backend technology or
   repository
@@ -31,7 +31,7 @@ does not define an own authentication scheme, it just uses the ones defined
 by the underlying storage technologies.
 
 The only constraint for using backend storage technologies is, that there must be
-- an implementation for accessing artefacts in the desired repository technology
+- an implementation for accessing artifacts in the desired repository technology
   and map them to a blob format
 - a specification for a [mapping scheme](doc/specification/mapping/README.md)
   describing how to map the elements of the component model to the supported
@@ -40,17 +40,17 @@ The only constraint for using backend storage technologies is, that there must b
   schemes for the storage scenarios used in a dedicated environment.
 
 By providing a globally unique identity scheme for component versions and
-artefacts,
+artifacts,
 OCM could be used in the whole software lifecycle management, from build to
 compliance, to deployment.
 It can be used as a common basis and lingua franca to exchange, access and
-transport delivery artefacts and their grouping in components as well as
-information about these artefacts between different tools, processes and even
+transport delivery artifacts and their grouping in components as well as
+information about these artifacts between different tools, processes and even
 fenced environments.
 
 To support fenced and/or private repository landscapes used to store the
-artefact content, OCM provides a mechanism to transparently adapt access
-information for artefacts during a transport step. Applications
+artifact content, OCM provides a mechanism to transparently adapt access
+information for artifacts during a transport step. Applications
 accessing the component information in a dedicated environment always 
 get the location specific access information valid for the actual environment. 
 

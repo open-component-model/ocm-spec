@@ -40,7 +40,7 @@ This is especially true for restricted or private clouds, in which it is usually
 their original source location (due to restricted internet access), leading to the fact that artifacts need to be
 transported into these environments. This local deployment scenario requires that software components must clearly
 separate their ID from the location of their technical artifacts, so that this technical location may change, without
-changing the ID. At the same time the environment-local location of the artefacts must be retrievable using this identity.
+changing the ID. At the same time the environment-local location of the artifacts must be retrievable using this identity.
 
 At its heart, the model has to be technology-agnostic, so that not only modern containerized cloud software,
 but also legacy software is supported, out-of-the-box. It simply has to be acknowledged that companies are not able to
@@ -87,13 +87,13 @@ The OCM provides a common standard for the coupling of
 - transport
 - deployment or
 - other lifecycle-management aspects
-based on a well-defined description of software-artefacts, their types and the access to their physical content.
+based on a well-defined description of software-artifacts, their types and the access to their physical content.
 
 In that sense, the OCM provides the basis to
 - exchange information about software in a controlled manner by defining a location- and technology-agnostic reference
   framework to identify software artifacts
 - enable access to local technical artifacts via these IDs
-- verify the authenticity of the artefact content found in an actual environment.
+- verify the authenticity of the artifact content found in an actual environment.
 
 If software installations are described using the OCM, e.g. a scanning tool could use this to collect all technical
 artifacts it needs to check and store findings under the globally unique and location-agnostic identities provided by the model.
@@ -107,7 +107,7 @@ a software installation is available.
 
 The identity scheme provided by the OCM acts as some kind of Lingua Franca, enabling
 a tool ecosystem to describe, store and exchange information even across environments without
-loosing its meaning in relation to the described software artefacts and groupings.
+loosing its meaning in relation to the described software artifacts and groupings.
 
 The core OCM does not make any assumptions about the
 

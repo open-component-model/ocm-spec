@@ -2,7 +2,7 @@
 
 2.4.1 [Types](types.md)
 - [Repository Types](types.md#repository-types)
-- [Artefact Types](types.md#artefact-types)
+- [Artifact Types](types.md#artifact-types)
 - [Access Method Types](types.md#access-method-types)
 - [Label Names](types.md#label-names)
 
