@@ -202,7 +202,7 @@ Example (pretty printed for readability): *TODO*: update
 
 As described, resources have a digest field to store the content hash. Different resource types will use a different normalisationAlgorithm:
 
- - `ociArtifactDigest/v1`: uses the hash of the manifest of an oci artifact
+ - `ociArtefactDigest/v1`: uses the hash of the manifest of an oci artifact
  - `genericBlobDigest/v1`: uses the hash of the blob
 
 ## Sign Algorithm
