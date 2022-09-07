@@ -5,6 +5,7 @@
 2.3 [Storage backend Mappings](mapping/README.md)<br>
 2.4 [Formats and Names](formats/README.md)<br>
 2.5 [Extension Points](extensionpoints/README.md)<br>
+2.6 [Transport](transport/README.md)<br>
 
 This specification is divided into three parts:
 
@@ -15,7 +16,7 @@ This specification is divided into three parts:
   how the model elements are mapped to elements of an underlying persistence layer
   (for example and OCI registry)
 
-<div align="center"> 
+<div align="center">
 <img src="ocmspecstruct.png" alt="Structure of OCM Specification" width="800"/>
 </div>
 
@@ -44,11 +45,11 @@ storage elements. This will then be encapsulated behind a common binding
 of an interpretation of the layer 1 and 2 specification for the dedicated client
 environment.
 
-An implementation of this layer for a dedicated storage technology MUST 
+An implementation of this layer for a dedicated storage technology MUST
 implement this mapping by supporting the mandatory abstract model operations
 defined in layer 2. It SHOULD implement the optional operations, also.
 
-<div align="center"> 
+<div align="center">
 <img src="ocmaltbind.png" alt="Alternatives for Language Bindings" width="800"/>
 </div>
 
