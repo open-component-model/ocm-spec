@@ -1,64 +1,46 @@
+# Open Component Model (OCM)
 
-## Open Component Model (OCM)
+## Overview
 
-The *Open Component Model (OCM)* is an open standard for a technology-agnostic
-and machine-readable format to describe software-bill-of-deliveries (SBOD) with
-the focus on the software artifacts which have to be delivered for
-software products. 
+The *Open Component Model (OCM)* is an open standard to describe software-bill-of-deliveries (SBOD). OCM is a technology-agnostic and machine-readable format focused on the software artifacts that must be delivered for software products.
 
-It is explicitly
-not meant to describe the complete bill of material of a software product
-in relation to the packages those delivery artifacts are composed of.
-Compared with other standards like [CyclonDX](https://cyclonedx.org/), this
-makes OCM a simpler model with more detailed and unambiguous specifications
-with respect to delivery and deployment related aspects like transport
-and signing of software artifacts. Further information about artifacts (like
-typical SBOMs) can be added using labels, additional resources or even
+By providing a globally unique identity scheme, OCM can be employed throughout the entire software lifecycle management process, from build to compliance, to deployment.
+
+It can be used as a common basis and lingua franca for the exchange, access and
+transport of delivery artifacts between different tools, processes and environments.
+
+To support fenced or otherwise restricted environments, OCM provides a mechanism to transparently adapt access information for artifacts during transport. This means that applications accessing the component information in a particular environment always receive location specific access information that is valid for their own environment.
+
+OCM is a technology-agnostic model to describe artifacts and the specific means by which to access their content. In this context we understand technology-agnostic to mean the following:
+
+- the model can describe any artifact regardless of its technology
+- artifacts can be stored using any storage backend technology or repository
+- the model information can be stored using any storage backend technology or repository
+
+## Comparison with Software-Bill-of-Materials
+
+OCM is (explicitly) not meant to describe the complete bill of materials of a software product,
+in relation to the packages those delivery artifacts are composed of. This makes OCM a simpler model in comparison with standards such as [CycloneDX](https://cyclonedx.org/). OCM provides detailed and unambiguous specifications with respect to delivery and deployment related aspects such as transport and signing of software artifacts. Further information about artifacts (like typical SBOMs) can be added using labels, additional resources or even
 component versions.
 
-It is a completely technology-agnostic model to describe artifacts and
-the technical access to their content. Technology-agnostic means:
+## Storage Technology
 
-- it can describe any artifact regardless of its technology
-- the artifacts can basically be stored using any storage backend technology or
-  repository
-- the model information can be stored using any storage backend technology or
-  repository
+The Open Component Model is an interpretation layer on top of existing storage technologies and is not itself a repository technology. Therefore, it does not define an authentication scheme but, rather, uses those defined by the underlying storage technology.
 
-The Open Component Model is just an interpretation layer on top of
-existing storage technologies and not an own technical repository. Therefore, it
-does not define an own authentication scheme, it just uses the ones defined
-by the underlying storage technologies.
-
-The only constraint for using backend storage technologies is, that there must be
-- an implementation for accessing artifacts in the desired repository technology
-  and map them to a blob format
+To use a backend storage technology as an OCM repository it is necessary to provide:
+- an implementation for accessing artifacts in the desired backend and mapping them to a blob format
 - a specification for a [mapping scheme](doc/specification/mapping/README.md)
-  describing how to map the elements of the component model to the supported
-  elements of the backend technology
+  describing how to map the elements of the Open Component Model to the supported
+  elements of the backend storage technology
 - an [implementation](doc/specification/operations/README.md) of all the mapping
-  schemes for the storage scenarios used in a dedicated environment.
+  schemes for the storage scenarios used in a dedicated environment
 
-By providing a globally unique identity scheme for component versions and
-artifacts,
-OCM could be used in the whole software lifecycle management, from build to
-compliance, to deployment.
-It can be used as a common basis and lingua franca to exchange, access and
-transport delivery artifacts and their grouping in components as well as
-information about these artifacts between different tools, processes and even
-fenced environments.
-
-To support fenced and/or private repository landscapes used to store the
-artifact content, OCM provides a mechanism to transparently adapt access
-information for artifacts during a transport step. Applications
-accessing the component information in a dedicated environment always 
-get the location specific access information valid for the actual environment. 
-
+## Specification
 
 1 [Introduction](doc/introduction/README.md)
 
 2 [OCM Specification](doc/specification/README.md)
-  
+
 2.1 [OCM Elements](doc/specification/layer1/README.md) <br>
 2.2 [OCM Operations](doc/specification/operations/README.md) <br>
 2.3 [Storage Backend Mappings](doc/specification/mapping/README.md) <br>
@@ -88,5 +70,11 @@ is provided, which supports the common environment and access types for objects
 in the Kubernetes ecosystem. A (Go) library provides a framework for
 adding further implementations of the [model extension points](doc/appendix/README.md) under the hood
 of a generic OCM API, and a [command line tool](https://github.com/gardener/ocm/blob/main/docs/reference/ocm.md)
-based on this library supports general operations, like composing, viewing, 
+based on this library supports general operations, like composing, viewing,
 transporting and signing of component versions.
+
+## Contributing
+
+Code contributions, feature requests, bug reports, and help requests are very welcome.
+
+OCM follows the [CNCF Code of Conduct](https://github.com/cncf/foundation/blob/main/code-of-conduct.md).
