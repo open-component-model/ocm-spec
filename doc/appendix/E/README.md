@@ -15,9 +15,3 @@ For centrally defined artifact types, there might be special support in the
 standard OCM library and tool set. For example, there is a dedicated downloader
 for helm charts providing the filesystem helm chart format regardless of
 the storage method and supported media type.
-
-Besides these centrally defined types, some typically used vendor specific types are:
-
-- [`landscaper.gardener.cloud/blueprint`](blueprint.md) an installation description for the landscaper tool
-- [`toiPackage`](toiPackage.md) a package for the Tiny OCM Installation Framework.
-- [`toiExecutor`](toiExecutor.md) an executor for the Tiny OCM Installation Framework
