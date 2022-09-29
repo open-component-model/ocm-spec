@@ -7,8 +7,18 @@ components between locations optionally including all their
 references. Based on a file-system it can be used to transport
 content without direct internet access. A tar file of this file
 structure will be called the transport archive of the OCI artifacts.
-If offline access is not required a transport archive can also be stored
-in an OCI registry.
+If offline access is not required the CTF can also be stored
+in an OCI registry as an additional repository view. You can transport between any kind of repository
+view as source and sink:
+
+```
+    CTF -> OCI
+    OCI -> CTF
+    CTF -> CTF
+    OCI -> OCI
+    <any supported type> -> <any supported type>
+```
+
 
 There are three different technical flavors:
 
@@ -20,60 +30,9 @@ All those technical representations use the same file formats and directory stru
 
 # Format
 
-## File System Structure
+The common transport format is described in detail in the [Appendix Common Transport Format](../../appendix/common/formatspec.md)
 
-The file system structure is a directory containing:
-
-- an `artifact-descriptor.json` file
-- and a `blobs` directory.
-
-The `blobs` directory contains the manifest, config and the layer files
-of all OCI artifacts under consideration in one flat file  ist. In case
-of multi arch artifacts, the `blobs` directory can also contain index
-manifest files.  Every file has a filename according to its
-[digest](https://github.com/opencontainers/image-spec/blob/main/descriptor.md#digests), where the algorithm separator character is replaced by a dot (".").
-
-The `artifact-descriptor.json` contains a list of all manifests with their tags.
-
-## Transport Format of a Component
-
-We describe a file system structure that represents one or more components.
-A tar file of this file structure will be called the transport archive of the components.
-
-In a first step, all references to external resources are converted to
-resources of type `localBlob`. This means two things: firstly, the resource
-in the component descriptor must be adjusted, and secondly, a local blob
-must be added. We use the transport archive of the resource as local blob.
-
-We have already defined a representation of components as OCI artifacts.
-Therefore, we can use for one or more component the same transport format
-as for OCI artifacts.
-
-Note that the transformation of external resources increases the number of
-layers. Hence, the manifest of the original component (in its OCI
-representation) and the manifest in the transport format are different.
-
-```text
-artefact-archive
-├── artefact-descriptor.json
-└── blobs
-    ├── sha.123... (manifest.json)
-    ├── sha.234... (config.json)
-    ├── sha.345... (component descriptor)
-    ├── sha.456... (local blob of resource)
-    └── sha.567... (local blob of resource)
-```
-
-The component version appears in the artefact-index.json as a tag
-associated to the digest of the component descriptor:
-
-```json
-{
-  "manifests": [
-    { "digest": "sha:345...", "tags": ["COMPONENT_VERSION"] }
-  ]
-}
-```
+(../appendix/common/formatspec.md)
 
 ## Component Descriptor of a Transport Archive
 When a transport between a source and a destination repository happens the component descriptor gets
