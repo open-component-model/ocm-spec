@@ -1,6 +1,6 @@
-$id: 'https://gardener.cloud/schemas/component-descriptor-v2'
+$id: 'https://ocm.software/schemas/component-descriptor-v2'
 $schema: 'https://json-schema.org/draft/2020-12/schema'
-description: 'Gardener Component Descriptor v2 schema'
+description: 'Open Component Model v2 schema'
 definitions:
   meta:
     type: 'object'

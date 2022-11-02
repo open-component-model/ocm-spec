@@ -173,12 +173,12 @@ component:
     access:            # -> access information how to locate this resource
       globalAccess:
         digest: sha256:57563cb451bb79eb1c4bf0e71c66fdad1daf44fe55e128f12eae5f7e5496a188
-        mediaType: application/vnd.toi.gardener.cloud.package.v1+yaml
+        mediaType: application/vnd.toi.ocm.software.package.v1+yaml
         ref: ghcr.io/jensh007/ctf/component-descriptors/github.com/open-component-model/ocmechoserver
         size: 615
         type: ociBlob
       localReference: sha256:57563cb451bb79eb1c4bf0e71c66fdad1daf44fe55e128f12eae5f7e5496a188
-      mediaType: application/vnd.toi.gardener.cloud.package.v1+yaml
+      mediaType: application/vnd.toi.ocm.software.package.v1+yaml
       type: localBlob
     labels:            # -> labels on this resource as key-value pairs
     - name: commit
