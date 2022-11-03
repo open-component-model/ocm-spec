@@ -53,9 +53,6 @@ predict the future, apart from the fact that things will always change, especial
 adapt to future trends, without constantly affecting the processes and tools responsible for the core of the lifecycle
 management of software, is a must.
 
-**Todo: Describe why existing component models could not be used, why is our model better**
-**Todo: Add image**
-
 ## Scope
 
 Operating software installations/products, both for cloud and on-premises, covers many aspects:

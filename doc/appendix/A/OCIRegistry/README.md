@@ -74,8 +74,6 @@ This json file has one defined formal field:
   `application/vnd.ocm.software.component-descriptor.v2+yaml+tar`
 
 
-TODO: decide which media type to use for v3 descriptors.
-
 The descriptor layer contains a tar archive with at least a single file
 with the name `component-descriptor.yaml` containing the component descriptor of the
 component version. This file should always be the first file in the tar archive.
