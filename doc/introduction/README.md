@@ -1,3 +1,6 @@
+
+1.1 [Component Descriptor](01_component_descriptor.md)<br>
+1.2 [Component Repository](02_component_repository.md)<br>
 # 1 Introduction
 
 The definition, structure and management of software in larger enterprises often builds upon tools and processes, which

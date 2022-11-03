@@ -39,6 +39,9 @@ To use a backend storage technology as an OCM repository it is necessary to prov
 
 1 [Introduction](doc/introduction/README.md)
 
+1.1 [Component Descriptor](doc/introduction/01_component_descriptor.md)<br>
+1.2 [Component Repository](doc/introduction/02_component_repository.md)<br>
+
 2 [OCM Specification](doc/specification/README.md)
 
 2.1 [OCM Elements](doc/specification/elements/README.md) <br>
