@@ -1,9 +1,17 @@
 # C. Digest Calculation
 
+## Artifact Digest
+TODO
+## Component descriptor Digest
+
 ## Normalisation of the component-descriptor
 
 The normalisation of the component-descriptor describes the process of generating a normalised component-descriptor. A normalised component-descriptor is a subset of the component-descriptor containing signing-relevant properties only.igest before the normalisation, the process must be aborted if the digest mismatches the calculated digest for the entry. Such preexisting digest entries can NOT be trusted and they have to be calculated in the process.
 
+- based on JSON
+- map serializes as alphanumerically ordered list of fields (to define unique order)
+- field is map with two keys 'name', 'value'
+-
 ### Exclude Resource from Normalisation/Signing
 
 If a resource should not be part of the normalisation and later signing, the resource needs a special digest in the following format:
