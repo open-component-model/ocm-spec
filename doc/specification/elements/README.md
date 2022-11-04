@@ -7,18 +7,25 @@ in some kind of repository.
 This leads to the following major elements that must be specified
 as part of the Open Component Model specification
 
-- [Repositories](#repositories)
-- [Components](#components)
-- [Component Versions](#component-versions)
+- [2.1 Model Structure and Elements](#21-model-structure-and-elements)
+  - [Repositories](#repositories)
+  - [Components](#components)
+  - [Component Versions](#component-versions)
+    - [Component Descriptor](#component-descriptor)
+    - [Composing the Artifact Set](#composing-the-artifact-set)
     - [Identities](#identities)
     - [Labels](#labels)
     - [Artifacts](#artifacts)
-        - [Sources](#sources)
-        - [Resources](#resources)
-        - [Artifact Access](#artifact-access)
+      - [Sources](#sources)
+      - [Resources](#resources)
+      - [Artifact Access](#artifact-access)
     - [Aggregation](#aggregation)
-- [Signatures](#signatures)
-- [Repository Contexts](#repository-contexts)
+    - [Artifact References](#artifact-references)
+      - [Absolute Artifact References](#absolute-artifact-references)
+  - [Signatures](#signatures)
+        - [Digest Info](#digest-info)
+        - [Signature Info](#signature-info)
+  - [Repository Contexts](#repository-contexts)
 
 Those elements partly use further sub-level elements that are
 defined in the context of their usage.
@@ -32,7 +39,7 @@ So far, we don't define a repository API for a dedicated technical native
 instance of an OCM repository, because we want to use existing storage
 subsystems, without the need of running OCM specific servers (Nevertheless,
 such an API is still compatible with this specification and could be defined in
-the future). 
+the future).
 
 Therefore, a component repository is typically an interpretation layer
 on-top of a given well-known storage
@@ -72,7 +79,7 @@ Hereby the DNS domain plus optionally any number of leading name components MUST
 be owned by the provider of a component. For example, `github.com`, as DNS domain
 is shared by lots of organizations. Therefore, all component identities provided
 based on this DNS name, must include the owner prefix of the providing
-organization, e.g. `github.com/gardener`.
+organization, e.g. `github.com/my-org`.
 
 The component acts as a namespace to host multiple [*Component Versions*](#component-versions),
 which finally describe dedicated technical artifact sets, which describe the
@@ -230,7 +237,7 @@ attributes. Selecting all artifacts for a dedicated purpose is possible
 by selecting all artifacts with the appropriate `name` attribute, without the
 need of parsing an artificial structure imprinted on the name attribute.
 
-<div align="center"> 
+<div align="center">
 <img src="ocmidentity.png" alt="Identities" width="800"/>
 </div>
 
@@ -389,7 +396,7 @@ global identity triple to the following procedure:
   and [resource](#resources))
 - [apply](../operations/README.md#access-method-operations) the described [access method](#artifact-access)
 
-<div align="center"> 
+<div align="center">
 <img src="ocmresourceaccess.png" alt="Structure of OCM Specification" width="800"/>
 </div>
 
@@ -431,10 +438,10 @@ artifact hosting the relative reference.
 
 CompVers: `A:1.0.0`
 ```
-- Resources: 
+- Resources:
   - name: DEPLOYER
   - type: mySpecialDeploymentDescription
-- 
+-
 - References:
   - name: content
     component: B:1.0.0
@@ -490,7 +497,7 @@ the pair by a third value, a component version identity.
 
 </div>
 
-In a dedicated interpretation environment such a location-agnostic reference can again be 
+In a dedicated interpretation environment such a location-agnostic reference can again be
 transferred into a location-specific reference by adding a [repository-context](#repository-contexts).
 
 Such a reference can then be used to finally address the content of this artifact by the

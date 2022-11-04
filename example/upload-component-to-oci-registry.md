@@ -182,8 +182,8 @@ transferring version "github.com/yitsushi/hello-world:1.0.7"...
 INFO[0000] trying next host - response was http.StatusNotFound  host=ghcr.io
 INFO[0001] trying next host - response was http.StatusNotFound  host=ghcr.io
 ...adding component version...
-*** push application/vnd.gardener.cloud.cnudie.component-descriptor.v2+yaml+tar sha256:4e972b297e47151dacd2582b9acaf9a94cda0203fe148e81d4e5f59cd7b8710b: unknown-sha256:4e972b297e47151dacd2582b9acaf9a94cda0203fe148e81d4e5f59cd7b8710b
-*** push application/vnd.gardener.cloud.cnudie.component.config.v1+json sha256:2eae2829e60c287ac2dabd3daed4fed9a45a021ebe0c0ff29e9db20b160f3b53: unknown-sha256:2eae2829e60c287ac2dabd3daed4fed9a45a021ebe0c0ff29e9db20b160f3b53
+*** push application/vnd.ocm.software.component-descriptor.v2+yaml+ta sha256:4e972b297e47151dacd2582b9acaf9a94cda0203fe148e81d4e5f59cd7b8710b: unknown-sha256:4e972b297e47151dacd2582b9acaf9a94cda0203fe148e81d4e5f59cd7b8710b
+*** push application/vnd.ocm.software.component.config.v1+json sha256:2eae2829e60c287ac2dabd3daed4fed9a45a021ebe0c0ff29e9db20b160f3b53: unknown-sha256:2eae2829e60c287ac2dabd3daed4fed9a45a021ebe0c0ff29e9db20b160f3b53
 *** push application/vnd.oci.image.manifest.v1+json sha256:d3418290d87f05f52c1801557c00d3e43eb0bcf1bb960331b3967c639541582f: manifest-sha256:d3418290d87f05f52c1801557c00d3e43eb0bcf1bb960331b3967c639541582f
 pusher for ghcr.io/sap/component-descriptors/github.com/yitsushi/hello-world:1.0.7
 pushing 1.0.7

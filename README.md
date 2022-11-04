@@ -41,11 +41,11 @@ To use a backend storage technology as an OCM repository it is necessary to prov
 
 2 [OCM Specification](doc/specification/README.md)
 
-2.1 [OCM Elements](doc/specification/layer1/README.md) <br>
+2.1 [OCM Elements](doc/specification/elements/README.md) <br>
 2.2 [OCM Operations](doc/specification/operations/README.md) <br>
 2.3 [Storage Backend Mappings](doc/specification/mapping/README.md) <br>
 2.4 [Formats and Names](doc/specification/formats/README.md) <br>
-2.5 [Denotation Schemes](doc/specification/fdenotations/README.md) <br>
+2.5 [Denotation Schemes](doc/specification/denotations/README.md) <br>
 
 3 [Scenarios](doc/scenarios/README.md) <br>
 
@@ -65,11 +65,11 @@ and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119]
 
 ## Model Support
 
-Accompanying to this specification a ready-to-go [reference implementation](https://github.com/gardener/ocm)
+Accompanying to this specification a ready-to-go [reference implementation](https://github.com/open-component-model/ocm)
 is provided, which supports the common environment and access types for objects
 in the Kubernetes ecosystem. A (Go) library provides a framework for
 adding further implementations of the [model extension points](doc/appendix/README.md) under the hood
-of a generic OCM API, and a [command line tool](https://github.com/gardener/ocm/blob/main/docs/reference/ocm.md)
+of a generic OCM API, and a [command line tool](https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm.md)
 based on this library supports general operations, like composing, viewing,
 transporting and signing of component versions.
 

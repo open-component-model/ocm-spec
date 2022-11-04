@@ -95,7 +95,7 @@ The *component* field of a *Component Descriptor* has the following fields:
 
 ### Component Name and Version
 
-Every *Component Descriptor* has a name and version, also called component name and component version. Name and version 
+Every *Component Descriptor* has a name and version, also called component name and component version. Name and version
 are the identifier for a *Component Descriptor* and the component version described by it.
 
 ```
@@ -107,7 +107,7 @@ component:
 ```
 
 Component names reside in a global namespace. To avoid name conflicts component names MUST start with a valid domain
-name (as specified by [RFC-1034](https://www.rfc-editor.org/info/rfc1034), [RFC-1035](https://www.rfc-editor.org/info/rfc1035)) 
+name (as specified by [RFC-1034](https://www.rfc-editor.org/info/rfc1034), [RFC-1035](https://www.rfc-editor.org/info/rfc1035))
 followed by an optional URL path suffix (as specified by [RFC-1738](https://www.rfc-editor.org/info/rfc1738)).
 
 Examples are:
@@ -115,12 +115,12 @@ Examples are:
 - *github.com*
 - *github.com/pathToYourRepo*
 
-If no URL path suffix is specified, the domain MUST be possessed by the component owner. If a URL path suffix is 
-specified, the namespace started by the concatenation of domain and URL path suffix MUST be controlled by the 
+If no URL path suffix is specified, the domain MUST be possessed by the component owner. If a URL path suffix is
+specified, the namespace started by the concatenation of domain and URL path suffix MUST be controlled by the
 component owner.
 
-A component name SHOULD reference a location where the component’s resources (typically source 
-code, and/or documentation) are hosted. An example and recommended practise is using GitHub repository names for 
+A component name SHOULD reference a location where the component’s resources (typically source
+code, and/or documentation) are hosted. An example and recommended practise is using GitHub repository names for
 components on GitHub like *github.com/path-of-your-repo*.
 
 Component versions refer to specific snapshots of a component. A common scenario being the release of a component.
@@ -171,7 +171,7 @@ component:
     access:
       commit: e01326928b6f9825dba9fa530b8d4917f93194b0
       ref: refs/tags/v1.19.4
-      repoUrl: github.com/gardener/example-sources-1
+      repoUrl: github.com/my.org/example-sources-1
       type: github
       ...
 ```
@@ -211,7 +211,7 @@ Sources and resources declare through their access attribute a means to access t
 This is done by declaring an access type (for example an OCI Image Registry), which defines the protocol through which
 access is done. Depending on the access type, additional attributes are required (e.g. an OCI Image Reference).
 
-OCM specifies the format and semantics of particular access types for particular resources and sources later in this 
+OCM specifies the format and semantics of particular access types for particular resources and sources later in this
 specification.
 
 ### References to Components
@@ -236,10 +236,10 @@ component:
     version: v1.38.3
   - name: name-2
     componentName: .../component-name-2
-    version: v0.11.4 
+    version: v0.11.4
 ```
 
-As elaborated later in the context of *Component Repositories*, references to components do not need to declare an 
+As elaborated later in the context of *Component Repositories*, references to components do not need to declare an
 access attribute. The lookup is always done by their name and version.
 
 ### Identifier for Sources, Resources and Component References
@@ -256,7 +256,7 @@ for valid names are defined:
 Every *source*, *resource* or *componentReference* needs a unique identifier in a *Component Descriptor*.
 In particular situations the name and version are not sufficient, e.g. if docker images for different platform are included.
 Therefore, every entry has an additional optional field *extraIdentity* to resolve this problem, i.e. every entry
-MUST have a unique combination of *name*, *version*, *extraIdentity* and formal type (*source*, *resource* or 
+MUST have a unique combination of *name*, *version*, *extraIdentity* and formal type (*source*, *resource* or
 *componentReference*) within a *Component Descriptor*.
 
 An *extraIdentity* is a map, of key value pairs whereby:
@@ -287,9 +287,9 @@ component:
 
 ### Labels
 
-According to the [schema](component-descriptor-v2-schema.yaml) for the *Component Descriptor*, additional fields are 
-not allowed. This express application specific extensions, every entry in the *sources*, *resources* and 
-*componentReferences* fields, and the component itself may declare optional labels. 
+According to the [schema](component-descriptor-v2-schema.yaml) for the *Component Descriptor*, additional fields are
+not allowed. This express application specific extensions, every entry in the *sources*, *resources* and
+*componentReferences* fields, and the component itself may declare optional labels.
 
 Labels is a map, of key value pairs whereby:
 
@@ -308,15 +308,15 @@ component:
 
 ### Repository Contexts
 
-Every *Component Descriptor* has a field *repositoryContexts* containing an array of access information of 
-*Component Descriptor Repositories*, i.e. stores for *Component Descriptors* which are specified later. 
+Every *Component Descriptor* has a field *repositoryContexts* containing an array of access information of
+*Component Descriptor Repositories*, i.e. stores for *Component Descriptors* which are specified later.
 
 The array of access information describes the transport chain of a *Component Descriptor* through different
 *Component Descriptor Repositories*, whereby the last entry describes the current *Component Descriptor Repository*,
 in which the *Component Descriptor* is stored.
 
-The *repositoryContexts* are usually not specified manually in the *Component Descriptor*, but are rather set 
-automatically when a component version is uploaded to a *Component Repository*. 
+The *repositoryContexts* are usually not specified manually in the *Component Descriptor*, but are rather set
+automatically when a component version is uploaded to a *Component Repository*.
 
 
 
