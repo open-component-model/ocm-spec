@@ -182,3 +182,108 @@ signatures:
 The normalisation of the component-descriptor describes the process of generating a normalised component-descriptor. A normalised component-descriptor is a subset of the component-descriptor containing signing-relevant properties only. Excluding properties from signing allows operations like transport where certain properties (e.g. image references) will change but still ensure integrity.
 
 # Transport
+In some scenarios ist is required to transfer artifacts between different locations. For example:
+
+* deployments have to be performed in isolated environments without Internet access
+* replication between locations in different regions or environments, sometimes far away.
+
+For such scenarios it is useful to transfer delivered artifacts consistently.
+
+## Transport Format of OCI Artifacts
+
+Such transports are supported by definig a file system structure that represents one or more OCI artifacts.
+A tar file of this file structure will be called the transport archive of the OCI artifacts.
+
+> Clarify that the containing directory is not part of the tar file.
+
+The file system structure consists of a directory containing:
+
+- an `artifact-descriptor.json` file
+- and a `blobs` directory.
+
+The `blobs` directory contains the manifest, config and the layer files of all OCI artifacts under consideration
+in one flat file list. In case of multi arch artifacts, the `blobs` directory can also contain index manifest files.
+Every file has a filename according to its
+[digest](https://github.com/opencontainers/image-spec/blob/main/descriptor.md#digests),
+where the algorithm separator character is replaced by a dot (".").
+
+The `artifact-descriptor.json` contains a list of all manifests with their tags.
+
+The `artifact-descriptor.json`: is the entry point of the transport archive. From here the complete
+network of artifacts can be resolved.
+
+### By Value Transport
+For resources referenced in non-local locations it can be chosen whether to include them ("by value")
+or to keep them as references.
+
+In a first step, all references to external resources are converted to resources of type `localBlob`.
+This means two things: firstly, the resource in the component descriptor must be adjusted,
+and secondly, a local blob must be added. We use the transport archive of the resource as local blob.
+
+### Recursive Transport
+A transport archive can be created for a component descriptor with keeping references as references or
+including all references and the references of their references and so on (transitive closure).
+
+For deploying a full solution in an isolated environment a transport always has to be done recursively
+and by value.
+
+Note that the transformation of external resources increases the number of layers. Hence, the
+manifest of the original component (in its OCI representation) and the manifest in the transport
+format are different.
+
+```text
+artifact-archive
+├── artifact-descriptor.json
+└── blobs
+    ├── sha.123... (manifest.json)
+    ├── sha.234... (config.json)
+    ├── sha.345... (component descriptor)
+    ├── sha.456... (local blob / transport archive of a previously external resource)
+    └── sha.567... (local blob / transport archive of a previously external resource)
+```
+
+The component version appears in the archive-descriptor.json as a tag associated to the digest of the component
+descriptor:
+
+```json
+{
+  "manifests": [
+    { "digest": "sha:345...", "tags": ["COMPONENT_VERSION"] }
+  ]
+}
+```
+
+#### Example of a transport archive containing two artifacts
+
+```text
+transport-archive
+├── artifact-descriptor.json
+└── blobs
+    ├── sha256.111... (manifest.json of artifact 1)
+    ├── sha256.222... (config.json   of artifact 1)
+    ├── sha256.333... (layer         of artifact 1)
+    ├── sha256.444... (layer         of artifact 1)
+    ├── sha256.555... (manifest.json of artifact 2)
+    ├── sha256.666... (config.json   of artifact 2)
+    ├── sha256.777... (layer         of artifact 2)
+    └── sha256.888... (layer         of artifact 2)
+```
+
+The manifest list in the `artifact-descriptor.json` contains the tags for the two manifests:
+
+```json
+{
+  "manifests": [
+    { "digest": "sha:111...", "tags": ["v1.25.0"] },
+    { "digest": "sha:555...", "tags": ["v1.12.0"] }
+  ]
+}
+```
+
+
+## Transport Format for Other Resource Types
+
+Whenever a new resource type is supported, a corresponding transport format must be defined.
+
+
+
