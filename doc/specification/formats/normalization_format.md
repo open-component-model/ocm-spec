@@ -1,23 +1,264 @@
-# Base Format for Normalization
-The OCM component model allows for signing component descriptors. Signing is done using a text based format. Usually component descriptors are stored as yaml files. The signing ensures that a component descriptor has not been tampered with since ist was signed. As yaml is a text based format the signing should be robust against various minor changes not effecting the integrity:
+# Component Descriptor Normalization
 
-* formatting issue (e.g. different indent depth)
-* comments
-* HTML escaping
-* ...
+The [component descriptor](../formats/compdesc/README.md) is used to describe
+a [component version](model.md#component-versions). It contains several kinds
+of information:
+- volatile label settings, which might be changeable.
+- artifact access information, which might be changed during transport steps.
+- static information describing the features and artifacts of a component
+  version.
 
-Furthermore the OCM supports transportation of artifacts between repositories. Scenarios should be supported where artifacts are fetched from a different repository compared to the one it was signed from. This implies changing URLs in the component descriptor.
+<!-- If a component version should be signed, to be able to verify its authenticity
+after transportation steps, the technical representation of a component descriptor
+cannot be used to calculate the digest, which is finally signed. Only the last
+kind of content must be covered by the signature, because ethe other information
+might be changed over time. -->
 
-These two requirements result in the definition of a normalization format and procedure.
+For signing a digest of the component descriptor needs to be generated.
+Therefore, a standardized normalized form is needed, which contains only the signature relevant
+information. This is the source to calculate a digest, which is finally signed (and verified).
 
-As a first step the component descriptor is converted to JSON and all line breaks are removed. All dictionaries are converted to a list where each element is a single-entry dictionary containing the key value pair of the original entry. The list is ordered in lexikographic order of the keys. In this way a sorting order can be guaranteed.
+Like for signature algorithms, the model offers the possibility to work with
+different normalization algorithms/formats.
+
+To support legacy versions of the component model, there are two different
+normalizations.
+- `JsonNormalisationV1`: This is a legacy format, which depends of the format of the
+  component descriptor
+- `JsonNormalisationV2`: This is the new format. which is independent of the
+  chosen representation format of the component desriptor.
+
+## Generic Normalization format
+
+The generic format is based on a data structure consisting of dictionaries, lists and
+simple values (like strings and integers).
+
+The signing relevant information described by a component descriptor is mapped
+to such a data structure according to the format specifications described below.
+
+This data structure is then mapped to a formal JSON representation, which
+only contains clearly ordered elements. It is marshalled without white-spaces contained
+in the representation. Therefor, the resulting byte stream is directly defined
+by the inbound data structure and independent of the order of marshalling
+dictionaries/objects.
+Its digest can be used as basis to calculate a signature.
+
+To map lists and dictionaries into such clearly ordered elements the rules described
+below are used. The inbound data structures in the examples below are shown in
+YAML notation.
+
+### Simple Values
+
+Simple values are kept as they are.
+
+Example:
+```yaml
+  "bob"
+```
+will result in :
+
+```json
+  "bob"
+```
+### Dictionary
+
+All dictionaries are converted to a list where each element is a single-entry
+dictionary containing the key/value pair of the original entry. This list is
+ordered by lexicographical order of the keys.
+
+Example:
+```yaml
+  bob: 26
+  alice: 25
+```
+will result in :
+
+```json
+  [{"alice":25},{"bob":26}]
+```
+
+The values are converted according to the same rules, recursively.
+
+Example:
+```yaml
+  people:
+    bob: 26
+    alice: 25
+```
+will result in :
+
+```json
+  [{"people":[{"alice":25},{"bob":26}]}]
+```
+
+### Lists
+
+Lists are converted to JSON arrays and preserve the order of the elements
+
+Example:
+```yaml
+- bob
+- alice
+```
+
+normalized to:
+```json
+["bob","alice"]
+```
+
+The values are converted according to the same rules, recursively.
+
+Example:
+```yaml
+   - bob: 26
+   - alice: 25
+```
+
+will result in :
+
+```json
+  [[{"bob":26}],[{"alice":25}]]
+```
+
+### Combined example
+
+The following snippet is taken from a real component descriptor.
+
+```yaml
+resources:
+- access:
+    localReference: blob
+    mediaType: text/plain
+    referenceName: ref
+    type: localBlob
+  extraIdentity:
+    additional: value
+    other: othervalue
+  name: elem1
+  relation: local
+  type: elemtype
+  version: 1
+```
+
+normalized to
+
+```json
+[{"resources":[[{"access":[{"localReference":"blob"},{"mediaType":"text/plain"},{"referenceName":"ref"},{"type":"localBlob"}]},{"extraIdentity":[{"additional":"value"},{"other":"othervalue"}]},{"name":"elem1"},{"relation":"local"},{"type":"elemtype"},{"version":1}]]}]
+```
+
+formatted with white spaces for better readability it looks like:
+
+```json
+[
+  {
+    "resources": [
+      [
+        {
+          "access": [
+            {
+              "localReference": "blob"
+            },
+            {
+              "mediaType": "text/plain"
+            },
+            {
+              "referenceName": "ref"
+            },
+            {
+              "type": "localBlob"
+            }
+          ]
+        },
+        {
+          "extraIdentity": [
+            {
+              "additional": "value"
+            },
+            {
+              "other": "othervalue"
+            }
+          ]
+        },
+        {
+          "name": "elem1"
+        },
+        {
+          "relation": "local"
+        },
+        {
+          "type": "elemtype"
+        },
+        {
+          "version": 1
+        }
+      ]
+    ]
+  }
+]
+```
+
+### Empty values:
+
+Empty lists are normalized as empty lists
+
+```yaml
+myList: []
+```
+
+```json
+[{"myList":[]}]
+```
+
+Null values are skipped during initialization
+
+```yaml
+myList: ~
+```
+
+```yaml
+myList: null
+```
+
+```yaml
+myList:
+```
+are all normalized to:
+
+```json
+[]
+```
+
+## Relevant information in Component Descriptors.
+
+A component descriptor contains signature relevant information and
+information, which may change. For example, the access methods specifications
+might be changed during atransport step.
+
+Relevant fields and their mapping to the normalized data structure for `JsonNormalisationV2`:
+- Component Name: mapped to `component.name`
+- Component Version: mapped to `component.version`
+- Component Labels: mapped to `component.labels` (see [Labels](#labels)])
+- Component Provider: mapped to `component.provider`
+- Resources: mapped to `component.resources`, always empty list enforced, without the source references (see [Labels](#labels)] and [Access Methods](#access-methods)])
+- Sources: mapped to `component.sources`, always empty list enforced, (see [Labels](#labels)] and [Access Methods](#access-methods)])
+- References: mapped to `component.references`, always empty list enforced, (see [Labels](#labels)])
+
+
+### Access Methods
+
+Access method specifications are completely ignored.
+A resource/source is ignored, if the access method type is `none`.
 
 ## Labels
-Labels are removed before signing but can be marked with a special boolean property `signing` not to be removed and thus be part of the signature.
+
+Labels are removed before signing but can be marked with a special boolean
+property `signing` not to be removed and thus be part of the signature.
+The structure of signing-relevant labels is preserved from the component
+descriptor version `v2`.
 
 Example:
 
-```
+```yaml
 labels:
 - name: label1
   value: foo
@@ -25,288 +266,15 @@ labels:
   value: bar
   signing: true
 ```
-label1 will be excluded from the signature, label2 will be included.
 
-## Excluded elements
-
-The following elements are removed
-
-* meta
-* component/repositoryContext
-* resources/access
-* resources/srcRef
-* resources/labels (unless marked for signing)
-* sources/access
-* sources/labels (unless marked for signing)
-* references/labels (unless marked for signing)
-* signatures
+`label1` will be excluded from the signature, `label2` will be included.
+The label values is takes as it is, preserving a potentially deep structure.
 
 
-## Example:
+# `JsonNormalisationV1` vs `JsonNormalisationV2`
 
-```
-  component:
-    componentReferences: []
-    name: github.com/vasu1124/introspect
-    provider: internal
-    version: 1.0.0
-    repositoryContexts: []
-    sources: []
-    resources: []
-  meta:
-    schemaVersion: v2```
-```
+The `JsonNormalisationV1` serialization format is based on the serialization
+format of the component descriptor. The format version fields are included
 
-will be converted for signing to:
-
-```
- [{"component":[{"componentReferences":[]},{"name":"github.com/vasu1124/introspect"},{"provider":[{"name":"internal"}]},{"resources":[]},{"sources":[]},{"version":"1.0.0"}]}]
-```
-
-or for better readability formatted (but not the format which is signed):
-
-```
-[
-    {
-        "component": [
-            {
-                "componentReferences": []
-            },
-            {
-                "name": "github.com/vasu1124/introspect"
-            },
-            {
-                "provider": [
-                    {
-                        "name": "internal"
-                    }
-                ]
-            },
-            {
-                "resources": []
-            },
-            {
-                "sources": []
-            },
-            {
-                "version": "1.0.0"
-            }
-        ]
-    }
-]
-```
-
-Here is a more complete example:
-
-```
-  component:
-    componentReferences: []
-    name: github.com/vasu1124/introspect
-    provider: internal
-    repositoryContexts:
-    - baseUrl: ghcr.io/vasu1124/ocm
-      componentNameMapping: urlPath
-      type: ociRegistry
-    resources:
-    - access:
-        localReference: sha256:7f0168496f273c1e2095703a050128114d339c580b0906cd124a93b66ae471e2
-        mediaType: application/vnd.docker.distribution.manifest.v2+tar+gzip
-        referenceName: vasu1124/introspect:1.0.0
-        type: localBlob
-      digest:
-        hashAlgorithm: sha256
-        normalisationAlgorithm: ociArtifactDigest/v1
-        value: 6a1c7637a528ab5957ab60edf73b5298a0a03de02a96be0313ee89b22544840c
-      name: introspect-image
-      labels:
-        - name: label1
-          value: foo
-        - name: label2
-          value: bar
-          signing: true
-      relation: local
-      srcRefs: []
-      type: ociImage
-      version: 1.0.0
-    - access:
-        localReference: sha256:d1187ac17793b2f5fa26175c21cabb6ce388871ae989e16ff9a38bd6b32507bf
-        mediaType: ""
-        type: localBlob
-      digest:
-        hashAlgorithm: sha256
-        normalisationAlgorithm: genericBlobDigest/v1
-        value: d1187ac17793b2f5fa26175c21cabb6ce388871ae989e16ff9a38bd6b32507bf
-      name: introspect-blueprint
-      relation: local
-      type: landscaper.gardener.cloud/blueprint
-      version: 1.0.0
-    - access:
-        localReference: sha256:4186663939459149a21c0bb1cd7b8ff86e0021b29ca45069446d046f808e6bfe
-        mediaType: application/vnd.oci.image.manifest.v1+tar+gzip
-        referenceName: vasu1124/helm/introspect-helm:0.1.0
-        type: localBlob
-      digest:
-        hashAlgorithm: sha256
-        normalisationAlgorithm: ociArtifactDigest/v1
-        value: 6229be2be7e328f74ba595d93b814b590b1aa262a1b85e49cc1492795a9e564c
-      name: introspect-helm
-      relation: external
-      type: helm
-      version: 0.1.0
-    sources:
-    - access:
-        repository: github.com/vasu1124/introspect
-        type: git
-      name: introspect
-      type: git
-      version: 1.0.0
-    version: 1.0.0
-  meta:
-    schemaVersion: v2
-```
-will be converted for signing to:
-
-```
-[{"component":[{"componentReferences":[]},{"name":"github.com/vasu1124/introspect"},{"provider":[{"name":"internal"}]},{"resources":[[{"digest":[{"hashAlgorithm":"sha256"},{"normalisationAlgorithm":"ociArtifactDigest/v1"},{"value":"6a1c7637a528ab5957ab60edf73b5298a0a03de02a96be0313ee89b22544840c"}]},{"labels":[[{"name":"label2"},{"signing":true},{"value":"bar"}]]},{"name":"introspect-image"},{"relation":"local"},{"type":"ociImage"},{"version":"1.0.0"}],[{"digest":[{"hashAlgorithm":"sha256"},{"normalisationAlgorithm":"genericBlobDigest/v1"},{"value":"d1187ac17793b2f5fa26175c21cabb6ce388871ae989e16ff9a38bd6b32507bf"}]},{"name":"introspect-blueprint"},{"relation":"local"},{"type":"landscaper.gardener.cloud/blueprint"},{"version":"1.0.0"}],[{"digest":[{"hashAlgorithm":"sha256"},{"normalisationAlgorithm":"ociArtifactDigest/v1"},{"value":"6229be2be7e328f74ba595d93b814b590b1aa262a1b85e49cc1492795a9e564c"}]},{"name":"introspect-helm"},{"relation":"external"},{"type":"helm"},{"version":"0.1.0"}]]},{"sources":[[{"name":"introspect"},{"type":"git"},{"version":"1.0.0"}]]},{"version":"1.0.0"}]}]
-```
-
-or formatted for better readability (but not the format which is signed):
-
-```
-[
-    {
-        "component": [
-            {
-                "componentReferences": []
-            },
-            {
-                "name": "github.com/vasu1124/introspect"
-            },
-            {
-                "provider": [
-                    {
-                        "name": "internal"
-                    }
-                ]
-            },
-            {
-                "resources": [
-                    [
-                        {
-                            "digest": [
-                                {
-                                    "hashAlgorithm": "sha256"
-                                },
-                                {
-                                    "normalisationAlgorithm": "ociArtifactDigest/v1"
-                                },
-                                {
-                                    "value": "6a1c7637a528ab5957ab60edf73b5298a0a03de02a96be0313ee89b22544840c"
-                                }
-                            ]
-                        },
-                        {
-                            "labels": [
-                                [
-                                    {
-                                        "name": "label2"
-                                    },
-                                    {
-                                        "signing": true
-                                    },
-                                    {
-                                        "value": "bar"
-                                    }
-                                ]
-                            ]
-                        },
-                        {
-                            "name": "introspect-image"
-                        },
-                        {
-                            "relation": "local"
-                        },
-                        {
-                            "type": "ociImage"
-                        },
-                        {
-                            "version": "1.0.0"
-                        }
-                    ],
-                    [
-                        {
-                            "digest": [
-                                {
-                                    "hashAlgorithm": "sha256"
-                                },
-                                {
-                                    "normalisationAlgorithm": "genericBlobDigest/v1"
-                                },
-                                {
-                                    "value": "d1187ac17793b2f5fa26175c21cabb6ce388871ae989e16ff9a38bd6b32507bf"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "introspect-blueprint"
-                        },
-                        {
-                            "relation": "local"
-                        },
-                        {
-                            "type": "landscaper.gardener.cloud/blueprint"
-                        },
-                        {
-                            "version": "1.0.0"
-                        }
-                    ],
-                    [
-                        {
-                            "digest": [
-                                {
-                                    "hashAlgorithm": "sha256"
-                                },
-                                {
-                                    "normalisationAlgorithm": "ociArtifactDigest/v1"
-                                },
-                                {
-                                    "value": "6229be2be7e328f74ba595d93b814b590b1aa262a1b85e49cc1492795a9e564c"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "introspect-helm"
-                        },
-                        {
-                            "relation": "external"
-                        },
-                        {
-                            "type": "helm"
-                        },
-                        {
-                            "version": "0.1.0"
-                        }
-                    ]
-                ]
-            },
-            {
-                "sources": [
-                    [
-                        {
-                            "name": "introspect"
-                        },
-                        {
-                            "type": "git"
-                        },
-                        {
-                            "version": "1.0.0"
-                        }
-                    ]
-                ]
-            },
-            {
-                "version": "1.0.0"
-            }
-        ]
-    }
-```
+`JsonNormalisationV2` strictly uses only the relevant component descriptor
+information according to the field specification shown above.
