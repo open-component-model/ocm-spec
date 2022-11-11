@@ -2,15 +2,11 @@
 
 # Introduction
 
-The purpose of the transport format is to transfer
-components between locations optionally including all their
-references. Based on a file-system it can be used to transport
-content without direct internet access. A tar file of this file
-structure will be called the transport archive of the OCI artifacts.
-If offline access is not required the CTF can also be stored
-in an OCI registry as an additional repository view. You can transport between any kind of repository
-view as source and sink:
+The purpose of the transport format is to transfer components between locations optionally including
+all their references. Based on a file-system it can be used to transport content without internet
+access. A tar file of this file structure will be called the transport archive of the OCI artifacts.
 
+You can transport between any kind of repository and a transport archive
 ```
     CTF -> OCI
     OCI -> CTF
@@ -19,14 +15,14 @@ view as source and sink:
     <any supported type> -> <any supported type>
 ```
 
-
 There are three different technical flavors:
 
 - `directory`: the content is stored directly as a directory tree
 - `tar`: the directory tree is stored in a tar archive
 - `tgz`: the directory tree is stored in a zipped tar archive
 
-All those technical representations use the same file formats and directory structure. The containing directory is not part of the tar file
+All those technical representations use the same file formats and directory structure. The containing
+directory is not part of the tar file
 
 # Format
 
