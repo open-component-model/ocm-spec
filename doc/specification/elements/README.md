@@ -269,6 +269,23 @@ Labels are described by the element field
   A list of arbitrary labels described by a formal name with a globally
   unique meaning (see [label structure](../formats/types.md#label-names)
 
+### Elements and Element Metadata
+
+A component version describes several kinds of elements.
+
+- [Artifacts](#artifacts) represent technical content. The appear in two different
+  flavors:
+  - [Sources](#sources) describe the sources a [component version](#component-versions)
+    has been composed/geerated from.
+  - [Resources](#resources) describe the delivery artifacts contained in the
+    [component version](#component-versions).
+- [References](#aggregation) describe the aggragation of other
+  [component version](#component-versions).
+
+All those described element feature a common set of meta data consisting of
+of the [element identity](#identities) and [labels](#labels), which can be used
+to attach formalized information, which is not defined the open component model.
+
 ### Artifacts
 
 An *Artifact* is a blob containing some data in some technical format.
@@ -412,7 +429,10 @@ is added to the local artifact set described by the component version defining
 the reference. To keep a unique addressing scheme, like [artifacts](#artifacts),
 references have an [identity](#identities).
 
-A reference element has the following additional formal fields:
+#### Component Version Reference
+
+Besides the regular [element metadata](#labels) a reference element has the
+following additional formal fields:
 
 - **`componentName`** (required) *string*
 
@@ -543,11 +563,12 @@ A digest is specified by the following fields:
 
 - **`hashAlgorithm`** (required) *string*
 
-  The used digest algorithm.
+  The used [digest algorithm](../../appendix/C/README.md#digest-algorithms).
 
 - **`normalisationAlgorithm`** (required) *string*
 
-  The used normalization algorithm for the signed element.
+  The used [normalization algorithm](../formats/types.md#normalization-types)
+  for the signed element.
 
   For example, the digest of a component version must not include volatile
   fields, like
@@ -576,7 +597,7 @@ A signature is specified by the following fields:
 
 - **`algorithm`** (required) *string*
 
-  The used signing algorithm.
+  The used [signing algorithm](../../appendix/C/README.md#signing-algorithms).
 
 - **`mediaType`** (required) *string*
 

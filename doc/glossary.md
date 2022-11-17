@@ -31,6 +31,11 @@ some blob content described  by a [component version](#component-version).
 #### [Artifact Digest](specification/elements/README.md#digest-info)<a id="artdigest"/>
 the (logical) digest of an [artifact](#artifact) described by a [component version](#component-version).
 
+#### [Artifact Normalization](specification/formats/artifact_normalization.md)<a id="artnorm"/>
+the transformation of a technical blob content of an [artifact](#artifact) depending
+on its [type](#arttype) into a
+serialization-agnostic digest, which is used for signing purposes along a transportation path.
+
 #### [Artifact Reference](specification/elements/README.md#artifact-references)<a id="artref"/>
 a relative or absolute reference to an [artifact](#artifact) described by a 
 [component version](#compvers).
@@ -49,6 +54,9 @@ meaning for a provided piece of software.
 #### [Component Descriptor](specification/elements/README.md#component-descriptor)<a id="compdesc"/>
 the formal description of a [component version](#compvers).
 
+#### [Component Descriptor Normalization](specification/formats/componentdescriptor_normalization.md)<a id="compdescnorm"/>
+the mapping of the elements of a [component descriptor](#compdec) into an
+immutable format containg only signature relevant information used to calculate a digest.
 
 #### [Component Identity](specification/elements/README.md#components)<a id="compid"/>
 the globally unique identity of a [component](#component).
@@ -114,10 +122,12 @@ described by a [repository type](#repotype).
 
 ## N
 
-#### [Normalization](specification/formats/normalization_format.md)<a id="norm"/>
-the transformation of a technical blob depending on its type into a
+#### [Normalization](specification/formats/types.md#normalization-types)<a id="norm"/>
+the transformation of a technical content depending on its type into a
 serialization-agnostic format, which can be used to calculate an immutable
 digest for signing purposes along a transportation path.
+There are two normalization procedures, [artifact normalization](#artdescnorm) and
+[component descriptor normalization](#compdescnorm).
 
 ## O
 

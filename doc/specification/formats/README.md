@@ -22,5 +22,6 @@ for type-specific specification formats.
 - [V3alpha1](compdesc/v3alpha1/README.md)
 
 2.4.4 Normalization
-- [Base Format for Normalization (Internal Format)](normalization_format.md)
-- [Normalization Procedure and Layout](normalization_procedure.md)
+- [Standard Artifact Normalization types](artifact_normalization.md)
+- [Component Descriptor Normalization](componentdescriptor_normalization.md)
+
