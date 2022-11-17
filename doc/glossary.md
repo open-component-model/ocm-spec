@@ -55,7 +55,7 @@ meaning for a provided piece of software.
 the formal description of a [component version](#compvers).
 
 #### [Component Descriptor Normalization](specification/formats/componentdescriptor_normalization.md)<a id="compdescnorm"/>
-the mapping of the elements of a [component descriptor](#compdec) into an
+the mapping of the elements of a [component descriptor](#compdesc) into an
 immutable format containg only signature relevant information used to calculate a digest.
 
 #### [Component Identity](specification/elements/README.md#components)<a id="compid"/>
@@ -122,11 +122,11 @@ described by a [repository type](#repotype).
 
 ## N
 
-#### [Normalization](specification/formats/types.md#normalization-types)<a id="norm"/>
+#### [Normalization](specification/formats/normalization.md)<a id="norm"/>
 the transformation of a technical content depending on its type into a
 serialization-agnostic format, which can be used to calculate an immutable
 digest for signing purposes along a transportation path.
-There are two normalization procedures, [artifact normalization](#artdescnorm) and
+There are two normalization procedures, [artifact normalization](#artnorm) and
 [component descriptor normalization](#compdescnorm).
 
 ## O
@@ -174,6 +174,10 @@ dedicated variants of some [extension points](#ext). See [access methods](#accme
 [repository types](#repotype), and [labels](#label).
 
 ## T
+
+#### [Transport](introduction/transports.md)<a id="transport"/>
+the operation on [component versions](#compvers) transferring content from
+one OCM repository into another one.
 
 #### [Type](specification/formats/types.md)<a id="type"/>
 a formal representation of the kind of an [extension point](#ext) of the
