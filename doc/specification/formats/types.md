@@ -32,6 +32,10 @@ of the described element.
   references can be enriched by labels capable to carry values with an
   arbitrary structure.
 
+- [Normalization Types](#normalization-types)
+
+  To calculate signatures, digests must be calculated for artifact content.
+  
 ## Repository Types
 
   Any [repository](../elements/README.md#repositories) that can be used to store
@@ -315,3 +319,34 @@ v[0-9]+([a-z][a-z0-9]*)?
 
 Centrally defined labels with their specification versions
 can be found in [appendix F](../../appendix/F/README.md).
+
+
+## Normalization Types
+
+To be able to sign a component version, the content of described artifacts
+must be incorporated. Therefore, a digest for the artifact content must be
+determined.
+
+By default, this digest is calculated based on the blob provided by the
+[access method](../elements/README.md#artifact-access)
+of an artifact. But there might be technology specific ways to uniquely identify
+the content for dedicated artifact types.
+
+Therefore, together with the digest and its algorithm, an artifact normalization
+algorithm is kept in the [component descriptor](../elements/README.md#component-descriptor).
+
+The same problem appears for the component descriptor. It contains signature
+relevant information and volatile information (e.g. the
+[access specification](../elements/README.md#artifact-access)). Therefore, there
+is a [normalization for component descriptors](componentdescriptor_normalization.md), also.
+
+Normalization algorithm types may be versioned and SHOULD match the following regexp
+
+```
+[a-z][a-zA-Z0-9]*/v[0-9]+([a-z][a-z0-9]*)
+```
+
+For example: `ociArtifactDigest/v1` or `jsonNormalisationV2`
+
+There are standardized normalization types for [artifacts](artifact_normalization.md)
+and [component descriptors](componentdescriptor_normalization.md).

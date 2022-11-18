@@ -10,6 +10,7 @@ for type-specific specification formats.
 - [Artifact Types](types.md#artifact-types)
 - [Access Method Types](types.md#access-method-types)
 - [Label Names](types.md#label-names)
+- [Normalization Types](types.md#normalization-types)
 
 2.4.2 [Formats](formats.md)
 - [Repository Specifications](formats.md#repository-specifications)
@@ -21,6 +22,7 @@ for type-specific specification formats.
 - [V2](compdesc/v2/README.md)
 - [V3alpha1](compdesc/v3alpha1/README.md)
 
-2.4.4 Normalization
-- [Base Format for Normalization (Internal Format)](normalization_format.md)
-- [Normalization Procedure and Layout](normalization_procedure.md)
+2.4.4 [Normalization](normalization.md)
+- [Standard Artifact Normalization types](artifact_normalization.md)
+- [Component Descriptor Normalization](componentdescriptor_normalization.md)
+
