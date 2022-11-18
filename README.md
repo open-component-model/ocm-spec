@@ -2,7 +2,7 @@
 
 ## Overview
 
-The *Open Component Model (OCM)* is an open standard to describe software-bill-of-deliveries (SBOD). OCM is a technology-agnostic and machine-readable format focused on the software artifacts that must be delivered for software products.
+The _Open Component Model (OCM)_ is an open standard to describe software-bill-of-deliveries (SBOD). OCM is a technology-agnostic and machine-readable format focused on the software artifacts that must be delivered for software products.
 
 By providing a globally unique identity scheme, OCM can be employed throughout the entire software lifecycle management process, from build to compliance, to deployment.
 
@@ -28,6 +28,7 @@ component versions.
 The Open Component Model is an interpretation layer on top of existing storage technologies and is not itself a repository technology. Therefore, it does not define an authentication scheme but, rather, uses those defined by the underlying storage technology.
 
 To use a backend storage technology as an OCM repository it is necessary to provide:
+
 - an implementation for accessing artifacts in the desired backend and mapping them to a blob format
 - a specification for a [mapping scheme](doc/specification/mapping/README.md)
   describing how to map the elements of the Open Component Model to the supported
@@ -81,3 +82,9 @@ transporting and signing of component versions.
 Code contributions, feature requests, bug reports, and help requests are very welcome. Please refer to the [Contributing Guide in the Community repository](https://github.com/open-component-model/community/blob/main/CONTRIBUTING.md) for more information on how to contribute to OCM.
 
 OCM follows the [CNCF Code of Conduct](https://github.com/cncf/foundation/blob/main/code-of-conduct.md).
+
+## Licensing
+
+Copyright 2022 SAP SE or an SAP affiliate company and Open Component Model contributors.
+Please see our [LICENSE](LICENSE) for copyright and license information.
+Detailed information including third-party components and their licensing/copyright information is available [via the REUSE tool](https://api.reuse.software/info/github.com/open-component-model/ocm-spec).
