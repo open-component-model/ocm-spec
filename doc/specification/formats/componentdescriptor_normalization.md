@@ -17,10 +17,10 @@ different normalization algorithms/formats.
 
 To support legacy versions of the component model, there are two different
 normalizations.
-- `jsonNormalisationV1`: This is a legacy format, which depends of the format of the
+- `jsonNormalisationV1`: This is a legacy format, which depends on the format of the
   component descriptor
 - `jsonNormalisationV2`: This is the new format. which is independent of the
-  chosen representation format of the component desriptor.
+  chosen representation format of the component descriptor.
 
 ## Generic Normalization format
 
