@@ -2,9 +2,10 @@
 
 2.1 [Model Elements](elements/README.md)<br>
 2.2 [Model Operations](operations/README.md)<br>
-2.3 [Storage backend Mappings](mapping/README.md)<br>
+2.3 [Model Contract](contract/README.md)<br>
 2.4 [Formats and Names](formats/README.md)<br>
 2.5 [Extension Points](extensionpoints/README.md)<br>
+2.6 [Storage backend Mappings](mapping/README.md)<br>
 
 This specification is divided into three parts:
 
