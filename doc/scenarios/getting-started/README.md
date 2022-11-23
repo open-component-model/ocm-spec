@@ -8,9 +8,12 @@ This chapter describes a walkthrough:
     - [Adding a local resource](#adding-a-local-resource)
     - [Adding an image reference](#adding-an-image-reference)
     - [Using a resources file](#using-a-resources-file)
-  - [Uploading OCM component versions](#uploading-ocm-component-versions)
-  - [Bundling of composed components](#bundling-of-composed-components)
-  - [Displaying component versions](#displaying-component-versions)
+    - [Uploading component versions](#uploading-component-versions)
+    - [Bundling of composed components](#bundling-of-composed-components)
+  - [Displaying and Examining component versions](#displaying-and-examining-component-versions)
+    - [Listing component versions](#listing-component-versions)
+    - [Listing resources of a component version](#listing-resources-of-a-component-version)
+    - [Downloading resources of a component version](#downloading-resources-of-a-component-version)
   - [Transporting OCM component versions](#transporting-ocm-component-versions)
   - [Signing component versions](#signing-component-versions)
 
@@ -231,7 +234,7 @@ adding resource helmChart: "name"="chart","version"="<componentversion>"...
 adding resource ociImage: "name"="image","version"="1.0.0"...
 ```
 
-## Uploading OCM component versions
+### Uploading component versions
 To upload the component version to an OCI registry you can transfer the created component archive using the command:
 
 ```shell
@@ -242,7 +245,7 @@ transferring version "github.com/acme/helloworld:1.0.0"...
 ...resource 0(github.com/acme/helloworld/echoserver:0.1.0)...
 ...adding component version...
 ```
-## Bundling of composed components
+### Bundling of composed components
 
 If you have created multiple components according to the instructions above you can bundle
 them into a single archive entity. This requires creating a transport archive. You can add
@@ -345,7 +348,80 @@ meta:
 
 </details>
 
-## Displaying component versions
+## Displaying and Examining component versions
+
+### Listing component versions
+To show the component stored in a component archive (without looking the file syetem structure) the `get componentversion` command can be used.
+```shell
+$ ocm get componentversion ${CA_ARCHIVE} 
+COMPONENT                  VERSION PROVIDER
+github.com/acme/helloworld 1.0.0   acme.org
+```
+
+If you want to show the component descriptor of the shown component versions you can use the output format option `-o yaml`
+```shell
+$ ocm get componentversion ${CA_ARCHIVE} -o yaml
+---
+context: []
+element:
+  component:
+    componentReferences: []
+    name: github.com/acme/helloworld
+    provider:
+      name: acme.org
+    repositoryContexts: []
+    resources: []
+    sources: []
+    version: 1.0.0
+  meta:
+    configuredSchemaVersion: v2
+```
+
+You also can display component versions in any OCM repository with this command. 
+```shell
+$ ocm get cv ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo
+COMPONENT                         VERSION   PROVIDER
+github.com/mandelsoft/ocmhelmdemo 0.1.0-dev mandelsoft
+```
+If you refer to content of a component repository the component name can be appended to the repository specification separated by `//`:  
+In the example above `ghcr.io/mandelsoft/cnudie` is the OCM repository, wheras `github.com/mandelsoft/ocmhelmdemo` is the component stored in this component repository. Optionally a dedicated version can be appended, separated by a colon (`:`). If no version is specified all, component versions will be displayed. 
+
+With the option `--recursive` it i possible to show the complete component version closure including the referenced component versions.
+```shell
+$ ocm get cv ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo --recursive
+REFERENCEPATH                               COMPONENT                              VERSION   PROVIDER   IDENTITY
+                                            github.com/mandelsoft/ocmhelmdemo      0.1.0-dev mandelsoft
+github.com/mandelsoft/ocmhelmdemo:0.1.0-dev github.com/mandelsoft/ocmhelminstaller 0.1.0-dev mandelsoft "name"="installer"
+```
+
+To get a tree view you can add the option `-o tree`.
+
+```shell
+$ ocm get componentversion ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo --recursive -o tree
+NESTING    COMPONENT                              VERSION   PROVIDER   IDENTITY
+└─ ⊗       github.com/mandelsoft/ocmhelmdemo      0.1.0-dev mandelsoft
+   └─      github.com/mandelsoft/ocmhelminstaller 0.1.0-dev mandelsoft "name"="installer"
+```
+
+### Listing resources of a component version
+
+To list the resources found in a compopnent version tree the command `ocm get resources` can be used.
+
+```shell
+$ ocm get resources ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo:0.1.0-dev --recursive -o tree
+COMPONENTVERSION                                           NAME        VERSION   IDENTITY TYPE        RELATION
+└─ github.com/mandelsoft/ocmhelmdemo:0.1.0-dev
+   ├─                                                      chart       0.1.0-dev          helmChart   local
+   ├─                                                      image       1.0                ociImage    external
+   ├─                                                      package     0.1.0-dev          toiPackage  local
+   └─ github.com/mandelsoft/ocmhelminstaller:0.1.0-dev
+      ├─                                                   toiexecutor 0.1.0-dev          toiExecutor local
+      └─                                                   toiimage    0.1.0-dev          ociImage    local
+```
+
+
+### Downloading resources of a component version
+
 
 ## Transporting OCM component versions
 
