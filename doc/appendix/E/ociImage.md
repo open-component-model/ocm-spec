@@ -1,6 +1,6 @@
 # `ociImage` &#8212; OCI Image or Image Index
 
-An OCI artifact that contains an OCI container image.
+An OCI artefact that contains an OCI container image.
 The content is intended to be used as container image.
 
 A general [ociArtefact](ociArtefact.md) may describe

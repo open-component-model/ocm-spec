@@ -7,11 +7,11 @@ OCI registry or an S3 blob store).
 These operations build the first extension point of OCM, which allows to 
 map the OCM functionality onto any blobstore-like storage system.
 
-A second extension point is the [access to artifacts](../elements/README.md#artifact-access)
+A second extension point is the [access to artefacts](../elements/README.md#artefact-access)
 described by a [component version](../elements/README.md#component-versions).
 Such access is described by an [access specification](../formats/formats.md#access-specifications)
 which is specific for a dedicated access method, whose implementation handles the
-technical access to the artifact content. Implementations for those methods must
+technical access to the artefact content. Implementations for those methods must
 implement some operations on the access specifications.
 
 The concrete incarnation of those repository and access method operations depend
@@ -66,17 +66,17 @@ The following operations are mandatory:
   the blob, again (together with the component version identity).
 
   Additionally, a dedicated media type can be used to decide how to internally
-  represent the artifact content.
+  represent the artefact content.
 
   Optionally, the operation may decide to store the blob in dedicated ways according
   to its media type. For example, an OCI based implementation can represent
-  blobs containing an OCI artifact as regular, globally addressable object.
+  blobs containing an OCI artefact as regular, globally addressable object.
 
   A type-specific optional *ReferenceHint* can be passed to guide the
   operation for generating an identity, if it decided to make the object
   externally visible.
 
-  If this is the case, an external [access specification](../elements/README.md#artifact-access)
+  If this is the case, an external [access specification](../elements/README.md#artefact-access)
   has to be returned. At least a blob identity or an external access specification
   has to be returned for not successful executions.
 
@@ -127,7 +127,7 @@ for the denoted blob is required.
 
 - **`<method>.GetMediaType(RepositoryContext, ComponentVersion, AccessSpecification) (string, error)`**
 
-  Provide the media type of the described artifact. It might explicitly be stored
+  Provide the media type of the described artefact. It might explicitly be stored
   as part of the access specification, or implicitly provided by the access method.
 
 - **`<method>.GetStream(RepositoryContext, ComponentVersion, AccessSpecification) (Byte Stream, error)`**
