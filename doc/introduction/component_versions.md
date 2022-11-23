@@ -7,29 +7,29 @@ As a result of the development phase, **component versions** are created, e.g. w
 The *component* itself just describes a globally unique identity with a dedicated 
 meaning (the purpose a dedicated version of this component can be used for). The 
 *component version* describes dedicated versions of a component with all the
-concrete artifact required to install this version.
+concrete artefact required to install this version.
 
 In this sense a component version is a software-bill-of-delivery (SBOD). It describes
-delivery and installation artifacts together with metadata. It does not contain
-formal descriptions of the decomposition of such artifacts, like packages or modules
-used to compose/build an artifact (typically meant with the term SBOM).
+delivery and installation artefacts together with metadata. It does not contain
+formal descriptions of the decomposition of such artefacts, like packages or modules
+used to compose/build an artefact (typically meant with the term SBOM).
 
-A component version consists of a set of [technical artifacts](../specification/elements/README.md#artifact-access), e.g. docker images, helm charts, binaries, configuration data etc. Such artifacts are called [**resources**](../specification/elements/README.md#resources).
+A component version consists of a set of [technical artefacts](../specification/elements/README.md#artefact-access), e.g. docker images, helm charts, binaries, configuration data etc. Such artefacts are called [**resources**](../specification/elements/README.md#resources).
 Resources are usually build or packaged from something, e.g. code in a git repo,  named [**sources**](../specification/elements/README.md#sources).
 
 In the Open Component Model a component version is described by a [**Component Descriptor**](../specification/elements/README.md#component-descriptor). 
 It describes the resources, sources and aggregated other component versions belonging to a particular component version.
 
-It not only describes identities for contained artifacts, but the real truth, by 
-additionally carrying access information for the technical content behind an artifact. Therefore, given the access to a component descriptor also provides access
-to the content of the described artifacts.
+It not only describes identities for contained artefacts, but the real truth, by 
+additionally carrying access information for the technical content behind an artefact. Therefore, given the access to a component descriptor also provides access
+to the content of the described artefacts.
 
 The model definition provides means to handle the [transport](transports.md) of
-component versions from one environment into another by adapting the artifact 
+component versions from one environment into another by adapting the artefact 
 access information, accordingly, without invalidation potential signatures. Therefore, the access information given by
 a component descriptor always provides environment local information, which
 enables tools working (e.g. deployment tools) with it to always access described
-artifacts from locations applicable for the actual environment.
+artefacts from locations applicable for the actual environment.
 
 For the three components in our sample software product mentioned above, one component descriptor exists for every component version, the frontend, backend and monitoring stack.
 
@@ -37,18 +37,18 @@ Not all component version combinations of frontend, backend and monitoring are c
 
 For our example we could introduce a component for the overall software product. A particular version of this product component is again described by a component descriptor, which contains references to particular component version for the frontend, backend and monitoring stack.
 
-This is only an example how to describe a particular product version with OCM as a component with one version with references to versions of other components, which itself could have such references and so on. You are not restricted to this approach, i.e. you could still just maintain a list of component version combinations which build a valid product release. But OCM provides you a simple approach to specify what belongs to a product version. Starting with the Component Descriptor for a product version and following the component references, you could collect all artifacts, belonging to this product version.
+This is only an example how to describe a particular product version with OCM as a component with one version with references to versions of other components, which itself could have such references and so on. You are not restricted to this approach, i.e. you could still just maintain a list of component version combinations which build a valid product release. But OCM provides you a simple approach to specify what belongs to a product version. Starting with the Component Descriptor for a product version and following the component references, you could collect all artefacts, belonging to this product version.
 
 **Summary:** \
 *Component Versions* are the central concept of OCM. A *Component Version* describes what belongs to a particular version of a software component and how to access it. This includes:
 
-- resources, i.e. technical artifacts like binaries, docker images, ...
+- resources, i.e. technical artefacts like binaries, docker images, ...
 - sources like code in github
 - references to other software component versions
 
 ### Component Name and Version
 
-Every *Component Version* has a name and version, also called component name and component version. Name and version are the identifier for a *Component Version* and therefor for the artifact set described by it.
+Every *Component Version* has a name and version, also called component name and component version. Name and version are the identifier for a *Component Version* and therefor for the artefact set described by it.
 
 ```
 meta:
@@ -195,7 +195,7 @@ component:
       type: ociArtefact
     digest:             # -> digest of this resource used for signing
       hashAlgorithm: sha256
-      normalisationAlgorithm: ociArtifactDigest/v1
+      normalisationAlgorithm: ociArtefactDigest/v1
       value: cb5c1bddd1b5665e1867a7fa1b5fa843a47ee433bbb75d4293888b71def53229
   - name: chart         # -> name of this resource
     version: 0.1.0-dev  # -> version of this resource
@@ -206,7 +206,7 @@ component:
       type: ociArtefact
     digest:             # -> digest of this resource used for signing
       hashAlgorithm: sha256
-      normalisationAlgorithm: ociArtifactDigest/v1
+      normalisationAlgorithm: ociArtefactDigest/v1
       value: 385531bf40fc2b93e1693c0270250deb8da488a8f6f8dcaa79b0ab2bf1041c0b
   - name: package      # -> name of this resource
     version: 0.1.0-dev # -> version of this resource

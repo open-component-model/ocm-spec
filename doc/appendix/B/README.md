@@ -1,6 +1,6 @@
 # B.  Access Method Types
 
-[Access methods](../../specification/elements/README.md#artifact-access)
+[Access methods](../../specification/elements/README.md#artefact-access)
 are used to access the content of artefacts described
 by a [component version](../../specification/elements/README.md#component-versions).
 The [type](../../specification/formats/types.md#access-method-types)

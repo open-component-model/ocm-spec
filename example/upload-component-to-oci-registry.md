@@ -136,7 +136,7 @@ component:
       type: ociRegistry
     digest:
       hashAlgorithm: sha256
-      normalisationAlgorithm: ociArtifactDigest/v1
+      normalisationAlgorithm: ociArtefactDigest/v1
       value: 2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488
     name: server
     relation: external
@@ -231,7 +231,7 @@ transferring version "github.com/yitsushi/hello-world:1.0.7"...
 
 ```bash
 ❯ tar ztf ctf.tgz
-artifact-index.json
+artefact-index.json
 blobs
 blobs/sha256.2eae2829e60c287ac2dabd3daed4fed9a45a021ebe0c0ff29e9db20b160f3b53
 blobs/sha256.4e972b297e47151dacd2582b9acaf9a94cda0203fe148e81d4e5f59cd7b8710b

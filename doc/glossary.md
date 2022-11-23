@@ -5,8 +5,8 @@
 ## A
 
 
-#### [Access Method](specification/elements/README.md#artifact-access)<a id="accmeth"/>
-a dedicated procedure how to access the content of an [artifact](#artifact) 
+#### [Access Method](specification/elements/README.md#artefact-access)<a id="accmeth"/>
+a dedicated procedure how to access the content of an [artefact](#artefact) 
 described by a [component version](#compvers). It is formally represented by an
 [access method type](#acctype).
 
@@ -15,35 +15,35 @@ the operations an implementation of an [access method](#accmeth) has to support.
 
 #### [Access Method Type](specification/formats/types.md#access-method-types)<a id="acctype"/>
 the type of an [access specification](#accspec) determining the formal procedure
-to use to access the blob content of an [artifact](#artifact).
+to use to access the blob content of an [artefact](#artefact).
 
-#### [Access Specification](specification/elements/README.md#artifact-access)<a id="accspec"/>
+#### [Access Specification](specification/elements/README.md#artefact-access)<a id="accspec"/>
 the specification of the technical access path to the physical blob content of
-an [artifact](#artifact) described by a [component version](#compvers).
+an [artefact](#artefact) described by a [component version](#compvers).
 
 #### [Aggregation](specification/elements/README.md#aggregation)<a id="aggregation"/>
 the ability of the Open Component Model to compose [component versions](#compvers)
 based on other component versions.
 
-#### [Artifact](specification/elements/README.md#artifacts)<a id="artifact"/>
+#### [Artefact](specification/elements/README.md#artefacts)<a id="artefact"/>
 some blob content described  by a [component version](#component-version).
 
-#### [Artifact Digest](specification/elements/README.md#digest-info)<a id="artdigest"/>
-the (logical) digest of an [artifact](#artifact) described by a [component version](#component-version).
+#### [Artefact Digest](specification/elements/README.md#digest-info)<a id="artdigest"/>
+the (logical) digest of an [artefact](#artefact) described by a [component version](#component-version).
 
-#### [Artifact Normalization](specification/formats/artifact_normalization.md)<a id="artnorm"/>
-the transformation of a technical blob content of an [artifact](#artifact) depending
+#### [Artefact Normalization](specification/formats/artefact_normalization.md)<a id="artnorm"/>
+the transformation of a technical blob content of an [artefact](#artefact) depending
 on its [type](#arttype) into a
 serialization-agnostic digest, which is used for signing purposes along a transportation path.
 
-#### [Artifact Reference](specification/elements/README.md#artifact-references)<a id="artref"/>
-a relative or absolute reference to an [artifact](#artifact) described by a 
+#### [Artefact Reference](specification/elements/README.md#artefact-references)<a id="artref"/>
+a relative or absolute reference to an [artefact](#artefact) described by a 
 [component version](#compvers).
 
-#### [Artifact Type](specification/formats/types.md#artifact-types)<a id="arttype"/>
-the formal type of an [artifact](#artifact) described by a
+#### [Artefact Type](specification/formats/types.md#artefact-types)<a id="arttype"/>
+the formal type of an [artefact](#artefact) described by a
 [component version](#compvers). The type implies the logical interpretation of
-the artifact blob.
+the artefact blob.
 
 ## C
 
@@ -88,7 +88,7 @@ the possibility to describe identities of [components](#component),
 
 
 #### Digest <a id="digest"/>
-see [artifact digest](#artdigest) or [component version digest](#compdigest).
+see [artefact digest](#artdigest) or [component version digest](#compdigest).
 
 ## E
 
@@ -111,7 +111,7 @@ see [element identity](#elemid), [component identity](#compid), [component versi
 
 #### [Labels](specification/elements/README.md#labels)<a id="labels"/>
 arbitrary typed information snippets attached to [component versions](#compvers),
-[artifacts](#artifacts) and [references](#compref).
+[artefacts](#artefacts) and [references](#compref).
 
 ## M
 
@@ -126,15 +126,15 @@ described by a [repository type](#repotype).
 the transformation of a technical content depending on its type into a
 serialization-agnostic format, which can be used to calculate an immutable
 digest for signing purposes along a transportation path.
-There are two normalization procedures, [artifact normalization](#artnorm) and
+There are two normalization procedures, [artefact normalization](#artnorm) and
 [component descriptor normalization](#compdescnorm).
 
 ## O
 
 #### [Open Component Model](../README.md)<a id="ocm"/>
 a technology- and location-agnostic description model for software delivery
-artifacts with attached meta-data, providing environment-specific access
-path to described [artifacts](#artifact).
+artefacts with attached meta-data, providing environment-specific access
+path to described [artefacts](#artefact).
 
 #### Operations <a id="ops"/>
 see [repository operations](#repops), [access methods](#accmeth) and
@@ -143,7 +143,7 @@ see [repository operations](#repops), [access methods](#accmeth) and
 ## R
 
 #### Reference <a id="ref"/>
-a reference to an element of the component model, see [artifact reference](#artref)
+a reference to an element of the component model, see [artefact reference](#artref)
 or [component version reference](#compref)
 
 #### [Repository Operations](specification/operations/README.md#repository-operations)<a id="repops"/>
@@ -156,7 +156,7 @@ the type of a [mapping](#mapping) of the [Open Component Model](#ocm) specificat
 to a dedicated storage technology.
 
 #### [Resource](specification/elements/README.md#resources)<a id="resource"/>
-a delivery artifact described by a [component version](#compvers). 
+a delivery artefact described by a [component version](#compvers). 
 
 ## S
 
@@ -165,7 +165,7 @@ a [component version](#compvers) may be signed by an authority, the signature as
 result of such a signing process is stored along with the component version.
 
 #### [Source](specification/elements/README.md#sources)<a id="source"/>
-an artifact described by a [component version](#compvers) containing sources
+an artefact described by a [component version](#compvers) containing sources
 used to generate one or more of the described [resources](#resource).
 
 #### Specification Format
@@ -182,4 +182,4 @@ one OCM repository into another one.
 #### [Type](specification/formats/types.md)<a id="type"/>
 a formal representation of the kind of an [extension point](#ext) of the
 [Open Component Model](#ocm). See [repository type](#repotype),
-[access method type](#acctype), [artifact type](#arttype) [label](#label).
+[access method type](#acctype), [artefact type](#arttype) [label](#label).

@@ -21,7 +21,7 @@ A *Component Descriptor* document consists of two top level elements: *meta*, *c
 |  | Description |
 | --- | --- |
 | meta | Contains the schema version of the *Component Descriptor* specification. This document defines schema version *v2*. |
-| component | Definition of the artifacts which belong to the component version. |
+| component | Definition of the artefacts which belong to the component version. |
 
 Example:
 
