@@ -1,9 +1,9 @@
-# `ociArtefact` &#8212; General OCI Artefact or Artefact Index
+# `ociArtifact` &#8212; General OCI Artifact or Artifact Index
 
 ## Format Variants
 
-When provided as a blob, the [Artefact Set Format](../common/formatspec.md#artefact-set-archive-format)
-MUST be used to represent the content of the OCI artefact.
+When provided as a blob, the [Artifact Set Format](../common/formatspec.md#artifact-set-archive-format)
+MUST be used to represent the content of the OCI artifact.
 THis format can be used to store multiple versions of on OCI repository
 in a filesystem-compatible manner. In this scenario only the 
 single version of interest is stored.
@@ -17,7 +17,7 @@ Provided blobs use the following media type:
 
 There is a dedicated uploader available for local blobs.
 It converts a blob with the media type shown above into 
-a regular OCI artefact in an OCI repository.
+a regular OCI artifact in an OCI repository.
 
 It uses the reference hint attribute of the
 [`localBlob` access method](../B/localBlob.md) to determine

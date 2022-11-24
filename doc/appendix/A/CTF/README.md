@@ -66,8 +66,8 @@ Local blobs are always stored as blobs.
 ## Examples
 
 ```text
-artefact-archive
-├── artefact-index.json
+artifact-archive
+├── artifact-index.json
 └── blobs
     ├── sha.123... (manifest.json)
     ├── sha.234... (config.json)
@@ -82,7 +82,7 @@ descriptor:
 ```json
 {
   "schemaVersion": 1,
-  "artefacts": [
+  "artifacts": [
     {
       "repository": "component-descriptors/<component name>>",
       "tag": "0.1.0",
@@ -93,28 +93,28 @@ descriptor:
 
 ```
 
-### Example of a transport archive containing two artefacts
+### Example of a transport archive containing two artifacts
 
 ```text
 transport-archive
-├── artefact-descriptor.json
+├── artifact-descriptor.json
 └── blobs
-    ├── sha256.111... (manifest.json of artefact 1)
-    ├── sha256.222... (config.json   of artefact 1)
-    ├── sha256.333... (layer         of artefact 1)
-    ├── sha256.444... (layer         of artefact 1)
-    ├── sha256.555... (manifest.json of artefact 2)
-    ├── sha256.666... (config.json   of artefact 2)
-    ├── sha256.777... (layer         of artefact 2)
-    └── sha256.888... (layer         of artefact 2)
+    ├── sha256.111... (manifest.json of artifact 1)
+    ├── sha256.222... (config.json   of artifact 1)
+    ├── sha256.333... (layer         of artifact 1)
+    ├── sha256.444... (layer         of artifact 1)
+    ├── sha256.555... (manifest.json of artifact 2)
+    ├── sha256.666... (config.json   of artifact 2)
+    ├── sha256.777... (layer         of artifact 2)
+    └── sha256.888... (layer         of artifact 2)
 ```
 
-The manifest list in the `artefact-descriptor.json` contains the tags for the two manifests:
+The manifest list in the `artifact-descriptor.json` contains the tags for the two manifests:
 
 ```json
 {
   "schemaVersion": 1,
-  "artefacts": [
+  "artifacts": [
     {
       "repository": "component-descriptors/<name of first component>",
       "tag": "0.1.0",

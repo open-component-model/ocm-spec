@@ -1,15 +1,15 @@
 # `helmChart` &#8212; Kubernetes Helm Chart
 
-A Kubernetes installation resource representing a Helm chart, either stored as OCI artefact or as tar blob.
+A Kubernetes installation resource representing a Helm chart, either stored as OCI artifact or as tar blob.
 
 ## Format Variants
 
 So far, two technical representations are supported:
 
-- *OCI Artefact*
+- *OCI Artifact*
 
-  If stored as OCI artefact, the access type MUST either be
-  `ociArtefact` or the [OCI artefact blob format](ociArtefact.md#format-variants) must be
+  If stored as OCI artifact, the access type MUST either be
+  `ociArtifact` or the [OCI artifact blob format](ociArtifact.md#format-variants) must be
   used with an appropriate media type.
 
 - *Helm Tar Archive*
@@ -21,5 +21,5 @@ So far, two technical representations are supported:
 
 There is a dedicated downloader available, that always converts
 the helm chart blob into the appropriate filesystem representation
-required by Helm when downloading the artefact using the
+required by Helm when downloading the artifact using the
 command line interface.

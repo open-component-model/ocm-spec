@@ -72,7 +72,7 @@ Sign:
 ❯ ocm sign componentversions ocm-ta-flow-ca \
     -s ww-ocm-sig -K private-key.pem -k public-key.pem
 applying to version "ghcr.io/sap/ocm-ta-flow:0.0.1"...
-  resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtefactDigest/v1]
+  resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtifactDigest/v1]
 successfully signed ghcr.io/sap/ocm-ta-flow:0.0.1 (digest sha256:a990e44fc567e8668796a1ef343922ce88febb1fc6742518cd0bd12b89faa316)
 ```
 
@@ -106,7 +106,7 @@ After that we have this directory structure:
 
 ❯ tar ztf ocm-ta-flow-ca-ta.tar.gz | tree --fromfile .
 .
-├── artefact-index.json
+├── artifact-index.json
 └── blobs
     ├── sha256.46f15984e3f2c7d779199e2e649d24d9ad8357404a6195ca73733097c622b5eb
     ├── sha256.f338df813e8b19652565a4a31407fae7a5a52fb162a6e867c2caab53d77c02cb
@@ -131,7 +131,7 @@ We can verify the content:
 
 ```bash
 ❯ tar ztf hello-world.tar.gz
-artefact-descriptor.json
+artifact-descriptor.json
 blobs
 blobs/sha256.2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488
 blobs/sha256.5305f40ab0c9c75856e5ffe193f47253e53696305f0da5ec44dacadec342328d
@@ -139,12 +139,12 @@ blobs/sha256.92360c1eaf0032a860dddb1e3cdc16b27bdfec509c23de434dbe53d3d35bed9d
 blobs/sha256.df9b9388f04ad6279a7410b85cedfdcb2208c0a003da7ab5613af71079148139
 ```
 
-#### Add artefact to the component transfer archive
+#### Add artifact to the component transfer archive
 
 ```bash
-❯ ocm oci artefacts transfer ./hello-world.tar.gz ./ocm-ta-flow-ca-ta.tar.gz
+❯ ocm oci artifacts transfer ./hello-world.tar.gz ./ocm-ta-flow-ca-ta.tar.gz
 copying :1.0.7 to :1.0.7...
-copied 1 from 1 artefact(s)
+copied 1 from 1 artifact(s)
 ```
 
 #### Advanced SHA256 check
@@ -168,7 +168,7 @@ ok: sha256.df9b9388f04ad6279a7410b85cedfdcb2208c0a003da7ab5613af71079148139
 
 ### Transfer
 
-Once the artefact is copied, we can use OCM to verify its signature, and extract
+Once the artifact is copied, we can use OCM to verify its signature, and extract
 it.
 
 #### Verify
@@ -185,6 +185,6 @@ We can verify the signing key with:
 ```bash
 ❯ ocm verify componentversion --signature ww-ocm-sig --public-key=public-key.pem  ./ocm-ta-flow-ca-ta.tar.gz
 applying to version "ghcr.io/sap/ocm-ta-flow:0.0.1"...
-  resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtefactDigest/v1]
+  resource 0:  "name"="server": digest sha256:2f97e43aea52dede928ccd2e1bcd75325b157bd2d5e893e3cd179e6eb5de1488[ociArtifactDigest/v1]
 successfully verified ghcr.io/sap/ocm-ta-flow:0.0.1 (digest sha256:a990e44fc567e8668796a1ef343922ce88febb1fc6742518cd0bd12b89faa316)
 ```

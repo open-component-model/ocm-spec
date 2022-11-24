@@ -4,25 +4,25 @@
 
 ## Overview
 
-The _Open Component Model (OCM)_ is an open standard to describe software-bill-of-deliveries (SBOD). OCM is a technology-agnostic and machine-readable format focused on the software artefacts that must be delivered for software products.
+The _Open Component Model (OCM)_ is an open standard to describe software-bill-of-deliveries (SBOD). OCM is a technology-agnostic and machine-readable format focused on the software artifacts that must be delivered for software products.
 
 By providing a globally unique identity scheme, OCM can be employed throughout the entire software lifecycle management process, from build to compliance, to deployment.
 
 It can be used as a common basis and lingua franca for the exchange, access and
-transport of delivery artefacts between different tools, processes and environments.
+transport of delivery artifacts between different tools, processes and environments.
 
-To support fenced or otherwise restricted environments, OCM provides a mechanism to transparently adapt access information for artefacts during transport. This means that applications accessing the component information in a particular environment always receive location specific access information that is valid for their own environment.
+To support fenced or otherwise restricted environments, OCM provides a mechanism to transparently adapt access information for artifacts during transport. This means that applications accessing the component information in a particular environment always receive location specific access information that is valid for their own environment.
 
-OCM is a technology-agnostic model to describe artefacts and the specific means by which to access their content. In this context we understand technology-agnostic to mean the following:
+OCM is a technology-agnostic model to describe artifacts and the specific means by which to access their content. In this context we understand technology-agnostic to mean the following:
 
-- the model can describe any artefact regardless of its technology
-- artefacts can be stored using any storage backend technology or repository
+- the model can describe any artifact regardless of its technology
+- artifacts can be stored using any storage backend technology or repository
 - the model information can be stored using any storage backend technology or repository
 
 ## Comparison with Software-Bill-of-Materials
 
 OCM is (explicitly) not meant to describe the complete bill of materials of a software product,
-in relation to the packages those delivery artefacts are composed of. This makes OCM a simpler model in comparison with standards such as [CycloneDX](https://cyclonedx.org/). OCM provides detailed and unambiguous specifications with respect to delivery and deployment related aspects such as transport and signing of software artefacts. Further information about artefacts (like typical SBOMs) can be added using labels, additional resources or even
+in relation to the packages those delivery artifacts are composed of. This makes OCM a simpler model in comparison with standards such as [CycloneDX](https://cyclonedx.org/). OCM provides detailed and unambiguous specifications with respect to delivery and deployment related aspects such as transport and signing of software artifacts. Further information about artifacts (like typical SBOMs) can be added using labels, additional resources or even
 component versions.
 
 ## Storage Technology
@@ -31,7 +31,7 @@ The Open Component Model is an interpretation layer on top of existing storage t
 
 To use a backend storage technology as an OCM repository it is necessary to provide:
 
-- an implementation for accessing artefacts in the desired backend and mapping them to a blob format
+- an implementation for accessing artifacts in the desired backend and mapping them to a blob format
 - a specification for a [mapping scheme](doc/specification/mapping/README.md)
   describing how to map the elements of the Open Component Model to the supported
   elements of the backend storage technology

@@ -19,7 +19,7 @@ type: ociRegistry/v1
 
 ### Description
 
-Artefact namespaces/repositories of the API layer will be mapped to an OCI
+Artifact namespaces/repositories of the API layer will be mapped to an OCI
 registry according to the [OCI distribution specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md).
 
 Supported specification version is `v1`.
@@ -91,8 +91,8 @@ access specification.
 
 ## Blob Mappings
 
-Local blobs with an OCI artefact media type will implicitly be mapped to a regular
-artefact. The *reference hint* provided by the specification of the local access
+Local blobs with an OCI artifact media type will implicitly be mapped to a regular
+artifact. The *reference hint* provided by the specification of the local access
 is used to compose a repository name of the form:
 
 <div align="center">
@@ -101,7 +101,7 @@ is used to compose a repository name of the form:
 
 </div>
 
-Without a given tag, the provided external access specification (of type `ociArtefact`)
+Without a given tag, the provided external access specification (of type `ociArtifact`)
 uses a digest based reference.
 
 Additional blob transformations can be added by registering appropriate blob handlers.

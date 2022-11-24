@@ -1,9 +1,9 @@
 # `ociImage` &#8212; OCI Image or Image Index
 
-An OCI artefact that contains an OCI container image.
+An OCI artifact that contains an OCI container image.
 The content is intended to be used as container image.
 
-A general [ociArtefact](ociArtefact.md) may describe
+A general [ociArtifact](ociArtifact.md) may describe
 any kind of content, depending on the media type of
 its config blob (see also [`helmChart`](helmChart.md)).
 
@@ -12,10 +12,10 @@ image media types.
 
 ## Format Variants
 
-As special case for a general `ociArtefact` is uses
-the [`ociArtefact` blob format](ociArtefact.md#format-variants).
+As special case for a general `ociArtifact` is uses
+the [`ociArtifact` blob format](ociArtifact.md#format-variants).
 
 ## Special Support
 
-As special case for a general `ociArtefact` is uses
-the [`ociArtefact` special support](ociArtefact.md#special-support).
+As special case for a general `ociArtifact` is uses
+the [`ociArtifact` special support](ociArtifact.md#special-support).
