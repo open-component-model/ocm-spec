@@ -1,7 +1,7 @@
 # Getting Started
 
-This chapter describes a walkthrough:
-- [Getting Started](#getting-started)
+This chapter walks you through some basic steps, in order to get you started with OCM, the concepts and the OCM CLI:
+
   - [Prerequisites](#prerequisites)
   - [Creating a component version](#creating-a-component-version)
     - [Creating a component archive](#creating-a-component-archive)
@@ -19,15 +19,9 @@ This chapter describes a walkthrough:
 
 ## Prerequisites
 
-For the following sections you will need the OCM Command Line Interface (CLI) to interact with component versions and registries. Download a binary from [here](https://github.com/open-component-model/ocm/releases).
-
-The link follows this pattern: https://github.com/open-component-model/ocm/releases/download/<VERSION>/ocm-<PLATFORM>.tgz
-
-You will need access to an OCM repository. You can use any existing OCI registry for which you have write permission (e.g. Github Packages).
-
-An OCM repository based on an OCI registry is identified by a leading OCI repository prefix. For example: `ghcr.io/<YOUR-ORG>/ocm`.
-
-You will have to configure credentials for the CLI to access the registry. The easiest way to do this is to reuse the docker configuration:
+- OCM Command Line Interface (CLI) to interact with component versions and registries. You can download it from [https://github.com/open-component-model/ocm/releases](https://github.com/open-component-model/ocm/releases).
+- Access to an OCM repository. You can use any existing OCI registry for which you have write permission (e.g. Github Packages). An OCM repository based on an OCI registry is identified by a leading OCI repository prefix. For example: `ghcr.io/<YOUR-ORG>/ocm`.
+- Credentials for the CLI to access the registry. The easiest way to do this is to reuse the docker configuration:
 
 You can create a file named `.ocmconfig` in your home directory with the following content:
 
@@ -49,9 +43,9 @@ configurations:
 
 ## Creating a component version
 
-Composition of component versions consists of creating a component archive. You can use the `ocm` CLI tool to create this. A component archive contains references, resources and sources.
+The first step when creating a new component versions is to create a component archive. You can use the `ocm` CLI tool for this. Such a component archive contains references, resources and sources.
 
-For convenience we define the following SHELL variables
+For convenience, we propose to define the following SHELL variables
 ```bash
 PROVIDER="acme.org"
 ORG="acme"
@@ -60,12 +54,11 @@ VERSION="1.0.0"
 CA_ARCHIVE="ca-hello-world"
 ```
 
-Let's asssume that we create a component based on a github source
-repository.
+Let's asssume that we create a component based on a github source repository.
 
 ### Creating a component archive
 
-First we create an empty component archive.
+First, we will create an empty component archive using the following command:
 
 <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_create_componentarchive.md">
 <pre>
@@ -83,7 +76,7 @@ ca-hello-world
 └── component-descriptor.yaml
 ```
 
-The generated component descriptor is already configured:
+The resulting component descriptor is already configured:
 
 ```yaml
 meta:
@@ -100,13 +93,13 @@ component:
 The [component descriptor](../../specification/elements/README.md#component-descriptor)
 is stored as a yaml file named `component-descriptor.yaml`. It describes the content of a component version.
 
-By default a directory structure is created. Using the option `--type` you can select other target formats (tar, tgz).
+By default, a directory structure is created. Using the option `--type` you can select other target formats (tar, tgz).
 
 </details>
 
 ### Adding a local resource
 
-The next step is to add resources. First we want to add a helm chart located in a local folder named `helmchart`.
+The next step is to add resources. First, we want to add a helm chart stored in a local folder named `helmchart`.
 
 ```
 $ ocm add resource $CA_ARCHIVE --type helmChart --name deploy --version ${VERSION} --inputType helm --inputPath ./helmchart
@@ -150,12 +143,12 @@ component:
   sources: []
   componentReferences: []
 ```
-Because we use content from the local environment it is directly packaged in the component archive using the [access method](../../specification/elements/README.md#artifact-access) [`local`](../../appendix/B/localBlob.md).
+Because we use content from the local environment, it is directly packaged into component archive using the [access method](../../specification/elements/README.md#artifact-access) [`local`](../../appendix/B/localBlob.md).
 </details>
 
 ### Adding an image reference
 
-As a next step we add the image already stored in an image registry (e.g. by a Docker build).
+As a next step, we add an image, which is stored in an image registry (e.g. by a previous Docker build).
 
 ```
 $ ocm add resource $CA_ARCHIVE --type ociImage --name image --version ${VERSION} --accessType ociArtefact --reference gcr.io/google_containers/echoserver:1.10
@@ -202,7 +195,7 @@ component:
 
 ### Using a resources file
 
-You can simplify the procedure by using a text file as input. Create a file `resources.yaml`:
+You could simplify the previous two steps (adding helm chart and image as resources) by using a text file as input. For that, you could create a file `resources.yaml`, which should look like this:
 
 ```
 ---
@@ -220,7 +213,7 @@ access:
   imageReference: gcr.io/google_containers/echoserver:1.10
 ```
 
-Then add the resources using the command:
+Then add the resources using the following command:
 
 ```shell
 $ ocm add resources $CA_ARCHIVE resources.yaml
@@ -235,7 +228,7 @@ adding resource ociImage: "name"="image","version"="1.0.0"...
 ```
 
 ### Uploading component versions
-To upload the component version to an OCI registry you can transfer the created component archive using the command:
+To upload the component version to an OCI registry, you can transfer the component archive using the command:
 
 ```shell
 OCMREPO=ghcr.io/acme
@@ -247,11 +240,11 @@ transferring version "github.com/acme/helloworld:1.0.0"...
 ```
 ### Bundling of composed components
 
-If you have created multiple components according to the instructions above you can bundle
+If you have created multiple components according to the instructions above, you can bundle
 them into a single archive entity. This requires creating a transport archive. You can add
-arbitrary numbers of component versions. You can also push a transport archive to an OCM
-repository (a transport achive is also an OCM repository and can be used as source or target
-for transport operations).
+any number of component versions. You can also push a transport archive to an OCM
+repository. Note that a transport achive is also an OCM repository and can be used as source or target
+for transport operations.
 
 ```shell
 $ CTF_ARCHIVE=ctf-hello-world
@@ -264,10 +257,12 @@ transferring version "github.com/acme/helloworld:1.0.0"...
 ```
 
 <details><summary>What happened?</summary>
-The created transport archive contains an index file `artifact-index.json` and a `blobs`
-directory. The index file contains the list of component version artifacts in this
-archive. The component artifacts are stored in OCI format. The component descriptor is
+The resulting transport archive contains an index file `artifact-index.json` and a `blobs`
+directory. The index file contains the list of component version artifacts in this archive. 
+The component artifacts are stored in OCI format. The component descriptor is
 now stored as a blob. It can be identified by its content type `application/vnd.ocm.software.component-descriptor.v2+yaml+tar`.
+
+**TODO**: The above text and the stuff below needs to be explained better. It's kinda hard to relate both. Suggestion: Explain each of the trees / JSONs below with a specific short paragraph.
 
 ```shell
 $ tree ${CTF_ARCHIVE}
@@ -351,14 +346,14 @@ meta:
 ## Displaying and Examining component versions
 
 ### Listing component versions
-To show the component stored in a component archive (without looking the file syetem structure) the `get componentversion` command can be used.
+To show the component stored in a component archive (without looking the file system structure), the `get componentversion` command can be used.
 ```shell
 $ ocm get componentversion ${CA_ARCHIVE} 
 COMPONENT                  VERSION PROVIDER
 github.com/acme/helloworld 1.0.0   acme.org
 ```
 
-If you want to show the component descriptor of the shown component versions you can use the output format option `-o yaml`
+If you want to see the component descriptor of the displayed component version, you can use the output format option `-o yaml`
 ```shell
 $ ocm get componentversion ${CA_ARCHIVE} -o yaml
 ---
@@ -377,16 +372,16 @@ element:
     configuredSchemaVersion: v2
 ```
 
-You also can display component versions in any OCM repository with this command. 
+You also can display component versions in any OCM repository with this command:
 ```shell
 $ ocm get cv ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo
 COMPONENT                         VERSION   PROVIDER
 github.com/mandelsoft/ocmhelmdemo 0.1.0-dev mandelsoft
 ```
-If you refer to content of a component repository the component name can be appended to the repository specification separated by `//`:  
-In the example above `ghcr.io/mandelsoft/cnudie` is the OCM repository, wheras `github.com/mandelsoft/ocmhelmdemo` is the component stored in this component repository. Optionally a dedicated version can be appended, separated by a colon (`:`). If no version is specified all, component versions will be displayed. 
+If you refer to content of a component repository, the component name can be appended to the repository specification separated by `//`:  
+In the example above, `ghcr.io/mandelsoft/cnudie` is the OCM repository, whereas `github.com/mandelsoft/ocmhelmdemo` is the component stored in this component repository. Optionally, a dedicated version can be appended, separated by a colon (`:`). If no version is specified, all component versions will be displayed. 
 
-With the option `--recursive` it i possible to show the complete component version closure including the referenced component versions.
+With the option `--recursive`, it is possible to show the complete component version closure including the referenced component versions.
 ```shell
 $ ocm get cv ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo --recursive
 REFERENCEPATH                               COMPONENT                              VERSION   PROVIDER   IDENTITY
@@ -394,7 +389,7 @@ REFERENCEPATH                               COMPONENT                           
 github.com/mandelsoft/ocmhelmdemo:0.1.0-dev github.com/mandelsoft/ocmhelminstaller 0.1.0-dev mandelsoft "name"="installer"
 ```
 
-To get a tree view you can add the option `-o tree`.
+To get a tree view, you can add the option `-o tree`.
 
 ```shell
 $ ocm get componentversion ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo --recursive -o tree
@@ -405,7 +400,7 @@ NESTING    COMPONENT                              VERSION   PROVIDER   IDENTITY
 
 ### Listing resources of a component version
 
-To list the resources found in a compopnent version tree the command `ocm get resources` can be used.
+To list the resources found in a component version tree, the command `ocm get resources` can be used:
 
 ```shell
 $ ocm get resources ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo:0.1.0-dev --recursive -o tree
