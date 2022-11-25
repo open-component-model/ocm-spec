@@ -2,6 +2,7 @@
 
 This chapter walks you through some basic steps, in order to get you started with OCM, the concepts and the OCM CLI:
 
+- [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Creating a component version](#creating-a-component-version)
     - [Creating a component archive](#creating-a-component-archive)
@@ -258,7 +259,7 @@ transferring version "github.com/acme/helloworld:1.0.0"...
 
 <details><summary>What happened?</summary>
 The resulting transport archive contains an index file `artifact-index.json` and a `blobs`
-directory. The index file contains the list of component version artifacts in this archive. 
+directory. The index file contains the list of component version artifacts in this archive.
 The component artifacts are stored in OCI format. The component descriptor is
 now stored as a blob. It can be identified by its content type `application/vnd.ocm.software.component-descriptor.v2+yaml+tar`.
 
@@ -348,7 +349,7 @@ meta:
 ### Listing component versions
 To show the component stored in a component archive (without looking the file system structure), the `get componentversion` command can be used.
 ```shell
-$ ocm get componentversion ${CA_ARCHIVE} 
+$ ocm get componentversion ${CA_ARCHIVE}
 COMPONENT                  VERSION PROVIDER
 github.com/acme/helloworld 1.0.0   acme.org
 ```
@@ -378,8 +379,8 @@ $ ocm get cv ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo
 COMPONENT                         VERSION   PROVIDER
 github.com/mandelsoft/ocmhelmdemo 0.1.0-dev mandelsoft
 ```
-If you refer to content of a component repository, the component name can be appended to the repository specification separated by `//`:  
-In the example above, `ghcr.io/mandelsoft/cnudie` is the OCM repository, whereas `github.com/mandelsoft/ocmhelmdemo` is the component stored in this component repository. Optionally, a dedicated version can be appended, separated by a colon (`:`). If no version is specified, all component versions will be displayed. 
+If you refer to content of a component repository, the component name can be appended to the repository specification separated by `//`:
+In the example above, `ghcr.io/mandelsoft/cnudie` is the OCM repository, whereas `github.com/mandelsoft/ocmhelmdemo` is the component stored in this component repository. Optionally, a dedicated version can be appended, separated by a colon (`:`). If no version is specified, all component versions will be displayed.
 
 With the option `--recursive`, it is possible to show the complete component version closure including the referenced component versions.
 ```shell
@@ -416,6 +417,139 @@ COMPONENTVERSION                                           NAME        VERSION  
 
 
 ### Downloading resources of a component version
+You can download entire component versions, individual resources or
+artifacts using the `ocm download` command:
+
+```shell
+$ ocm download resource ghcr.io/jensh007//github.com/acme/helloworld:1.0.0 chart -O helmchart.tgz
+helmchart.tgz: 4747 byte(s) written
+```
+
+<details><summary>What happened?</summary>
+The file helmchart.tgz was downloaded.
+
+```shell
+$ tar xvf helmchart.tgz
+x index.json
+x oci-layout
+x blobs
+x blobs/sha256.1c1af427d477202d102c141f27d3be0f5b6595e2948a82ec58987560c1915fea
+x blobs/sha256.47eacca4cbed4b63c17e044d3c87a33d9bd1f88a9e76fa0ab051e48b0a3cd7ec
+x blobs/sha256.ea8e5b44cd1aff1f3d9377d169ad795be20fbfcd58475a62341ed8fb74d4788c
+
+$ jq . index.json
+{
+  "schemaVersion": 2,
+  "mediaType": "application/vnd.oci.image.index.v1+json",
+  "manifests": [
+    {
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "digest": "sha256:47eacca4cbed4b63c17e044d3c87a33d9bd1f88a9e76fa0ab051e48b0a3cd7ec",
+      "size": 410,
+      "annotations": {
+        "cloud.gardener.ocm/tags": "0.1.0",
+        "org.opencontainers.image.ref.name": "0.1.0",
+        "software.ocm/tags": "0.1.0"
+      }
+    }
+  ],
+  "annotations": {
+    "cloud.gardener.ocm/main": "sha256:47eacca4cbed4b63c17e044d3c87a33d9bd1f88a9e76fa0ab051e48b0a3cd7ec",
+    "software.ocm/main": "sha256:47eacca4cbed4b63c17e044d3c87a33d9bd1f88a9e76fa0ab051e48b0a3cd7ec"
+  }
+}
+
+```
+</details>
+
+
+```shell
+$ ocm download resource ghcr.io/jensh007//github.com/acme/helloworld:1.0.0 image -O echoserver.tgz
+echoserver.tgz: 46148828 byte(s) written
+
+```
+<details><summary>What happened?</summary>
+The file echoserver.tgz was downloaded.
+
+```shell
+$ tar xvf echoserver.tgz
+x index.json
+x oci-layout
+x blobs
+x blobs/sha256.06679f57dba70a6875e4ae5843ba2483ecab6ec48182ca8720ddc5b1863bad52
+x blobs/sha256.28c6282d04f63710146ace6c7be14a40c7ee6a71a2f91316928469e4aafe0d92
+x blobs/sha256.2d3e25b9e93ad26878862abee5ed02683206f6f6d57e311cdd1dedf3662b61c8
+x blobs/sha256.365ec60129c5426b4cf160257c06f6ad062c709e0576c8b3d9a5dcc488f5252d
+x blobs/sha256.4b12f3ef8e65aaf1fd77201670deb98728a8925236d8f1f0473afa5abe9de119
+x blobs/sha256.76d46396145f805d716dcd1607832e6a1257aa17c0c2646a2a4916e47059dd54
+x blobs/sha256.7fd34bf149707ca78b3bb90e4ba68fe9a013465e5d03179fb8d3a3b1cac8be27
+x blobs/sha256.b0e3c31807a2330c86f07d45a6d80923d947a8a66745a2fd68eb3994be879db6
+x blobs/sha256.bc391bffe5907b0eaa04e96fd638784f77d39f1feb7fbe438a1dae0af2675205
+x blobs/sha256.cb5c1bddd1b5665e1867a7fa1b5fa843a47ee433bbb75d4293888b71def53229
+x blobs/sha256.d5157969118932d522396fe278eb722551751c7aa7473e6d3f03e821a74ee8ec
+x blobs/sha256.e0962580d8254d0b1ef35006d7e2319eb4870e63dc1f9573d2406c7c47d442d2
+
+jq . index.json
+{
+  "schemaVersion": 2,
+  "mediaType": "application/vnd.oci.image.index.v1+json",
+  "manifests": [
+    {
+      "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+      "digest": "sha256:cb5c1bddd1b5665e1867a7fa1b5fa843a47ee433bbb75d4293888b71def53229",
+      "size": 2400,
+      "annotations": {
+        "cloud.gardener.ocm/tags": "1.10",
+        "org.opencontainers.image.ref.name": "1.10",
+        "software.ocm/tags": "1.10"
+      }
+    }
+  ],
+  "annotations": {
+    "cloud.gardener.ocm/main": "sha256:cb5c1bddd1b5665e1867a7fa1b5fa843a47ee433bbb75d4293888b71def53229",
+    "software.ocm/main": "sha256:cb5c1bddd1b5665e1867a7fa1b5fa843a47ee433bbb75d4293888b71def53229"
+  }
+}
+```
+</details>
+
+You can download artifacts, e.g. OCI images using `ocm download artifacts` command:
+
+```shell
+$ ocm download artefact ghcr.io/jensh007/github.com/acme/helloworld/echoserver:0.1.0 -O echoserver
+echoserver: downloaded
+```
+
+<details><summary>What happened?</summary>
+The OCI image echoserver was downloaded.
+
+```shell
+$ tree echoserver
+echoserver
+├── blobs
+│   ├── sha256.1c1af427d477202d102c141f27d3be0f5b6595e2948a82ec58987560c1915fea
+│   ├── sha256.47eacca4cbed4b63c17e044d3c87a33d9bd1f88a9e76fa0ab051e48b0a3cd7ec
+│   └── sha256.ea8e5b44cd1aff1f3d9377d169ad795be20fbfcd58475a62341ed8fb74d4788c
+├── index.json
+└── oci-layout
+```
+</details>
+
+You can download entire component versions using the `ocm download componentversion` command
+```shell
+ocm download componentversions ghcr.io/jensh007//github.com/acme/helloworld:1.0.0 -O helloworld
+
+TODO!!
+Error: all mode not supported
+```
+
+<details><summary>What happened?</summary>
+The component version  was downloaded.
+
+```shell
+$ tree helloworld
+```
+</details>
 
 
 ## Transporting OCM component versions
