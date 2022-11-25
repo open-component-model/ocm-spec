@@ -16,6 +16,7 @@ This chapter walks you through some basic steps, in order to get you started wit
     - [Listing resources of a component version](#listing-resources-of-a-component-version)
     - [Downloading resources of a component version](#downloading-resources-of-a-component-version)
   - [Transporting OCM component versions](#transporting-ocm-component-versions)
+    - [Transferring a transport archive to an OCI registry](#transferring-a-transport-archive-to-an-oci-registry)
   - [Signing component versions](#signing-component-versions)
 
 ## Prerequisites
@@ -553,5 +554,26 @@ $ tree helloworld
 
 
 ## Transporting OCM component versions
+
+We saw already how to bundle multiple component version into a transport
+archive. The transport archive is the entity you can transfer between
+component repositories. This is used to transfer entire deployments between
+locations. During transfer you can decide if component references should be
+included as local blobs and if references should be followed (by value transport) so that the transitive closure in included (recursive transport).
+Examples how the transport archive looks like can be found in [appendix A](../../appendix/A/CTF/README.md).
+
+To perform a transport you can use the command `ocm transfer commontransportarchive`:
+
+```shell
+$ transfer commontransportarchive ./mydir
+transferring component "github.com/acme/helloworld"...
+  transferring version "github.com/acme/helloworld:1.0.0"...
+TODO: complete this!
+
+```
+
+### Transferring a transport archive to an OCI registry
+
+
 
 ## Signing component versions
