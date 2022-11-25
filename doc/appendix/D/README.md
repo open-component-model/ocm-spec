@@ -6,7 +6,7 @@ Signing of a component version consists of several steps:
 1. digests for all reference component versions are determined and put
    into the dedicated reference element of the component descriptor.
    This is done by recursively following this procedure, but without the signing step.
-2. digests for all described artefacts are determined and put into the dedicated
+2. digests for all described artifacts are determined and put into the dedicated
    element entry in the component descriptor (sources, resources)
 3. the resulting component descriptor is [normalized](../../specification/formats/componentdescriptor_normalization.md)
    and a digest is calculated according to the selected digest algorithm. The resulting
@@ -17,7 +17,7 @@ Signing of a component version consists of several steps:
 
 The digest fields *MUST* be calculated during teh signing process and already existing
 digest fields *CAN NOT* be trusted. Resources have to be accessed and
-a digests has to be determined according to the combination of artefact
+a digests has to be determined according to the combination of artifact
 normalization and digest algorithm and verified against existing digests.
 Component version references have to be followed recursively, calculating the
 digest for the referenced component descriptor. If digests fields for resources or

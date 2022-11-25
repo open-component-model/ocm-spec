@@ -14,14 +14,14 @@ of the described element.
 
 - [Access Method Types](#access-method-types)
 
-  [Access methods](../elements/README.md#artefact-access) describe dedicated
+  [Access methods](../elements/README.md#artifact-access) describe dedicated
   technical ways how to access the blob
-  content of an [artefact](../elements/README.md#artefacts) described by an
+  content of an [artifact](../elements/README.md#artifacts) described by an
   [OCM component descriptor](../formats/compdesc/README.md). It is evaluated in
   the storage context used to read the component descriptor containing the
   access method description.
 
-- [Artefact Types](#artefact-types)
+- [Artifact Types](#artifact-types)
 
   The OCM component descriptor describes a set of resources, their type and
   meaning with attached meta and access information.
@@ -34,7 +34,7 @@ of the described element.
 
 - [Normalization Types](#normalization-types)
 
-  To calculate signatures, digests must be calculated for artefact content.
+  To calculate signatures, digests must be calculated for artifact content.
   
 ## Repository Types
 
@@ -89,15 +89,15 @@ There are two kinds of types:
 
 ## Access Method Types
 
-[Access methods](../elements/README.md#artefact-access) describe (and finally
+[Access methods](../elements/README.md#artifact-access) describe (and finally
 implement) dedicated technical ways how to
-access the blob content of an [artefact](../elements/README.md#artefacts)
+access the blob content of an [artifact](../elements/README.md#artifacts)
 described by an [OCM component descriptor](../elements/README.md#component-descriptor).
 
 They are an integral part of the [Open Component Model](../../../README.md). They always
 provide the link between a component version stored in some repository context,
 and the technical access of the described resources applicable for this
-context. Therefore, the access specification as well as the method of an artefact
+context. Therefore, the access specification as well as the method of an artifact
 may change when component versions are transported among repository contexts.
 
 In a dedicated context all used access methods must be known by the used tool
@@ -108,7 +108,7 @@ their implementations to support own local environments.
 Because of this extensibility, the names of access methods must be globally
 unique.
 
-Like for [artefact types](#artefact-types), there are two flavors
+Like for [artifact types](#artifact-types), there are two flavors
 of method names:
 
 - centrally provided access methods
@@ -118,7 +118,7 @@ of method names:
   access methods can be use across local organizational extension.
 
   These types use flat names following a camel case scheme with
-  the first character in lower case (for example `ociArtefact`).
+  the first character in lower case (for example `ociArtifact`).
 
   Their format is described by the following regexp:
 
@@ -167,15 +167,15 @@ v[0-9]+([a-z][a-z0-9]*)?
 ```
 
 Examples:
-- `ociArtefact/v1`
+- `ociArtifact/v1`
 - `myprotocol.acme.org/v1alpha1`
 
 If no version is specified, implicitly the version `v1` is assumed.
 
-The access method type is part of the access specification of an artefact
+The access method type is part of the access specification of an artifact
 in the component descriptor. The access method type may define
 additional specification attributes required to finally identify the
-concrete access path to the artefact blob.
+concrete access path to the artifact blob.
 
 For example, the access method `ociBlob` requires the OCI repository reference
 and the blob digest to be able to access the blob.
@@ -183,40 +183,40 @@ and the blob digest to be able to access the blob.
 Centrally defined access methods with their specification versions
 can be found in [appendix B](../../appendix/B/README.md).
 
-## Artefact Types
+## Artifact Types
 
 The [OCM component version](../elements/README.md#component-versions) describes
-a set of [artefacts](../elements/README.md#artefacts), their type and
+a set of [artifacts](../elements/README.md#artifacts), their type and
 meaning with attached meta, and access information.
 
-The formal type of an artefact uniquely specifies the
-logical interpretation of an artefact, its kind, independent of its
+The formal type of an artifact uniquely specifies the
+logical interpretation of an artifact, its kind, independent of its
 concrete technical representation.
 
 If there are different possible technical representation the
-[access method](../elements/README.md#artefact-access)
+[access method](../elements/README.md#artifact-access)
 returns the concrete format given by a media type used for the returned blob.
 
 For example, a helm chart (type `helmChart`) can be represented as
-OCI artefact or helm chart archive. Nevertheless, the technical meaning is
+OCI artifact or helm chart archive. Nevertheless, the technical meaning is
 to be a helm chart, even if represented as OCI image. The type `ociImage`
 describes an object that can be used as container image. So, although the
 technical representation might in both cases be an OCI image manifest, its
 semantics and use case is completely different. This is expressed
-by the chosen type of the artefact, which focuses on the semantics.
+by the chosen type of the artifact, which focuses on the semantics.
 
-The kind and logical interpretation of a technical artefact is basically
+The kind and logical interpretation of a technical artifact is basically
 encoded into a dedicated simple string.
-Because the interpretation of an artefact must be the same, independent
+Because the interpretation of an artifact must be the same, independent
 of the provisioning and consumption environment of a component version,
-the artefact type must be globally unique.
+the artifact type must be globally unique.
 The OCM defines a dedicated naming scheme to guarantee this uniqueness.
 
 There are two kinds of types:
 - centrally defined type names managed by the OCM organization
 
   These types use flat names following a camel case scheme with
-  the first character in lower case (for example `ociArtefact`).
+  the first character in lower case (for example `ociArtifact`).
 
   Their format is described by the following regexp:
 
@@ -269,7 +269,7 @@ the set of labels must be extensible.
 Because of this extensibility, the names of labels must be globally
 unique, also.
 
-Like for [artefact types](#artefact-types) there are two flavors
+Like for [artifact types](#artifact-types) there are two flavors
 of label names:
 
 - labels with a predefined meaning for the component model itself.
@@ -323,21 +323,21 @@ can be found in [appendix F](../../appendix/F/README.md).
 
 ## Normalization Types
 
-To be able to sign a component version, the content of described artefacts
-must be incorporated. Therefore, a digest for the artefact content must be
+To be able to sign a component version, the content of described artifacts
+must be incorporated. Therefore, a digest for the artifact content must be
 determined.
 
 By default, this digest is calculated based on the blob provided by the
-[access method](../elements/README.md#artefact-access)
-of an artefact. But there might be technology specific ways to uniquely identify
-the content for dedicated artefact types.
+[access method](../elements/README.md#artifact-access)
+of an artifact. But there might be technology specific ways to uniquely identify
+the content for dedicated artifact types.
 
-Therefore, together with the digest and its algorithm, an artefact normalization
+Therefore, together with the digest and its algorithm, an artifact normalization
 algorithm is kept in the [component descriptor](../elements/README.md#component-descriptor).
 
 The same problem appears for the component descriptor. It contains signature
 relevant information and volatile information (e.g. the
-[access specification](../elements/README.md#artefact-access)). Therefore, there
+[access specification](../elements/README.md#artifact-access)). Therefore, there
 is a [normalization for component descriptors](componentdescriptor_normalization.md), also.
 
 Normalization algorithm types may be versioned and SHOULD match the following regexp
@@ -346,7 +346,7 @@ Normalization algorithm types may be versioned and SHOULD match the following re
 [a-z][a-zA-Z0-9]*/v[0-9]+([a-z][a-z0-9]*)
 ```
 
-For example: `ociArtefactDigest/v1` or `jsonNormalisationV2`
+For example: `ociArtifactDigest/v1` or `jsonNormalisationV2`
 
-There are standardized normalization types for [artefacts](artefact_normalization.md)
+There are standardized normalization types for [artifacts](artifact_normalization.md)
 and [component descriptors](componentdescriptor_normalization.md).

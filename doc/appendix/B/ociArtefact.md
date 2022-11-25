@@ -1,10 +1,10 @@
-# `ociArtefact` &#8212; OCI Artefact Access
+# `ociArtifact` &#8212; OCI Artifact Access
 
 
 ### Synopsis
 
 ```
-type: ociArtefact/v1
+type: ociArtifact/v1
 ```
 
 Provided blobs use the following media type:
@@ -14,12 +14,12 @@ Provided blobs use the following media type:
 
 Depending on the repository appropriate docker legacy types might be used.
 
-The artefact content is provided in the [Artefact Set Format](../common/formatspec.md#artefact-set-archive-format).
+The artifact content is provided in the [Artifact Set Format](../common/formatspec.md#artifact-set-archive-format).
 The tag is provided as annotation.
 
 ### Description
 
-This method implements the access of an OCI artefact stored in an OCI registry.
+This method implements the access of an OCI artifact stored in an OCI registry.
 
 ### Specification Versions
 
@@ -31,6 +31,6 @@ The type specific specification fields are:
 
 - **`imageReference`** *string*
 
-  OCI image/artefact reference following the possible docker schemes:
-    - `<repo>/<artefact>:<digest>@<tag>`
-    - `<host>[<port>]/repo path>/<artefact>:<version>@<tag>`
+  OCI image/artifact reference following the possible docker schemes:
+    - `<repo>/<artifact>:<digest>@<tag>`
+    - `<host>[<port>]/repo path>/<artifact>:<version>@<tag>`

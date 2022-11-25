@@ -1,6 +1,6 @@
 # F. Label Definitions
 
-[Artefacts](../../specification/elements/README.md#artefacts),
+[Artifacts](../../specification/elements/README.md#artifacts),
 [references](../../specification/elements/README.md#aggregation) and
 [component versions](../../specification/elements/README.md#component-versions)
 feature [labels](../../specification/elements/README.md#labels)

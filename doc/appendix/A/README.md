@@ -20,7 +20,7 @@ Mappings for the following technologies are defined:
 - [FileSystem (CTF)](CTF/README.md) OCM content as filesystem structure
 - [AWS S3](S3/README.md)OCM content in AWS S3 buckets
 
-## Transport of Artefact Content
+## Transport of Artifact Content
 
 A [transport](../../introduction/transports.md) of a [component version](../../specification/elements/README.md#component-versions)
 from one [component repository](../../introduction/component_repository.md) into 
@@ -51,11 +51,11 @@ This enables:
   transport by just using a dedicated component repository.
 
 Therefore, *Component Repositories* MUST provide the possibility to store
-technical artefacts together with the component descriptors in the component
+technical artifacts together with the component descriptors in the component
 repository itself as so-called *local blobs*. Therefore, a dedicated general
 access type [`localBlob`](../B/localBlob.md)is used that MUST be implemented by all 
 repository implementations. This also allows to pack all component versions with their
-technical artefacts in a *Component Repository* as a completely self-contained
+technical artifacts in a *Component Repository* as a completely self-contained
 package, a typical requirement if you need to deliver your product into a fenced
 landscape.
 
