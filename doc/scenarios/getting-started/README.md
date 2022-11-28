@@ -21,16 +21,22 @@ This chapter walks you through some basic steps, in order to get you started wit
 
 ## Prerequisites
 
-- OCM Command Line Interface (CLI) to interact with component versions and registries. You can download it from [https://github.com/open-component-model/ocm/releases](https://github.com/open-component-model/ocm/releases).
+To follow the steps described in this section, you need
+
+- The OCM Command Line Interface (CLI) to interact with component versions and registries. You can download it from [https://github.com/open-component-model/ocm/releases](https://github.com/open-component-model/ocm/releases).
+  ```shell
+  $ curl -L https://github.com/open-component-model/ocm/releases/download/v0.1.0-alpha.1/ocm-linux-amd64.tgz -o - | tar -xz; mv ocm* ocm
+  ```
 - Access to an OCM repository. You can use any existing OCI registry for which you have write permission (e.g. Github Packages). An OCM repository based on an OCI registry is identified by a leading OCI repository prefix. For example: `ghcr.io/<YOUR-ORG>/ocm`.
 - Credentials for the CLI to access the registry. The easiest way to do this is to reuse the docker configuration:
 
-You can create a file named `.ocmconfig` in your home directory with the following content:
+  You can create a file named `.ocmconfig` in your home directory with the following content:
 
-<a href='.ocmconfig'>
-<pre>
-type: generic.config.ocm.software/v1
-configurations:
+  <a href='.ocmconfig'>
+
+  ```yaml
+  type: generic.config.ocm.software/v1
+  configurations:
   - type: credentials.config.ocm.software
     repositories:
       - repository:
@@ -40,14 +46,14 @@ configurations:
   - type: attributes.config.ocm.software
     attributes:
       cache: ~/.ocm/cache
-</pre>
-</a>
+  ```
+  </a>
 
 ## Creating a component version
 
 The first step when creating a new component versions is to create a component archive. You can use the `ocm` CLI tool for this. Such a component archive contains references, resources and sources.
 
-For convenience, we propose to define the following SHELL variables
+For convenience, we define the following SHELL variables:
 ```bash
 PROVIDER="acme.org"
 ORG="acme"
@@ -56,16 +62,19 @@ VERSION="1.0.0"
 CA_ARCHIVE="ca-hello-world"
 ```
 
-Let's asssume that we create a component based on a github source repository.
+If you specify values applicable for your setup, you can directly use the command lines shown below.
+
+Let's asssume that we create a component based on a GitHub source repository.
 
 ### Creating a component archive
 
 First, we will create an empty component archive using the following command:
 
 <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_create_componentarchive.md">
-<pre>
+
+```shell
 $ ocm create componentarchive ${COMPONENT} ${VERSION}  --provider ${PROVIDER} --file $CA_ARCHIVE
-</pre>
+```
 </a>
 
 <details><summary>What happened?</summary>
@@ -103,7 +112,9 @@ By default, a directory structure is created. Using the option `--type` you can 
 
 The next step is to add resources. First, we want to add a helm chart stored in a local folder named `helmchart`.
 
-```
+<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_add_resources.md">
+
+```shell
 $ ocm add resource $CA_ARCHIVE --type helmChart --name deploy --version ${VERSION} --inputType helm --inputPath ./helmchart
 
 processing resource (by options)...
@@ -112,7 +123,9 @@ processing resource (by options)...
 found 1 resources
 adding resource helmChart: "name"="deploy","version"="1.0.0"...
 ```
+</a>
 <details><summary>What happened?</summary>
+
 The generated file structure then is:
 
 ```shell
@@ -150,9 +163,9 @@ Because we use content from the local environment, it is directly packaged into 
 
 ### Adding an image reference
 
-As a next step, we add an image, which is stored in an image registry (e.g. by a previous Docker build).
+As a next step, we add an image, which is already stored in an image registry (e.g. by a previous Docker build/push).
 
-```
+```shell
 $ ocm add resource $CA_ARCHIVE --type ociImage --name image --version ${VERSION} --accessType ociArtefact --reference gcr.io/google_containers/echoserver:1.10
 
 processing resource (by options)...
@@ -160,8 +173,8 @@ processing resource (by options)...
     processing index 1
 found 1 resources
 adding resource ociImage: "name"="image","version"="1.0.0"...
-
 ```
+
 <details><summary>What happened?</summary>
 The component descriptor now has the content:
 
@@ -199,7 +212,7 @@ component:
 
 You could simplify the previous two steps (adding helm chart and image as resources) by using a text file as input. For that, you could create a file `resources.yaml`, which should look like this:
 
-```
+```yaml
 ---
 name: chart
 type: helmChart
@@ -232,6 +245,8 @@ adding resource ociImage: "name"="image","version"="1.0.0"...
 ### Uploading component versions
 To upload the component version to an OCI registry, you can transfer the component archive using the command:
 
+<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_transfer_componentarchive.md">
+
 ```shell
 OCMREPO=ghcr.io/acme
 $ ocm transfer componentarchive ./ca-hello-world ${OCMREPO}
@@ -240,6 +255,8 @@ transferring version "github.com/acme/helloworld:1.0.0"...
 ...resource 0(github.com/acme/helloworld/echoserver:0.1.0)...
 ...adding component version...
 ```
+</a>
+
 ### Bundling of composed components
 
 If you have created multiple components according to the instructions above, you can bundle
@@ -257,8 +274,8 @@ transferring version "github.com/acme/helloworld:1.0.0"...
 ...adding component version...
 1 versions transferred
 ```
-
 <details><summary>What happened?</summary>
+
 The resulting transport archive contains an index file `artifact-index.json` and a `blobs`
 directory. The index file contains the list of component version artifacts in this archive.
 The component artifacts are stored in OCI format. The component descriptor is
@@ -348,14 +365,20 @@ meta:
 ## Displaying and Examining component versions
 
 ### Listing component versions
+
 To show the component stored in a component archive (without looking the file system structure), the `get componentversion` command can be used.
+
+<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_get_componentversions.md">
+
 ```shell
 $ ocm get componentversion ${CA_ARCHIVE}
 COMPONENT                  VERSION PROVIDER
 github.com/acme/helloworld 1.0.0   acme.org
 ```
+</a>
 
 If you want to see the component descriptor of the displayed component version, you can use the output format option `-o yaml`
+
 ```shell
 $ ocm get componentversion ${CA_ARCHIVE} -o yaml
 ---
@@ -375,15 +398,18 @@ element:
 ```
 
 You also can display component versions in any OCM repository with this command:
+
 ```shell
 $ ocm get cv ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo
 COMPONENT                         VERSION   PROVIDER
 github.com/mandelsoft/ocmhelmdemo 0.1.0-dev mandelsoft
 ```
+
 If you refer to content of a component repository, the component name can be appended to the repository specification separated by `//`:
 In the example above, `ghcr.io/mandelsoft/cnudie` is the OCM repository, whereas `github.com/mandelsoft/ocmhelmdemo` is the component stored in this component repository. Optionally, a dedicated version can be appended, separated by a colon (`:`). If no version is specified, all component versions will be displayed.
 
 With the option `--recursive`, it is possible to show the complete component version closure including the referenced component versions.
+
 ```shell
 $ ocm get cv ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo --recursive
 REFERENCEPATH                               COMPONENT                              VERSION   PROVIDER   IDENTITY
@@ -404,6 +430,8 @@ NESTING    COMPONENT                              VERSION   PROVIDER   IDENTITY
 
 To list the resources found in a component version tree, the command `ocm get resources` can be used:
 
+<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_get_resources.md">
+
 ```shell
 $ ocm get resources ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo:0.1.0-dev --recursive -o tree
 COMPONENTVERSION                                           NAME        VERSION   IDENTITY TYPE        RELATION
@@ -415,16 +443,23 @@ COMPONENTVERSION                                           NAME        VERSION  
       ├─                                                   toiexecutor 0.1.0-dev          toiExecutor local
       └─                                                   toiimage    0.1.0-dev          ociImage    local
 ```
-
+</a>
 
 ### Downloading resources of a component version
+
 You can download entire component versions, individual resources or
 artifacts using the `ocm download` command:
+
+<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_resources.md">
 
 ```shell
 $ ocm download resource ghcr.io/jensh007//github.com/acme/helloworld:1.0.0 chart -O helmchart.tgz
 helmchart.tgz: 4747 byte(s) written
 ```
+</a>
+
+Because it is stored as OCI artifact in an OCI registry the filesystem format is the
+blob format used for OCI artifacts.
 
 <details><summary>What happened?</summary>
 The file helmchart.tgz was downloaded.
@@ -463,12 +498,23 @@ $ jq . index.json
 ```
 </details>
 
+If you want to use a format more suitable for the content technology, you could enable the usage
+of download handlers. If a download handler is available for the combination of artifact type and
+blob media type used to store the blob in the OCM repository it will convert the native blob format
+into a format suitable to the content technology:
+
+```shell
+$ ocm download resource -d ghcr.io/jensh007//github.com/acme/helloworld:1.0.0 chart -O helmchart.tgz
+helmchart.tgz: 4747 byte(s) written
+```
+
+For images the native  format is better suited.
 
 ```shell
 $ ocm download resource ghcr.io/jensh007//github.com/acme/helloworld:1.0.0 image -O echoserver.tgz
 echoserver.tgz: 46148828 byte(s) written
-
 ```
+
 <details><summary>What happened?</summary>
 The file echoserver.tgz was downloaded.
 
@@ -514,28 +560,6 @@ jq . index.json
 ```
 </details>
 
-You can download artifacts, e.g. OCI images using `ocm download artifacts` command:
-
-```shell
-$ ocm download artefact ghcr.io/jensh007/github.com/acme/helloworld/echoserver:0.1.0 -O echoserver
-echoserver: downloaded
-```
-
-<details><summary>What happened?</summary>
-The OCI image echoserver was downloaded.
-
-```shell
-$ tree echoserver
-echoserver
-├── blobs
-│   ├── sha256.1c1af427d477202d102c141f27d3be0f5b6595e2948a82ec58987560c1915fea
-│   ├── sha256.47eacca4cbed4b63c17e044d3c87a33d9bd1f88a9e76fa0ab051e48b0a3cd7ec
-│   └── sha256.ea8e5b44cd1aff1f3d9377d169ad795be20fbfcd58475a62341ed8fb74d4788c
-├── index.json
-└── oci-layout
-```
-</details>
-
 You can download entire component versions using the `ocm download componentversion` command
 ```shell
 ocm download componentversions ghcr.io/jensh007//github.com/acme/helloworld:1.0.0 -O helloworld
@@ -549,6 +573,33 @@ The component version  was downloaded.
 
 ```shell
 $ tree helloworld
+```
+</details>
+
+### Download of OCI Artifacts
+
+You can download OCI artifacts from an OCI registry, e.g. OCI images using `ocm download artifacts` command:
+
+<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_artifacts.md">
+
+```shell
+$ ocm download artefact ghcr.io/jensh007/github.com/acme/helloworld/echoserver:0.1.0 -O echoserver
+echoserver: downloaded
+```
+</a>
+
+<details><summary>What happened?</summary>
+The OCI image echoserver was downloaded.
+
+```shell
+$ tree echoserver
+echoserver
+├── blobs
+│   ├── sha256.1c1af427d477202d102c141f27d3be0f5b6595e2948a82ec58987560c1915fea
+│   ├── sha256.47eacca4cbed4b63c17e044d3c87a33d9bd1f88a9e76fa0ab051e48b0a3cd7ec
+│   └── sha256.ea8e5b44cd1aff1f3d9377d169ad795be20fbfcd58475a62341ed8fb74d4788c
+├── index.json
+└── oci-layout
 ```
 </details>
 
