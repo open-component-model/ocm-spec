@@ -15,8 +15,10 @@ This chapter walks you through some basic steps, in order to get you started wit
     - [Listing component versions](#listing-component-versions)
     - [Listing resources of a component version](#listing-resources-of-a-component-version)
     - [Downloading resources of a component version](#downloading-resources-of-a-component-version)
+    - [Download of OCI Artifacts](#download-of-oci-artifacts)
   - [Transporting OCM component versions](#transporting-ocm-component-versions)
   - [Signing component versions](#signing-component-versions)
+  - [Building a Component Version](#building-a-component-version)
 
 ## Prerequisites
 
@@ -275,12 +277,7 @@ transferring version "github.com/acme/helloworld:1.0.0"...
 ```
 <details><summary>What happened?</summary>
 
-The resulting transport archive contains an index file `artifact-index.json` and a `blobs`
-directory. The index file contains the list of component version artifacts in this archive.
-The component artifacts are stored in OCI format. The component descriptor is
-now stored as a blob. It can be identified by its content type `application/vnd.ocm.software.component-descriptor.v2+yaml+tar`.
-
-**TODO**: The above text and the stuff below needs to be explained better. It's kinda hard to relate both. Suggestion: Explain each of the trees / JSONs below with a specific short paragraph.
+The resulting transport archive has the following file structure:
 
 ```shell
 $ tree ${CTF_ARCHIVE}
@@ -291,7 +288,12 @@ ctf-hello-world
     ├── sha256.4f2080d8d41d2b52182f325f4f42d91e2581e3f2299f4f8631196801773ba869
     ├── sha256.63dc40246a604ef503f0361e14216ab7e002912697d09da49f50bba7091549f7
     └── sha256.b9bf66cb07b129d12956392dff6110874c37a1b06ed8dde88881f6de971ff293
+```
 
+The index file `artifact-index.json` describes the content of the transport archive. It
+contains a list of component version artifacts.
+
+```shell
 $ jq . ${CTF_ARCHIVE}/artefact-index.json
 {
   "schemaVersion": 1,
@@ -303,7 +305,12 @@ $ jq . ${CTF_ARCHIVE}/artefact-index.json
     }
   ]
 }
+```
 
+The content is stored as OCI artifacts. Component Version artifact repository names are prefixed by
+`component-descriptors`.  The component version is described by an OCI manifest.
+
+```shell
 $ jq . ${CTF_ARCHIVE}/blobs/sha256.63dc40246a604ef503f0361e14216ab7e002912697d09da49f50bba7091549f7
 {
   "schemaVersion": 2,
@@ -328,9 +335,11 @@ $ jq . ${CTF_ARCHIVE}/blobs/sha256.63dc40246a604ef503f0361e14216ab7e002912697d09
 }
 ```
 
+It contains the component-descriptor as layer which can be identified by its content type
+ `application/vnd.ocm.software.component-descriptor.v2+yaml+tar`.
+
 ```shell
 $ tar xvf ctf-hello-world/blobs/sha256.4f2080d8d41d2b52182f325f4f42d91e2581e3f2299f4f8631196801773ba869 -O - component-descriptor.yaml
-
 component:
   componentReferences: []
   name: github.com/acme/helloworld
@@ -358,6 +367,9 @@ component:
 meta:
   schemaVersion: v2
 ```
+
+The other layers describe the blobs for the local resources stored along with the component
+version. The digests can be seen in the `localReference` attributes of the component descriptor.
 
 </details>
 
@@ -561,18 +573,23 @@ jq . index.json
 
 You can download entire component versions using the `ocm download componentversion` command
 ```shell
-ocm download componentversions ghcr.io/jensh007//github.com/acme/helloworld:1.0.0 -O helloworld
-
-TODO!!
-Error: all mode not supported
+$ ocm download componentversions ${OCM_REPO}//${COMPONENT}:${VERSION} -O helloworld
+helloworld: downloaded
 ```
+
+The result is a component archive (which could be modified using `ocm add ...`commands).
 
 <details><summary>What happened?</summary>
 The component version  was downloaded.
 
 ```shell
-$ tree helloworld
+$ tree helloworld2
+├── blobs
+└── component-descriptor.yaml
 ```
+
+The blobs directory is empty because during the upload to the OCI registry the local helmchart blob was transformed to a regular OCI artifact. The access method in the component descriptor has been modified to ociArtifact.
+
 </details>
 
 ### Download of OCI Artifacts
@@ -582,7 +599,7 @@ You can download OCI artifacts from an OCI registry, e.g. OCI images using `ocm 
 <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_artifacts.md">
 
 ```shell
-$ ocm download artefact ghcr.io/jensh007/github.com/acme/helloworld/echoserver:0.1.0 -O echoserver
+$ ocm download artefact ${OCM_REPO}/${COMPONENT}:${VERSION} -O echoserver
 echoserver: downloaded
 ```
 </a>
@@ -752,3 +769,12 @@ applying to version "github.com/acme/helloworld:1.0.0"...
 successfully verified github.com/acme/helloworld:1.0.0 (digest sha256:46615253117b7217903302d172a45de7a92f2966f6a41efdcc948023ada318bc)
 ```
 
+
+
+## Building a Component Version
+* CTF as contract between build and build system
+* support for multiarch images in CTF / ocm CLI
+* do not push in build, create a CTF
+* allows e.g. signing before pushing
+* Makefile as example
+* resources.yaml can be templated
