@@ -15,6 +15,10 @@ This chapter walks you through some basic steps, in order to get you started wit
     - [Listing component versions](#listing-component-versions)
     - [Listing resources of a component version](#listing-resources-of-a-component-version)
     - [Downloading resources of a component version](#downloading-resources-of-a-component-version)
+      - [Downloading with download handlers](#downloading-with-download-handlers)
+      - [Downloading an image](#downloading-an-image)
+      - [Downloading an executable](#downloading-an-executable)
+      - [Downloading a full component version](#downloading-a-full-component-version)
     - [Download of OCI Artifacts](#download-of-oci-artifacts)
   - [Transporting OCM component versions](#transporting-ocm-component-versions)
   - [Signing component versions](#signing-component-versions)
@@ -509,15 +513,41 @@ $ jq . index.json
 ```
 </details>
 
+
+#### Downloading with download handlers
+
 If you want to use a format more suitable for the content technology, you could enable the usage
 of download handlers. If a download handler is available for the combination of artifact type and
 blob media type used to store the blob in the OCM repository it will convert the native blob format
 into a format suitable to the content technology:
 
+
 ```shell
 $ ocm download resource -d ghcr.io/jensh007//github.com/acme/helloworld:1.0.0 chart -O helmchart.tgz
 helmchart.tgz: 4747 byte(s) written
+````
+
+<details><summary>What happened?</summary>
+The downloaded archive is now a regular helm chart archive:
+
+```shell
+$ tar tvf echoserver-0.1.0.tgz
+-rw-r--r--  0 0      0         136 Nov 30 13:19 echoserver/Chart.yaml
+-rw-r--r--  0 0      0        1842 Nov 30 13:19 echoserver/values.yaml
+-rw-r--r--  0 0      0        1755 Nov 30 13:19 echoserver/templates/NOTES.txt
+-rw-r--r--  0 0      0        1802 Nov 30 13:19 echoserver/templates/_helpers.tpl
+-rw-r--r--  0 0      0        1848 Nov 30 13:19 echoserver/templates/deployment.yaml
+-rw-r--r--  0 0      0         922 Nov 30 13:19 echoserver/templates/hpa.yaml
+-rw-r--r--  0 0      0        2083 Nov 30 13:19 echoserver/templates/ingress.yaml
+-rw-r--r--  0 0      0         367 Nov 30 13:19 echoserver/templates/service.yaml
+-rw-r--r--  0 0      0         324 Nov 30 13:19 echoserver/templates/serviceaccount.yaml
+-rw-r--r--  0 0      0         385 Nov 30 13:19 echoserver/templates/tests/test-connection.yaml
+-rw-r--r--  0 0      0         349 Nov 30 13:19 echoserver/.helmignore
 ```
+</details>
+
+
+#### Downloading an image
 
 For images the native  format is better suited.
 
@@ -570,6 +600,72 @@ jq . index.json
 }
 ```
 </details>
+
+#### Downloading an executable
+The Open Component Model allows to publish platform-specific executables. Hereby the platform
+specification is by convention used as extra identity for the artifacts contained in the component
+version.
+
+Example:
+```shell
+$ ocm get componentversion ghcr.io/open-component-model/ocm//ocm.software/ocmcli:0.1.0-dev -o yaml
+...
+    resources:
+    - name: ocmcli
+      extraIdentity:
+        architecture: amd64
+        os: linux
+      relation: local
+      type: executable
+      version: 0.1.0-dev
+      access:
+        localReference: sha256:1a8827761f0aaa897d1d4330c845121c157e905d1ff300ba5488f8c423bc7cd9
+        mediaType: application/octet-stream
+        type: localBlob
+    - name: ocmcli
+      extraIdentity:
+        architecture: arm64
+        os: darwin
+      relation: local
+      type: executable
+      version: 0.1.0-dev
+      access:
+        localReference: sha256:9976b18dc16ae2b2b3fc56686f18f4896d44859f1ea6221f70e83517f697e289
+        mediaType: application/octet-stream
+        type: localBlob
+...
+```
+The resources have the same name and type `executable` but a different extra-identity. If a
+component version complies to this convention executables can directly be downloaded for the specified
+platform using the `-x` option. If only one executable is contained in the component version even the
+resource name can be omitted. Example:
+
+```shell
+ocm download resource -x --latest ghcr.io/open-component-model/ocm//ocm.software/ocmcli
+ocm: 52613730 byte(s) written
+```
+
+<details><summary>What happened?</summary>
+
+```shell
+$ ls -l
+total 51M
+-rwxr-xr-x  1 me staff  51M Nov 30 13:49 ocm
+$ file ocm
+ocm: Mach-O 64-bit executable arm64
+```
+
+With the option `--latest` the latest mathching component version is used for download. With the
+option `--constraints` version constraints can be configured. For example: `--constraints 0.1.x`
+will select all patch versions of `0.1`. Together with --latest the latest pacth version is
+selected.
+
+The option `-x` enables the executable download handler which provides the x-bit of the downloaded
+files. Additionally it filters all matching resources for executables and the correct platform.
+
+</details>
+
+#### Downloading a full component version
 
 You can download entire component versions using the `ocm download componentversion` command
 ```shell
