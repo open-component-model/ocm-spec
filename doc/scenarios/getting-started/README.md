@@ -22,7 +22,6 @@ This chapter walks you through some basic steps, in order to get you started wit
     - [Download of OCI Artifacts](#download-of-oci-artifacts)
   - [Transporting OCM component versions](#transporting-ocm-component-versions)
   - [Signing component versions](#signing-component-versions)
-  - [Building a Component Version](#building-a-component-version)
 
 ## Prerequisites
 
@@ -864,13 +863,3 @@ $ ocm verify componentversions --signature acme-sig --public-key=acme.pub ctf-he
 applying to version "github.com/acme/helloworld:1.0.0"...
 successfully verified github.com/acme/helloworld:1.0.0 (digest sha256:46615253117b7217903302d172a45de7a92f2966f6a41efdcc948023ada318bc)
 ```
-
-
-
-## Building a Component Version
-* CTF as contract between build and build system
-* support for multiarch images in CTF / ocm CLI
-* do not push in build, create a CTF
-* allows e.g. signing before pushing
-* Makefile as example
-* resources.yaml can be templated
