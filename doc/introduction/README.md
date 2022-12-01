@@ -1,7 +1,7 @@
 
 # 1 Introduction
 
-1.1 [Component Descriptor](component_version.md)<br>
+1.1 [Component Descriptor](component_versions.md)<br>
 1.2 [Component Repository](component_repository.md)<br>
 
 The definition, structure and management of software in larger enterprises often builds upon tools and processes, which
