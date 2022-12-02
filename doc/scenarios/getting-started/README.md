@@ -15,14 +15,13 @@ This chapter walks you through some basic steps to get started with OCM concepts
   - [List component versions](#list-component-versions)
   - [List the resources of a component version](#list-the-resources-of-a-component-version)
   - [Download the resources of a component version](#download-the-resources-of-a-component-version)
-    - [Downloading with download handlers](#downloading-with-download-handlers)
-    - [Downloading an image](#downloading-an-image)
-    - [Downloading an executable](#downloading-an-executable)
-    - [Downloading a full component version](#downloading-a-full-component-version)
+    - [Download with download handlers](#download-with-download-handlers)
+    - [Download an image](#download-an-image)
+    - [Download an executable](#download-an-executable)
+    - [Download a full component version](#download-a-full-component-version)
   - [Download OCI Artifacts](#download-oci-artifacts)
 - [Transport OCM component versions](#transport-ocm-component-versions)
 - [Sign component versions](#sign-component-versions)
-- [Building a Component Version](#building-a-component-version)
 
 ## Prerequisites
 
@@ -521,12 +520,8 @@ $ jq . index.json
 </details>
 
 
-#### Downloading with download handlers
+#### Download with download handlers
 
-If you want to use a format more suitable for the content technology, you could enable the usage
-of download handlers. If a download handler is available for the combination of artifact type and
-blob media type used to store the blob in the OCM repository it will convert the native blob format
-into a format suitable to the content technology:
 To use a format more suitable for the content technology, enable the usage
 of download handlers.
 
@@ -534,14 +529,13 @@ If a download handler is available for the artifact type and the
 blob media type used to store the blob in the OCM repository, it will convert the blob format
 into a more suitable format:
 
-
 ```shell
 $ ocm download resource -d ghcr.io/jensh007//github.com/acme/helloworld:1.0.0 chart -O helmchart.tgz
 helmchart.tgz: 4747 byte(s) written
 ````
 
 <details><summary>What happened?</summary>
-The downloaded archive is now a regular helm chart archive:
+The downloaded archive is now a regular Helm Chart archive:
 
 ```shell
 $ tar tvf echoserver-0.1.0.tgz
@@ -560,7 +554,7 @@ $ tar tvf echoserver-0.1.0.tgz
 </details>
 
 
-#### Downloading an image
+#### Download an image
 
 For example, for OCI images, the OCI format is more suitable:
 
@@ -614,9 +608,9 @@ jq . index.json
 ```
 </details>
 
-#### Downloading an executable
-The Open Component Model allows to publish platform-specific executables. Hereby the platform
-specification is by convention used as extra identity for the artifacts contained in the component
+#### Download an executable
+The Open Component Model allows to publish platform-specific executables. In this case, the platform
+specification is used by convention as extra identity for the artifacts that are contained in the component
 version.
 
 Example:
@@ -648,9 +642,9 @@ $ ocm get componentversion ghcr.io/open-component-model/ocm//ocm.software/ocmcli
         type: localBlob
 ...
 ```
-The resources have the same name and type `executable` but a different extra-identity. If a
-component version complies to this convention executables can directly be downloaded for the specified
-platform using the `-x` option. If only one executable is contained in the component version even the
+Note, the resources shown above have the same name and type `executable` but a different extra-identity. If a
+component version complies to this convention, executables can directly be downloaded for the specified
+platform with the use of the `-x` option. If only one executable is contained in the component version, the
 resource name can be omitted. Example:
 
 ```shell
@@ -668,27 +662,26 @@ $ file ocm
 ocm: Mach-O 64-bit executable arm64
 ```
 
-With the option `--latest` the latest mathching component version is used for download. With the
+With the option `--latest`, the latest mathching component version is used for download. With the
 option `--constraints` version constraints can be configured. For example: `--constraints 0.1.x`
-will select all patch versions of `0.1`. Together with --latest the latest pacth version is
+will select all patch versions of `0.1`. Together with `--latest` the latest patch version is
 selected.
 
-The option `-x` enables the executable download handler which provides the x-bit of the downloaded
+The option `-x` enables the executable download handler, which provides the x-bit of the downloaded
 files. Additionally it filters all matching resources for executables and the correct platform.
 
 </details>
 
-#### Downloading a full component version
+#### Download a full component version
 
 Download entire component versions using the `ocm download componentversion` command:
 
->>>>>>> 6caf3a4 (Rewording for clarity)
 ```shell
 $ ocm download componentversions ${OCM_REPO}//${COMPONENT}:${VERSION} -O helloworld
 helloworld: downloaded
 ```
 
-The result is a component archive. This can thens be modified using `ocm add ...` commands shown earlier.
+The result is a component archive. This can then be modified using the `ocm add ...` commands shown earlier.
 
 <details><summary>What happened?</summary>
 The component version was downloaded.
@@ -699,7 +692,7 @@ $ tree helloworld2
 └── component-descriptor.yaml
 ```
 
-The blobs directory is empty because, during the upload to the OCI registry, the local helmchart blob was transformed to a regular OCI artifact. The access method in the component descriptor has been modified to ociArtifact.
+The `blobs` directory is empty because, during the upload to the OCI registry, the local helmchart blob was transformed to a regular OCI artifact. The access method in the component descriptor has been modified to ociArtifact.
 
 </details>
 
@@ -880,13 +873,3 @@ $ ocm verify componentversions --signature acme-sig --public-key=acme.pub ctf-he
 applying to version "github.com/acme/helloworld:1.0.0"...
 successfully verified github.com/acme/helloworld:1.0.0 (digest sha256:46615253117b7217903302d172a45de7a92f2966f6a41efdcc948023ada318bc)
 ```
-
-
-
-## Building a Component Version
-* CTF as contract between build and build system
-* support for multiarch images in CTF / ocm CLI
-* do not push in build, create a CTF
-* allows e.g. signing before pushing
-* Makefile as example
-* resources.yaml can be templated
