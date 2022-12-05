@@ -8,8 +8,9 @@ This chapter walks you through some basic steps to get started with OCM concepts
   - [Create a component archive](#create-a-component-archive)
   - [Add a local resource](#add-a-local-resource)
   - [Add an image reference](#add-an-image-reference)
-  - [Use a resources file](#use-a-resources-file)
-  - [Upload component versions](#upload-component-versions)
+  - [Adding an image resource](#adding-an-image-resource)
+  - [Using a resources file](#using-a-resources-file)
+  - [Uploading component versions](#uploading-component-versions)
   - [Bundle composed components](#bundle-composed-components)
 - [Display and Examine component versions](#display-and-examine-component-versions)
   - [List component versions](#list-component-versions)
@@ -212,7 +213,60 @@ component:
 ```
 </details>
 
-### Use a resources file
+### Adding an image resource
+
+Alternatively you can add an image as a resource that was locally build by Docker in a
+previous step. It will be picked up from docker and added to the component archive.
+
+```shell
+$ ocm add resource ${CA_ARCHIVE} --name image --version ${VERSION} --type ociArtifact  --inputType docker --inputPath=echoserver:0.1.0
+
+processing resource (by options)...
+  processing document 1...
+    processing index 1
+found 1 resources
+adding resource ociImage: "name"="image","version"="1.0.0"...
+```
+
+<details><summary>What happened?</summary>
+The docker image is downloaded from the docker daemon, converted to an OCI artifact,
+and added as local artifact to the component version.
+The component descriptor now has the content:
+
+```yaml
+component:
+  componentReferences: []
+  name: github.com/acme/helloworld
+  provider: acme.org
+  repositoryContexts: []
+  resources:
+  - access:
+      localReference: sha256.56215627eddcd09db405ed8a503c53a7d47095599d493d31ce4f9b7e879bae3b
+      mediaType: application/vnd.oci.image.manifest.v1+tar+gzip
+      referenceName: github.com/acme/helloworld/echoserver:0.1.0
+      type: localBlob
+    name: chart
+    relation: local
+    type: helmChart
+    version: 1.0.0
+  - access:
+      localReference: sha256.65cf1c11b1a602bce59a6a7d71acd7b6a83394f3ebd1d2e2d4af5c9c8e64ea0d
+      mediaType: application/vnd.oci.image.manifest.v1+tar+gzip
+      referenceName: github.com/acme/helloworld/echoserver:0.1.0
+      type: localBlob
+    name: image
+    relation: local
+    type: ociImage
+    version: 1.0.0
+  sources: []
+  version: 1.0.0
+meta:
+  schemaVersion: v2
+```
+The generated blob sha256.65cf... is an archive describing the image according to the
+[OCI Image Layout Specification](https://github.com/opencontainers/image-spec/blob/v1.0.1/image-layout.md).
+
+### Using a resources file
 
 You could simplify the previous two steps (adding helm chart and image as resources) by using a text file as input. For that, you could create a file `resources.yaml`, which should look like this:
 
@@ -246,8 +300,26 @@ adding resource helmChart: "name"="chart","version"="<componentversion>"...
 adding resource ociImage: "name"="image","version"="1.0.0"...
 ```
 
-### Upload component versions
-To upload the component version to an OCI registry, transfer the component archive with the following command:
+For an image built with docker use this file:
+```shell
+---
+name: chart
+type: helmChart
+input:
+  type: helm
+  path: ./helmchart
+---
+name: image
+type: ociImage
+version: "1.0.0"
+input:
+  type: docker
+  repository: simpleserver
+  path: simpleserver:0.1.0
+```
+
+### Uploading component versions
+To upload the component version to an OCI registry, you can transfer the component archive using the command:
 
 <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_transfer_componentarchive.md">
 
@@ -727,7 +799,7 @@ echoserver
 ## Transport OCM component versions
 
 The section [Bundle composed components](#bundle-composed-components) explained how to bundle multiple component version into a transport
-archive. 
+archive.
 
 During the transfer, it is possible to include component references as local blobs. It is also possible to include references in a recursive way.
 
