@@ -141,7 +141,8 @@ ca-hello-world
 └── component-descriptor.yaml
 ```
 
-The added blob contains the packaged Helm Chart. The blob is referenced in the component descriptor in `component.resources.access.localreference`:
+The added blob contains the packaged Helm Chart. The blob is referenced in the component descriptor
+in `component.resources.access.localreference`:
 
 ```yaml
 meta:
@@ -163,7 +164,9 @@ component:
   sources: []
   componentReferences: []
 ```
-Because we use content from the local environment, it is directly packaged into the component archive using the [access method](../../specification/elements/README.md#artifact-access) of type [`local`](../../appendix/B/localBlob.md).
+Because we use content from the local environment, it is directly packaged into the component archive
+using the [access method](../../specification/elements/README.md#artifact-access) of type
+[`local`](../../appendix/B/localBlob.md).
 </details>
 
 ### Add an image reference
@@ -181,7 +184,8 @@ adding resource ociImage: "name"="image","version"="1.0.0"...
 ```
 
 <details><summary>What happened?</summary>
-The component descriptor now has the following content, with an additional `access` under `component.resources`, where the `access` is of type `external`:
+The component descriptor now has the following content, with an additional `access` under
+`component.resources`, where the `access` is of type `external`:
 
 ```yaml
 meta:
@@ -219,13 +223,22 @@ Alternatively you can add an image as a resource that was locally build by Docke
 previous step. It will be picked up from docker and added to the component archive.
 
 ```shell
-$ ocm add resource ${CA_ARCHIVE} --name image --version ${VERSION} --type ociArtifact  --inputType docker --inputPath=echoserver:0.1.0
+$ docker image ls
+REPOSITORY                                              TAG                 IMAGE ID       CREATED         SIZE
+echoserverimage                                         1.10.0              365ec60129c5   4 years ago     95.4MB
+...
+
+$ ocm add resource ${CA_ARCHIVE} --name image --version ${VERSION} --type ociArtifact  --inputType docker --inputPath=echoserverimage:1.10.0
 
 processing resource (by options)...
   processing document 1...
     processing index 1
 found 1 resources
-adding resource ociImage: "name"="image","version"="1.0.0"...
+adding resource ociArtifact: "name"="image","version"="1.0.0"...
+  image echoserverimage:1.10.0
+locator: echoserverimage, repo: , version 1.10.0
+~/temp/ocm/hello>
+
 ```
 
 <details><summary>What happened?</summary>
@@ -241,22 +254,22 @@ component:
   repositoryContexts: []
   resources:
   - access:
-      localReference: sha256.56215627eddcd09db405ed8a503c53a7d47095599d493d31ce4f9b7e879bae3b
+      localReference: sha256.31b7c98008a6b2d6f0b07e11b997c47c70d31edeea0986382940ccc42288741e
       mediaType: application/vnd.oci.image.manifest.v1+tar+gzip
-      referenceName: github.com/acme/helloworld/echoserver:0.1.0
-      type: localBlob
-    name: chart
-    relation: local
-    type: helmChart
-    version: 1.0.0
-  - access:
-      localReference: sha256.65cf1c11b1a602bce59a6a7d71acd7b6a83394f3ebd1d2e2d4af5c9c8e64ea0d
-      mediaType: application/vnd.oci.image.manifest.v1+tar+gzip
-      referenceName: github.com/acme/helloworld/echoserver:0.1.0
+      referenceName: github.com/acme/helloworld/echoserverimage:1.10.0
       type: localBlob
     name: image
     relation: local
-    type: ociImage
+    type: ociArtifact
+    version: 1.0.0
+  - access:
+      localReference: sha256.cf0b6e95c1f05e6825d37e15744f46c6fdb37eea7be2234b8948be71b28ff6b1
+      mediaType: application/vnd.oci.image.manifest.v1+tar+gzip
+      referenceName: github.com/acme/helloworld/echoserver:0.1.0
+      type: localBlob
+    name: deploy
+    relation: local
+    type: helmChart
     version: 1.0.0
   sources: []
   version: 1.0.0
@@ -316,8 +329,8 @@ type: ociImage
 version: "1.0.0"
 input:
   type: docker
-  repository: simpleserver
-  path: simpleserver:0.1.0
+  repository: echoserverimage
+  path: echoserverimage:1.10.0
 ```
 
 ### Uploading component versions
