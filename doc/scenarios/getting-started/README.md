@@ -266,6 +266,8 @@ meta:
 The generated blob sha256.65cf... is an archive describing the image according to the
 [OCI Image Layout Specification](https://github.com/opencontainers/image-spec/blob/v1.0.1/image-layout.md).
 
+</details>
+
 ### Using a resources file
 
 You could simplify the previous two steps (adding helm chart and image as resources) by using a text file as input. For that, you could create a file `resources.yaml`, which should look like this:
