@@ -5,11 +5,12 @@ This chapter contains guidelines for common scenarios how to work with the Open 
 - [Best Practices for working with the Open-Component-Model](#best-practices-for-working-with-the-open-component-model)
   - [Separate between Build and Publish](#separate-between-build-and-publish)
   - [Building multi-arch images](#building-multi-arch-images)
-  - [Templating input files](#templating-input-files)
   - [Using Makefiles](#using-makefiles)
+    - [Prerequisites](#prerequisites)
+    - [Templating the resources](#templating-the-resources)
   - [Pipeline integration](#pipeline-integration)
 
-  
+
 ## Separate between Build and Publish
 
 Typical automated builds have access to the complete internet ecosystem. This involves
@@ -60,7 +61,7 @@ images natively. Instead, the `buildx` plugin is used. However, this implies bui
 images in one step to a remote container registry as the local docker image store does not
 support multi-arch images.
 
-The OCM CLI has therefore some built-in support for dealing with multi-arch images during the 
+The OCM CLI has therefore some built-in support for dealing with multi-arch images during the
 component version composition ([`ocm add resources`](https://github.com/open-component-model/ocm/docs/reference/ocm_add_resources.md)). This allows
 building all artifacts locally and push them in a separate step to a container registry. This
 is done by building single-arch images in a first step (still using `buildx` for cross-platform
@@ -252,7 +253,7 @@ input:
 The input type `dockermulti` adds a multi-arch image composed by the given dedicated images from the local docker
 image store as local artifact to the component archive.
 
-Add the described rsources to your component archive:
+Add the described resources to your component archive:
 
 ```shell
 $ ocm add resources ./gen/ca resources.yaml
@@ -402,20 +403,248 @@ GitHub packages you can see under `OS/Arch` that there are two platforms `linux/
 
 For better automation and reuse you may consider templating resource files and makefiles (see below)
 
-## Templating input files
-* resources.yaml can be templated
-
 ## Using Makefiles
-Developing with the Open Component Model usually is an iterative process of building artifacts, publishing them, generating component descriptors and analyzing them. This implies repeating commands with many parameters and modifying input files again and again. To simplify and speedup this process a `Makefile` and the `make` utility can be helpful. The following example can be used as a starting point and modified according to your needs.
+Developing with the Open Component Model usually is an iterative process of building artifacts,
+generating component descriptors, analyzing them and publishing them. To simplify and speedup this
+process it should be automated using a build tool. One option is to use a `makefile`.
+The following example can be used as a starting point and can be modified according to your needs.
 
-We use the following file system layout for this example
+In this example we will automated the example shown in the sections before:
+
+* Create a multi arch image from Go sources from a Git repository with docker
+* Packaging the image and a helm chart into a common transport archive
+* Signing and publishing the build result
+### Prerequisites
+
+* The ocm CLI must be installed and in the PATH
+* The Makefile is in the top-level folder of a Git project
+* Operating system is Unix
+* A sub-directory `local` can be used for local settings e.g. environment varibles, RSA keys, ...
+* A sub-directory `gen` will be used for generated artifacts from the make build
+* It is recommended to add `local/` and `gen/` to the `.gitignore` file
+
+We use the following file system layout for this example:
 
 ```shell
-
+$ tree .
+.
+├── Dockerfile
+├── LICENSE
+├── Makefile
+├── README.md
+├── go.mod
+├── helmchart
+│   ├── Chart.yaml
+│   ├── templates
+│   │   ├── NOTES.txt
+│   │   ├── _helpers.tpl
+│   │   ├── deployment.yaml
+│   │   ├── hpa.yaml
+│   │   ├── ingress.yaml
+│   │   ├── service.yaml
+│   │   ├── serviceaccount.yaml
+│   │   └── tests
+│   │       └── test-connection.yaml
+│   └── values.yaml
+├── local
+│   └── env.sh
+├── main.go
+├── resources.yaml
+└── VERSION
 ```
+
+<details><summary>This `makefile` can be used</summary>
 
 ```makefile
+NAME      ?= simpleserver
+PROVIDER  ?= acme.org
+GITHUBORG ?= acme
+IMAGE     = ghcr.io/$(GITHUBORG)/demo/$(NAME)
+COMPONENT = $(PROVIDER)/demo/$(NAME)
+OCMREPO   ?= ghcr.io/$(GITHUBORG)/ocm
+MULTI     ?= true
+PLATFORMS ?= linux/amd64 linux/arm64
+REPO_ROOT           = .
+VERSION             = $(shell git describe --tags --exact-match 2>/dev/null|| echo "$$(cat $(REPO_ROOT)/VERSION)")
+COMMIT              = $(shell git rev-parse HEAD)
+EFFECTIVE_VERSION   = $(VERSION)-$(COMMIT)
+GIT_TREE_STATE      := $(shell [ -z "$(git status --porcelain 2>/dev/null)" ] && echo clean || echo dirty)
+GEN = ./gen
+OCM = ocm
+
+CHART_SRCS=$(shell find helmchart -type f)
+GO_SRCS=$(shell find . -name \*.go -type f)
+
+ifeq ($(MULTI),true)
+FLAGSUF     = .multi
+endif
+
+.PHONY: build
+build: $(GEN)/build
+
+.PHONY: version
+version:
+	@echo $(VERSION)
+
+.PHONY: ca
+ca: $(GEN)/ca
+
+$(GEN)/ca: $(GEN)/.exists $(GEN)/image.$(NAME)$(FLAGSUF) resources.yaml $(CHART_SRCS)
+	$(OCM) create ca -f $(COMPONENT) "$(VERSION)" --provider $(PROVIDER) --file $(GEN)/ca
+	$(OCM) add resources --templater spiff $(GEN)/ca COMMIT="$(COMMIT)" VERSION="$(VERSION)" \
+		IMAGE="$(IMAGE):$(VERSION)" PLATFORMS="$(PLATFORMS)" MULTI=$(MULTI) resources.yaml
+	@touch $(GEN)/ca
+
+$(GEN)/build: $(GO_SRCS)
+	go build .
+	@touch $(GEN)/build
+
+.PHONY: image
+image: $(GEN)/image.$(NAME)
+
+$(GEN)/image.$(NAME): $(GEN)/.exists Dockerfile $(OCMSRCS)
+	docker build -t $(IMAGE):$(VERSION) --file Dockerfile $(COMPONENT_ROOT) .;
+	@touch $(GEN)/image.$(NAME)
+
+.PHONY: multi
+multi: $(GEN)/image.$(NAME).multi
+
+$(GEN)/image.$(NAME).multi: $(GEN)/.exists Dockerfile $(GO_SRCS)
+	echo "Building Multi $(PLATFORMS)"
+	for i in $(PLATFORMS); do \
+	tag=$$(echo $$i | sed -e s:/:-:g); \
+	echo "Building platform $$i with tag: $$tag"; \
+	docker buildx build --load -t $(IMAGE):$(VERSION)-$$tag --platform $$i .; \
+	done
+	@touch $(GEN)/image.$(NAME).multi
+
+.PHONY: ctf
+ctf: $(GEN)/ctf
+
+$(GEN)/ctf: $(GEN)/ca
+	@rm -rf $(GEN)/ctf
+	$(OCM) transfer ca $(GEN)/ca $(GEN)/ctf
+	touch $(GEN)/ctf
+
+.PHONY: push
+push: $(GEN)/ctf $(GEN)/push.$(NAME)
+
+$(GEN)/push.$(NAME): $(GEN)/ctf
+	$(OCM) transfer ctf -f $(GEN)/ctf $(OCMREPO)
+	@touch $(GEN)/push.$(NAME)
+
+.PHONY: transport
+transport:
+ifneq ($(TARGETREPO),)
+	$(OCM) transfer component -Vc  $(OCMREPO)//$(COMPONENT):$(VERSION) $(TARGETREPO)
+else
+	@echo "Cannot transport no TARGETREPO defined as destination" && exit 1
+endif
+
+$(GEN)/.exists:
+	@mkdir -p $(GEN)
+	@touch $@
+
+.PHONY: info
+info:
+	@echo "VERSION:  $(VERSION)"
+	@echo "COMMIT:   $(COMMIT)"
+	@echo "TREESTATE:   $(GIT_TREE_STATE)"
+
+.PHONY: describe
+describe: $(GEN)/ctf
+	ocm get resources --lookup $(OCMREPO) -r -o treewide $(GEN)/ctf
+
+.PHONY: descriptor
+descriptor: $(GEN)/ctf
+	ocm get component -S v3alpha1 -o yaml $(GEN)/ctf
+
+.PHONY: clean
+clean:
+	rm -rf $(GEN)
 ```
+</details>
+
+It supports the following targets:
+
+* `build` (default) simple go build
+* `version` show current VERSION of Github repository
+* `image` build a local docker image
+* `multi` build multiarch images with docker
+* `ca` executes build and creates a component archive
+* `ctf` create a common transport format archive
+* `push` pushes the common transport format to an OCI registry
+* `info` shows variables used in makefile (version, commit, etc.)
+* `describe` displays the component version in a tree-form
+* `descriptor` shows the component-descriptor for this component version
+* `transport` transport the component from the upload repository into another OCM repository
+* `clean` deletes all generated files (but does not delete docker images)
+
+The variables at the beginning assigned with `?=` can be set from outside and override the default
+declared in the makefile. Use either an environment variable or an argument when calling `make`.
+
+Example:
+
+```
+$ PROVIDER=foo make ca
+```
+
+### Templating the resources
+The makefile uses a dynamic list of generated platforms for the images. You can just set the
+`PLATFORMS` variable:
+
+```makefile
+MULTI     ?= true
+PLATFORMS ?= linux/amd64 linux/arm64
+```
+
+If `MULTI` is set to `true` the variable `PLATFORMS` will be evaluated to decide which image variants
+will be built. This has to be reflected in the `resources.yaml`. It has to use the input type
+`dockermulti` and list all the variants which should be aggregated into a multiarch image. This list
+depends on the content of the make variable.
+
+
+The ocm CLI supports this by enabling templating mechanisms for the content by selecting a templater
+using the option `--templater ...` . The example uses the [Spiff templater](https://github.com/mandelsoft/spiff).
+
+```makefile
+$(GEN)/ca: $(GEN)/.exists $(GEN)/image.$(NAME)$(FLAGSUF) resources.yaml $(CHART_SRCS)
+	$(OCM) create ca -f $(COMPONENT) "$(VERSION)" --provider $(PROVIDER) --file $(GEN)/ca
+	$(OCM) add resources --templater spiff $(GEN)/ca COMMIT="$(COMMIT)" VERSION="$(VERSION)" \
+		IMAGE="$(IMAGE):$(VERSION)" PLATFORMS="$(PLATFORMS)" MULTI=$(MULTI) resources.yaml
+	@touch $(GEN)/ca
+```
+
+The variables given to the `add resources` command are passed to the templater. The template looks
+like:
+
+```yaml
+name: image
+type: ociImage
+version: (( values.VERSION ))
+input:
+  type: (( bool(values.MULTI) ? "dockermulti" :"docker" ))
+  repository:  (( index(values.IMAGE, ":") >= 0 ? substr(values.IMAGE,0,index(values.IMAGE,":")) :values.IMAGE ))
+  variants: (( bool(values.MULTI) ? map[split(" ", values.PLATFORMS)|v|-> values.IMAGE "-" replace(v,"/","-")] :~~ ))
+  path: (( bool(values.MULTI) ? ~~ :values.IMAGE ))
+```
+
+It distinguishes with the variable `values.MULTI` between a single docker image and multiarch image.
+With `map[]` the platform list from the makefile is mapped to a list of tags created by the
+`docker buildx` command used in the makefile. The value `~~` is used to undefine the yaml fields not
+required for the selected case (the template can be used for multi and single arch builds).
+
+```makefile
+$(GEN)/image.$(NAME).multi: $(GEN)/.exists Dockerfile $(GO_SRCS)
+	echo "Building Multi $(PLATFORMS)"
+	for i in $(PLATFORMS); do \
+	tag=$$(echo $$i | sed -e s:/:-:g); \
+	echo "Building platform $$i with tag: $$tag"; \
+	docker buildx build --load -t $(IMAGE):$(VERSION)-$$tag --platform $$i .; \
+	done
+	@touch $(GEN)/image.$(NAME).multi
+```
+
 
 ## Pipeline integration
 

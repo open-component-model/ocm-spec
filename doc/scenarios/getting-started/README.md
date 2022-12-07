@@ -23,6 +23,8 @@ This chapter walks you through some basic steps to get started with OCM concepts
   - [Download OCI Artifacts](#download-oci-artifacts)
 - [Transport OCM component versions](#transport-ocm-component-versions)
 - [Sign component versions](#sign-component-versions)
+  - [Signing with certificates](#signing-with-certificates)
+  - [Signature Verification](#signature-verification)
 
 ## Prerequisites
 
@@ -836,23 +838,27 @@ More examples on the transport archive can be found in [appendix A](../../append
 
 Sign component versions to ensure integrity along a transport chain.
 
-Signing requires a key pair, a signature algorithm and a name for the signature.
+Signing requires a key pair, a signature, and optionally an issuer as well as an algorithm and a
+name for the signature.
 
-A component version can have multiple signatures with different names. A normalization of the component version is used for signing. See [appendix X](../../appendix/C/README.md) for more details.
+A component version can have multiple signatures with different names. A normalization of the
+component version is used for signing. See [appendix C](../../appendix/C/README.md) for more details.
+Currently only signing according
+[RSA PKCS #1 v1.5 signature algorithm](https://datatracker.ietf.org/doc/html/rfc3447) supported.
 
 Create a key pair using the OCM CLI:
 ```shell
-$ ocm create rsakeypair acme.priv acme.pub
+$ ocm create rsakeypair acme.priv
 ```
 
-This will create two files named `acme.priv` for the private key and `acme.pub` for
-the public key.
+This will create two files. One named `acme.priv` for the private key and for convenience one named
+`acme.pub` for the public key.
 
-Use the `sign` command to sign a component version:
+Use the `sign componentversion` command to sign a component version:
 
 ```shell
 ocm sign componentversion --signature acme-sig --private-key=acme.priv ${OCM_REPO}//${COMPONENT}:${VERSION}
-````
+```
 
 You can also sign a common transport archive before uploading to a component
 repository:
@@ -865,8 +871,9 @@ successfully signed github.com/acme/helloworld:1.0.0 (digest sha256:46615253117b
 
 <details><summary>What happened?</summary>
 
-The component was signed. Signature and digests are stored in the component
-descriptor:
+Digests will be created for all described artifacts and referenced component versions. Then for the
+top-level component versions the component-version digests are signed. Signature and digests are
+stored in the component descriptor(s):
 
 ```shell
 $ jq . ${CTF_ARCHIVE}/artifact-index.json
@@ -880,6 +887,8 @@ $ jq . ${CTF_ARCHIVE}/artifact-index.json
     }
   ]
 }
+
+Beside the digests of the component descriptor layer nothing has changed:
 
 $ jq . ${CTF_ARCHIVE}/blobs/sha256.8c6b8c5a63a09d96d2a60b50adbd47f06b31be6e9d3e8618177c60fb47ec4bb2
 {
@@ -953,7 +962,39 @@ signatures:
 ```
 </details>
 
-You can verify a signature with `ocm verify`:
+### Signing with certificates
+
+The public key from the last example cannot be validated. This can be changed by using a certificate
+instead of a pure public key. The certificate is signed by a CA. This ensures the authenticity of the
+described public key. Additionally the common name of the certificate is validated against the issuer
+attribute of the signature stored in the component descriptor.
+
+To create a certificate use the command:
+
+```shell
+$ ocm create rsakeypair --cacert ca.cert --cakey ca.priv CN=acme.org acme.priv
+```
+
+You can use additional attributes of the certificate like `O`, `OU` or `C`. See usage for details.
+The certificate can be requested by any offical certificate authority instead. It requires the usage types x509.KeyUsageDigitalSignature and x509.ExtKeyUsageCodeSigning.
+
+For signing the component version you need to provide the issuer then:
+
+```shell
+ocm sign componentversion --signature acme-sig --private-key=acme.priv --issuer acme.org ${OCM_REPO}//${COMPONENT}:${VERSION}
+```
+
+Now the issuer will be stored along the signature and will be checked when verifying with the certificate
+instead of the public key.
+
+
+
+### Signature Verification
+You can verify a signed component version. Therefore a public or a certificate provided by the
+signer is required. If a certificate is provided it is validated according its certificate chain.
+If not an official CA is used you need the certificate of the used root CA.
+
+To verify the signature of a component version use
 
 ```shell
 $ ocm verify componentversions --signature acme-sig --public-key=acme.pub ctf-hello-world
