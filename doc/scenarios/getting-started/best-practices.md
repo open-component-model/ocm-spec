@@ -453,7 +453,7 @@ $ tree .
 └── VERSION
 ```
 
-<details><summary>This `makefile` can be used</summary>
+<details><summary>This makefile can be used</summary>
 
 ```makefile
 NAME      ?= simpleserver
