@@ -14,11 +14,11 @@ These mappings describe:
 - the mapping of the [OCM elements](../../specification/elements/README.md) 
   to the elements provided by the storage technology.
 
-Mappings for the following technologies are defined:
+Currently mappings for the following technologies are defined:
 
-- [OCIRegistry](OCIRegistry/README.md) OCM content in OCI registries
-- [FileSystem (CTF)](CTF/README.md) OCM content as filesystem structure
-- [AWS S3](S3/README.md)OCM content in AWS S3 buckets
+- [OCIRegistry](OCIRegistry/README.md): OCM content in OCI registries
+- [FileSystem (CTF)](CTF/README.md): OCM content as filesystem structure
+- [AWS S3](S3/README.md): OCM content in AWS S3 buckets
 
 ## Transport of Artifact Content
 

@@ -1,6 +1,6 @@
 # 3 Scenarios
 
-This sections describes some potential use case examples to illistrate
+This sections describes some potential use case examples to illustrate
 the basic usage and power of an ecosystem based on the Open Component Model.
 
 [3.1 Structuring Software with the Open Component Model](structuring/README.md)<br>

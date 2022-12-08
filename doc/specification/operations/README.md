@@ -1,17 +1,17 @@
 # 2.2 Abstract Operations defined by the Open Component Model
 
-The Open Component Model defines abstract operations that must be available to
-work with a [component repository](../elements/README.md#repositories) view as
-interpretation layer on-top of dedicated well-known storage subsystems (like an
-OCI registry or an S3 blob store).
+The Open Component Model defines abstract operations to interact with a 
+[component repository](../elements/README.md#repositories) view as
+interpretation layer on top of well-known storage subsystems, like an
+OCI registry or an S3 blob store.
 These operations build the first extension point of OCM, which allows to 
-map the OCM functionality onto any blobstore-like storage system.
+map the OCM functionality to any blob store-like storage system.
 
 A second extension point is the [access to artifacts](../elements/README.md#artifact-access)
 described by a [component version](../elements/README.md#component-versions).
 Such access is described by an [access specification](../formats/formats.md#access-specifications)
-which is specific for a dedicated access method, whose implementation handles the
-technical access to the artifact content. Implementations for those methods must
+which is specific for a dedicated access method, that implements the
+technical access to the artifact content. Implementations of those methods must
 implement some operations on the access specifications.
 
 The concrete incarnation of those repository and access method operations depend
