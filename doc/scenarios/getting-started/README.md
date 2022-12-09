@@ -80,7 +80,7 @@ First, we will create an empty component archive using the following command:
 <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_create_componentarchive.md">
 
 ```shell
-$ ocm create componentarchive ${COMPONENT} ${VERSION}  --provider ${PROVIDER} --file $CA_ARCHIVE
+ocm create componentarchive ${COMPONENT} ${VERSION}  --provider ${PROVIDER} --file $CA_ARCHIVE
 ```
 </a>
 
@@ -122,8 +122,9 @@ The next step is to add resources. First, we want to add a Helm Chart stored in 
 <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_add_resources.md">
 
 ```shell
-$ ocm add resource $CA_ARCHIVE --type helmChart --name deploy --version ${VERSION} --inputType helm --inputPath ./helmchart
-
+ocm add resource $CA_ARCHIVE --type helmChart --name deploy --version ${VERSION} --inputType helm --inputPath ./helmchart
+```
+```shell
 processing resource (by options)...
   processing document 1...
     processing index 1
@@ -136,7 +137,9 @@ adding resource helmChart: "name"="deploy","version"="1.0.0"...
 The generated file structure is:
 
 ```shell
-$ tree ca-hello-world
+tree ca-hello-world
+```
+```shell
 ca-hello-world
 ├── blobs
 │   └── sha256.60bfd05083f81f2841657e24410d3ba25e4bcc3e3c927da7e1811e775116a74d
@@ -176,8 +179,9 @@ using the [access method](../../specification/elements/README.md#artifact-access
 Next, we will add an image. The image is already stored in an image registry (e.g. by a previous Docker build/push).
 
 ```shell
-$ ocm add resource $CA_ARCHIVE --type ociImage --name image --version ${VERSION} --accessType ociArtefact --reference gcr.io/google_containers/echoserver:1.10
-
+ocm add resource $CA_ARCHIVE --type ociImage --name image --version ${VERSION} --accessType ociArtefact --reference gcr.io/google_containers/echoserver:1.10
+```
+```shell
 processing resource (by options)...
   processing document 1...
     processing index 1
@@ -225,13 +229,17 @@ Alternatively you can add an image as a resource that was locally build by Docke
 previous step. It will be picked up from docker and added to the component archive.
 
 ```shell
-$ docker image ls
+docker image ls
+```
+```shell
 REPOSITORY                                              TAG                 IMAGE ID       CREATED         SIZE
 echoserverimage                                         1.10.0              365ec60129c5   4 years ago     95.4MB
 ...
-
-$ ocm add resource ${CA_ARCHIVE} --name image --version ${VERSION} --type ociArtifact  --inputType docker --inputPath=echoserverimage:1.10.0
-
+```
+```shell
+ocm add resource ${CA_ARCHIVE} --name image --version ${VERSION} --type ociArtifact  --inputType docker --inputPath=echoserverimage:1.10.0
+```
+```shell
 processing resource (by options)...
   processing document 1...
     processing index 1
@@ -240,7 +248,6 @@ adding resource ociArtifact: "name"="image","version"="1.0.0"...
   image echoserverimage:1.10.0
 locator: echoserverimage, repo: , version 1.10.0
 ~/temp/ocm/hello>
-
 ```
 
 <details><summary>What happened?</summary>
@@ -307,6 +314,8 @@ Then add the resources using the following command:
 
 ```shell
 $ ocm add resources $CA_ARCHIVE resources.yaml
+```
+```shell
 processing resources.yaml...
   processing document 1...
     processing index 1
@@ -342,8 +351,9 @@ To upload the component version to an OCI registry, you can transfer the compone
 
 ```shell
 OCMREPO=ghcr.io/acme
-$ ocm transfer componentarchive ./ca-hello-world ${OCMREPO}
-
+ocm transfer componentarchive ./ca-hello-world ${OCMREPO}
+```
+```shell
 transferring version "github.com/acme/helloworld:1.0.0"...
 ...resource 0(github.com/acme/helloworld/echoserver:0.1.0)...
 ...adding component version...
@@ -365,9 +375,10 @@ Note that a transport achive is also an OCM repository, so it can also be used a
 for transport operations.
 
 ```shell
-$ CTF_ARCHIVE=ctf-hello-world
-$ ocm transfer componentversion ${CA_ARCHIVE} ${CTF_ARCHIVE}
-
+CTF_ARCHIVE=ctf-hello-world
+ocm transfer componentversion ${CA_ARCHIVE} ${CTF_ARCHIVE}
+```
+```shell
 transferring version "github.com/acme/helloworld:1.0.0"...
 ...resource 0(github.com/acme/helloworld/echoserver:0.1.0)...
 ...adding component version...
@@ -378,7 +389,9 @@ transferring version "github.com/acme/helloworld:1.0.0"...
 The resulting transport archive has the following file structure:
 
 ```shell
-$ tree ${CTF_ARCHIVE}
+tree ${CTF_ARCHIVE}
+```
+```shell
 ctf-hello-world
 ├── artefact-index.json
 └── blobs
@@ -392,7 +405,9 @@ The transport archive's contents can be found in `artifact-index.json`. This fil
 contains the list of component version artifacts to be transported.
 
 ```shell
-$ jq . ${CTF_ARCHIVE}/artefact-index.json
+jq . ${CTF_ARCHIVE}/artefact-index.json
+```
+```shell
 {
   "schemaVersion": 1,
   "artefacts": [
@@ -410,7 +425,9 @@ The content of the transport archive is stored as OCI artifacts. Notice that the
 The component version is described as an OCI manifest:
 
 ```shell
-$ jq . ${CTF_ARCHIVE}/blobs/sha256.63dc40246a604ef503f0361e14216ab7e002912697d09da49f50bba7091549f7
+jq . ${CTF_ARCHIVE}/blobs/sha256.63dc40246a604ef503f0361e14216ab7e002912697d09da49f50bba7091549f7
+```
+```shell
 {
   "schemaVersion": 2,
   "mediaType": "application/vnd.oci.image.manifest.v1+json",
@@ -437,7 +454,9 @@ $ jq . ${CTF_ARCHIVE}/blobs/sha256.63dc40246a604ef503f0361e14216ab7e002912697d09
 Notice that the output of the component version above contains the component descriptor as a `layer`. It can be identified by its content type, which is `application/vnd.ocm.software.component-descriptor.v2+yaml+tar`. In ths case, the component descriptor can be displayed with the following command:
 
 ```shell
-$ tar xvf ctf-hello-world/blobs/sha256.4f2080d8d41d2b52182f325f4f42d91e2581e3f2299f4f8631196801773ba869 -O - component-descriptor.yaml
+tar xvf ctf-hello-world/blobs/sha256.4f2080d8d41d2b52182f325f4f42d91e2581e3f2299f4f8631196801773ba869 -O - component-descriptor.yaml
+```
+```shell
 component:
   componentReferences: []
   name: github.com/acme/helloworld
@@ -479,7 +498,9 @@ To show the component stored in a component archive (without looking at the file
 <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_get_componentversions.md">
 
 ```shell
-$ ocm get componentversion ${CA_ARCHIVE}
+ocm get componentversion ${CA_ARCHIVE}
+```
+```shell
 COMPONENT                  VERSION PROVIDER
 github.com/acme/helloworld 1.0.0   acme.org
 ```
@@ -488,7 +509,9 @@ github.com/acme/helloworld 1.0.0   acme.org
 To see the component descriptor of the displayed component version, use the output format option `-o yaml`:
 
 ```shell
-$ ocm get componentversion ${CA_ARCHIVE} -o yaml
+ocm get componentversion ${CA_ARCHIVE} -o yaml
+```
+```shell
 ---
 context: []
 element:
@@ -508,7 +531,9 @@ element:
 Display the component versions of any OCM repository with this command:
 
 ```shell
-$ ocm get cv ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo
+ocm get cv ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo
+```
+```shell
 COMPONENT                         VERSION   PROVIDER
 github.com/mandelsoft/ocmhelmdemo 0.1.0-dev mandelsoft
 ```
@@ -522,7 +547,9 @@ Optionally, a specific version can be appended, separated by a colon (`:`). If n
 With the option `--recursive`, it is possible to show the complete component version, including the component versions it references.
 
 ```shell
-$ ocm get cv ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo --recursive
+ocm get cv ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo --recursive
+```
+```shell
 REFERENCEPATH                               COMPONENT                              VERSION   PROVIDER   IDENTITY
                                             github.com/mandelsoft/ocmhelmdemo      0.1.0-dev mandelsoft
 github.com/mandelsoft/ocmhelmdemo:0.1.0-dev github.com/mandelsoft/ocmhelminstaller 0.1.0-dev mandelsoft "name"="installer"
@@ -531,7 +558,9 @@ github.com/mandelsoft/ocmhelmdemo:0.1.0-dev github.com/mandelsoft/ocmhelminstall
 To get a tree view, add the option `-o tree`:
 
 ```shell
-$ ocm get componentversion ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo --recursive -o tree
+ocm get componentversion ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo --recursive -o tree
+```
+```shell
 NESTING    COMPONENT                              VERSION   PROVIDER   IDENTITY
 └─ ⊗       github.com/mandelsoft/ocmhelmdemo      0.1.0-dev mandelsoft
    └─      github.com/mandelsoft/ocmhelminstaller 0.1.0-dev mandelsoft "name"="installer"
@@ -544,7 +573,9 @@ To list the resources found in a component version tree, the command `ocm get re
 <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_get_resources.md">
 
 ```shell
-$ ocm get resources ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo:0.1.0-dev --recursive -o tree
+ocm get resources ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo:0.1.0-dev --recursive -o tree
+```
+```shell
 COMPONENTVERSION                                           NAME        VERSION   IDENTITY TYPE        RELATION
 └─ github.com/mandelsoft/ocmhelmdemo:0.1.0-dev
    ├─                                                      chart       0.1.0-dev          helmChart   local
@@ -564,7 +595,9 @@ artifacts:
 <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_resources.md">
 
 ```shell
-$ ocm download resource ghcr.io/jensh007//github.com/acme/helloworld:1.0.0 chart -O helmchart.tgz
+ocm download resource ghcr.io/jensh007//github.com/acme/helloworld:1.0.0 chart -O helmchart.tgz
+```
+```shell
 helmchart.tgz: 4747 byte(s) written
 ```
 </a>
@@ -575,14 +608,17 @@ Because it is stored as OCI artifact in an OCI registry, the filesystem format u
 The file helmchart.tgz was downloaded.
 
 ```shell
-$ tar xvf helmchart.tgz
+tar xvf helmchart.tgz
+```
+```shell
 x index.json
 x oci-layout
 x blobs
 x blobs/sha256.1c1af427d477202d102c141f27d3be0f5b6595e2948a82ec58987560c1915fea
 x blobs/sha256.47eacca4cbed4b63c17e044d3c87a33d9bd1f88a9e76fa0ab051e48b0a3cd7ec
 x blobs/sha256.ea8e5b44cd1aff1f3d9377d169ad795be20fbfcd58475a62341ed8fb74d4788c
-
+```
+```shell
 $ jq . index.json
 {
   "schemaVersion": 2,
@@ -619,15 +655,19 @@ blob media type used to store the blob in the OCM repository, it will convert th
 into a more suitable format:
 
 ```shell
-$ ocm download resource -d ghcr.io/jensh007//github.com/acme/helloworld:1.0.0 chart -O helmchart.tgz
+ocm download resource -d ghcr.io/jensh007//github.com/acme/helloworld:1.0.0 chart -O helmchart.tgz
+```
+```shell
 helmchart.tgz: 4747 byte(s) written
-````
+```
 
 <details><summary>What happened?</summary>
 The downloaded archive is now a regular Helm Chart archive:
 
 ```shell
-$ tar tvf echoserver-0.1.0.tgz
+tar tvf echoserver-0.1.0.tgz
+```
+```shell
 -rw-r--r--  0 0      0         136 Nov 30 13:19 echoserver/Chart.yaml
 -rw-r--r--  0 0      0        1842 Nov 30 13:19 echoserver/values.yaml
 -rw-r--r--  0 0      0        1755 Nov 30 13:19 echoserver/templates/NOTES.txt
@@ -648,7 +688,9 @@ $ tar tvf echoserver-0.1.0.tgz
 For example, for OCI images, the OCI format is more suitable:
 
 ```shell
-$ ocm download resource ghcr.io/jensh007//github.com/acme/helloworld:1.0.0 image -O echoserver.tgz
+ocm download resource ghcr.io/jensh007//github.com/acme/helloworld:1.0.0 image -O echoserver.tgz
+```
+```shell
 echoserver.tgz: 46148828 byte(s) written
 ```
 
@@ -656,7 +698,9 @@ echoserver.tgz: 46148828 byte(s) written
 The file `echoserver.tgz` was downloaded.
 
 ```shell
-$ tar xvf echoserver.tgz
+tar xvf echoserver.tgz
+```
+```shell
 x index.json
 x oci-layout
 x blobs
@@ -672,6 +716,8 @@ x blobs/sha256.bc391bffe5907b0eaa04e96fd638784f77d39f1feb7fbe438a1dae0af2675205
 x blobs/sha256.cb5c1bddd1b5665e1867a7fa1b5fa843a47ee433bbb75d4293888b71def53229
 x blobs/sha256.d5157969118932d522396fe278eb722551751c7aa7473e6d3f03e821a74ee8ec
 x blobs/sha256.e0962580d8254d0b1ef35006d7e2319eb4870e63dc1f9573d2406c7c47d442d2
+```
+```shell
 
 jq . index.json
 {
@@ -704,7 +750,9 @@ version.
 
 Example:
 ```shell
-$ ocm get componentversion ghcr.io/open-component-model/ocm//ocm.software/ocmcli:0.1.0-dev -o yaml
+ocm get componentversion ghcr.io/open-component-model/ocm//ocm.software/ocmcli:0.1.0-dev -o yaml
+```
+```shell
 ...
     resources:
     - name: ocmcli
@@ -738,16 +786,24 @@ resource name can be omitted. Example:
 
 ```shell
 ocm download resource -x --latest ghcr.io/open-component-model/ocm//ocm.software/ocmcli
+```
+```shell
 ocm: 52613730 byte(s) written
 ```
 
 <details><summary>What happened?</summary>
 
 ```shell
-$ ls -l
+ls -l
+```
+```shell
 total 51M
 -rwxr-xr-x  1 me staff  51M Nov 30 13:49 ocm
-$ file ocm
+```
+```shell
+file ocm
+```
+```shell
 ocm: Mach-O 64-bit executable arm64
 ```
 
@@ -766,7 +822,9 @@ files. Additionally it filters all matching resources for executables and the co
 Download entire component versions using the `ocm download componentversion` command:
 
 ```shell
-$ ocm download componentversions ${OCM_REPO}//${COMPONENT}:${VERSION} -O helloworld
+ocm download componentversions ${OCM_REPO}//${COMPONENT}:${VERSION} -O helloworld
+```
+```shell
 helloworld: downloaded
 ```
 
@@ -776,7 +834,9 @@ The result is a component archive. This can then be modified using the `ocm add 
 The component version was downloaded.
 
 ```shell
-$ tree helloworld2
+tree helloworld2
+```
+```shell
 ├── blobs
 └── component-descriptor.yaml
 ```
@@ -792,7 +852,9 @@ Download OCI artifacts from an OCI registry, such as OCI images, with the `ocm d
 <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_artifacts.md">
 
 ```shell
-$ ocm download artefact ${OCM_REPO}/${COMPONENT}:${VERSION} -O echoserver
+ocm download artefact ${OCM_REPO}/${COMPONENT}:${VERSION} -O echoserver
+```
+```shell
 echoserver: downloaded
 ```
 </a>
@@ -801,7 +863,9 @@ echoserver: downloaded
 The OCI image `echoserver` was downloaded.
 
 ```shell
-$ tree echoserver
+tree echoserver
+```
+```shell
 echoserver
 ├── blobs
 │   ├── sha256.1c1af427d477202d102c141f27d3be0f5b6595e2948a82ec58987560c1915fea
@@ -823,7 +887,9 @@ During the transfer, it is possible to include component references as local blo
 Here is an example of a recursive transfer from one OCI registry to another, which includes resources and references:
 
 ```shell
-$ ocm transfer componentversion --recursive --copy-resources ${OCM_REPO}//${COMPONENT}:${VERSION} eu.gcr.io/acme/
+ocm transfer componentversion --recursive --copy-resources ${OCM_REPO}//${COMPONENT}:${VERSION} eu.gcr.io/acme/
+```
+```shell
 transferring version "github.com/acme/helloworld:1.0.0"...
 ...resource 0(github.com/acme/helloworld/echoserver:0.1.0)...
 ...adding component version...
@@ -848,7 +914,7 @@ Currently only signing according
 
 Create a key pair using the OCM CLI:
 ```shell
-$ ocm create rsakeypair acme.priv
+ocm create rsakeypair acme.priv
 ```
 
 This will create two files. One named `acme.priv` for the private key and for convenience one named
@@ -864,7 +930,9 @@ You can also sign a common transport archive before uploading to a component
 repository:
 
 ```shell
-$ ocm sign componentversion --signature acme-sig --private-key=acme.priv ctf-hello-world
+ocm sign componentversion --signature acme-sig --private-key=acme.priv ctf-hello-world
+```
+```shell
 applying to version "github.com/acme/helloworld:1.0.0"...
 successfully signed github.com/acme/helloworld:1.0.0 (digest sha256:46615253117b7217903302d172a45de7a92f2966f6a41efdcc948023ada318bc)
 ```
@@ -876,7 +944,9 @@ top-level component versions the component-version digests are signed. Signature
 stored in the component descriptor(s):
 
 ```shell
-$ jq . ${CTF_ARCHIVE}/artifact-index.json
+jq . ${CTF_ARCHIVE}/artifact-index.json
+```
+```shell
 {
   "schemaVersion": 1,
   "artifacts": [
@@ -890,7 +960,9 @@ $ jq . ${CTF_ARCHIVE}/artifact-index.json
 
 Beside the digests of the component descriptor layer nothing has changed:
 
-$ jq . ${CTF_ARCHIVE}/blobs/sha256.8c6b8c5a63a09d96d2a60b50adbd47f06b31be6e9d3e8618177c60fb47ec4bb2
+jq . ${CTF_ARCHIVE}/blobs/sha256.8c6b8c5a63a09d96d2a60b50adbd47f06b31be6e9d3e8618177c60fb47ec4bb2
+```
+```shell
 {
   "schemaVersion": 2,
   "mediaType": "application/vnd.oci.image.manifest.v1+json",
@@ -912,9 +984,11 @@ $ jq . ${CTF_ARCHIVE}/blobs/sha256.8c6b8c5a63a09d96d2a60b50adbd47f06b31be6e9d3e8
     }
   ]
 }
-
-$ tar xvf ${CTF_ARCHIVE}/blobs/sha256.1f8c7801b2b35768b0eb9c919683ffcd0af24d8135beaccb7146af56cb2981d9 -O - component-descriptor.yaml
-
+```
+```shell
+tar xvf ${CTF_ARCHIVE}/blobs/sha256.1f8c7801b2b35768b0eb9c919683ffcd0af24d8135beaccb7146af56cb2981d9 -O - component-descriptor.yaml
+```
+```shell
 meta:
   schemaVersion: v2
 component:
@@ -972,7 +1046,7 @@ attribute of the signature stored in the component descriptor.
 To create a certificate use the command:
 
 ```shell
-$ ocm create rsakeypair --cacert ca.cert --cakey ca.priv CN=acme.org acme.priv
+ocm create rsakeypair --cacert ca.cert --cakey ca.priv CN=acme.org acme.priv
 ```
 
 You can use additional attributes of the certificate like `O`, `OU` or `C`. See usage for details.
@@ -997,7 +1071,9 @@ If not an official CA is used you need the certificate of the used root CA.
 To verify the signature of a component version use
 
 ```shell
-$ ocm verify componentversions --signature acme-sig --public-key=acme.pub ctf-hello-world
+ocm verify componentversions --signature acme-sig --public-key=acme.pub ctf-hello-world
+```
+```shell
 applying to version "github.com/acme/helloworld:1.0.0"...
 successfully verified github.com/acme/helloworld:1.0.0 (digest sha256:46615253117b7217903302d172a45de7a92f2966f6a41efdcc948023ada318bc)
 ```
