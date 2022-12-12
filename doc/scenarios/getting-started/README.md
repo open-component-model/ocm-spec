@@ -75,6 +75,7 @@ Let's asssume that we create a component based on a GitHub source repository.
 First, we will create an empty component archive using the command <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_create_componentarchive.md">`ocm create componentarchive`</a>:
 
 <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_create_componentarchive.md">
+
 ```shell
 ocm create componentarchive ${COMPONENT} ${VERSION}  --provider ${PROVIDER} --file $CA_ARCHIVE
 ```
