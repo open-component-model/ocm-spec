@@ -117,9 +117,13 @@ By default, the command creates a directory structure. The option `--type` can b
 The next step is <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_add_resources.md">
 `ocm add resources`</a>. First, we want to add a Helm Chart stored in a local folder named `helmchart`.
 
+<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_add_resources.md">
+
 ```shell
 ocm add resource $CA_ARCHIVE --type helmChart --name deploy --version ${VERSION} --inputType helm --inputPath ./helmchart
 ```
+</a>
+
 ```shell
 processing resource (by options)...
   processing document 1...
@@ -343,10 +347,14 @@ input:
 ### Uploading component versions
 To upload the component version to an OCI registry, you can transfer the component archive using the command <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_transfer_componentarchive.md">`ocm transfer componentarchive`</a>:
 
+<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_transfer_componentarchive.md">
+
 ```shell
 OCMREPO=ghcr.io/acme
 ocm transfer componentarchive ./ca-hello-world ${OCMREPO}
 ```
+</a>:
+
 ```shell
 transferring version "github.com/acme/helloworld:1.0.0"...
 ...resource 0(github.com/acme/helloworld/echoserver:0.1.0)...
@@ -489,9 +497,13 @@ The other elements listed as `layer`s describe the blobs for the local resources
 
 To show the component stored in a component archive (without looking at the file system structure), the <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_get_componentversions.md">`ocm get componentversion`</a> command can be used:
 
+<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_get_componentversions.md">
+
 ```shell
 ocm get componentversion ${CA_ARCHIVE}
 ```
+</a> 
+
 ```shell
 COMPONENT                  VERSION PROVIDER
 github.com/acme/helloworld 1.0.0   acme.org
@@ -561,9 +573,13 @@ NESTING    COMPONENT                              VERSION   PROVIDER   IDENTITY
 
 To list the resources found in a component version tree, the command <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_get_resources.md">`ocm get resources`</a> can be used:
 
+<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_get_resources.md">
+
 ```shell
 ocm get resources ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo:0.1.0-dev --recursive -o tree
 ```
+</a>
+
 ```shell
 COMPONENTVERSION                                           NAME        VERSION   IDENTITY TYPE        RELATION
 └─ github.com/mandelsoft/ocmhelmdemo:0.1.0-dev
@@ -578,10 +594,13 @@ COMPONENTVERSION                                           NAME        VERSION  
 ### Download the resources of a component version
 
 Use the <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_resources.md">`ocm download`</a> command to download resources such as component versions, individual resources or artifacts:
+<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_resources.md">
 
 ```shell
 ocm download resource ghcr.io/jensh007//github.com/acme/helloworld:1.0.0 chart -O helmchart.tgz
 ```
+</a>
+
 ```shell
 helmchart.tgz: 4747 byte(s) written
 ```
@@ -803,11 +822,14 @@ files. Additionally it filters all matching resources for executables and the co
 
 #### Download a full component version
 
-Download entire component versions using the `ocm download componentversion` command:
+Download entire component versions using the <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_componentversions.md">`ocm download componentversion`</a> command:
+
+<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_componentversions.md">
 
 ```shell
 ocm download componentversions ${OCM_REPO}//${COMPONENT}:${VERSION} -O helloworld
 ```
+</a>
 ```shell
 helloworld: downloaded
 ```
@@ -833,9 +855,13 @@ The `blobs` directory is empty because, during the upload to the OCI registry, t
 
 Download OCI artifacts from an OCI registry, such as OCI images, with the <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_artifacts.md">`ocm download artifacts`</a> command:
 
+<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_artifacts.md">
+
 ```shell
 ocm download artefact ${OCM_REPO}/${COMPONENT}:${VERSION} -O echoserver
 ```
+</a>
+
 ```shell
 echoserver: downloaded
 ```
