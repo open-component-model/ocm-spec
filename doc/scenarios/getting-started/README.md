@@ -113,7 +113,7 @@ By default, the command creates a directory structure. The option `--type` can b
 ### Add a local resource
 
 The next step is <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_add_resources.md">
-`com add resources`</a>. First, we want to add a Helm Chart stored in a local folder named `helmchart`.
+`ocm add resources`</a>. First, we want to add a Helm Chart stored in a local folder named `helmchart`.
 
 ```shell
 ocm add resource $CA_ARCHIVE --type helmChart --name deploy --version ${VERSION} --inputType helm --inputPath ./helmchart
