@@ -37,9 +37,9 @@ To follow the steps described in this section, you will need:
 - Access to an OCM repository. This can be any OCI registry for which you have write permission (e.g. GitHub Packages). An OCM repository based on an OCI registry is identified by a leading OCI repository prefix. For example: `ghcr.io/<YOUR-ORG>/ocm`.
 - Credentials for the CLI to access the OCM repository. The easiest way to do this is to reuse the Docker configuration.
 
-  To do this, create a file named `.ocmconfig` in your home directory with the following:
+  To do this, create a file named <a href='.ocmconfig'>`.ocmconfig`</a> in your home directory with the following:
 
-  <a href='.ocmconfig'>
+  
 
   ```yaml
   type: generic.config.ocm.software/v1
@@ -54,7 +54,7 @@ To follow the steps described in this section, you will need:
     attributes:
       cache: ~/.ocm/cache
   ```
-  </a>
+
 
 ## Create a component version
 
