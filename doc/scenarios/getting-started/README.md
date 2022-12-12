@@ -39,8 +39,6 @@ To follow the steps described in this section, you will need:
 
   To do this, create a file named <a href='.ocmconfig'>`.ocmconfig`</a> in your home directory with the following:
 
-  
-
   ```yaml
   type: generic.config.ocm.software/v1
   configurations:
@@ -54,7 +52,6 @@ To follow the steps described in this section, you will need:
     attributes:
       cache: ~/.ocm/cache
   ```
-
 
 ## Create a component version
 
@@ -75,14 +72,13 @@ Let's asssume that we create a component based on a GitHub source repository.
 
 ### Create a component archive
 
-First, we will create an empty component archive using the following command:
+First, we will create an empty component archive using the command <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_create_componentarchive.md">`ocm create componentarchive`</a>:
 
-<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_create_componentarchive.md">
 
 ```shell
 ocm create componentarchive ${COMPONENT} ${VERSION}  --provider ${PROVIDER} --file $CA_ARCHIVE
 ```
-</a>
+
 
 <details><summary>What happened?</summary>
 
