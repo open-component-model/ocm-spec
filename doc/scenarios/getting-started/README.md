@@ -79,7 +79,6 @@ First, we will create an empty component archive using the command <a href="http
 ocm create componentarchive ${COMPONENT} ${VERSION}  --provider ${PROVIDER} --file $CA_ARCHIVE
 ```
 
-
 <details><summary>What happened?</summary>
 
 This command creates the following file structure:
@@ -113,9 +112,8 @@ By default, the command creates a directory structure. The option `--type` can b
 
 ### Add a local resource
 
-The next step is to add resources. First, we want to add a Helm Chart stored in a local folder named `helmchart`.
-
-<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_add_resources.md">
+The next step is <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_add_resources.md">
+`com add resources`</a>. First, we want to add a Helm Chart stored in a local folder named `helmchart`.
 
 ```shell
 ocm add resource $CA_ARCHIVE --type helmChart --name deploy --version ${VERSION} --inputType helm --inputPath ./helmchart
@@ -127,7 +125,7 @@ processing resource (by options)...
 found 1 resources
 adding resource helmChart: "name"="deploy","version"="1.0.0"...
 ```
-</a>
+
 <details><summary>What happened?</summary>
 
 The generated file structure is:
