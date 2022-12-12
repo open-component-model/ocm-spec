@@ -339,9 +339,7 @@ input:
 ```
 
 ### Uploading component versions
-To upload the component version to an OCI registry, you can transfer the component archive using the command:
-
-<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_transfer_componentarchive.md">
+To upload the component version to an OCI registry, you can transfer the component archive using the command <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_transfer_componentarchive.md">`ocm transfer componentarchive`</a>:
 
 ```shell
 OCMREPO=ghcr.io/acme
@@ -352,7 +350,7 @@ transferring version "github.com/acme/helloworld:1.0.0"...
 ...resource 0(github.com/acme/helloworld/echoserver:0.1.0)...
 ...adding component version...
 ```
-</a>
+
 
 ### Bundle composed components
 
@@ -487,9 +485,7 @@ The other elements listed as `layer`s describe the blobs for the local resources
 
 ### List component versions
 
-To show the component stored in a component archive (without looking at the file system structure), the `get componentversion` command can be used:
-
-<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_get_componentversions.md">
+To show the component stored in a component archive (without looking at the file system structure), the <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_get_componentversions.md">`ocm get componentversion`</a> command can be used:
 
 ```shell
 ocm get componentversion ${CA_ARCHIVE}
@@ -498,7 +494,6 @@ ocm get componentversion ${CA_ARCHIVE}
 COMPONENT                  VERSION PROVIDER
 github.com/acme/helloworld 1.0.0   acme.org
 ```
-</a>
 
 To see the component descriptor of the displayed component version, use the output format option `-o yaml`:
 
@@ -562,9 +557,7 @@ NESTING    COMPONENT                              VERSION   PROVIDER   IDENTITY
 
 ### List the resources of a component version
 
-To list the resources found in a component version tree, the command `ocm get resources` can be used:
-
-<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_get_resources.md">
+To list the resources found in a component version tree, the command <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_get_resources.md">`ocm get resources`</a> can be used:
 
 ```shell
 ocm get resources ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo:0.1.0-dev --recursive -o tree
@@ -579,14 +572,10 @@ COMPONENTVERSION                                           NAME        VERSION  
       ├─                                                   toiexecutor 0.1.0-dev          toiExecutor local
       └─                                                   toiimage    0.1.0-dev          ociImage    local
 ```
-</a>
 
 ### Download the resources of a component version
 
-Use the `ocm download` command to download resources such as component versions, individual resources or
-artifacts:
-
-<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_resources.md">
+Use the <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_resources.md">`ocm download`</a> command to download resources such as component versions, individual resources or artifacts:
 
 ```shell
 ocm download resource ghcr.io/jensh007//github.com/acme/helloworld:1.0.0 chart -O helmchart.tgz
@@ -594,7 +583,6 @@ ocm download resource ghcr.io/jensh007//github.com/acme/helloworld:1.0.0 chart -
 ```shell
 helmchart.tgz: 4747 byte(s) written
 ```
-</a>
 
 Because it is stored as OCI artifact in an OCI registry, the filesystem format used for OCI artifacts is the blob format.
 
@@ -841,9 +829,7 @@ The `blobs` directory is empty because, during the upload to the OCI registry, t
 
 ### Download OCI Artifacts
 
-Download OCI artifacts from an OCI registry, such as OCI images, with the `ocm download artifacts` command:
-
-<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_artifacts.md">
+Download OCI artifacts from an OCI registry, such as OCI images, with the <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_artifacts.md">`ocm download artifacts`</a> command:
 
 ```shell
 ocm download artefact ${OCM_REPO}/${COMPONENT}:${VERSION} -O echoserver
@@ -851,7 +837,6 @@ ocm download artefact ${OCM_REPO}/${COMPONENT}:${VERSION} -O echoserver
 ```shell
 echoserver: downloaded
 ```
-</a>
 
 <details><summary>What happened?</summary>
 The OCI image `echoserver` was downloaded.
