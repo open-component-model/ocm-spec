@@ -74,10 +74,11 @@ Let's asssume that we create a component based on a GitHub source repository.
 
 First, we will create an empty component archive using the command <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_create_componentarchive.md">`ocm create componentarchive`</a>:
 
-
+<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_create_componentarchive.md">
 ```shell
 ocm create componentarchive ${COMPONENT} ${VERSION}  --provider ${PROVIDER} --file $CA_ARCHIVE
 ```
+</a>
 
 <details><summary>What happened?</summary>
 
@@ -219,8 +220,8 @@ component:
 
 ### Adding an image resource
 
-Alternatively you can add an image as a resource that was locally build by Docker in a
-previous step. It will be picked up from docker and added to the component archive.
+Alternatively you can add an image as a resource that was locally built using Docker in a
+previous step. It will be picked up from the local fileocker and added to the component archive.
 
 ```shell
 docker image ls
