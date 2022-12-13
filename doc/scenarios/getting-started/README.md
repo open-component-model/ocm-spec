@@ -8,7 +8,7 @@ This chapter walks you through some basic steps to get started with OCM concepts
   - [Create a component archive](#create-a-component-archive)
   - [Add a local resource](#add-a-local-resource)
   - [Add an image reference](#add-an-image-reference)
-  - [Adding an image resource](#adding-an-image-resource)
+  - [Add an image resource](#add-an-image-resource)
   - [Using a resources file](#using-a-resources-file)
   - [Uploading component versions](#uploading-component-versions)
   - [Bundle composed components](#bundle-composed-components)
@@ -74,12 +74,9 @@ Let's asssume that we create a component based on a GitHub source repository.
 
 First we create an empty component archive using the command <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_create_componentarchive.md">`ocm create componentarchive`</a>:
 
-<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_create_componentarchive.md">
-
 ```shell
 ocm create componentarchive ${COMPONENT} ${VERSION}  --provider ${PROVIDER} --file $CA_ARCHIVE
 ```
-</a>
 
 <details><summary>What happened?</summary>
 
@@ -117,19 +114,15 @@ By default, the command creates a directory structure. The option `--type` can b
 The next step is <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_add_resources.md">
 `ocm add resources`</a>. First, we want to add a Helm Chart stored in a local folder named `helmchart`.
 
-<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_add_resources.md">
-
 ```shell
-ocm add resource $CA_ARCHIVE --type helmChart --name deploy --version ${VERSION} --inputType helm --inputPath ./helmchart
+ocm add resource $CA_ARCHIVE --type helmChart --name mychart --version ${VERSION} --inputType helm --inputPath ./helmchart
 ```
-</a>
-
 ```shell
 processing resource (by options)...
   processing document 1...
     processing index 1
 found 1 resources
-adding resource helmChart: "name"="deploy","version"="1.0.0"...
+adding resource helmChart: "name"="mychart","version"="1.0.0"...
 ```
 
 <details><summary>What happened?</summary>
@@ -162,7 +155,7 @@ component:
       mediaType: application/vnd.oci.image.manifest.v1+tar+gzip
       referenceName: github.com/acme/helloworld/echoserver:0.1.0
       type: localBlob
-    name: deploy
+    name: mychart
     relation: local
     type: helmChart
     version: 1.0.0
@@ -191,7 +184,7 @@ adding resource ociImage: "name"="image","version"="1.0.0"...
 
 <details><summary>What happened?</summary>
 The component descriptor now has the following content, with an additional `access` under
-`component.resources`, where the `access` is of type `external`:
+`component.resources`, where `access` is of type `external`:
 
 ```yaml
 meta:
@@ -206,7 +199,7 @@ component:
       mediaType: application/vnd.oci.image.manifest.v1+tar+gzip
       referenceName: github.com/acme/helloworld/echoserver:0.1.0
       type: localBlob
-    name: deploy
+    name: mychart
     relation: local
     type: helmChart
     version: 1.0.0
@@ -223,15 +216,13 @@ component:
 ```
 </details>
 
-### Adding an image resource
+### Add an image resource
 
-Alternatively you can add an image as a resource that was locally built using Docker in a
-previous step. It will be picked up from the local fileocker and added to the component archive.
+Alternatively you can add an image as a resource built locally using Docker before. It will be picked up from the local Docker file system and added to the component archive.
 
 ```shell
 docker image ls
-```
-```shell
+
 REPOSITORY                                              TAG                 IMAGE ID       CREATED         SIZE
 echoserverimage                                         1.10.0              365ec60129c5   4 years ago     95.4MB
 ...
@@ -276,7 +267,7 @@ component:
       mediaType: application/vnd.oci.image.manifest.v1+tar+gzip
       referenceName: github.com/acme/helloworld/echoserver:0.1.0
       type: localBlob
-    name: deploy
+    name: mychart
     relation: local
     type: helmChart
     version: 1.0.0
@@ -292,11 +283,11 @@ The generated blob sha256.65cf... is an archive describing the image according t
 
 ### Using a resources file
 
-You could simplify the previous two steps (adding helm chart and image as resources) by using a text file as input. For that, you could create a file `resources.yaml`, which should look like this:
+You could simplify the previous two steps (adding helm chart and image as resources) by using a text file as input. For that, you could create a file `resources.yaml`, which looks like this:
 
 ```yaml
 ---
-name: chart
+name: mychart
 type: helmChart
 input:
   type: helm
@@ -322,14 +313,14 @@ processing resources.yaml...
   processing document 2...
     processing index 1
 found 2 resources
-adding resource helmChart: "name"="chart","version"="<componentversion>"...
+adding resource helmChart: "name"="mychart","version"="<componentversion>"...
 adding resource ociImage: "name"="image","version"="1.0.0"...
 ```
 
-For an image built with docker use this file:
+For an image built with Docker use this file:
 ```shell
 ---
-name: chart
+name: mychart
 type: helmChart
 input:
   type: helm
@@ -347,14 +338,10 @@ input:
 ### Uploading component versions
 To upload the component version to an OCI registry, you can transfer the component archive using the command <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_transfer_componentarchive.md">`ocm transfer componentarchive`</a>:
 
-<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_transfer_componentarchive.md">
-
 ```shell
 OCMREPO=ghcr.io/acme
 ocm transfer componentarchive ./ca-hello-world ${OCMREPO}
 ```
-</a>:
-
 ```shell
 transferring version "github.com/acme/helloworld:1.0.0"...
 ...resource 0(github.com/acme/helloworld/echoserver:0.1.0)...
@@ -470,7 +457,7 @@ component:
       mediaType: application/vnd.oci.image.manifest.v1+tar+gzip
       referenceName: github.com/acme/helloworld/echoserver:0.1.0
       type: localBlob
-    name: chart
+    name: mychart
     relation: local
     type: helmChart
     version: 1.0.0
@@ -497,13 +484,9 @@ The other elements listed as `layer`s describe the blobs for the local resources
 
 To show the component stored in a component archive (without looking at the file system structure), the <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_get_componentversions.md">`ocm get componentversion`</a> command can be used:
 
-<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_get_componentversions.md">
-
 ```shell
 ocm get componentversion ${CA_ARCHIVE}
 ```
-</a> 
-
 ```shell
 COMPONENT                  VERSION PROVIDER
 github.com/acme/helloworld 1.0.0   acme.org
@@ -573,13 +556,9 @@ NESTING    COMPONENT                              VERSION   PROVIDER   IDENTITY
 
 To list the resources found in a component version tree, the command <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_get_resources.md">`ocm get resources`</a> can be used:
 
-<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_get_resources.md">
-
 ```shell
 ocm get resources ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo:0.1.0-dev --recursive -o tree
 ```
-</a>
-
 ```shell
 COMPONENTVERSION                                           NAME        VERSION   IDENTITY TYPE        RELATION
 └─ github.com/mandelsoft/ocmhelmdemo:0.1.0-dev
@@ -594,13 +573,10 @@ COMPONENTVERSION                                           NAME        VERSION  
 ### Download the resources of a component version
 
 Use the <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_resources.md">`ocm download`</a> command to download resources such as component versions, individual resources or artifacts:
-<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_resources.md">
 
 ```shell
 ocm download resource ghcr.io/jensh007//github.com/acme/helloworld:1.0.0 chart -O helmchart.tgz
 ```
-</a>
-
 ```shell
 helmchart.tgz: 4747 byte(s) written
 ```
@@ -824,12 +800,9 @@ files. Additionally it filters all matching resources for executables and the co
 
 Download entire component versions using the <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_componentversions.md">`ocm download componentversion`</a> command:
 
-<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_componentversions.md">
-
 ```shell
 ocm download componentversions ${OCM_REPO}//${COMPONENT}:${VERSION} -O helloworld
 ```
-</a>
 ```shell
 helloworld: downloaded
 ```
@@ -855,13 +828,9 @@ The `blobs` directory is empty because, during the upload to the OCI registry, t
 
 Download OCI artifacts from an OCI registry, such as OCI images, with the <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_artifacts.md">`ocm download artifacts`</a> command:
 
-<a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_artifacts.md">
-
 ```shell
 ocm download artefact ${OCM_REPO}/${COMPONENT}:${VERSION} -O echoserver
 ```
-</a>
-
 ```shell
 echoserver: downloaded
 ```
