@@ -172,7 +172,7 @@ using the [access method](../../specification/elements/README.md#artifact-access
 Next, we will add an image. The image is already stored in an image registry (e.g. by a previous Docker build/push).
 
 ```shell
-ocm add resource $CA_ARCHIVE --type ociImage --name image --version ${VERSION} --accessType ociArtefact --reference gcr.io/google_containers/echoserver:1.10
+ocm add resource $CA_ARCHIVE --type ociImage --name image --version ${VERSION} --accessType ociArtifact --reference gcr.io/google_containers/echoserver:1.10
 ```
 ```shell
 processing resource (by options)...
@@ -205,7 +205,7 @@ component:
     version: 1.0.0
   - access:
       imageReference: gcr.io/google_containers/echoserver:1.10
-      type: ociArtefact
+      type: ociArtifact
     name: image
     relation: external
     type: ociImage
@@ -297,7 +297,7 @@ name: image
 type: ociImage
 version: "1.0.0"
 access:
-  type: ociArtefact
+  type: ociArtifact
   imageReference: gcr.io/google_containers/echoserver:1.10
 ```
 
@@ -382,7 +382,7 @@ tree ${CTF_ARCHIVE}
 ```
 ```shell
 ctf-hello-world
-├── artefact-index.json
+├── artifact-index.json
 └── blobs
     ├── sha256.378a171e7a1bcecc19b7fd4a330161a9d91550486dad668c78d08e590ef245e7
     ├── sha256.4f2080d8d41d2b52182f325f4f42d91e2581e3f2299f4f8631196801773ba869
@@ -394,12 +394,12 @@ The transport archive's contents can be found in `artifact-index.json`. This fil
 contains the list of component version artifacts to be transported.
 
 ```shell
-jq . ${CTF_ARCHIVE}/artefact-index.json
+jq . ${CTF_ARCHIVE}/artifact-index.json
 ```
 ```shell
 {
   "schemaVersion": 1,
-  "artefacts": [
+  "artifacts": [
     {
       "repository": "component-descriptors/github.com/acme/helloworld",
       "tag": "1.0.0",
@@ -409,7 +409,7 @@ jq . ${CTF_ARCHIVE}/artefact-index.json
 }
 ```
 
-The content of the transport archive is stored as OCI artifacts. Notice that the repository names of Component Version artifacts (found at `artefacts.respository`) are prefixed by `component-descriptors/`.
+The content of the transport archive is stored as OCI artifacts. Notice that the repository names of Component Version artifacts (found at `artifacts.respository`) are prefixed by `component-descriptors/`.
 
 The component version is described as an OCI manifest:
 
@@ -463,7 +463,7 @@ component:
     version: 1.0.0
   - access:
       imageReference: gcr.io/google_containers/echoserver:1.10
-      type: ociArtefact
+      type: ociArtifact
     name: image
     relation: external
     type: ociImage
@@ -829,7 +829,7 @@ The `blobs` directory is empty because, during the upload to the OCI registry, t
 Download OCI artifacts from an OCI registry, such as OCI images, with the <a href="https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_artifacts.md">`ocm download artifacts`</a> command:
 
 ```shell
-ocm download artefact ${OCM_REPO}/${COMPONENT}:${VERSION} -O echoserver
+ocm download artifact ${OCM_REPO}/${COMPONENT}:${VERSION} -O echoserver
 ```
 ```shell
 echoserver: downloaded
