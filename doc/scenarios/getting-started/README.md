@@ -242,7 +242,7 @@ locator: echoserverimage, repo: , version 1.10.0
 ```
 
 <details><summary>What happened?</summary>
-The docker image is downloaded from the docker daemon, converted to an OCI artifact,
+The Docker image is downloaded from the Docker daemon, converted to an OCI artifact,
 and added as local artifact to the component version.
 The component descriptor now has the content:
 
@@ -301,7 +301,7 @@ access:
   imageReference: gcr.io/google_containers/echoserver:1.10
 ```
 
-Then add the resources using the following command:
+Add the resources using the following command:
 
 ```shell
 $ ocm add resources $CA_ARCHIVE resources.yaml
@@ -317,7 +317,7 @@ adding resource helmChart: "name"="mychart","version"="<componentversion>"...
 adding resource ociImage: "name"="image","version"="1.0.0"...
 ```
 
-For an image built with Docker use this file:
+For a local image built with Docker use this file:
 ```shell
 ---
 name: mychart
