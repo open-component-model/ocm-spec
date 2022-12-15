@@ -440,7 +440,7 @@ jq . ${CTF_ARCHIVE}/blobs/sha256.63dc40246a604ef503f0361e14216ab7e002912697d09da
 }
 ```
 
-Notice that the output of the component version above contains the component descriptor as a `layer`. It can be identified by its content type, which is `application/vnd.ocm.software.component-descriptor.v2+yaml+tar`. In ths case, the component descriptor can be displayed with the following command:
+Notice that the output of the component version above contains the component descriptor as one of the `layers`. It can be identified by its content type, which is `application/vnd.ocm.software.component-descriptor.v2+yaml+tar`. In ths case, the component descriptor can be displayed with the following command:
 
 ```shell
 tar xvf ctf-hello-world/blobs/sha256.4f2080d8d41d2b52182f325f4f42d91e2581e3f2299f4f8631196801773ba869 -O - component-descriptor.yaml
@@ -474,7 +474,7 @@ meta:
   schemaVersion: v2
 ```
 
-The other elements listed as `layer`s describe the blobs for the local resources stored along with the component version. The digests can be seen in the `localReference` attributes of the component descriptor.
+The other elements listed as `layers` describe the blobs for the local resources stored along with the component version. The digests can be seen in the `localReference` attributes of the component descriptor.
 
 </details>
 
