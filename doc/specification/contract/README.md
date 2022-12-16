@@ -1,10 +1,10 @@
 # 2.3 Model Contract
 
-The greatest value of the Open Component Model comes
-with the tools interacting with the model and its content, the contract between tools and OCM.
+The value of the plain Open Component Model is very limited. It comes
+with the tools interacting with the Model and its content.
 
-One example of such a tool is the [transport](../../introduction/transports.md) tool provided
-by the OCM CLI. It uses the access information of resources contained in a component version to copy software artifacts from one environment into another. If required it adapts the resource locations registered for the component version in the target environment.
+A first example for such a tool is the [transport](../../introduction/transports.md) tool provided directly
+by the OCM Command line client. It uses the access information of resources contained in a component version to copy software artifacts from one environment into another and to potentially adapt then resource locations registered for the component version in the target environment.
 
 Another example could be a deployment tool accessing a component version to determine the artifacts, which should be deployed into a target environments.
 
@@ -54,8 +54,8 @@ A simple example could look like this:
             ├── Makefile
             └── src
                 ├── lib
-                │   ├── lib.c
-                │   └── lib.h
+                │   ├── lib.c
+                │   └── lib.h
                 └── main.c
 ```
 
