@@ -14,14 +14,14 @@ Resources are usually built from something, e.g. code in a git repo,
 named **sources** in this specification.
 
 OCM introduces a so-called **Component Descriptor** for every
-component version, that describes the resources, sources and other
+component version, that describes resources, sources and other
 component versions belonging to a particular component version and
 how to access them.
 
 For each version of a component there is an own *Component Descriptor*, e.g. in our example there might be 
 three component versions (and three *Component Descriptors*) for the frontend, but six component versions for the backend.
 
-Not all component version combinations of frontend, backend and monitoring stack are
+Not all component version combinations of frontend, backend and the monitoring stack are
 compatible and form a valid product version. In order to define reasonable
 version combinations for our software product, we could use another feature of
 the *Component Descriptor*, which allows the aggregation of component versions.
