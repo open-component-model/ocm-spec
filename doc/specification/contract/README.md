@@ -54,8 +54,8 @@ A simple example could look like this:
             ├── Makefile
             └── src
                 ├── lib
-                │   ├── lib.c
-                │   └── lib.h
+                │   ├── lib.c
+                │   └── lib.h
                 └── main.c
 ```
 
