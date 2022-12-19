@@ -11,7 +11,7 @@ Signing of a component version consists of several steps:
 3. the resulting component descriptor is [normalized](../../specification/formats/componentdescriptor_normalization.md)
    and a digest is calculated according to the selected digest algorithm. The resulting
    digest is stored in the component descriptor
-4. the digest is signed with the selected signing algorithm and stored in the 
+4. the digest is signed with the selected signing algorithm and stored in the
    component descriptor.
 5. the final component descriptor is updated in the OCM repository.
 
@@ -21,7 +21,7 @@ a digests has to be determined according to the combination of artifact
 normalization and digest algorithm and verified against existing digests.
 Component version references have to be followed recursively, calculating the
 digest for the referenced component descriptor. If digests fields for resources or
-component references already exist, they have to be compared against 
+component references already exist, they have to be compared against
 he calculated digest and rejected if different.
 
 ## Signing Algorithms
@@ -68,7 +68,8 @@ Signature verification with RSASSA-PKCS1-V1_5 requires a Public Key. This is use
 ### Verify with X509
 
 Signature verification with X509 certificates require a validation of the
-*signing* certificate and the signature itself. First, the validity of the 
+*signing* certificate and the signature itself. First, the validity of the
 signing certificate is checked with a root CA and a chain of intermediate
-certificates. Afterwards, the CD signature is verified with the public key in
-the signing certificate.
+certificates. The certificate requires the usage types x509.KeyUsageDigitalSignature and
+x509.ExtKeyUsageCodeSigning. Afterwards, the CD signature is verified with the public key in
+the signing certificate. If the signature entry of the component version describes an issuer it is validated against the common name of the certificate.

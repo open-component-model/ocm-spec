@@ -1,4 +1,4 @@
-# 2.3 Storage Backend Mappings
+# 2.6 Storage Backend Mappings
 
 ## General Layout
 
