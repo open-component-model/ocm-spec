@@ -304,7 +304,7 @@ access:
 Add the resources using the following command:
 
 ```shell
-$ ocm add resources $CA_ARCHIVE resources.yaml
+ocm add resources $CA_ARCHIVE resources.yaml
 ```
 ```shell
 processing resources.yaml...
