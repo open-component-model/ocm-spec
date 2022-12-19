@@ -1,24 +1,22 @@
 # 2.3 Model Contract
 
-The value of the plain Open Component Model is very limited. It comes
-with the tools interacting with the Model and its content.
+The greatest value of the Open Component Model comes with the tools interacting with the model and its content, the contract between tools and OCM.
 
-A first example for such a tool is the [transport](../../introduction/transports.md) tool provided directly
-by the OCM Command line client. It uses the access information of resources contained in a component version to copy software artifacts from one environment into another and to potentially adapt then resource locations registered for the component version in the target environment.
+One example for such a tool is the [transport](../../introduction/transports.md) tool provided by the OCM CLI. It uses the access information of resources contained in a component version to copy software artifacts from one environment to another. If required it also adapts resource locations registered for the component version in the target environment.
 
-Another example could be a deployment tool accessing a component version to determine the artifacts, which should be deployed into a target environments.
+Another example could be a deployment tool accessing a component version to determine the artifacts, which should be deployed into a target environment.
 
-Such tools and their specification ar not part of the OCM specification. Nevertheless, they have to interact with the content described by the Open Component Model.
+Such tools and their specification are not part of the OCM specification. Nevertheless, they have to interact with the content described by the Open Component Model.
 
 To do so, there must be a clear contract between the model and the way tools interact with the model.
 
-There are two basic parts for this contract:
-- All content required to deploy and install software described by a component version must be included as resources in this component version.
-- All resource locations (e.g. image locations) used in a runtime environment must be taken directly or indirectly from the access information provided by the used component versions.
+Such a contract consists of two basic parts:
+- all content required to deploy and install the software described by a component version must be included as resources in this component version.
+- all resource locations (e.g. image locations) used in a runtime environment must be taken directly or indirectly from the access information provided by the used component versions.
 
 This is required to fulfill the promise made by the Open Component Model:
 
-*Being able to describe closed Software Bills of Delivery enabling the transport of software from one environment into another one, and the deployment of this software in decoupled or isolated target environments.*
+*Being able to describe closed Software Bills of Delivery enabling the transport of software from one environment into another, and the deployment of this software in decoupled or isolated target environments.*
 
 This has various consequences especially for deployment environments,
 but basically for all tools working with the component model and even the component model itself:
