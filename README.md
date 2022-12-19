@@ -64,6 +64,9 @@ To use a backend storage technology as an OCM repository it is necessary to prov
 [B. Access Method Types](doc/appendix/B/README.md) <br>
 [C. Resource Types](doc/appendix/C/README.md) <br>
 [D. Labels](doc/appendix/D/README.md) <br>
+[E. Artifact Types](doc/appendix/E/README.md) <br>
+[F. Label Definitions](doc/appendix/F/README.md) <br>
+[G. Conventions](doc/appendix/G/README.md) <br>
 
 ## Notational Conventions
 
