@@ -648,3 +648,41 @@ $(GEN)/image.$(NAME).multi: $(GEN)/.exists Dockerfile $(GO_SRCS)
 
 ## Pipeline integration
 
+Pipeline infrastructures are heterogenous so that there is no universal answer how to integrate.
+Usually the simplest way to integrate is using the command line interface of the `ocm` project. As
+one example we use GitHub actions how an integration can be done:
+
+There are two repositories dealing with GitHub actions:
+The [first one](https://github.com/open-component-model/ocm-action) provides various actions that can
+called from a workflow. The [second one](https://github.com/open-component-model/ocm-setup-action)
+provides the necessary installations of ocm into the container.
+
+An typical workflow for a build step will create a component version. It contains the following steps:
+
+```yaml
+jobs:
+  create-ocm:
+    runs-on: ubuntu-latest
+    steps:
+      ...
+      - name: setup OCM
+        uses: open-component-model/ocm-setup-action@main
+      ...
+      - name: create OCM component version
+        uses: open-component-model/ocm-action@main
+        with:
+          action: create_component
+          component: acme.org/demo/simpleserver
+          provider: ${{ env.PROVIDER }}
+          version: github.com/jensh007
+      ...
+```
+This creates a component version for the current build. Additionally a transport archive
+may be created or the component version along with the built container images may be uploaded to an
+OCI registry, etc.
+
+The documentation is availble [here](https://github.com/open-component-model/ocm-action). A full
+example can be found in the sample Github repository.
+
+
+
