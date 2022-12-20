@@ -560,14 +560,14 @@ To list the resources found in a component version tree, the command <a href="ht
 ocm get resources ghcr.io/mandelsoft/cnudie//github.com/mandelsoft/ocmhelmdemo:0.1.0-dev --recursive -o tree
 ```
 ```shell
-COMPONENTVERSION                                           NAME        VERSION   IDENTITY TYPE        RELATION
-└─ github.com/mandelsoft/ocmhelmdemo:0.1.0-dev
-   ├─                                                      chart       0.1.0-dev          helmChart   local
-   ├─                                                      image       1.0                ociImage    external
-   ├─                                                      package     0.1.0-dev          toiPackage  local
-   └─ github.com/mandelsoft/ocmhelminstaller:0.1.0-dev
-      ├─                                                   toiexecutor 0.1.0-dev          toiExecutor local
-      └─                                                   toiimage    0.1.0-dev          ociImage    local
+COMPONENT                                    NAME        VERSION   IDENTITY TYPE        RELATION
+└─ github.com/mandelsoft/ocmhelmdemo                     0.1.0-dev
+   ├─                                        chart       0.1.0-dev          helmChart   local
+   ├─                                        image       1.0                ociImage    external
+   ├─                                        package     0.1.0-dev          toiPackage  local
+   └─ github.com/mandelsoft/ocmhelminstaller installer   0.1.0-dev
+      ├─                                     toiexecutor 0.1.0-dev          toiExecutor local
+      └─                                     toiimage    0.1.0-dev          ociImage    local
 ```
 
 ### Download the resources of a component version
