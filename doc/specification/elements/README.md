@@ -212,7 +212,10 @@ The element identity is composed by the following formal fields of an element:
   If name and version are not sufficient to provide a unique selection
   scheme, any arbitrary identity dimension can be added by using this field.
   If given, all those attributes contribute to the identity of the element
-  and must be given to uniquely identify an element.
+  and must be given to uniquely identify an element. The identity scheme can 
+  be chosen differently per element, by all effective identities of elements
+  of a dedicated class (resources, sources, references) in a component must be
+  unique.
 
 Using multiple attributes of an artifact for its identity makes it easier to formally
 describe the identity and to select a dedicated artifact from the set of

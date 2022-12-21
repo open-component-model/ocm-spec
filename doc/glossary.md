@@ -1,6 +1,6 @@
 # Glossary
 
-[A](#a) &nbsp; B &nbsp; [C](#c) &nbsp; [D](#d) &nbsp; [E](#e) &nbsp; F &nbsp; G &nbsp; H &nbsp; [I](#i) &nbsp; J &nbsp; K &nbsp; [L](#l) &nbsp; [M](#m) &nbsp; [N](#n) &nbsp; [O](#o) &nbsp; P &nbsp; Q &nbsp; [R](#r) &nbsp; [S](#s) &nbsp; [T](#t) &nbsp; U &nbsp; V &nbsp; W &nbsp; X &nbsp; Y &nbsp; Z
+[A](#a) &nbsp; B &nbsp; [C](#c) &nbsp; [D](#d) &nbsp; [E](#e) &nbsp; F &nbsp; G &nbsp; H &nbsp; [I](#i) &nbsp; J &nbsp; K &nbsp; [L](#l) &nbsp; [M](#m) &nbsp; [N](#n) &nbsp; [O](#o) &nbsp; [P](#p) &nbsp; Q &nbsp; [R](#r) &nbsp; [S](#s) &nbsp; [T](#t) &nbsp; U &nbsp; V &nbsp; W &nbsp; X &nbsp; Y &nbsp; Z
 
 ## A
 
@@ -102,6 +102,10 @@ parts of the [OCM](#ocm) specification, which may be extended by arbitrary
 variations. The specification just defines the meaning, syntax and or functional
 behaviour of such elements.
 
+#### [Extra Identity](specification/elements/README.md#identities)<a id="extraid"/>
+additional parts of the identity of an [element](#elemid) of a [component version](#compvers)
+described as dedicated attributes in a [component descriptor](#compdesc).
+
 ## I
 
 #### Identity<a id="identity"/>
@@ -112,6 +116,9 @@ see [element identity](#elemid), [component identity](#compid), [component versi
 #### [Labels](specification/elements/README.md#labels)<a id="labels"/>
 arbitrary typed information snippets attached to [component versions](#compvers),
 [artifacts](#artifacts) and [references](#compref).
+ 
+#### [Localization](specification/contract/README.md#real-life-example)<a id="localization"/>
+the process of adapting content delivered as [artifacts](#artifacts) in a [component versions](#compvers) to a local repository landscape in a target environment.
 
 ## M
 
@@ -119,6 +126,11 @@ arbitrary typed information snippets attached to [component versions](#compvers)
 the mapping of the [elements](specification/elements/README.md) of the
 [Open Component Model)](#ocm) onto a dedicated storage backend technology
 described by a [repository type](#repotype).
+
+#### [Model-Tool Contract](specification/contract/README.md)<a id="contract"/>
+The agreement between the Open Component Model and tools working with content
+provided by [component versions](#compvers), which regulates the cooperation
+between both.
 
 ## N
 
@@ -140,11 +152,22 @@ path to described [artifacts](#artifact).
 see [repository operations](#repops), [access methods](#accmeth) and
 [access method operations](#accmethops).
 
+## P
+
+### [Platform Convention](appendix/G/README.md#operating-system-and-cpu-architecture) <a id="osarch"/>
+Using extra identities to express the assignment of an [artifact](#artifact) to a dedicated
+execution platform.
+
 ## R
 
 #### Reference <a id="ref"/>
 a reference to an element of the component model, see [artifact reference](#artref)
 or [component version reference](#compref)
+
+#### [Relative Resource Refererences](specification/elements/README.md#artifact-references)<a id="relrefs"/>
+a reference to an [artifact](#artifact) described by a [component version](#compvers) relative to
+a given component version exploiting the [aggregation feature](#aggregation) of the Open Component
+Model. It is part of the [model-tool contract](#contract).
 
 #### [Repository Operations](specification/operations/README.md#repository-operations)<a id="repops"/>
 abstract operations that have to be provided by a language binding for a

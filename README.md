@@ -47,11 +47,12 @@ To use a backend storage technology as an OCM repository it is necessary to prov
 
 2 [OCM Specification](doc/specification/README.md)
 
-2.1 [OCM Elements](doc/specification/elements/README.md) <br>
-2.2 [OCM Operations](doc/specification/operations/README.md) <br>
-2.3 [Storage Backend Mappings](doc/specification/mapping/README.md) <br>
+2.1 [Model Elements](doc/specification/elements/README.md) <br>
+2.2 [Model Operations](doc/specification/operations/README.md) <br>
+2.3 [Model Contract](doc/specification/contract/README.md) <br>
 2.4 [Formats and Names](doc/specification/formats/README.md) <br>
 2.5 [Denotation Schemes](doc/specification/denotations/README.md) <br>
+2.6 [Storage Backend Mappings](doc/specification/mapping/README.md) <br>
 
 3 [Scenarios](doc/scenarios/README.md) <br>
 
@@ -63,6 +64,9 @@ To use a backend storage technology as an OCM repository it is necessary to prov
 [B. Access Method Types](doc/appendix/B/README.md) <br>
 [C. Resource Types](doc/appendix/C/README.md) <br>
 [D. Labels](doc/appendix/D/README.md) <br>
+[E. Artifact Types](doc/appendix/E/README.md) <br>
+[F. Label Definitions](doc/appendix/F/README.md) <br>
+[G. Conventions](doc/appendix/G/README.md) <br>
 
 ## Notational Conventions
 
