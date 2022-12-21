@@ -12,6 +12,7 @@ This chapter walks you through some basic steps to get started with OCM concepts
   - [Using a resources file](#using-a-resources-file)
   - [Uploading component versions](#uploading-component-versions)
   - [Bundle composed components](#bundle-composed-components)
+  - [All in One](#all-in-one)
 - [Display and Examine component versions](#display-and-examine-component-versions)
   - [List component versions](#list-component-versions)
   - [List the resources of a component version](#list-the-resources-of-a-component-version)
@@ -301,6 +302,17 @@ access:
   imageReference: gcr.io/google_containers/echoserver:1.10
 ```
 
+A resource is described either by its accesss information to a remote repository or by locally
+provided resources. For remote access the field `access` is used to describe the
+[access method](../../appendix/B/README.md). The type field is used to specify the kind of access.
+If the resource content should be taken from local resources with the field `input` is used to specify
+the access to local resources. In this case the resource content is directly put into the component
+archive. Like for the `access` attribute the kind of the input source is described by the field `type`.
+The input types are not part of the input specification but are provided locally by the OCM command
+line client. For available input types see [`ocm add resources`](https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_add_resources.md).
+
+For more complex scenarios the description files might use variable substitution (templating), see [Best practices](best-practices.md)
+
 Add the resources using the following command:
 
 ```shell
@@ -476,6 +488,71 @@ meta:
 
 The other elements listed as `layers` describe the blobs for the local resources stored along with the component version. The digests can be seen in the `localReference` attributes of the component descriptor.
 
+</details>
+
+### All in One
+The previous steps can be combined into a single operation working on a single description file:
+* Creating a Common Transport Archive
+* Adding one or more components
+* With resources, sources and references
+
+The command [ocm add componentversions](https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_add_componentversions.md)
+directly creates or extends a common transport archive without the need for creating dedicated component archives
+
+Create a yaml configuration file `components.yaml`, which contains information about the components
+to create and the elements addded to those components
+
+```yaml
+components:
+- name: github.com/acme.org/helloworld
+  version: "1.0.0"
+  provider:
+    name: acme.org
+  resources:
+    - name: mychart
+      type: helmChart
+      input:
+        type: helm
+        path: ./helmchart
+    - name: image
+      type: ociImage
+      version: "1.0.0"
+      access:
+        type: ociArtifact
+        imageReference: gcr.io/google_containers/echoserver:1.10
+```
+
+```shell
+ocm add componentversions --create --file ${CTF_ARCHIVE} components.yaml
+```
+
+```shell
+processing components.yaml...
+  processing document 1...
+    processing index 1
+found 1 component
+adding component github.com/acme.org/helloworld:1.0.0...
+  adding resource helmChart: "name"="mychart","version"="<componentversion>"...
+  adding resource ociImage: "name"="image","version"="1.0.0"...
+```
+
+<details><summary>What happened?</summary>
+The command creates the common-transport-archive (option `--create`), and adds the listed components
+with the described resources.
+
+```shell
+tree ${CTF_ARCHIVE}
+```
+
+```shell
+ctf-hello-world
+├── artifact-index.json
+└── blobs
+    ├── sha256.35ab56695654b260c633453d59064ad2aa075fadf1811b6712f982ea4f3cf814
+    ├── sha256.3732cc9004408e98ec28b66c1844dff166294a5bb03f953220d1542fba10de92
+    ├── sha256.d275a99002962136691f3982b7e176a2812a22193809aa2c879e29cac6851919
+    └── sha256.ee6d6431f54c511015a59203213c998ba0654730a3f3279b56d1b29e9b51b068
+```
 </details>
 
 ## Display and Examine component versions
