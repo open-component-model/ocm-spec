@@ -18,7 +18,9 @@ definitions:
         $ref: '#/definitions/labels'
       provider:
         $ref: '#/definitions/provider'
-
+      creationTime:
+        type: string
+        format: date-time
   labels:
     type: 'array'
     items:
@@ -138,7 +140,6 @@ definitions:
         $ref: '#/definitions/relaxedSemver'
       type:
         type: 'string'
-        enum: ['git']
       labels:
         $ref: '#/definitions/labels'
       access:
@@ -444,7 +445,7 @@ required:
 properties:
   apiVersion:
     type: 'string'
-    enum: [ 'ocm.software/v3alpha1' ]
+    enum: [ 'ocm.gardener.cloud/v3alpha1', 'ocm.software/v3alpha1' ]
   kind:
     type: 'string'
     const: 'ComponentVersion'
