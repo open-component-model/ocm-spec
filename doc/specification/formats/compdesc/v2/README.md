@@ -83,6 +83,6 @@ Component versions MUST adhere to a loosened variant of [Semver 2.0.0](https://s
 Different to strict semver 2.0.0, component versions MAY:
 
 - have an optional v prefix
-- omit the third level (patch-level); if omitted, path-level is implied to equal 0
+- omit the third level (patch-level); if omitted, patch-level is implied to equal 0
 
 The inner elements are described in detail in chapter [Types](../../../elements/README.md)
