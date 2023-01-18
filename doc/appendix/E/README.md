@@ -4,7 +4,7 @@ The following [artifact types](../../specification/formats/types.md#artifact-typ
 
 | TYPE          | VALUE                           | DESCRIPTION                   |
 | ------------- | ------------------------------- | ----------------------------- |
-| OCI Artifact  | [`ociArtifact`](ociArtifact.md) | A generic OCI artifact following the [open containers image specification](https://github.com/opencontainers/image-spec/blob/main/spec.md) |
+| OCI Artifact  | [`ociArtifact`](ociArtefact.md) | A generic OCI artifact following the [open containers image specification](https://github.com/opencontainers/image-spec/blob/main/spec.md) |
 | OCI Image     | [`ociImage`](ociImage.md)       | An OCI image or image list |
 | Helm Chart    | [`helmChart`](helmChart.md)     | A Helm Chart stored as OCI artifact or as tar blob (`mediaType` tar) |
 | Blob          | [`blob`](blob.md)               | Any anonymous untyped blob data |
