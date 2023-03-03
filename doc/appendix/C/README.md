@@ -90,8 +90,9 @@ The following algorithms are centrally defined and available in the OCM toolset:
 ## Serialization Format
 
 A digest for a component version is stored along with a [signature](../D/README.md) in a
-component-descriptor. A component-descriptor can have multiple signatures and with this multipe digests.
-A digest consists of the elements `hashAlgorithm`, `normalisationAlgorithm`, and `value`.
+component-descriptor. A component-descriptor can have multiple signatures and with this
+multiple digests. A digest consists of the elements `hashAlgorithm`, `normalisationAlgorithm`,
+and `value`.
 
 Example:
 

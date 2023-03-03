@@ -33,8 +33,10 @@ which will the be signed with the selected signing algorithm.
 
 *Algorith Name:* `RSASSA-PKCS1-V1_5`
 
-After the digest for the normalised component-descriptor is calculated, it can be signed using RSASSA-PKCS1-V1_5 as signature.algorithm. The corresponding signature is stored hex encoded in
-in `signature.value` with a `mediaType` of `application/vnd.ocm.signature.rsa`.
+After the digest for the normalised component-descriptor is calculated, it can be
+
+signed using RSASSA-PKCS1-V1_5 as signature.algorithm. The corresponding signature is stored hex encoded in `signature.value` with a `mediaType` of
+`application/vnd.ocm.signature.rsa`.
 
 
 ## Verification Procedure
