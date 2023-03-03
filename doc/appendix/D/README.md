@@ -15,14 +15,14 @@ Signing of a component version consists of several steps:
    component descriptor.
 5. the final component descriptor is updated in the OCM repository.
 
-The digest fields *MUST* be calculated during teh signing process and already existing
+The digest fields *MUST* be calculated during the signing process and already existing
 digest fields *CAN NOT* be trusted. Resources have to be accessed and
-a digests has to be determined according to the combination of artifact
+digests has to be determined according to the combination of artifact
 normalization and digest algorithm and verified against existing digests.
 Component version references have to be followed recursively, calculating the
 digest for the referenced component descriptor. If digests fields for resources or
 component references already exist, they have to be compared against
-he calculated digest and rejected if different.
+the calculated digest and rejected if different.
 
 ## Signing Algorithms
 
@@ -33,7 +33,10 @@ which will the be signed with the selected signing algorithm.
 
 *Algorith Name:* `RSASSA-PKCS1-V1_5`
 
-After the digest for the normalised component-descriptor is calculated, it can be signed using RSASSA-PKCS1-V1_5 as signature.algorithm. The corresponding signature is stored hex encoded in signature.value with a mediaType of application/vnd.ocm.signature.rsa.
+After the digest for the normalised component-descriptor is calculated, it can be
+
+signed using RSASSA-PKCS1-V1_5 as signature.algorithm. The corresponding signature is stored hex encoded in `signature.value` with a `mediaType` of
+`application/vnd.ocm.signature.rsa`.
 
 
 ## Verification Procedure
@@ -63,13 +66,15 @@ func digestForComponentDescriptor(cd) -> digest:
 
 ### Verify with RSA
 
-Signature verification with RSASSA-PKCS1-V1_5 requires a Public Key. This is used in step 3 of the verification algorithm.
+Signature verification with RSASSA-PKCS1-V1_5 requires a Public Key. This is used in step 3 of the
+verification algorithm.
 
 ### Verify with X509
 
 Signature verification with X509 certificates require a validation of the
 *signing* certificate and the signature itself. First, the validity of the
 signing certificate is checked with a root CA and a chain of intermediate
-certificates. The certificate requires the usage types x509.KeyUsageDigitalSignature and
-x509.ExtKeyUsageCodeSigning. Afterwards, the CD signature is verified with the public key in
-the signing certificate. If the signature entry of the component version describes an issuer it is validated against the common name of the certificate.
+certificates. The certificate requires the usage types `x509.KeyUsageDigitalSignature` and
+`x509.ExtKeyUsageCodeSigning`. Afterwards, the CD signature is verified with the public key in
+the signing certificate. If the signature entry of the component version describes an issuer it is
+validated against the common name of the certificate.
