@@ -11,7 +11,8 @@
 
 In this specification software products are comprised of logical units called
 [**components**](../../specification/elements/README.md#components). A component version
-consists of a set of technical [artifacts](../../specification/elements/README.md#artifacts), e.g. Docker images, Helm charts, binaries, configuration data etc.
+consists of a set of technical [artifacts](../../specification/elements/README.md#artifacts),
+e.g. Docker images, Helm charts, binaries, configuration data etc.
 Such artifacts are called **resources** in this specification. Resources are usually built
 from something, e.g. code in a git repo. Those are named **sources** in this specification.
 
@@ -21,7 +22,8 @@ component version and how to access them.
 
 Usually however real-life applications are composed of multiple components. For
 example an application might consist of a frontend, a backend, a database and a web server.
-During the software development process new [**component versions**](../../specification/elements/README.md#component-versions)
+During the software development process new
+[**component versions**](../../specification/elements/README.md#component-versions)
 are created and third-party components might be consumed from a public registry and
 updated from time to time.
 
@@ -48,7 +50,9 @@ references, you could collect all artifacts, belonging to this product version.
 ## Example
 
 Let's illustrate this idea by an example. As base we use the 'microblog' application. This
-application was created for a programming tutorial and is documented in detail [here](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world). The source code can be found [here](https://github.com/miguelgrinberg/microblog/).
+application was created for a programming tutorial and is documented in detail
+[here](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world).
+The source code can be found [here](https://github.com/miguelgrinberg/microblog/).
 
 At the end of the tutorial this application consists of the following components:
 
