@@ -139,6 +139,7 @@ A component descriptor describes:
 - a history of [Repository Contexts](#repository-contexts) describing
   former repository locations of the component version along a transportation
   chain
+- an optional creation timestamp (RFC3339) rounded to seconds.
 - a set of [Labels](#labels) to assign arbitrary kinds of information to the
   component version, which is not formally defined by the Open Component Model
 - an optional set of [Sources](#sources), that were used to generate the
@@ -269,8 +270,9 @@ Labels are described by the element field
 
 - **`labels`** *[]label*
 
-  A list of arbitrary labels described by a formal name with a globally
-  unique meaning (see [label structure](../formats/types.md#label-names)
+  A list of arbitrary [labels](../formats/formats.md#label-specifications)  described by a formal name with a globally
+  unique meaning (see [label structure](../formats/types.md#label-names)).
+
 
 ### Elements and Element Metadata
 
@@ -321,7 +323,7 @@ in the component descriptor:
 
 - **`labels`** (optional) *[]label*
 
-  A list of arbitrary labels described by a formal name with a globally
+  A list of arbitrary [labels](#labels) described by a formal name with a globally
   unique meaning (see [label structure](../formats/types.md#label-names))
 
 - **`access`** (required) *access specification*
@@ -387,7 +389,7 @@ A resource uses the following additional formal fields:
 
     - **`labels`** (optional) *[]label
 
-      A list of arbitrary labels described by a formal name with a globally
+      A list of arbitrary [labels](#labels) described by a formal name with a globally
       unique meaning (see [label structure](../formats/types.md#label-names)) can be used
       to attach more information about the part or kind of usage of the sources.
 
@@ -434,7 +436,7 @@ references have an [identity](#identities).
 
 #### Component Version Reference
 
-Besides the regular [element metadata](#labels) a reference element has the
+Besides the regular [element metadata](#elements-and-element-metadata) a reference element has the
 following additional formal fields:
 
 - **`componentName`** (required) *string*

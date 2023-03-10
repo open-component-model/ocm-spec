@@ -18,9 +18,9 @@ The order of elements in sequences MAY be significant and MUST be retained in ca
 
 A *Component Descriptor* document consists of two top level elements: *meta*, *component*
 
-|  | Description |
-| --- | --- |
-| meta | Contains the schema version of the *Component Descriptor* specification. This document defines schema version *v2*. |
+| Field     | Description |
+|-----------| --- |
+| meta      | Contains the schema version of the *Component Descriptor* specification. This document defines schema version *v2*. |
 | component | Definition of the artifacts which belong to the component version. |
 
 Example:
@@ -36,16 +36,16 @@ component:
 
 The *component* field of a *Component Descriptor* has the following fields:
 
-|  | Description |
-| --- | --- |
-| name | Component name |
-| version | Component version |
-| repositoryContexts | Locations of the *Component Descriptor* in a transport chain |
-| provider | Provider of the component, e.g. a company, organization,... |
-| sources | Array of references to sources |
-| resources | Array of references to resources |
+| Field               | Description |
+|---------------------| --- |
+| name                | Component name |
+| version             | Component version |
+| repositoryContexts  | Locations of the *Component Descriptor* in a transport chain |
+| provider            | Provider of the component, e.g. a company, organization,... |
+| sources             | Array of references to sources |
+| resources           | Array of references to resources |
 | componentReferences | Array of references to other *component versions* described by *Component Descriptors* |
-| labels | Optional field to add additional information/extensions |
+| labels              | Optional field to add additional information/extensions |
 
 ### Component Name and Version
 
@@ -86,3 +86,14 @@ Different to strict semver 2.0.0, component versions MAY:
 - omit the third level (patch-level); if omitted, patch-level is implied to equal 0
 
 The inner elements are described in detail in chapter [Types](../../../elements/README.md)
+
+### Provider
+
+The provider field may be a simple name or a string containing a json document describing the provider attributes.
+The json document has the following structure:
+
+| Field | Description                                                         |
+|-------|---------------------------------------------------------------------|
+| name  | (required) Provider name                                            |
+| labels| list of labels according to the  [label specificcation](../../../elements/README.md#labels) |
+
