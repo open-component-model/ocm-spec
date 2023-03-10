@@ -38,10 +38,16 @@ name: `github.com/jensh007/microblog-deployment`
 version: `0.23.1`
 
 URL of OCI registry: `ghcr.io/acme.org/microblogapp`
+
 It is convenient to put this into an environment variable:
 
 ```yaml
 OCMREPO=github.com/acme.org/microblog
+```
+
+Getting all component-versions of the application with the ocm cli:
+
+```yaml
 ocm get component ${OCM_REPO}//github.com/jensh007/microblog-deployment:0.23.1 -o yaml
 
 ---
