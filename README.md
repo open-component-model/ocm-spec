@@ -54,7 +54,6 @@ To use a backend storage technology as an OCM repository it is necessary to prov
 2.5 [Denotation Schemes](doc/specification/denotations/README.md) <br>
 2.6 [Storage Backend Mappings](doc/specification/mapping/README.md) <br>
 
-3 [Scenarios](doc/scenarios/README.md) <br>
 
 [Glossary](doc/glossary.md) <br>
 
