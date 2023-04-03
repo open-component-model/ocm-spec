@@ -6,9 +6,8 @@ provided by the Open Component Model.
 [A. Storage backend Mappings](A/README.md) <br>
 [B. Access Methods](B/README.md) <br>
 [C. Digest Calculation](C/README.md) <br>
-[D. Signature types](E/README.md) <br>
-
-[E. Artifact Types](F/README.md) <br>
+[D. Signature types](D/README.md) <br>
+[E. Artifact Types](E/README.md) <br>
 [F. Labels](F/README.md) <br>
 
 The specification is based on 4 basic functional extension points:
