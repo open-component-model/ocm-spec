@@ -163,3 +163,31 @@ models for the OCI specification:
    by a dedicated digest based field. Those artifacts can directly be
    described by this format. But language bindings basically have to support
    this additional type.
+
+# *Component Archive Format*
+
+This is a special filesystem based format to store the content of
+a single component version. It is intended to be used during a
+build process to incrementally compose a component version.
+Once finished it can be transfered to a regular OCM repository.
+
+It is a directory containing
+
+- **`component-descriptor.yaml`** *YAML file*
+
+  This yaml is the serialized form of a [component descriptor](../../specification/elements#component-descriptor).
+
+- **`blobs`** *directory*
+
+  The *blobs* directory contains the local blobs described by the
+  _component descriptor_ as a flat file list. Typically, every
+  file has a filename according to its [digest](https://github.com/opencontainers/image-spec/blob/main/descriptor.md#digests).
+  Hereby the algorithm separator character is replaced by a dot (".").
+  Every file SHOULD be referenced, directly or indirectly, in the
+  component descriptor by a
+  [`localBlob` access specification](../../appendix/B/localBlob.md). The `localReference` value is the file name of the blob file in the `blobs` directory.
+
+This format might be used in various technical forms: as structure of an
+operating system file system, a virtual file system or as content of
+an archive file. The descriptor SHOULD be the first file if stored in an
+archive.

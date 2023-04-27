@@ -54,7 +54,7 @@ The type specific specification fields are:
 
 ## Element Mapping
 
-This format used the [`OCIRegistry`](../OCIRegistry/README.md#element-mapping)
+This format uses the [`OCIRegistry`](../OCIRegistry/README.md#element-mapping)
 element mapping to map OCM elements to OCI elements.
 Those elements will then be stored according to the [OCI mapping to filesystem content](../../common/formatspec.md#common-transport-format)
 
