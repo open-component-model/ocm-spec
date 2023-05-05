@@ -22,7 +22,85 @@ normalizations.
 - `jsonNormalisationV2`: This is the new format. which is independent of the
   chosen representation format of the component descriptor.
 
-## Generic Normalization format
+The normalization process is divided into two steps:
+
+- *extraction of the signature relevant information from the component descriptor*
+
+  The result is basically a JSON object, which decsribed the relevant information.
+
+- *normalization of the resulting JSON object*
+
+  Here, the object is serialized to a unique and reproducable byte sequence, which is finally used to determine the digest.
+
+  There are to such normalizations:
+  - `jsonNormalisationV1` uses an [OCM specific representation](#generic-normalization-format) of the JSON object.
+  - `jsonNormalisationV2` uses a standard scheme according to [RFC8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785).
+
+
+# `jsonNormalisationV1` vs `jsonNormalisationV2`
+
+The `JsonNormalisationV1` serialization format is based on the serialization
+format of the component descriptor. It uses an appropriate JSON object containing the relevant fields as contained in the component descriptors's serialization. The format version fields are included. Therefore, the normalized form is depending on the chosen serialization format. Changing this format version would result in different digests. The resulting JSON object is serialized with the [OCM specific scheme](#generic-normalization-format)
+
+`JsonNormalisationV2` strictly uses only the relevant component descriptor
+information according to the field specification shown below. It is independent of the serialization format used to store the component decsriptor in some storage backend. Therefore, the calculated digest in finally independent of the serialization format chosen for storing the component descriptor in a storage backend.
+
+  Additionally, it uses the JCS scheme for uniquely 
+  serialize the resulting JSON object.
+
+## Relevant information in Component Descriptors
+
+A component descriptor contains signature relevant information and
+information, which may change. For example, the access methods specifications
+might be changed during atransport step.
+
+Relevant fields and their mapping to the normalized data structure for `JsonNormalisationV2`:
+- Component Name: mapped to `component.name`
+- Component Version: mapped to `component.version`
+- Component Labels: mapped to `component.labels` (see [Labels](#labels)])
+- Component Provider: mapped to `component.provider`
+- Resources: mapped to `component.resources`, always empty list enforced, without the source references (see [Labels](#labels)] and [Access Methods](#access-methods)])
+- Sources: mapped to `component.sources`, always empty list enforced, (see [Labels](#labels)] and [Access Methods](#access-methods)])
+- References: mapped to `component.references`, always empty list enforced, (see [Labels](#labels)])
+
+### Access Methods
+
+Access method specifications are completely ignored.
+A resource/source is ignored, if the access method type is `none`.
+
+## Labels
+
+Labels are removed before signing but can be marked with a special boolean
+property `signing` not to be removed and thus be part of the signature.
+The structure of signing-relevant labels is preserved from the component
+descriptor version `v2`.
+
+Example:
+
+```yaml
+labels:
+- name: label1
+  value: foo
+- name: label2
+  value: bar
+  signing: true
+```
+
+`label1` will be excluded from the signature, `label2` will be included.
+The label values is takes as it is, preserving a potentially deep structure.
+
+## Exclude Resource from Normalisation/Signing
+
+If a resource should not be part of the normalisation and later signing, the resource needs a special digest in the following format:
+
+```yaml
+digest:
+  hashAlgorithm: NO-DIGEST
+  normalisationAlgorithm: EXCLUDE-FROM-SIGNATURE
+  value: NO-DIGEST
+```
+
+## Generic Normalization Format
 
 The generic format is based on a data structure consisting of dictionaries, lists and
 simple values (like strings and integers).
@@ -221,63 +299,3 @@ are all normalized to:
 ```json
 []
 ```
-
-## Relevant information in Component Descriptors.
-
-A component descriptor contains signature relevant information and
-information, which may change. For example, the access methods specifications
-might be changed during atransport step.
-
-Relevant fields and their mapping to the normalized data structure for `JsonNormalisationV2`:
-- Component Name: mapped to `component.name`
-- Component Version: mapped to `component.version`
-- Component Labels: mapped to `component.labels` (see [Labels](#labels)])
-- Component Provider: mapped to `component.provider`
-- Resources: mapped to `component.resources`, always empty list enforced, without the source references (see [Labels](#labels)] and [Access Methods](#access-methods)])
-- Sources: mapped to `component.sources`, always empty list enforced, (see [Labels](#labels)] and [Access Methods](#access-methods)])
-- References: mapped to `component.references`, always empty list enforced, (see [Labels](#labels)])
-
-### Access Methods
-
-Access method specifications are completely ignored.
-A resource/source is ignored, if the access method type is `none`.
-
-## Labels
-
-Labels are removed before signing but can be marked with a special boolean
-property `signing` not to be removed and thus be part of the signature.
-The structure of signing-relevant labels is preserved from the component
-descriptor version `v2`.
-
-Example:
-
-```yaml
-labels:
-- name: label1
-  value: foo
-- name: label2
-  value: bar
-  signing: true
-```
-
-`label1` will be excluded from the signature, `label2` will be included.
-The label values is takes as it is, preserving a potentially deep structure.
-
-## Exclude Resource from Normalisation/Signing
-
-If a resource should not be part of the normalisation and later signing, the resource needs a special digest in the following format:
-
-```yaml
-digest:
-  hashAlgorithm: NO-DIGEST
-  normalisationAlgorithm: EXCLUDE-FROM-SIGNATURE
-  value: NO-DIGEST
-```
-
-# `jsonNormalisationV1` vs `jsonNormalisationV2`
-
-The `JsonNormalisationV1` serialization format is based on the serialization
-format of the component descriptor. The format version fields are included
-
-`JsonNormalisationV2` strictly uses only the relevant component descriptor
-information according to the field specification shown above.
