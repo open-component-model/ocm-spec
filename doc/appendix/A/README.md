@@ -18,7 +18,8 @@ Mappings for the following technologies are defined:
 
 - [OCIRegistry](OCIRegistry/README.md) OCM content in OCI registries
 - [FileSystem (CTF)](CTF/README.md) OCM content as filesystem structure
-- [AWS S3](S3/README.md)OCM content in AWS S3 buckets
+- [FileSystem (Component Archive)](ComponentArchive/README.md) Single [component version](../../specification/elements/README.md#component-versions) as content as filesystem structure
+- [AWS S3](S3/README.md) OCM content in AWS S3 buckets
 
 ## Transport of Artifact Content
 
