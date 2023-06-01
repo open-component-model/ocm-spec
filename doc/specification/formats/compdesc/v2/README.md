@@ -1,6 +1,6 @@
 # Component Descriptor Serialization Version V2
 
-A *Component Descriptor* of version v2 is a [YAML](https://yaml.org/) or [JSON](https://www.json.org/json-en.html) document according to this [schema](json-schema.yaml). Additional fields are not allowed.
+A *Component Descriptor* of version v2 is a [YAML](https://yaml.org/) or [JSON](https://www.json.org/json-en.html) document according to this [schema](https://github.com/open-component-model/ocm/blob/main/resources/component-descriptor-v2-schema.yaml). Additional fields are not allowed. Note that the schemas are maintained in a different Git repository.
 
 In serialised form, *Component Descriptors* MUST be UTF-8-encoded. Either YAML, or JSON MUST be used. If YAML is used as serialisation format, only the subset of features defined by JSON MUST be used, thus allowing conversion to a JSON representation.
 
