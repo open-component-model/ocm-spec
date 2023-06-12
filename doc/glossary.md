@@ -1,6 +1,6 @@
 # Glossary
 
-[A](#a) &nbsp; B &nbsp; [C](#c) &nbsp; [D](#d) &nbsp; [E](#e) &nbsp; F &nbsp; G &nbsp; H &nbsp; [I](#i) &nbsp; J &nbsp; K &nbsp; [L](#l) &nbsp; [M](#m) &nbsp; [N](#n) &nbsp; [O](#o) &nbsp; [P](#p) &nbsp; Q &nbsp; [R](#r) &nbsp; [S](#s) &nbsp; [T](#t) &nbsp; U &nbsp; V &nbsp; W &nbsp; X &nbsp; Y &nbsp; Z
+[A](#a) &nbsp; B &nbsp; [C](#c) &nbsp; [D](#d) &nbsp; [E](#e) &nbsp; F &nbsp; G &nbsp; [H](#h) &nbsp; [I](#i) &nbsp; J &nbsp; K &nbsp; [L](#l) &nbsp; [M](#m) &nbsp; [N](#n) &nbsp; [O](#o) &nbsp; [P](#p) &nbsp; Q &nbsp; [R](#r) &nbsp; [S](#s) &nbsp; [T](#t) &nbsp; U &nbsp; V &nbsp; W &nbsp; X &nbsp; Y &nbsp; Z
 
 ## A
 
@@ -105,6 +105,14 @@ behaviour of such elements.
 #### [Extra Identity](specification/elements/README.md#identities)<a id="extraid"/>
 additional parts of the identity of an [element](#elemid) of a [component version](#compvers)
 described as dedicated attributes in a [component descriptor](#compdesc).
+
+## H
+
+#### [Helm Chart](appendix/B/helm.md)<a id="helmchart"/>
+A set of files describing the deplyoment of a Kubernetes application using
+the [Helm](https://helm.sh/) deployment mechanism.
+
+see [element identity](#elemid), [component identity](#compid), [component version identity](#compversid)
 
 ## I
 
