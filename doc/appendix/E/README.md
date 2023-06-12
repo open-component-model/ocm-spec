@@ -39,7 +39,7 @@ must deliver such a blob, also.
 This basically means, whenever a new resource type is supported,
 corresponding blob formats must be defined for this type. Type-agnostic access types, like [`localBlob`](../B/localBlob.md) or [`ociBlob`](../B/ociBlob.md)
 just deal with those blobs, they never need to know anything about their internal 
-format. But specific access methods, e.g. the [`ociArticat`](../B/ociArtifact.md) 
+format. But specific access methods, e.g. the [`ociArtifact`](../B/ociArtifact.md) 
 method may provide dedicated blob formats.
 
 These blob formats may depend on the combination of artifact type and access type.

@@ -32,27 +32,31 @@ The normalization process is divided into two steps:
 
   Here, the object is serialized to a unique and reproducable byte sequence, which is finally used to determine the digest.
 
-  There are to such normalizations:
+  There are two such normalization methods:
   - `jsonNormalisationV1` uses an [OCM specific representation](#generic-normalization-format) of the JSON object.
   - `jsonNormalisationV2` uses a standard scheme according to [RFC8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785).
 
 
-# `jsonNormalisationV1` vs `jsonNormalisationV2`
+## `jsonNormalisationV1` vs `jsonNormalisationV2`
 
 The `JsonNormalisationV1` serialization format is based on the serialization
 format of the component descriptor. It uses an appropriate JSON object containing the relevant fields as contained in the component descriptors's serialization. The format version fields are included. Therefore, the normalized form is depending on the chosen serialization format. Changing this format version would result in different digests. The resulting JSON object is serialized with the [OCM specific scheme](#generic-normalization-format)
 
 `JsonNormalisationV2` strictly uses only the relevant component descriptor
-information according to the field specification shown below. It is independent of the serialization format used to store the component decsriptor in some storage backend. Therefore, the calculated digest in finally independent of the serialization format chosen for storing the component descriptor in a storage backend.
+information according to the field specification shown below. It is independent of the serialization format used to store the component decsriptor in some storage backend. Therefore, the calculated digest is finally independent of the serialization format chosen for storing the component descriptor in a storage backend.
 
-  Additionally, it uses the JCS scheme for uniquely 
-  serialize the resulting JSON object.
+Additionally, it uses the JCS scheme for uniquely serializing the resulting
+JSON object.
 
 ## Relevant information in Component Descriptors
 
-A component descriptor contains signature relevant information and
-information, which may change. For example, the access methods specifications
-might be changed during atransport step.
+A component descriptor contains static information and
+information, which may change over time (for example, the access methods
+specifications might be changed during a transport step). A digest should be
+stable even after a transport and therefore should only hash static
+information. Therefore, a component descriptor is transformed to format
+containing only immutable fields, which are finally relevant for the signing
+process to assure the data integrity.
 
 Relevant fields and their mapping to the normalized data structure for `JsonNormalisationV2`:
 - Component Name: mapped to `component.name`
@@ -71,7 +75,10 @@ A resource/source is ignored, if the access method type is `none`.
 ## Labels
 
 Labels are removed before signing but can be marked with a special boolean
-property `signing` not to be removed and thus be part of the signature.
+property `signing`. This property indicates that the label should be
+signing-relevant and therefore part of the digest. As a consequence such
+labels cannot be changed anymore during the lifecycle of a component version
+any may only describe static information.
 The structure of signing-relevant labels is preserved from the component
 descriptor version `v2`.
 
@@ -86,12 +93,12 @@ labels:
   signing: true
 ```
 
-`label1` will be excluded from the signature, `label2` will be included.
-The label values is takes as it is, preserving a potentially deep structure.
+`label1` will be excluded from the digest, `label2` will be included.
+The label value is taken as it is, preserving a potentially deeply nested structure.
 
-## Exclude Resource from Normalisation/Signing
+## Exclude Resources from Normalization/Signing
 
-If a resource should not be part of the normalisation and later signing, the resource needs a special digest in the following format:
+If a resource should not be part of the normalization and later signing, the resource needs a special digest in the following format:
 
 ```yaml
 digest:

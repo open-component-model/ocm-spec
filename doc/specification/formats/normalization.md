@@ -5,7 +5,7 @@ content of described artifacts must be incorporated.
 
 The metadata of a component version is described by a [component-descriptor](../../specification/elements/README.md#component-descriptor). It contains volatile information, also, e.g. the artifact access specification, which might change during [transports](../../introduction/transports.md).
 Therefore, to calculate a digest, the component descriptor has to be transformed
-to an immutable technical reprsentation containing only signature relevant information. This process is called [*component descriptor normalization*](componentdescriptor_normalization.md).
+to an immutable technical representation containing only static signature relevant information. This process is called [*component descriptor normalization*](componentdescriptor_normalization.md).
 
 To cover the content of the artifacts described by a component version, a digest
 for the artifact content has to be calculated, also, and incorporated into the

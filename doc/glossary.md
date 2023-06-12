@@ -109,7 +109,7 @@ described as dedicated attributes in a [component descriptor](#compdesc).
 ## H
 
 #### [Helm Chart](appendix/B/helm.md)<a id="helmchart"/>
-An set of files describing the deplyoment of a Kubernetes application using
+A set of files describing the deplyoment of a Kubernetes application using
 the [Helm](https://helm.sh/) deployment mechanism.
 
 see [element identity](#elemid), [component identity](#compid), [component version identity](#compversid)
