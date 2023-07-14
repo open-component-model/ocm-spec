@@ -161,7 +161,7 @@ There are two normalization procedures, [artifact normalization](#artnorm) and
 [component descriptor normalization](#compdescnorm).
 
 #### [`npm`](appendix/B/npm.md)<a id="npm"/>
-[access method](#accmeth) used to access NodeJS packages in NPM repositories.
+[access method](#accmeth) used to access NodeJS packages in an NPM repository.
 
 ## O
 
