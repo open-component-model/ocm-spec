@@ -34,11 +34,17 @@ The type specific specification fields are:
 
   OCI repository reference
 
-- **`legacyTypes`** (optional) *bool*
+- **`subPath`** (optional) *string*
 
-  OCI repository requires Docker legacy mime types for OCI
-  image manifests. (automatically enabled for docker.io)
+  The base repository name used for the OCM repository. The OCM based artifacts will use this path as repository prefix.  An OCI registry may host many OCM repositories with different repository prefixes.
 
+- **`componentNameMapping`** (optional) *string*
+
+  This attribute describes how component names are mapped to OCI artifact repositories.
+  There are two flavors:
+  - `urlPath` (default) the component name is directly used as part of the OCI repository name.
+  - `sha256-digest` (not used anymore) the digest of the component name is used to limit the length of the OCI repository name.
+  
 ## Element Mapping
 
 An OCI registry can be used to host multiple OCM repositories.

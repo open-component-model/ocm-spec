@@ -17,3 +17,4 @@ The following access method types are centrally defined:
 - [helm](helm.md) a Helm chart stored in a Helm Repository
 - [gitHub](gitHub.md) a commit in a GitHub-based Git repository
 - [s3](s3.md) a blob stored in an AWS S3 bucket
+- [npm](s3.md) a NodeJS package stored in an NPM repository

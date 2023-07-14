@@ -1,6 +1,6 @@
 # Glossary
 
-[A](#a) &nbsp; B &nbsp; [C](#c) &nbsp; [D](#d) &nbsp; [E](#e) &nbsp; F &nbsp; G &nbsp; [H](#h) &nbsp; [I](#i) &nbsp; J &nbsp; K &nbsp; [L](#l) &nbsp; [M](#m) &nbsp; [N](#n) &nbsp; [O](#o) &nbsp; [P](#p) &nbsp; Q &nbsp; [R](#r) &nbsp; [S](#s) &nbsp; [T](#t) &nbsp; U &nbsp; V &nbsp; W &nbsp; X &nbsp; Y &nbsp; Z
+[A](#a) &nbsp; B &nbsp; [C](#c) &nbsp; [D](#d) &nbsp; [E](#e) &nbsp; F &nbsp; [G](#g) &nbsp; [H](#h) &nbsp; [I](#i) &nbsp; J &nbsp; K &nbsp; [L](#l) &nbsp; [M](#m) &nbsp; [N](#n) &nbsp; [O](#o) &nbsp; [P](#p) &nbsp; Q &nbsp; [R](#r) &nbsp; [S](#s) &nbsp; [T](#t) &nbsp; U &nbsp; V &nbsp; W &nbsp; X &nbsp; Y &nbsp; Z
 
 ## A
 
@@ -8,7 +8,7 @@
 #### [Access Method](specification/elements/README.md#artifact-access)<a id="accmeth"/>
 a dedicated procedure how to access the content of an [artifact](#artifact) 
 described by a [component version](#compvers). It is formally represented by an
-[access method type](#acctype).
+[access method type](#acctype).  (see [supported access methods](appendix/B/README.md))
 
 #### [Access Method Operations](specification/operations/README.md#access-method-operations)<a id="accmethops"/>
 the operations an implementation of an [access method](#accmeth) has to support.
@@ -106,7 +106,15 @@ behaviour of such elements.
 additional parts of the identity of an [element](#elemid) of a [component version](#compvers)
 described as dedicated attributes in a [component descriptor](#compdesc).
 
+## G
+
+#### [`gitHub`](appendix/B/gitHub.md)<a id="github"/>
+[access method](#accmeth) used to access Git commits in a GitHub repository.
+
 ## H
+
+#### [`helm`](appendix/B/helm.md)<a id="helm"/>
+[access method](#accmeth) used to access [Helm Charts](#helmchart) in a Helm repository.
 
 #### [Helm Chart](appendix/B/helm.md)<a id="helmchart"/>
 A set of files describing the deplyoment of a Kubernetes application using
@@ -124,7 +132,10 @@ see [element identity](#elemid), [component identity](#compid), [component versi
 #### [Labels](specification/elements/README.md#labels)<a id="labels"/>
 arbitrary typed information snippets attached to [component versions](#compvers),
 [artifacts](#artifacts) and [references](#compref).
- 
+
+#### [`localBlob`](appendix/B/localBlob.md)<a id="localblob"/>
+[access method](#accmeth) used to access blobs stored along with a component version.
+
 #### [Localization](specification/contract/README.md#real-life-example)<a id="localization"/>
 the process of adapting content delivered as [artifacts](#artifacts) in a [component versions](#compvers) to a local repository landscape in a target environment.
 
@@ -149,7 +160,16 @@ digest for signing purposes along a transportation path.
 There are two normalization procedures, [artifact normalization](#artnorm) and
 [component descriptor normalization](#compdescnorm).
 
+#### [`npm`](appendix/B/npm.md)<a id="npm"/>
+[access method](#accmeth) used to access NodeJS packages in an NPM repository.
+
 ## O
+
+#### [`ociArtifact`](appendix/B/ociArtifact.md)<a id="ociartifact"/>
+[access method](#accmeth) used to access OCI artifacts stored in an OCI registry.
+
+#### [`ociBlob`](appendix/B/ociBlob.md)<a id="ociblob"/>
+[access method](#accmeth) used to access blobs stored in an OCI registry.
 
 #### [Open Component Model](../README.md)<a id="ocm"/>
 a technology- and location-agnostic description model for software delivery
@@ -203,6 +223,9 @@ used to generate one or more of the described [resources](#resource).
 a format definition for the specification of attributes for
 dedicated variants of some [extension points](#ext). See [access methods](#accmeth),
 [repository types](#repotype), and [labels](#label).
+
+#### [`s3`](appendix/B/s3.md)<a id="s3"/>
+[access method](#accmeth) used to access blobs in an S3 repository.
 
 ## T
 
