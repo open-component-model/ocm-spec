@@ -10,7 +10,7 @@ Provided blobs use the following media type: `application/x-tgz`
 
 ### Description
 
-This method implements the access of an NPM package from an NPM registry.
+This method implements the access of an NPM package in an NPM registry.
 
 
 ### Specification Versions
@@ -27,10 +27,8 @@ The type specific specification fields are:
 
 - **`package`** *string*
 
-  The name of the NPM package.
+  Name of the NPM package.
 
 - **`version`** *string*
 
-  The version name of the NPM package.
-
-
+  Version name of the NPM package.
