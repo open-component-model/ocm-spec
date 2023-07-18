@@ -1,125 +1,79 @@
 
 # 1 Introduction
 
-1.1 [Component Descriptor](component_versions.md)<br>
-1.2 [Component Repository](component_repository.md)<br>
-
-The definition, structure and management of software in larger enterprises often builds upon tools and processes, which
-largely originate from former on-premise thinking and monolithic architectures. Development teams responsible for
-solutions or services have built specific, often point-2-point integrations with CI/CD systems, compliance tools,
-reporting dashboards or delivery processes in the past. Larger development teams might have even built their own
-toolsets specifically for their products, including those needed for compliance handling and delivery automation.
-These concepts, process integrations and resulting tools are often still in use today, even though everyone knows:
-They don't fit into today's cloud world.
-
-The result is a fragmented set of homegrown specific tools across products, solutions and services, affecting an
-enterprises' ability to deliver software consistently and compliant to its own or customer operated target environments.
-These specific, overly complex and thus hard to understand CI/CD pipelines, and the inability to instantly
-provide a holistic aggregated view of currently running technical artifacts for each and every production environment
-(including both cloud and on-premise), result in the overall management of software at scale becoming tedious, error-prone
-and ineffective.
-
-## Why is this a huge problem?
-
-Most prominently, with the general un-alignment of how software is defined and managed,
-it is not possible without additional overhead (like setting up even more processes and tools on top) to manage
-the complete lifecycle of all solutions, services or individual deployment artifacts running in any
-given landscape. Even worse, when trying to set up new landscapes, it becomes a nightmare to successfully orchestrate,
-deploy and configure the needed software components in the new environments.
-
-As long as individual development teams within a company continue to use their own tools and processes to manage the
-lifecycle of the software they are responsible for, this unsatisfying (and finally TCD and TCO affecting) situation can
-not improve and will only get worse over time.
-
-## How can this improve?
-The major problem at hand here is the absence of one aligned software component model, consistently used across the
-enterprise, to manage compliant software components and their technical artifacts. Such
-a model would help not only with streamlined deployments to public and private cloud environments, but also in various
-other areas of lifecycle management like compliance processes and reporting. This software component model must describe
-all technical artifacts of a software product, and establish an ID for each component, which should then consistently be
-used across all lifecycle management tasks.
-
-Here, it is also crucial to understand that setting up local environments often requires the use of artifacts stored local to the environment.
-This is especially true for restricted or private clouds, in which it is usually not possible to access artifacts from
-their original source location (due to restricted internet access), leading to the fact that artifacts need to be
-transported into these environments. This local deployment scenario requires that software components must clearly
-separate their ID from the location of their technical artifacts, so that this technical location may change, without
-changing the ID. At the same time the environment-local location of the artifacts must be retrievable using this identity.
-
-At its heart, the model has to be technology-agnostic, so that not only modern containerized cloud software,
-but also legacy software is supported, out-of-the-box. It simply has to be acknowledged that companies are not able to
-just drop everything that has been used in the past and solely use new cloud native workloads. This fact makes it
-crucial to establish a common component model, which is able to handle both cloud native and legacy software, for which
-it needs to be fully agnostic about the technology used.
-
-Additionally, the model needs to be easily extensible. No one is able to
-predict the future, apart from the fact that things will always change, especially in the area of IT. Being able to
-adapt to future trends, without constantly affecting the processes and tools responsible for the core of the lifecycle
-management of software, is a must.
+Goal of the Open Component Model (OCM) is to provides a standard for a well-defined description of software-artifacts, their types and the access to their physical content in machine-readable manner.
 
 ## Scope
 
-Operating software installations/products, both for cloud and on-premises, covers many aspects:
+## Overview
 
-- How, when and where are the technical artifacts created?
-- How are technical artifacts stored and accessed?
-- Which technical artifacts are to be deployed?
-- How is the configuration managed?
-- How and when are compliance checks, scanning etc. executed?
-- When are technical artifacts deployed?
-- Where and how are those artifacts deployed?
-- Which other software installations are required and how are they deployed and accessed?
-- etc.
+The _Open Component Model (OCM)_ is an open standard to describe software-bill-of-deliveries (SBOD). OCM is a technology-agnostic and machine-readable format focused on the software artifacts that must be delivered for software products.
 
-The overall problem domain has a complexity that makes it challenging to be solved as a whole.
-However, the problem domain can be divided into two disjoint phases:
+By providing a globally unique identity scheme, OCM can be employed throughout the entire software lifecycle management process, from build to compliance, to deployment.
 
-- production of technical artifacts
-- deployment and lifecycle management of technical artifacts
+It can be used as a common basis and lingua franca for the exchange, access and
+transport of delivery artifacts between different tools, processes and environments.
 
-The produced artifacts must be stored somewhere such that they can be accessed and collected for the deployment.
-The OCM defines a standard to describe which technical artifacts belong to a software installation and how to
-access them which could be used at the interface between production and the deployment/lifecycle management phase.
+To support fenced or otherwise restricted environments, OCM provides a mechanism to transparently adapt access information for artifacts during transport. This means that applications accessing the component information in a particular environment always receive location specific access information that is valid for their own environment.
 
-The OCM provides a common standard for the coupling of
+OCM is a technology-agnostic model to describe artifacts and the specific means by which to access their content. In this context we understand technology-agnostic to mean the following:
+
+- the model can describe any artifact regardless of its technology
+- artifacts can be stored using any storage backend technology or repository
+- the model information can be stored using any storage backend technology or repository
+
+This can be used for:
+
 - compliance checks
 - security scanning
 - code signing
 - transport
 - deployment or
 - other lifecycle-management aspects
-based on a well-defined description of software-artifacts, their types and the access to their physical content.
 
 In that sense, the OCM provides the basis to
-- exchange information about software in a controlled manner by defining a location- and technology-agnostic reference
-  framework to identify software artifacts
+
+- exchange information about software by defining a location- and technology-agnostic reference
 - enable access to local technical artifacts via these IDs
-- verify the authenticity of the artifact content found in an actual environment.
+- verify the authenticity of the artifact content
 
-If software installations are described using the OCM, e.g. a scanning tool could use this to collect all technical
-artifacts it needs to check and store findings under the globally unique and location-agnostic identities provided by the model.
-This information can be stored along with the component versions and exchanged with other tools without loosing its meaning.
-If the technical resources of different software installations are described with different
-formalisms, such tools must provide interfaces and implementations for all if them and data exchange becomes a nightmare.
+OCM consists of:
 
-This problem becomes even harder if a software installation is build of different parts/components, each described with
-another formalism. OCM allows a uniform definition of such compositions such that one consistent description of
-a software installation is available.
+* a schema describing a software component (component descriptor)
+* operations to store and retrieve components and their descriptors from a registry
+* methods for proofing authentity
 
-The identity scheme provided by the OCM acts as some kind of Lingua Franca, enabling
-a tool ecosystem to describe, store and exchange information even across environments without
-loosing its meaning in relation to the described software artifacts and groupings.
+OCM is not:
 
-The core OCM does not make any assumptions about the
+* a communication protocol (like http)
+* a persistence layer (like a database)
+* a tool set
 
-- kinds of technical artifacts (e.g. docker images, helm chart, binaries etc., git sources)
-- technology how to store and access technical artifacts (e.g. as OCI artifacts in an OCI registry)
+## Comparison with Software-Bill-of-Materials
 
-OCM is a technology-agnostic specification and allows [implementations](../specification/extensionpoints/README.md) to provide support
-for exactly those technical aspects as an extension of the basic model. The description formalism is even valid and can (at least partly)
-formally processed, if not all specified aspects are covered by an actual implementation.
+OCM is (explicitly) not meant to describe the complete bill of materials of a software product,
+in relation to the packages those delivery artifacts are composed of. This makes OCM a simpler model in comparison with standards such as [CycloneDX](https://cyclonedx.org/). OCM provides detailed and unambiguous specifications with respect to delivery and deployment related aspects such as transport and signing of software artifacts. Further information about artifacts (like typical SBOMs) can be added using labels, additional resources or even
+component versions.
 
-It consists of two major elements:
+## Specification
+This specification is divided into three parts:
 
-- [*Component Versions*](component_versions.md) are used to describe sets of delivery artifacts.
-- [*Component Repositories*](component_repository.md) are used to store component versions.
+- Part 1: The [model elements](../model/README.md) defined by the Open Component Model
+- Part 2: The [model operations](../operations/README.md) , which must be provided to
+  interact with those model elements stored in any OCM persistence
+- Part 3: The [persistence layer](../persistence‚/README.md) describing
+  how the model elements are mapped to elements of an underlying persistence layer
+  (for example and OCI registry)
+
+## Notational Conventions
+
+The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](https://www.rfc-editor.org/info/rfc2119).
+
+## Implementation
+
+Accompanying this specification a [reference implementation](https://github.com/open-component-model/ocm) is provided for objects in the Kubernetes ecosystem.
+
+It consists of:
+
+* a (Go) library provides a framework for adding further implementations
+* a [command line tool](https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm.md) supporting general operations, like composing, viewing, transporting and signing.
