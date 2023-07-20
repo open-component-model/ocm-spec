@@ -248,10 +248,9 @@ There are two flavors of labels:
 
 - labels with a predefined meaning for the component model itself.
 
-  Those labels are used by the standard OCM library and tool set to   control some behaviour like signing.
+  Those labels are used by the standard OCM library and tool set to control some behaviour like signing. Labels without a namespace are relevant for the component model itself.
 
-  Such labels use flat names following a camel case scheme with
-  the first character in lower case.
+  Such labels use flat names following a camel case scheme with the first character in lower case.
 
   Their format is described by the following regexp:
 
@@ -261,11 +260,10 @@ There are two flavors of labels:
 
 - vendor specific labels
 
-  any organization using the open component model may define dedicated labels
+  any organization using the open component model may define labels
   on their own. Nevertheless, their names must be globally unique.
   Basically there may be multiple such labels provided by different organizations
-  with the same meaning. But we strongly encourage organizations to share
-  such types instead of introducing new type names.
+  with the same meaning. Such label names feature a namespace.
 
   To support a unique namespace for those label names vendor specific labels
   have to follow a hierarchical naming scheme based on DNS domain names.
@@ -280,6 +278,9 @@ There are two flavors of labels:
   <DNS domain name>/[a-z][a-zA-Z0-9]*
   ```
 
+## Prefdefined  Labels
+
+So far, no centrally predefined labels are defined.
 There is a [standard structure](formats.md#label-specifications) of a label
 that includes label meta-data and the concrete label-specific attributes.
 Every label must define a specification of its attributes,
@@ -289,9 +290,7 @@ The version must match the following regexp
 ```
 v[0-9]+([a-z][a-z0-9]*)?
 ```
-
-Centrally defined labels with their specification versions
-can be found in [appendix F](../../appendix/F/README.md).
+So far, no centrally predefined labels are defined.
 
 ## Repository Contexts
 
@@ -346,7 +345,7 @@ A signature is specified by the following fields:
 
 - **`algorithm`** (required) *string*
 
-  The used [signing algorithm](../../appendix/C/README.md#signing-algorithms).
+  The used signing algorithm
 
 - **`mediaType`** (required) *string*
 
