@@ -1,9 +1,8 @@
-
 # OCM Model
 
 This chapter describes the elements and data formats the Open Component Model deals with. All implementations MUST provide a binding for those kinds of elements.
 
-# Components and Component Versions
+## Components and Component Versions
 
 Usually, complex software products are divided into logical units (called components in this specification). A component is typically maintained in a source code control system, has a build procedure generating binary artifacts from source code and has a release process to make it available for consumers. Usually releases are repeated from time to time makeing new versions available.
 
@@ -78,7 +77,7 @@ component:
 
 In the Open Component Model a component version is described by a *Component Descriptor*. It describes the resources, sources and aggregated other component versions belonging to a particular component version. A component descriptor is stored in a yaml file following this [schema](https://github.com/open-component-model/ocm/blob/main/resources/.component-descriptor-ocm-v3-schema.yaml).
 
-# Component Repositories
+## Component Repositories
 
 To provide standardized remote access for component versions and allow referencing between component versions the definition of a component descriptor is not enough. Therefore a *Component Repository* is the second important entity in the Open Component Model.
 
@@ -86,7 +85,7 @@ The component repository acts as access point to the elements of the component m
 
 A component descriptor describes references to all other elements belonging to a component version. Those elements may be stored in the same repository or in other storages. As a special case blob content may be stored along with the component descriptor. Those blobs are called local blobs.
 
-# Summary
+## Summary
 
 Component Versions are the central concept of OCM. A Component Version describes what belongs to a particular version of a software component and how to access it. This includes:
 

@@ -1,4 +1,5 @@
-## Example for a complete Component Version
+
+# Example for a complete Component Version
 
 ```yaml
 # Example for a signed component descriptor containing three resources and one reference

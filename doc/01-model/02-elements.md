@@ -1,3 +1,4 @@
+
 # Model Elements
 
 The following section describe in more detail how a component (version) is specified. Please note that this section is intended to give an overview and explain the main elements and their structure. It is not a full specification. See the [schemas](https://github.com/open-component-model/ocm/tree/main/resources) for a full definition.
@@ -278,10 +279,10 @@ There are two flavors of labels:
   <DNS domain name>/[a-z][a-zA-Z0-9]*
   ```
 
-## Prefdefined  Labels
+## Predefined  Labels
 
 So far, no centrally predefined labels are defined.
-There is a [standard structure](formats.md#label-specifications) of a label
+There is a standard structure of a label
 that includes label meta-data and the concrete label-specific attributes.
 Every label must define a specification of its attributes,
 to describe its value space. This specification may be versioned.

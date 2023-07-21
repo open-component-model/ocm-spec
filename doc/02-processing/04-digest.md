@@ -67,7 +67,7 @@ The following algorithms are centrally defined and available in the OCM toolset:
 - `NO-DIGEST`: Blob content is ignored for the signing process.
 
   This is a possibility for referencing volatile artifact content.
--
+
 - `genericBlobDigest/v1` (*default*): Blob byte stream digest
 
   This is the default normalization algorithm. It just uses the blob content
