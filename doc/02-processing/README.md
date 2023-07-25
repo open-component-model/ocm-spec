@@ -3,7 +3,8 @@
 This chapter explains how to create and use components.
 
 1. [Referencing](01-references.md#referencing)
-   1. [Absolute Artifact References](01-references.md#absolute-artifact-references)
+   1. [Relative Artifact References](01-references.md#relative-artifact-references)
+   2. [Absolute Artifact References](01-references.md#absolute-artifact-references)
 
 2. [Transport](02-transport.md#transport)
 

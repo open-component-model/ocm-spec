@@ -1,8 +1,12 @@
 # Referencing
 
+A component version may refer to other component versions by adding a reference to the component version. This can be used to compose *aggregations* of component versions.
+
+A component version reference describes only the component version and no location or OCM repository. It is always evaluated in the actual repository context. In this way references are stable across transports.  To keep a unique addressing scheme, like artifacts, references have an identity.
+
 A component version reference refers to another component version by using its identifier. A source or resource of the target component is identified by its `name` attribute (which must be unique within a component version).
 
-A reference does not contain a location or an OCM repository. It is always evaluated in the actual repository context. In this way references are stable acros transports.
+## Relative Artifact References
 
 A composite, consisting of an artifact identity and a sequence of reference identities is called relative *Source Reference* or *Resource Reference*. It can be used in artifacts described by a component version to refer to other artifacts described by the same component version.
 

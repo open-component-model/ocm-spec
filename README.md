@@ -27,7 +27,8 @@
 
 2. [Processing OCM](doc/02-processing/README.md)
    1. [Referencing](doc/02-processing/01-references.md#referencing)
-      1. [Absolute Artifact References](doc/02-processing/01-references.md#absolute-artifact-references)
+      1. [Relative Artifact References](doc/02-processing/01-references.md#relative-artifact-references)
+      2. [Absolute Artifact References](doc/02-processing/01-references.md#absolute-artifact-references)
    2. [Transport](doc/02-processing/02-transport.md#transport)
    3. [Signing](doc/02-processing/03-signing.md#signing)
       1. [Signing Algorithms](doc/02-processing/03-signing.md#signing-algorithms)
