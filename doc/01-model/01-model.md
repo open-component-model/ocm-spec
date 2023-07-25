@@ -6,7 +6,9 @@ This chapter describes the elements and data formats the Open Component Model de
 
 Usually, complex software products are divided into logical units (called components in this specification). A component is typically maintained in a source code control system, has a build procedure generating binary artifacts from source code and has a release process to make it available for consumers. Usually releases are repeated from time to time makeing new versions available.
 
-In OCM a component itself is described by a globally unique identity. Each component version is described be the identity of the component plus a version number following the [semantic versioning](https://semver.org) specification.
+In the Open Component Model a component version is described by a *Component Descriptor*. It describes the resources, sources and aggregated other component versions belonging to a particular component version. A component descriptor is stored in a yaml file following this [schema](https://github.com/open-component-model/ocm/blob/main/resources/.component-descriptor-ocm-v3-schema.yaml).
+
+A component itself is described by a globally unique identity. Each component version is described be the identity of the component plus a version number following the [semantic versioning](https://semver.org) specification.
 
 Example:
 
@@ -74,8 +76,6 @@ component:
     componentName: github.com/mandelsoft/ocmhelminstaller # -> name of referenced component
     version: 0.1.0      # -> version of referenced component
 ```
-
-In the Open Component Model a component version is described by a *Component Descriptor*. It describes the resources, sources and aggregated other component versions belonging to a particular component version. A component descriptor is stored in a yaml file following this [schema](https://github.com/open-component-model/ocm/blob/main/resources/.component-descriptor-ocm-v3-schema.yaml).
 
 ## Component Repositories
 
