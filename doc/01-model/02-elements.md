@@ -279,7 +279,7 @@ There are two flavors of labels:
   <DNS domain name>/[a-z][a-zA-Z0-9]*
   ```
 
-## Predefined  Labels
+### Predefined  Labels
 
 So far, no centrally predefined labels are defined.
 There is a standard structure of a label

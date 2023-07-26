@@ -16,10 +16,12 @@ This chapter describes the elements of the Open Component Model and their syntax
    6. [Identifiers](02-elements.md#identifiers)
    7. [Access Specification](02-elements.md#access-specification)
    8. [Labels](02-elements.md#labels)
-   9. [Prefdefined  Labels](02-elements.md#predefined-labels)
    10. [Repository Contexts](02-elements.md#repository-contexts)
    11. [Signatures](02-elements.md#signatures)
    12. [Digest Info](02-elements.md#digest-info)
    13. [Signature Info](02-elements.md#signature-info)
 
 3. [Example for a complete Component Version](03-example.md#example-for-a-complete-component-version)
+4. 1. [Extending the Open Component Model](04-extensions.md#extending-the-open-component-model)
+   1. [Functional extensions](04-extensions.md##functional-extensions)
+   2. [Semantic extensions](04-extensions.md##semantic-extensions)
