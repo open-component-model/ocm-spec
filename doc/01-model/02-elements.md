@@ -45,6 +45,42 @@ Those attributes are described by formal fields in the component descriptor:
 
   The access specification for the actual artifact (see below)
 
+
+### Artifact Types
+
+The formal type of an artifact uniquely specifies the logical interpretation of an artifact, its kind, independent of its concrete technical representation.
+
+If there are different possible technical representation the access specification determines the concrete format given by a media type used for the returned blob.
+
+For example, a helm chart (type `helmChart`) can be represented as OCI artifact or helm chart archive. Nevertheless, the technical meaning is the same, even if represented as OCI image. The type `ociImage` describes an object that can be used as container image. So, although the technical representation might in both cases be an OCI image manifest, its semantics are completely different. This is expressed by the `type` of the artifact.
+
+The kind and logical interpretation of an artifact is encoded into a simple string. Because the interpretation of an artifact must always be the same the artifact type must be globally unique. The OCM defines a naming scheme to guarantee this uniqueness.
+
+There are two kinds of types:
+
+- Centrally defined type names managed by the OCM organization
+
+  These types use flat names following a camel case scheme with the first character in lower case (for example `ociArtifact`).
+
+  Their format is described by the following regular expression:
+
+  ```regex
+  [a-z][a-zA-Z0-9]*
+  ```
+
+- Vendor specific types
+
+  Any organization may define dedicated types on their own. Nevertheless, the meaning of those types must be defined. There may be multiple such types provided by different organizations with the same meaning. Organizations should share and reuse such types instead of introducing new type names.
+
+  To support a unique namespace for those type names vendor specific types MUST follow a hierarchical naming scheme based on DNS domain names. Every type name has to be preceded by a DNS domain owned by the providing organization (for example `landscaper.gardener.cloud/blueprint`). The local type must follow the above rules for centrally defined type names
+  and is appended, separated by a slash (`/`).
+
+  So, the complete pattern looks as follows:
+
+  ```
+  <DNS domain name>/[a-z][a-zA-Z0-9]*
+  ```
+
 ## Sources
 
 A *Source* is an artifact which describes the sources that were used to generate one or more of the resources. Source elements do not have specific additional formal attributes.
@@ -214,22 +250,287 @@ by the Gardener team developing the component `external-dns-management`.
 
 ## Access Specification
 
-The technical access to the physical content of an
-artifact described as
-part of a Component Version is expressed by an
-*Access Specification*.
-It describes the type of the *access method* and the type-specific access path to the content. In a concrete execution environment the *Access Method Type* is mapped to a concrete access method implementation to execute the procedure to finally access the content of an artifact.
+The technical access to the physical content of an artifact described as part of a Component Version is expressed by an *Access Specification*. It describes the type of the *access method* and the type-specific access path to the content. In a concrete execution environment the *Access Method Type* is mapped to a concrete access method implementation to execute the procedure to finally access the content of an artifact.
 
-The content of a described artifact is accessible by applying its
-global identity triple to the following procedure:
+The content of a described artifact is accessible by applying its global identity triple to the following procedure:
 
 - lookup of a component version in a component descriptor by using its component identity and version name in the desired repository context.
-- identify the artifact by its local identity]
+- identify the artifact by its local identity
 - apply the described access method
 
 <div align="center">
 <img src="ocmresourceaccess.png" alt="Structure of OCM Specification" width="800"/>
 </div>
+
+The access specification of an artifact may change when component versions are transported among repositories. The set of access methods is not fixed. Because of this extensibility the names of access methods must be globally unique.
+
+There are two flavors of method names:
+
+- Centrally provided access methods
+
+  Those methods should be implemented by OCM compliant libraries and tools. Using only such
+  access methods guarantees universal access.
+
+  These types use flat names following a camel case scheme with the first character in lower case (for example `ociArtifact`).
+
+  Their format is described by the following regexp:
+
+  ```regex
+  [a-z][a-zA-Z0-9]*
+  ```
+
+- Vendor specific types
+
+  Any organization using the open component model may define additional access methods on their own. Their name MUST be globally unique. There may be multiple such types provided by different organizations with the same meaning. Organizations should share such types and reuse existing types instead of introducing new type names.
+
+  Using component versions with vendor specific access methods always means a restriction on using tools implementing these access methods. FOr exchanging such component versions involved parties must agree on the used toolset.
+
+  To support a unique namespace for those type names vendor specific types MUST follow a hierarchical naming scheme based on DNS domain names. Every type name has to be suffixed by a DNS domain owned by the providing organization. The local type must follow the above rules for centrally defined type names and suffixed by the namespace separated by a dot (`.`)
+
+  So, the complete pattern looks as follows:
+
+  ```
+  [a-z][a-zA-Z0-9]*\.<DNS domain name>
+  ```
+
+Every access method type must define a specification of the attributes required to locate the content. This specification may be versioned. Therefore, the type name used in an access specification may include a specification version appended by a slash (`/`). The version must match the following regular expression:
+
+```
+v[0-9]+([a-z][a-z0-9]*)?
+```
+
+Examples:
+- `ociArtifact/v1`
+- `myprotocol.acme.org/v1alpha1`
+
+If no version is specified, implicitly the version `v1` is assumed.
+
+The access method type is part of the access specification. The access method type may define
+additional specification attributes required specify the access path to the artifact blob.
+
+For example, the access method `ociBlob` requires the OCI repository reference
+and the blob digest to be able to access the blob.
+
+### Access Types
+Access methods are used to access the content of artifacts of a component version.
+The type of the methods defines how to access the artifact and the access specification
+provides the required attributes to identify the blob and its location.
+
+The following access types are defined:
+
+---
+#### gitHub
+
+access to a commit in Git repository
+
+*Synopsis:*
+```
+type: gitHub/v1
+```
+
+*Media type for blobs*
+
+`application/x-tgz`
+
+The artifact content is provided as g-zipped tar archive
+
+*Specification Versions*
+
+Supported specification version is `v1`
+
+*Attributes*
+
+
+- **`repoUrl`**  *string*
+
+  Repository URL with or without scheme.
+
+- **`ref`** (optional) *string*
+
+  Original ref used to get the commit from
+
+- **`commit`** *string*
+
+  The sha/id of the git commit
+
+---
+#### helm
+
+*Synopsis:*
+```
+type: helm/v1
+```
+*Specification Versions*
+
+Supported specification version is `v1`
+
+*Attributes*
+
+- **`helmRepository`** *string*
+
+  Helm repository URL.
+
+- **`helmChart`** *string*
+
+  The name of the Helm chart and its version separated by a colon.
+
+- **`caCert`** *string*
+
+  An optional TLS root certificate.
+
+- **`keyring`** *string*
+
+  An optional keyring used to verify the chart.
+
+---
+#### localBlob
+
+access to a resource blob stored along with the component descriptor
+
+It's implementation of an OCM repository type how to read the component descriptor. Every repository implementation may decide how and where local blobs are stored, but it MUST provide an implementation for this access method.
+
+*Synopsis:*
+
+```
+type: localBlob/v1
+```
+
+*Attributes*
+
+- **`localReference`** *string*
+
+  Repository type specific location information as string. The value
+  may encode any deep structure, but typically an access path is sufficient.
+
+- **`mediaType`** *string*
+
+  The media type of the blob used to store the resource. It may add
+  format information like `+tar` or `+gzip`.
+
+- **`referenceName`** (optional) *string*
+
+  This optional attribute may contain identity information used by other repositories to restore some global access with an identity related to the original source.
+
+  For example, an OCI artifact originally referenced using the access method `ociArtifact` is stored during a transport as local artifact. The reference name can then be set to its original repository name. An import step into an OCI repository may then decide to makethis artifact available again as regular OCI artifact using this attribute.
+
+- **`globalAccess`** (optional) *access method specification*
+
+  If a resource blob is stored locally, the repository implementation may decide to provide an external access information (usable by non OCM-aware tools). For example, an OCI artifact stored as local blob can be additionally stored as regular OCI artifact in an OCI registry.
+
+  This additional external access information can be added using a second external access method specification.
+
+---
+#### npm
+
+access to an NodeJS package in an NPM registry.
+
+*Synopsis:*
+```
+type: npm/v1
+```
+*Specification Versions*
+
+Supported specification version is `v1`
+
+*Attributes*
+
+- **`registry`** *string*
+
+  Base URL of the NPM registry.
+
+- **`package`** *string*
+
+  Name of the NPM package.
+
+- **`version`** *string*
+
+  Version name of the NPM package.
+
+---
+#### ociArtifact
+
+Access of an OCI artifact stored in an OCI registry
+
+*Synopsis:*
+
+```
+type: ociArtifact/v1
+```
+
+*Media type for blobs*
+
+- `application/vnd.oci.image.manifest.v1+tar+gzip`: OCI image manifests
+- `application/vnd.oci.image.index.v1+tar.gzip`: OCI index manifests
+
+Depending on the repository appropriate docker legacy types might be used.
+
+*Attributes*
+
+- **`imageReference`** *string*
+
+  OCI image/artifact reference following the possible docker schemes:
+    - `<repo>/<artifact>:<digest>@<tag>`
+    - `<host>[<port>]/repo path>/<artifact>:<version>@<tag>`
+
+
+---
+
+#### ociBlob
+
+Access of an OCI blob stored in an OCI repository.
+
+*Synopsis:*
+```
+type: ociBlob/v1
+```
+*Specification Versions*
+
+Supported specification version is `v1`
+
+*Attributes*
+
+- **`imageReference`** *string*
+
+  OCI repository reference (this artifact name used to store the blob).
+
+- **`mediaType`** *string*
+
+  The media type of the blob
+
+- **`digest`** *string*
+
+  The digest of the blob used to access the blob in the OCI repository.
+
+- **`size`** *integer*
+
+  The size of the blob
+
+---
+#### s3
+
+access to a blob stored in an S3 API compatible bucket
+
+*Synopsis:*
+```
+type: s3/v1
+```
+*Specification Versions*
+
+Supported specification version is `v1`
+
+*Attributes*
+
+- **`region`** (optional) *string*
+
+  region identifier of the used store
+
+- **`bucket`** *string*
+
+  The name of the S3 bucket containing the blob
+
+- **`key`** *string*
+
+  The key of the desired blob
 
 ## Labels
 
@@ -295,8 +596,7 @@ So far, no centrally predefined labels are defined.
 
 ## Repository Contexts
 
-A *Repository Context* describes the access to an OCM Repository. This access is described by a [formal and typed specification](../formats/formats.md#repository-specifications). A component descriptor MAY contain information about the transport history by keeping a list of repository contexts. It SHOULD at least describe the last repository context for an OCM repository it was transported into.
-
+A *Repository Context* describes the access to an OCM Repository. This access is described by a formal and typed specification. A component descriptor MAY contain information about the transport history by keeping a list of repository contexts. It SHOULD at least describe the last repository context for an OCM repository it was transported into.
 
 ## Signatures
 

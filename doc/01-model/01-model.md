@@ -85,6 +85,40 @@ The component repository acts as access point to the elements of the component m
 
 A component descriptor describes references to all other elements belonging to a component version. Those elements may be stored in the same repository or in other storages. As a special case blob content may be stored along with the component descriptor. Those blobs are called local blobs.
 
+### Repository Types
+
+Any repository kind that can be used to store content according to the Open Component Model must is described by a formal specification.
+
+Such a specification is usable by a language binding to gain access to this repository.
+In a concrete environment all those repositories are usable, for which an
+implementation of the [abstract model operations](../03-operations/README.md) exists.
+
+A repository specification has a type, the *Repository Type* used to identify the required [mapping](../04-persistence/01-mappings.md) and the information required to identity a concrete repository instance.
+
+There are two kinds of types:
+
+- Centrally defined type names managed by the OCM organization
+
+  The format of a repository type is described by the following regexp:
+
+  ```regex
+  [A-Z][a-zA-Z0-9]*
+  ```
+
+  The defined types with their meaning and format can be found in [a later chapter](../04-persistence/README.md)
+
+- Vendor specific types
+
+  Any organization using the open component model) may define repository types on their own. Nevertheless, the meaning of those types must be defined. Organizations should share and reuse existing types instead of introducing new type names.
+
+  To support a unique namespace for those type names vendor specific types have to follow a hierarchical naming scheme based on DNS domain names. Every type name has to be suffixed by a DNS domain owned by the providing organization (for example `myspecialrepo.acme.com`). The local type must follow the above rules for centrally defined type names and prepended, separated by a dot (`.`).
+
+  So, the complete pattern looks as follows:
+
+  ```
+  [a-z][a-zA-Z0-9].<DNS domain name>
+  ```
+
 ## Summary
 
 Component Versions are the central concept of OCM. A Component Version describes what belongs to a particular version of a software component and how to access it. This includes:

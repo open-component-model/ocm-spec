@@ -41,8 +41,6 @@ The normalization of the component-descriptor describes the process of generatin
 - map serializes as alphanumerically ordered list of fields (to define unique order)
 - field is map with two keys 'name', 'value'
 
-The process and the format is described here.
-
 ## Artifact Digests
 
 As described, resources have a digest field to store the content hash. Different resource types will use a different normalisationAlgorithm:
@@ -61,6 +59,23 @@ The following digest algorithms are defined:
 - `SHA-512`
 
 ## Normalization Types
+
+To be able to sign a component version, the content of described artifacts must be incorporated. Therefore, a digest for the artifact content is calculated.
+
+By default, this digest is calculated based on the blob provided by the access specification of an artifact. There might be technology specific ways to uniquely identify the content for specific artifact types.
+
+Together with the digest and its algorithm, an artifact normalization algorithm is specified in the component descriptor
+
+This is done in the same way for the component descriptor. It contains signature
+relevant information and volatile information (e.g. the access specification). Therefore, there is a normalization for component descriptors
+
+Normalization algorithm types may be versioned and SHOULD match the following regexp
+
+```
+[a-z][a-zA-Z0-9]*/v[0-9]+([a-z][a-z0-9]*)
+```
+
+For example: `ociArtifactDigest/v1` or `jsonNormalisationV2`
 
 The following algorithms are centrally defined and available in the OCM toolset:
 
