@@ -15,7 +15,7 @@ type: ociRegistry/v1
 
 ### Description
 
-Artifact namespaces/repositories of the API layer will be mapped to an OCI registry according to the [OCI distribution specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md).
+Component descriptors and their artifacts will be mapped to an OCI registry according to the [OCI distribution specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md).
 
 Supported specification version is `v1`.
 
@@ -42,8 +42,7 @@ The type specific specification fields are:
 
 ## Element Mapping
 
-An OCI registry can be used to host multiple OCM repositories.
-Such an OCM repository is identified by an OCI repository reference.
+An OCI registry can be used to host multiple OCM repositories. Such an OCM repository is identified by an OCI repository reference.
 
 <div align="center">
 
@@ -51,8 +50,7 @@ Such an OCM repository is identified by an OCI repository reference.
 
 </div>
 
-An OCM *component identifier* is mapped to a sub *repository name* prefixed
-with `component-descriptors/`. The complete repository name is
+An OCM *component identifier* is mapped to a sub *repository name* prefixed with `component-descriptors/`. The complete repository name is
 
 <div align="center">
 
@@ -65,8 +63,7 @@ An OCM *version name* of a component version is mapped to an OCI *tag*.
 The *component version* is represented as OCI *image manifest*.
 
 This manifest uses a config media type `application/vnd.ocm.software.component.config.v1+json`.
-According to the [OCI image specification](https://github.com/opencontainers/image-spec/blob/main/spec.md) this must be a JSON blob.
-This json file has one defined formal field:
+According to the [OCI image specification](https://github.com/opencontainers/image-spec/blob/main/spec.md) this must be a JSON blob. This json file has one defined formal field:
 
 - **`componentDescriptorLayer`** (required) [*OCI Content Descriptor*](https://github.com/opencontainers/image-spec/blob/main/descriptor.md)
 
@@ -122,3 +119,103 @@ Without a given tag, the provided external access specification (of type `ociArt
 uses a digest based reference.
 
 Additional blob transformations can be added by registering appropriate blob handlers.
+
+## Example
+
+Given the following component descriptor with a component version consisting of a file and an inline text:
+
+```yaml
+apiVersion: ocm.software/v3alpha1
+kind: ComponentVersion
+metadata:
+  name: github.com/open-component-model/spec-example
+  provider:
+    name: github.com/open-component-model
+  version: 1.0.0
+repositoryContexts:
+- baseUrl: eu.gcr.io
+  componentNameMapping: urlPath
+  subPath: ghcr.io/open-component-model/spec-example
+  type: OCIRegistry
+spec:
+  resources:
+  - access:
+      globalAccess:
+        digest: sha256:7acd701465611ed8a45d7889b4f3f6ed5e1450ca446f90fd6406cc59ea2baea8
+        mediaType: text/plain
+        ref: ghcr.io/open-component-model/spec-example/component-descriptors/github.com/open-component-model/spec-example
+        size: 26
+        type: ociBlob
+      localReference: sha256:7acd701465611ed8a45d7889b4f3f6ed5e1450ca446f90fd6406cc59ea2baea8
+      mediaType: text/plain
+      type: localBlob
+    name: noticeplain
+    relation: local
+    type: blob
+    version: 1.0.0
+  - access:
+      globalAccess:
+        digest: sha256:f5ba8322a580272bbaf93678c48881aa799795bafb9998600655fa669f6ea7bd
+        mediaType: application/octet-stream
+        ref: ghcr.io/open-component-model/spec-example/component-descriptors/github.com/open-component-model/spec-example
+        size: 5266
+        type: ociBlob
+      localReference: sha256:f5ba8322a580272bbaf93678c48881aa799795bafb9998600655fa669f6ea7bd
+      mediaType: application/octet-stream
+      type: localBlob
+    name: logo
+    relation: local
+    type: blob
+```
+
+The OCI image manifest will then have three layers (one for the component-descriptor, one for the logo file and one for the inline text):
+
+```yaml
+{
+  "schemaVersion": 2,
+  "mediaType": "application/vnd.oci.image.manifest.v1+json",
+  "config": {
+    "mediaType": "application/vnd.ocm.software.component.config.v1+json",
+    "digest": "sha256:e63f662a4b600705ed975af69e23fd61d6d68ae1b38d3d3feefbd4df14ce4448",
+    "size": 201
+  },
+  "layers": [
+    {
+      "mediaType": "application/vnd.ocm.software.component-descriptor.v2+yaml+tar",
+      "digest": "sha256:0e75813f479e5486985747d6f741ee63d824097c8ee7e48b558bac608bded669",
+      "size": 3072
+    },
+    {
+      "mediaType": "text/plain",
+      "digest": "sha256:7acd701465611ed8a45d7889b4f3f6ed5e1450ca446f90fd6406cc59ea2baea8",
+      "size": 26
+    },
+    {
+      "mediaType": "application/octet-stream",
+      "digest": "sha256:f5ba8322a580272bbaf93678c48881aa799795bafb9998600655fa669f6ea7bd",
+      "size": 5266
+    }
+  ]
+}
+```
+
+The image configuration is:
+```yaml
+{
+  "componentDescriptorLayer": {
+    "mediaType": "application/vnd.ocm.software.component-descriptor.v2+yaml+tar",
+    "digest": "sha256:0e75813f479e5486985747d6f741ee63d824097c8ee7e48b558bac608bded669",
+    "size": 3072
+  }
+}
+```
+
+If the repo-url is `ghcr.io/open-component-model/spec-example` individual blobs can be accessed using references like
+
+```
+ghcr.io/open-component-model/spec-example/component-descriptors/github.com/open-component-model/spec-example@sha256:f5ba8322a580272bbaf93678c48881aa799795bafb9998600655fa669f6ea7bd
+ghcr.io/open-component-model/spec-example/component-descriptors/github.com/open-component-model/mymaspec-exampleriadb@sha256:0e75813f479e5486985747d6f741ee63d824097c8ee7e48b558bac608bded669
+ghcr.io/open-component-model/spec-example/component-descriptors/github.com/open-component-model/spec-example@sha256:7acd701465611ed8a45d7889b4f3f6ed5e1450ca446f90fd6406cc59ea2baea8
+```
+
+Note that these references are contained in the component-descriptor under the `globalAccess` tag in the resources.
