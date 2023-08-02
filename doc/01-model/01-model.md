@@ -4,9 +4,9 @@ This chapter describes the elements and data formats the Open Component Model de
 
 ## Components and Component Versions
 
-Usually, complex software products are divided into logical units (called components in this specification). A component is typically maintained in a source code control system, has a build procedure generating binary artifacts from source code and has a release process to make it available for consumers. Usually releases are repeated from time to time makeing new versions available.
+Usually, complex software products are divided into logical units (called components in this specification). A component is typically maintained in a source code control system. It has a build procedure generating binary artifacts from source code and a release process to make it available for consumers. Usually, releases are repeated from time to time, making new versions available. A component is a logical unit within a software product. It is a semantic bracket around software pieces belonging together because they fulfill a specific purpose. E.g. like, "This is the Frontend Component," "This is the Database component," and "This is the Kubernetes vertical autoscale component."
 
-In the Open Component Model a component version is described by a *Component Descriptor*. It describes the resources, sources and aggregated other component versions belonging to a particular component version. A component descriptor is stored in a yaml file following this [schema](https://github.com/open-component-model/ocm/blob/main/resources/.component-descriptor-ocm-v3-schema.yaml).
+In the Open Component Model, a *Component Version* is described by a *Component Descriptor*. It describes the resources, sources, and aggregated other Component Versions belonging to a particular Component Version. A Component Descriptor is stored in a yaml file following this [schema](https://github.com/open-component-model/ocm/blob/main/resources/.component-descriptor-ocm-v3-schema.yaml).
 
 A component itself is described by a globally unique identity. Each component version is described be the identity of the component plus a version number following the [semantic versioning](https://semver.org) specification.
 
@@ -21,7 +21,7 @@ component:
     name: open-component-model
 ```
 
-A component version contains all artifacts required for using it plus additional metadata. Such artifacts in OCM are called *resources*. Resources are usually build or packaged from something, e.g. code in a git repo. The artifacts needed for building a component version are named *sources* in ocm.
+A component version contains all artifacts required for using it, plus additional metadata. Such artifacts in OCM are called resources. Resources are usually built or packaged from something, e.g., code in a git repo. The artifacts needed for creating a component version are named *sources* in OCM.
 
 ```yaml
 ...
@@ -62,7 +62,7 @@ component:
       type: github
 ```
 
-A component version can also reference other component versions using their identity. In this way aggregations of components are possible. OCM does not make any assumption of the meaning of the reference. Often you will see component versions containing only references and no sources or resources. They can be used for example to describe deployments or delivery packages of software.
+A *Component Version* can also reference other *Component Versions* using their identity. In this way aggregations of components are possible. OCM does not make any assumption of the meaning of the reference. Often you will see component versions containing only references and no sources or resources. They can be used for example to describe deployments or delivery packages of software.
 
 Example:
 
@@ -79,15 +79,15 @@ component:
 
 ## Component Repositories
 
-To provide standardized remote access for component versions and allow referencing between component versions the definition of a component descriptor is not enough. Therefore a *Component Repository* is the second important entity in the Open Component Model.
+The definition of a component descriptor is not enough to provide standardized remote access for component versions and allow referencing between component versions. Therefore a *Component Repository* is the second important entity in the Open Component Model.
 
-The component repository acts as access point to the elements of the component model. The OCM specification does not define an access protocol but instead uses existing storage technologies and their protocol and defines a mapping from OCM elements to storage elements. The most prominent example is an [OCI registry](https://github.com/opencontainers/distribution-spec/blob/main/spec.md). Other technologies are object stores like Amazon S3 or file-systems. File systems do not provide remote access but are useful for offline scenarios and transporting component versions between locations.
+The component repository acts as the access point to the elements of the component model. The OCM specification does not define an access protocol but instead uses existing storage technologies and their protocol and defines a mapping from OCM elements to storage elements. The most prominent example is an [OCI registry](https://github.com/opencontainers/distribution-spec/blob/main/spec.md). Other technologies are object stores like Amazon S3 or file systems. File systems do not provide remote access but are helpful for offline scenarios and transporting component versions between locations.
 
-A component descriptor describes references to all other elements belonging to a component version. Those elements may be stored in the same repository or in other storages. As a special case blob content may be stored along with the component descriptor. Those blobs are called local blobs.
+A component descriptor contains references to all other elements belonging to a component version. Those elements may be stored in the same repository or in other storages. Blob content may be stored along with the component descriptor as a special case. Those blobs are called local blobs.
 
 ### Repository Types
 
-Any repository kind that can be used to store content according to the Open Component Model must is described by a formal specification.
+A formal specification must describe any repository that can be used to store content according to the Open Component Model.
 
 Such a specification is usable by a language binding to gain access to this repository.
 In a concrete environment all those repositories are usable, for which an
