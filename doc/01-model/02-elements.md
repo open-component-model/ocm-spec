@@ -1,31 +1,30 @@
 
 # Model Elements
 
-The following section describe in more detail how a component (version) is specified. Please note that this section is intended to give an overview and explain the main elements and their structure. It is not a full specification. See the [schemas](https://github.com/open-component-model/ocm/tree/main/resources) for a full definition.
+The following section describes how a component (version) is specified in more detail. Please note that this section intends to give an overview and explain the principal elements and their structure. It is not a complete specification. See the [schemas](https://github.com/open-component-model/ocm/tree/main/resources) for a full definition.
 
 ## Components and Component Versions
 
 A component version describes several kinds of elements.
 
-- Artifacts represent technical content. The appear in two different flavors:
-  - Sources describe the sources a component version  has been composed/geerated from
-  - Resources describe the delivery artifacts contained in the component version
-- References describe the aggregation of other component versions
+- Artifacts represent technical content. They appear in two different flavors:
+  - *Sources* describe the sources a component version  has been composed/generated from.
+  - *Resources* describe the delivery artifacts contained in the component version.
+- References describe the aggregation of other component versions.
 
-All those described elements share a common set of meta data.
+All those described elements share a common set of metadata.
 
 ## Artifacts (Resources and Sources)
 
 The Open Component Model distinguishes two kinds of artifacts:
 - *Sources* are optional artifacts that contain the sources, which
-  were used to generate the deployment-relevant *Resources*
-- *Resources* are artifacts that finally make up the deployment
-  relevant set of artifacts
+  were used to generate the deployment-relevant *Resources*.
+- *Resources* are artifacts that finally make up the deployment-relevant set of artifacts.
 
 An *Artifact* is a blob containing some data in a technical format.
 Every artifact described by the component version has
 
-- an Identity in the context of the component version
+- an *Identity* in the context of the component version
 - a type representing the kind of content and how it can be used
 - a set of labels
 - an Access Specification to technically access the content of the artifact
@@ -48,13 +47,13 @@ Those attributes are described by formal fields in the component descriptor:
 
 ### Artifact Types
 
-The formal type of an artifact uniquely specifies the logical interpretation of an artifact, its kind, independent of its concrete technical representation.
+The formal type of an artifact uniquely specifies the logical interpretation of an artifact and its kind, independent of its concrete technical representation.
 
-If there are different possible technical representation the access specification determines the concrete format given by a media type used for the returned blob.
+If there are different possible technical representations, the access specification determines the concrete format given by a media type used for the returned blob.
 
-For example, a helm chart (type `helmChart`) can be represented as OCI artifact or helm chart archive. Nevertheless, the technical meaning is the same, even if represented as OCI image. The type `ociImage` describes an object that can be used as container image. So, although the technical representation might in both cases be an OCI image manifest, its semantics are completely different. This is expressed by the `type` of the artifact.
+For example, a helm chart (type `helmChart`) can be represented as OCI artifact or helm chart archive. Nevertheless, the technical meaning is the same. The type `ociImage` describes an object that can be used as a container image. So, although the technical representation might in both cases be an OCI image manifest, its semantics are completely different. This is expressed by the `type` of the artifact.
 
-The kind and logical interpretation of an artifact is encoded into a simple string. Because the interpretation of an artifact must always be the same the artifact type must be globally unique. The OCM defines a naming scheme to guarantee this uniqueness.
+An artifact's kind and logical interpretation is encoded into a simple string. Because the interpretation of an artifact must always be the same, the artifact type must be globally unique. The OCM defines a naming scheme to guarantee this uniqueness.
 
 There are two kinds of types:
 
@@ -127,7 +126,7 @@ A resource uses the following additional formal fields:
 
 ## References
 
-A component version may refer to other component versions by adding a *reference* to the component version.s
+A component version may refer to other component versions by adding a *reference* to the component version.
 
 A reference element has the following fields:
 
@@ -166,6 +165,8 @@ A component identifier uses the following naming scheme:
 *&lt;DNS domain>* `/` *&lt;name component> {* `/` *&lt;name component> }*
 
 </div>
+
+
 
 Hereby the DNS domain plus optionally any number of leading name components MUST
 be owned by the provider of a component. For example, `github.com`, as DNS domain

@@ -1,14 +1,14 @@
 # Extending the Open Component Model
 
-The OCM specification is designed to be extended in several ways. The definition of such elements is restricted to a minimum set of attributes and may include functional behaviour. It typically includes a type attribute.
+The OCM specification is designed to be extended in several ways. The definition of such elements is restricted to a minimum set of attributes and may include functional behavior. It typically consists of a type attribute.
 
 Those extension points are used to cover technology-specific aspects to be known either by dedicated implementations of the model or by applications using the model.
 
-There are two different kinds of extensions: functional and semantic
+There are two different kinds of extensions: functional and semantic.
 
 ## Functional extensions
 
-Functional extensions offer the possibility to enrich an implementation of the Open Component Model by technology specific parts to support more technology environments, like storage backends for the model or artifacts described by the model.
+Functional extensions offer the possibility to enrich an implementation of the Open Component Model with technology-specific parts to support more technology environments, like storage backends for the model or artifacts described by the model.
 
 The functional extension points are:
 
