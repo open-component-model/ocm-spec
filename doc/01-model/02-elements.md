@@ -51,9 +51,47 @@ The formal type of an artifact uniquely specifies the logical interpretation of 
 
 If there are different possible technical representations, the access specification determines the concrete format given by a media type used for the returned blob.
 
-For example, a helm chart (type `helmChart`) can be represented as OCI artifact or helm chart archive. Nevertheless, the technical meaning is the same. The type `ociImage` describes an object that can be used as a container image. So, although the technical representation might in both cases be an OCI image manifest, its semantics are completely different. This is expressed by the `type` of the artifact.
+For example, a helm chart (type `helmChart`) can be represented as OCI artifact or helm chart archive. Nevertheless, the technical meaning is the same. In both cases the artifact (resource)`type` will be `helmChart`. The acess specification however will be different. In the first case it will refer to the helm-chart archive. In the second case it the access type will be `ociImage`.
 
-An artifact's kind and logical interpretation is encoded into a simple string. Because the interpretation of an artifact must always be the same, the artifact type must be globally unique. The OCM defines a naming scheme to guarantee this uniqueness.
+```yaml
+  - access:
+      helmChart: mariadb:12.2.7
+      helmRepository: https://charts.bitnami.com/bitnami
+      type: helm
+    name: mariadb-chart
+    relation: external
+    type: helmChart
+    version: 12.2.7
+```
+
+```yaml
+...
+  resources:
+  - name: mariadb-chart
+    relation: local
+    type: helmChart
+    version: 12.2.7
+    access:
+      imageReference: ghcr.io/open-component-model/helmexample/charts/mariadb:12.2.7
+      type: ociArtifact
+```
+
+The access type `ociArtifact` however is also used for container images:
+
+```yaml
+  resources:
+  - name: mariadb-image
+    version: 10.11.2
+    relation: external
+    type: ociImage
+    access:
+      imageReference: bitnami/mariadb:10.11.2
+      type: ociArtifact
+```
+
+The resource type `ociImage` now describes an object that can be used as a container image. So, the technical representation in both cases will be an OCI image manifest. The semantics how these objects can be used are completely different. This is expressed by the `type` of the artifact.
+
+An artifact's kind and logical interpretation is encoded into a simple string. The artifact type must be globally unique. OCM defines a naming scheme to guarantee this uniqueness.
 
 There are two kinds of types:
 
@@ -83,6 +121,21 @@ There are two kinds of types:
 ## Sources
 
 A *Source* is an artifact which describes the sources that were used to generate one or more of the resources. Source elements do not have specific additional formal attributes.
+
+Example:
+
+```yaml
+  ...
+  sources:
+  - name: ocm_source
+    version: 0.1.0
+    type: git
+    access:
+      commit: 9b2cf6ced322c7b938533caa22d5a5f48105b3ab
+      ref: refs/heads/main
+      repoUrl: github.com/open-component-model/ocm
+      type: github
+```
 
 ## Resources
 
@@ -124,6 +177,20 @@ A resource uses the following additional formal fields:
 
       A list of arbitrary labels
 
+Example:
+
+```yaml
+...
+  resources:
+  - name: image
+    relation: external
+    type: ociImage
+    version: 1.0.0
+    access:
+      imageReference: gcr.io/google_containers/echoserver:1.10
+      type: ociArtefact
+```
+
 ## References
 
 A component version may refer to other component versions by adding a *reference* to the component version.
@@ -153,6 +220,15 @@ A reference element has the following fields:
 - **`digest`** (optional) see below *Digest Info*
 
   The extra identity of the referenced component.
+
+Example:
+```yaml
+...
+  references:
+  - name: installer
+    version: 0.1.0
+    componentName: github.com/open-component-model/ocmhelminstaller
+```
 
 ## Identifiers
 
@@ -226,6 +302,19 @@ attributes this can easily be modeled by using
 - the `version` attribute for the image version
 - and an extra identity attribute for the intended Kubernetes Version.
 
+```yaml
+...
+component:
+  name: github.com/open-component-model/ocmcli
+  version: 0.3.0
+  extraIdentity:
+    arch: amd64
+    os: linux
+  resources:
+  ...
+...
+```
+
 Then you don't need to derive artificially unique artifact names, instead
 the identity of the artifact can naturally be composed by using appropriate
 attributes. Selecting all artifacts for a dedicated purpose is possible
@@ -251,7 +340,7 @@ by the Gardener team developing the component `external-dns-management`.
 
 ## Access Specification
 
-The technical access to the physical content of an artifact described as part of a Component Version is expressed by an *Access Specification*. It describes the type of the *access method* and the type-specific access path to the content. In a concrete execution environment the *Access Method Type* is mapped to a concrete access method implementation to execute the procedure to finally access the content of an artifact.
+The technical access to the physical content of an artifact described as part of a Component Version is expressed by an *Access Specification*. It describes the type of the *access method* and the type-specific access path to the content. In an implementation the *Access Method Type* is mapped to code for finally accessing the content of an artifact.
 
 The content of a described artifact is accessible by applying its global identity triple to the following procedure:
 
@@ -311,6 +400,15 @@ additional specification attributes required specify the access path to the arti
 
 For example, the access method `ociBlob` requires the OCI repository reference
 and the blob digest to be able to access the blob.
+
+```yaml
+...
+  resources:
+  - ...
+    access:
+      imageReference: ghcr.io/jensh007/ctf/github.com/open-component-model/ocmechoserver/echoserver:0.1.0
+      type: ociArtefact
+```
 
 ### Access Types
 Access methods are used to access the content of artifacts of a component version.
