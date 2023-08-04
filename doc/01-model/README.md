@@ -37,3 +37,7 @@ This chapter describes the elements of the Open Component Model and their syntax
 * 5.[Model Contract](05-contract.md#model-contract)
   * 5.1.[Example: Helm deployment](05-contract.md#example-helm-deployment)
     * 5.1.1.[Example: Indirect Deployments](05-contract.md#example-indirect-deployments)
+* 6. [Conventions](06-conventions.md#conventions)
+  * 6.1 [Intended Environments](06-conventions.md#intended-environments)
+    * 6.1.1 [Operating System and CPU Architecture](06-conventions.md#operating-system-and-cpu-architecture)
+  * 6.2 [Selection of Usage Scenarios](06-conventions.md#selection-of-usage-scenarios)

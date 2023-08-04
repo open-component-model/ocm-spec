@@ -11,7 +11,7 @@ defines how to access the content of an [artifact](#artifact)
 #### [Access Method Operations](03-operations/01-operations.md#access-method-operations)<a id="accmethops"/>
 the operations an implementation of an [access method](#accmeth) has to support.
 
-#### [Access Method Type](TODO)<a id="acctype"/>
+#### [Access Method Type](01-model/02-elements.md/#access-types)<a id="acctype"/>
 the type of an [access specification](#accspec) determining the formal procedure
 to use to access the blob content of an [artifact](#artifact).
 
@@ -37,7 +37,7 @@ on its type into a serialization-agnostic digest.
 a relative or absolute reference to an [artifact](#artifact) described by a
 [component version](#compvers).
 
-#### [Artifact Type](TODO)<a id="arttype"/>
+#### [Artifact Type](01-model/02-elements.md#artifact-types)<a id="arttype"/>
 the formal type of an [artifact](#artifact) described by a
 [component version](#compvers). The type implies the logical interpretation of
 the artifact blob.
@@ -51,7 +51,7 @@ meaning for a provided piece of software.
 #### [Component Descriptor](01-model/01-model.md#components-and-component-versions)<a id="compdesc"/>
 the formal description of a [component version](#compvers).
 
-#### [Component Descriptor Normalization](02-processing/04-digest.md#normalization-of-the-component-descriptor)<a id="compdescnorm"/>
+#### [Component Descriptor Normalization](02-processing/04-digest.md#normalization)<a id="compdescnorm"/>
 the mapping of the elements of a [component descriptor](#compdesc) into an
 immutable format containg only signature relevant information used to calculate a digest.
 
@@ -93,15 +93,15 @@ additional parts of the identity of an [element](#elemid) of a [component versio
 
 ## G
 
-#### [`gitHub`](TODO)<a id="github"/>
+#### [`gitHub`](01-model/02-elements.md/#github)<a id="github"/>
 [access method](#accmeth) used to access Git commits in a GitHub repository.
 
 ## H
 
-#### [`helm`](TODO)<a id="helm"/>
+#### [`helm`](./01-model/02-elements.md#helm)<a id="helm"/>
 [access method](#accmeth) used to access [Helm Charts](#helmchart) in a Helm repository.
 
-#### [Helm Chart](appendix/B/helm.md)<a id="helmchart"/>
+#### Helm Chart<a id="helmchart"/>
 A set of files describing the deplyoment of a Kubernetes application using
 the [Helm](https://helm.sh/) deployment mechanism.
 
@@ -118,10 +118,10 @@ see [element identity](#elemid), [component identity](#compid), [component versi
 arbitrary typed information snippets attached to [component versions](#compvers),
 [artifacts](#artifacts) and [references](#compref).
 
-#### [`localBlob`](TODO)<a id="localblob"/>
+#### [`localBlob`](01-model/02-elements.md#localblob)<a id="localblob"/>
 [access method](#accmeth) used to access blobs stored along with a component version.
 
-#### [Localization](TODO)<a id="localization"/>
+#### [Localization](01-model/05-contract.md#example-helm-deployment)<a id="localization"/>
 the process of adapting content delivered as [artifacts](#artifacts) in a [component versions](#compvers) to a local repository landscape in a target environment.
 
 ## M
@@ -129,7 +129,7 @@ the process of adapting content delivered as [artifacts](#artifacts) in a [compo
 #### [Mapping](04-persistence/01-mappings.md#mappings-for-ocm-persistence)<a id="mapping"/>
 the mapping of the [elements](01-model/02-elements.md) of the Open Component Model onto a storage technology described by a [repository type](#repotype).
 
-#### [Model-Tool Contract](TODO)<a id="contract"/>
+#### [Model-Tool Contract](01-model/05-contract.md)<a id="contract"/>
 The agreement between the Open Component Model and tools working with content
 provided by [component versions](#compvers), which regulates the cooperation
 between both.
@@ -140,15 +140,15 @@ between both.
 the transformation which can be used to calculate an immutable digest for signing purposes along a transportation path. There are two normalization procedures, [artifact normalization](#artnorm) and
 [component descriptor normalization](#compdescnorm).
 
-#### [`npm`](TODO)<a id="npm"/>
+#### [`npm`](./01-model/02-elements.md#npm)<a id="npm"/>
 [access method](#accmeth) used to access NodeJS packages in an NPM repository.
 
 ## O
 
-#### [`ociArtifact`](TODO)<a id="ociartifact"/>
+#### [`ociArtifact`](./01-model/02-elements.md#ociartifact)<a id="ociartifact"/>
 [access method](#accmeth) used to access OCI artifacts stored in an OCI registry.
 
-#### [`ociBlob`](TODO)<a id="ociblob"/>
+#### [`ociBlob`](./01-model/02-elements.md#ociblob)<a id="ociblob"/>
 [access method](#accmeth) used to access blobs stored in an OCI registry.
 
 #### [Open Component Model](../README.md)<a id="ocm"/>
@@ -162,7 +162,7 @@ see [repository operations](#repops), [access methods](#accmeth) and
 
 ## P
 
-### [Platform Convention](TODO)) <a id="osarch"/>
+### [Platform Convention](01-model/06-conventions.md#operating-system-and-cpu-architecture)) <a id="osarch"/>
 Using extra identities to express the assignment of an [artifact](#artifact) to a dedicated
 execution platform.
 
@@ -182,7 +182,7 @@ abstract operations that have to be provided by a language binding for a
 [mapping](#mapping) of the [Open Component Model](#ocm) to a dedicated storage
 technology.
 
-#### [Repository Type](TODO)<a id="repoptype"/>
+#### [Repository Type](./04-persistence/01-mappings.md#mappings-for-ocm-persistence)<a id="repoptype"/>
 the type of a [mapping](#mapping) of the [Open Component Model](#ocm) specification
 to a storage technology.
 
@@ -213,7 +213,7 @@ dedicated variants of some [extension points](#ext). See [access methods](#accme
 the operation on [component versions](#compvers) transferring content from
 one OCM repository into another one.
 
-#### [Type](TODO)<a id="type"/>
+#### Type<a id="type"/>
 a formal representation of the kind of an [extension point](#ext) of the
 [Open Component Model](#ocm). See [repository type](#repotype),
 [access method type](#acctype), [artifact type](#arttype) [label](#label).

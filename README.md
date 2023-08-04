@@ -2,7 +2,7 @@
 
 [![REUSE status](https://api.reuse.software/badge/github.com/open-component-model/ocm-spec)](https://api.reuse.software/info/github.com/open-component-model/ocm-spec)
 
-The _Open Component Model (OCM)_ is an open standard to describe software-bill-of-deliveries (SBOD). OCM is a technology-agnostic and machine-readable format focused on the software artifacts that must be delivered for software products. OCM provides a globally unique identity scheme throughout the entire software lifecycle management process, from build to compliance, to deployment. OCM makes software artifacts queriable: what is inside, where is it from, is it authentic etc. 
+The _Open Component Model (OCM)_ is an open standard to describe software-bill-of-deliveries (SBOD). OCM is a technology-agnostic and machine-readable format focused on the software artifacts that must be delivered for software products. OCM provides a globally unique identity scheme throughout the entire software lifecycle management process, from build to compliance, to deployment. OCM makes software artifacts queriable: what is inside, where is it from, is it authentic etc.
 
 ![OCM Overview](doc/OCM.png)
 
@@ -31,6 +31,11 @@ The following chapters provide a formal description of the format to describe so
    4. [Extending the Open Component Model](doc/01-model/04-extensions.md#extending-the-open-component-model)
       1. [Functional extensions](doc/01-model/04-extensions.md##functional-extensions)
       2. [Semantic extensions](doc/01-model/04-extensions.md##semantic-extensions)
+   * 5.[Model Contract](doc/05-contract.md#model-contract)
+     * 5.1.[Example: Helm deployment](doc/05-contract.md#example-helm-deployment)
+   * 6. [Conventions](doc/06-conventions.md#conventions)
+     * 6.1 [Intended Environments](doc/06-conventions.md#intended-environments)
+     * 6.2 [Selection of Usage Scenarios](06-conventions.md#selection-of-usage-scenarios)
 2. [Processing OCM](doc/02-processing/README.md)
    1. [Referencing](doc/02-processing/01-references.md#referencing)
       1. [Relative Artifact References](doc/02-processing/01-references.md#relative-artifact-references)
