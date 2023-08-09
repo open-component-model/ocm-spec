@@ -10,6 +10,8 @@ The following [artifact types](../../specification/formats/types.md#artifact-typ
 | Blob               | [`blob`](blob.md)                             | Any anonymous untyped blob data                                                                                                            |
 | Filesystem Content | [`filesystem` `directoryTree`](fileSystem.md) | Some filesystem content (typically provided by a *tar* or *tgz* archive). The blob's mime type specifies the concrete format.              |
 | GitOps             | [`gitOpsTemplate`](gitOpsTemplate.md)         | Filesystem content (tar, tgz) used as GitOps Template, e.g. to set up a git repo used for continuous deployment (for example flux)         |
+| Blueprint          | [`blueprint`](blueprint.md)                   | An installation description for the [landscaper](https://github.com/gardener/landscaper) installation environment. |
+| Node Package Manager | [`npm`](npm.md)                             | A Node Package Manager [npm](https://www.npmjs.com) archive |
 
 For centrally defined artifact types, there might be special support in the
 standard OCM library and tool set. For example, there is a dedicated downloader
