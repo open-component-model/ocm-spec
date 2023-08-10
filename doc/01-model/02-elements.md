@@ -117,6 +117,111 @@ There are two kinds of types:
   ```
   <DNS domain name>/[a-z][a-zA-Z0-9]*
   ```
+The following list of artifact types is defined as part of the OCM core specification. This list can be extended by user-defined custom types or by later versions of the OCM specification.
+
+| TYPE               | VALUE                                         | DESCRIPTION                                                                                                                                |
+|--------------------|-----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| Blob               | [`blob`](#blobd)                             | Any anonymous untyped blob data                                                                                                            |
+| Filesystem Content | [`filesystem` `directoryTree`](#file-system) | Files from a file system (typically provided by a *tar* or *tgz* archive). The mime type of the blob specifies the concrete format.              |
+| GitOps             | [`gitOpsTemplate`](#file-system)         | Filesystem content (tar, tgz) used as GitOps Template, e.g. to set up a git repo used for continuous deployment (for example flux)         |
+| Helm Chart         | [`helmChart`](#helm-chart)                   | A Helm Chart stored as OCI artifact or as tar blob (`mediaType` tar)                                                                       |
+| OCI Artifact       | [`ociArtifact`](#oci-artifact)               | A generic OCI artifact following the [open containers image specification](https://github.com/opencontainers/image-spec/blob/main/spec.md) |
+| OCI Image          | [`ociImage`](#oci-image)                     | An OCI image or image list                                                                                                                 |
+
+#### Blob
+
+- **`blob`**
+
+A blob represents any data without a dedicated logical type.
+
+The media type is used to define the logical and/or technical format of the byte-stream represented by the blob
+
+#### File System
+
+- **`filesystem`**
+- **`directoryTree`**
+
+Filesystem content represented in tar format.
+
+The media type SHOULD be application/x-tar or for content compressed with GNU Zip application/gzip, application/x-gzip, application/x-gtar, and application/x-tgz or application/x-tar+gzip.
+
+#### GitOps
+
+- **`gitOpsTemplate`**
+
+A filesystem content intended to be used as Git Opts Template. Such an artifact should be used in a sequence of successive versions that can be used by a 3-way merge to be merged with an instance specific Git Ops Repository content (for example via GitHub Pull Requests).
+
+#### Helm Chart
+
+- **`helmChart`**
+
+A Kubernetes installation resource representing a Helm chart, either stored as OCI artifact or as tar blob.
+
+Format Variants:
+
+- *OCI Artifact*
+
+  If stored as OCI artifact, the access type MUST either be
+  `ociArtifact` or the [OCI artifact blob format](ociArtifact.md#format-variants) must be
+  used with an appropriate media type.
+
+- *Helm Tar Archive*
+
+  If stored in the Helm tar format (for the filesystem),
+  the tar media type MUST be used.
+
+Special Support
+
+There is a dedicated downloader available, that always converts the helm chart blob into the appropriate filesystem representation required by Helm when downloading the artifact using the command line interface.
+
+#### OCI Artifact
+
+- **`helmChart`**
+
+Format Variants:
+
+When provided as a blob, the [Artifact Set Format](../common/formatspec.md#artifact-set-archive-format)
+MUST be used to represent the content of the OCI artifact.
+THis format can be used to store multiple versions of on OCI repository
+in a filesystem-compatible manner. In this scenario only the
+single version of interest is stored.
+
+Provided blobs use the following media type:
+
+- `application/vnd.oci.image.manifest.v1+tar+gzip`: OCI image manifests
+- `application/vnd.oci.image.index.v1+tar.gzip`: OCI index manifests
+
+Special Support:
+
+There is a dedicated uploader available for local blobs. It converts a blob with the media type shown above into a regular OCI artifact in an OCI repository.
+
+It uses the reference hint attribute of the [`localBlob` access method](#localblob) to determine an appropriate OCI repository. If the import target of the OCM component version is an OCI registry, by default, the used OCI repository will be the base repository of the [OCM mapping](../04-persistence/01-mappings.md#mappings-for-ocm-persistence) with the appended reference hint.
+
+#### OCI Image
+
+- **`helmChart`**
+
+This type describes an OCI artifact containing an OCI container image.
+
+A general [ociArtifact](#oci-artifact) describes any kind of content, depending on the media type of its config blob.
+
+`ociImage` is a dedicated variant for the container image media types.
+
+Format Variants:
+
+As special case for a general `ociArtifact` is uses the `ociArtifact` blob format.
+
+Special Support:
+
+As special case for a general `ociArtifact` it uses the `ociArtifact` special support.
+
+#### Reserved Types
+
+The following artifact types are reserved:
+
+- **`blueprint`**
+- **`toiExecutor`**
+- **`toiPackage`**
 
 ## Sources
 
@@ -241,8 +346,6 @@ A component identifier uses the following naming scheme:
 *&lt;DNS domain>* `/` *&lt;name component> {* `/` *&lt;name component> }*
 
 </div>
-
-
 
 Hereby the DNS domain plus optionally any number of leading name components MUST
 be owned by the provider of a component. For example, `github.com`, as DNS domain
@@ -395,11 +498,9 @@ Examples:
 
 If no version is specified, implicitly the version `v1` is assumed.
 
-The access method type is part of the access specification. The access method type may define
-additional specification attributes required specify the access path to the artifact blob.
+The access method type is part of the access specification. The access method type may define additional specification attributes required to specify the access path to the artifact blob.
 
-For example, the access method `ociBlob` requires the OCI repository reference
-and the blob digest to be able to access the blob.
+For example, the access method `ociBlob` requires the OCI repository reference and the blob digest to be able to access the blob.
 
 ```yaml
 ...
@@ -411,11 +512,10 @@ and the blob digest to be able to access the blob.
 ```
 
 ### Access Types
-Access methods are used to access the content of artifacts of a component version.
-The type of the methods defines how to access the artifact and the access specification
-provides the required attributes to identify the blob and its location.
 
-The following access types are defined:
+Access methods are used to access the content of artifacts of a component version. The type of the methods defines how to access the artifact and the access specification provides the required attributes to identify the blob and its location.
+
+The following access types are defined in core model. This list can be extended by custom access methods or by later extensions of the specification:
 
 ---
 #### gitHub
