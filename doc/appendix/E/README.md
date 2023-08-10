@@ -4,14 +4,20 @@ The following [artifact types](../../specification/formats/types.md#artifact-typ
 
 | TYPE               | VALUE                                         | DESCRIPTION                                                                                                                                |
 |--------------------|-----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
-| OCI Artifact       | [`ociArtifact`](ociArtifact.md)               | A generic OCI artifact following the [open containers image specification](https://github.com/opencontainers/image-spec/blob/main/spec.md) |
-| OCI Image          | [`ociImage`](ociImage.md)                     | An OCI image or image list                                                                                                                 |
-| Helm Chart         | [`helmChart`](helmChart.md)                   | A Helm Chart stored as OCI artifact or as tar blob (`mediaType` tar)                                                                       |
 | Blob               | [`blob`](blob.md)                             | Any anonymous untyped blob data                                                                                                            |
 | Filesystem Content | [`filesystem` `directoryTree`](fileSystem.md) | Some filesystem content (typically provided by a *tar* or *tgz* archive). The blob's mime type specifies the concrete format.              |
 | GitOps             | [`gitOpsTemplate`](gitOpsTemplate.md)         | Filesystem content (tar, tgz) used as GitOps Template, e.g. to set up a git repo used for continuous deployment (for example flux)         |
-| Blueprint          | [`blueprint`](blueprint.md)                   | An installation description for the [landscaper](https://github.com/gardener/landscaper) installation environment. |
+| Helm Chart         | [`helmChart`](helmChart.md)                   | A Helm Chart stored as OCI artifact or as tar blob (`mediaType` tar)                                                                       |
 | Node Package Manager | [`npm`](npm.md)                             | A Node Package Manager [npm](https://www.npmjs.com) archive |
+| OCI Artifact       | [`ociArtifact`](ociArtifact.md)               | A generic OCI artifact following the [open containers image specification](https://github.com/opencontainers/image-spec/blob/main/spec.md) |
+| OCI Image          | [`ociImage`](ociImage.md)                     | An OCI image or image list                                                                                                                 |
+
+The following additional types are defined but not part of the core specification. Support is optional
+| TYPE               | VALUE                                         | DESCRIPTION                                                                                                                                |
+|--------------------|-----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| Blueprint          | [`blueprint`](blueprint.md)                   | An installation description for the [landscaper](https://github.com/gardener/landscaper) installation environment.                         |
+| TOI Executor       | [`toiExecutor`](toiExecutor.md)               | A toolset for simple installation in the [OCM CLI](https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_toi.md) installation environment.    |
+| TOI Package        | [`toiPackage`](toiPackackage.md)              | A YAML resource describing the installation for the [OCM CLI](https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_toi.md) TOI installation. |
 
 For centrally defined artifact types, there might be special support in the
 standard OCM library and tool set. For example, there is a dedicated downloader
