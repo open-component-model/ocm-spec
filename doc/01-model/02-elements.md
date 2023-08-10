@@ -125,8 +125,16 @@ The following list of artifact types is defined as part of the OCM core specific
 | Filesystem Content | [`filesystem` `directoryTree`](#file-system) | Files from a file system (typically provided by a *tar* or *tgz* archive). The mime type of the blob specifies the concrete format.              |
 | GitOps             | [`gitOpsTemplate`](#file-system)         | Filesystem content (tar, tgz) used as GitOps Template, e.g. to set up a git repo used for continuous deployment (for example flux)         |
 | Helm Chart         | [`helmChart`](#helm-chart)                   | A Helm Chart stored as OCI artifact or as tar blob (`mediaType` tar)                                                                       |
+| Node Package Manager | [`npm`](npm.md)                             | A Node Package Manager [npm](https://www.npmjs.com) archive |
 | OCI Artifact       | [`ociArtifact`](#oci-artifact)               | A generic OCI artifact following the [open containers image specification](https://github.com/opencontainers/image-spec/blob/main/spec.md) |
 | OCI Image          | [`ociImage`](#oci-image)                     | An OCI image or image list                                                                                                                 |
+
+The following additional types are defined but not part of the core specification. Support is optional
+| TYPE               | VALUE                                         | DESCRIPTION                                                                                                                                |
+|--------------------|-----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| Blueprint          | [`blueprint`](blueprint.md)                   | An installation description for the [landscaper](https://github.com/gardener/landscaper) installation environment.                         |
+| TOI Executor       | [`toiExecutor`](toiExecutor.md)               | A toolset for simple installation in the [OCM CLI](https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_toi.md) installation environment.    |
+| TOI Package        | [`toiPackage`](toiPackackage.md)              | A YAML resource describing the installation for the [OCM CLI](https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_toi.md) TOI installation. |
 
 #### Blob
 
@@ -173,6 +181,12 @@ Format Variants:
 Special Support
 
 There is a dedicated downloader available, that always converts the helm chart blob into the appropriate filesystem representation required by Helm when downloading the artifact using the command line interface.
+
+#### npm
+
+- **`npm`**
+
+A Node Package Manager ([npm](https://www.npmjs.com)) archive that is located in an npm registry. By default npm packages use the npm public registry at https://registry.npmjs.org.
 
 #### OCI Artifact
 
