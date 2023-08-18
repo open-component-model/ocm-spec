@@ -115,7 +115,7 @@ of method names:
 
   Those methods are coming with the standard OCM library and tool set.
   It provides an implementation and component version using only such
-  access methods can be use across local organizational extension.
+  access methods can be used across local organizational extension.
 
   These types use flat names following a camel case scheme with
   the first character in lower case (for example `ociArtifact`).
@@ -250,13 +250,14 @@ found in [appendix E](../../appendix/E/README.md).
 
 ## Label Names
 
-There are several elements in the component descriptor, which
-can be annotated by labels:
+There are several elements in the [component descriptor](../elements/README.md#component-descriptor), which
+can be annotated by [labels](../elements/README.md#labels):
 
-- The component version itself
-- resource specifications
-- source specifications
-- component version references
+- The [component version](../elements/README.md#component-versions) itself
+- The [provider](../elements/README.md#provider-information) of the component version
+- [resource](../elements/README.md#resources) specifications
+- [source](../elements/README.md#sources) specifications
+- component version [references](../elements/README.md#component-version-reference)
 
 In addition to the element type (for resources and sources), labels
 are intended to express additional semantics for an element that cannot

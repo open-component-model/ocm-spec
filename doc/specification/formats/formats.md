@@ -67,10 +67,11 @@ The specification MUST contain at least the field
 There are several elements in the component descriptor, which
 can be annotated by labels:
 
-- The component version itself
-- resource specifications
-- source specifications
-- component version references
+- The [component version](../elements/README.md#component-versions) itself
+- The [provider](../elements/README.md#provider-information) of the component version
+- [resource](../elements/README.md#resources) specifications
+- [source](../elements/README.md#sources) specifications
+- component version [references](../elements/README.md#component-version-reference)
 
 In addition to the element type (for resources and sources), labels
 are intended to express additional semantics for an element.
@@ -107,6 +108,19 @@ allowed at the label entry level.
 
   By default, labels are not part of the signature.
 
+- `merge` (optional) *merge spec*
+
+  non-signature relevant labels (the default) can be modified without breaking a potential signature. They can be changed in any repository the component version has been transferred to. This is supported to attach evolving information to a component version. But it also implies, that a component version must be updatable (re-transferable) in a certain target repository. This may lead to conflicting changes which might need to be resolved in a non-trivial way. 
+
+  The merge behaviour can be specified together with the label definition using the `merge` attribute. It has the following fields:
+
+  - `algorithm` (optional) *string*
+
+    The name of the algorithm used to merge the label during a transport step. (see [appendix H](../../appendix/H/README.md) for available algorithms)
+  - `config` (optional) *any*
+
+    A configuration specific for the chosen algorithm.
+  
 Centrally defined labels with their specification versions
 can be found in [appendix F](../../appendix/F/README.md).
 

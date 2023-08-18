@@ -95,5 +95,5 @@ The json document has the following structure:
 | Field | Description                                                         |
 |-------|---------------------------------------------------------------------|
 | name  | (required) Provider name                                            |
-| labels| list of labels according to the  [label specificcation](../../../elements/README.md#labels) |
+| labels| list of labels according to the  [label specification](../../../elements/README.md#labels) |
 

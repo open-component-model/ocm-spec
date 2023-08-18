@@ -50,14 +50,14 @@ well as the mapping scheme is expressed by the [*Repository Type*](../formats/ty
 
 So, any tool or language binding can map an existing storage technology into an
 OCM repository view by implementing the
-[abstract operations (layer 2 of this specification)](../operations/README.md))
+[abstract operations (layer 2 of this specification)](../operations/README.md)
 using this specification for the dedicated storage technology.
 
 If required, an own specification for a native OCM repository (similar to the
 [OCI distribution spec](https://github.com/opencontainers/distribution-spec/blob/main/spec.md))
 can be added.
 
-A concrete instance of a repository is described by a [*Repository Specification*](../formats/types.md#repository-types))
+A concrete instance of a repository is described by a [*Repository Specification*](../formats/types.md#repository-types)
 for which a general simplified [textual denotation](../denotations/README.md#repositories) can be used.
 
 ## Components
@@ -142,12 +142,19 @@ A component descriptor describes:
 - an optional creation timestamp (RFC3339) rounded to seconds.
 - a set of [Labels](#labels) to assign arbitrary kinds of information to the
   component version, which is not formally defined by the Open Component Model
+- information about the [provider](#provider-information) of the component (version).
 - an optional set of [Sources](#sources), that were used to generate the
   [Resources](#resources) provided by the component version
 - a set of [Resources](#resources) provided with this component version
 - an optional set of [References](#aggregation) included component versions
 - an optional set of [Signatures](#signatures) provided by some authority
   to confirm some state or origin of the component version
+
+### Provider Information
+
+The only information snippet defined by the model for a provider is its identity stored in a simple string name field.
+
+Additional information can be stored as formalized [labels](#labels) attached to the provider field.
 
 ### Composing the Artifact Set
 
@@ -271,7 +278,7 @@ Labels are described by the element field
 - **`labels`** *[]label*
 
   A list of arbitrary [labels](../formats/formats.md#label-specifications)  described by a formal name with a globally
-  unique meaning (see [label structure](../formats/types.md#label-names)).
+  unique meaning (see [label structure](../formats/formats.md#label-specifications)).
 
 
 ### Elements and Element Metadata
@@ -281,14 +288,14 @@ A component version describes several kinds of elements.
 - [Artifacts](#artifacts) represent technical content. The appear in two different
   flavors:
   - [Sources](#sources) describe the sources a [component version](#component-versions)
-    has been composed/geerated from.
+    has been composed/generated from.
   - [Resources](#resources) describe the delivery artifacts contained in the
     [component version](#component-versions).
 - [References](#aggregation) describe the aggragation of other
   [component version](#component-versions).
 
-All those described element feature a common set of meta data consisting of
-of the [element identity](#identities) and [labels](#labels), which can be used
+All those described elements feature a common set of metadata consisting of
+the [element identity](#identities) and [labels](#labels), which can be used
 to attach formalized information, which is not defined the open component model.
 
 ### Artifacts
@@ -410,7 +417,7 @@ to finally access the content of an artifact.
 The content of a described artifact is accessible by applying its
 global identity triple to the following procedure:
 
-- [lookup](../operations/README.md#mandatory-operations) of a [component version](#component-versions)) and its
+- [lookup](../operations/README.md#mandatory-operations) of a [component version](#component-versions) and its
   [component descriptor](#component-descriptor) by using its
   component identity and version name in
   the desired [repository context](#repository-contexts)
@@ -450,7 +457,7 @@ Following the chain of [references](#aggregation), starting from an initial
 [component version](#component-versions),
 any local or non-local artifact can be addressed relative to a component
 version by a possibly empty sequence (for a local artifact) of reference
-[identities](#identities)) followed by the artifact identity in the context of the finally
+[identities](#identities) followed by the artifact identity in the context of the finally
 reached component version.
 
 Such a composite, consisting of an artifact identity and a sequence of reference
@@ -512,7 +519,7 @@ correct artifact location valid for the actual environment is used.
 
 #### Absolute Artifact References
 
-A relative reference can be extended to an location-agnostic absolute reference by extending
+A relative reference can be extended to a location-agnostic absolute reference by extending
 the pair by a third value, a component version identity.
 
 
@@ -602,7 +609,7 @@ A signature is specified by the following fields:
 
 - **`algorithm`** (required) *string*
 
-  The used [signing algorithm](../../appendix/C/README.md#signing-algorithms).
+  The used [signing algorithm](../../appendix/D/README.md#signing-algorithms).
 
 - **`mediaType`** (required) *string*
 

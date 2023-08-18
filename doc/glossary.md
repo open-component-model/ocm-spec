@@ -56,7 +56,7 @@ the formal description of a [component version](#compvers).
 
 #### [Component Descriptor Normalization](specification/formats/componentdescriptor_normalization.md)<a id="compdescnorm"/>
 the mapping of the elements of a [component descriptor](#compdesc) into an
-immutable format containg only signature relevant information used to calculate a digest.
+immutable format containing only signature relevant information used to calculate a digest.
 
 #### [Component Identity](specification/elements/README.md#components)<a id="compid"/>
 the globally unique identity of a [component](#component).
@@ -117,7 +117,7 @@ described as dedicated attributes in a [component descriptor](#compdesc).
 [access method](#accmeth) used to access [Helm Charts](#helmchart) in a Helm repository.
 
 #### [Helm Chart](appendix/B/helm.md)<a id="helmchart"/>
-A set of files describing the deplyoment of a Kubernetes application using
+A set of files describing the deployment of a Kubernetes application using
 the [Helm](https://helm.sh/) deployment mechanism.
 
 see [element identity](#elemid), [component identity](#compid), [component version identity](#compversid)
@@ -145,6 +145,12 @@ the process of adapting content delivered as [artifacts](#artifacts) in a [compo
 the mapping of the [elements](specification/elements/README.md) of the
 [Open Component Model)](#ocm) onto a dedicated storage backend technology
 described by a [repository type](#repotype).
+
+#### [Merge Algorithm](specification/formats/formats.md#label-specifications)<a id="mergealgo"/>
+the algorithm used to merge [label](#labels) values during a transfer step.
+
+#### [Merge Specification](specification/formats/formats.md#label-specifications)<a id="mergespec"/>
+the specification of a [merge algorithm](#mergealgo) and a merge algorithm configuration used to merge [label](#labels) values (or as cascaded specification sub value structures) during a transfer step.
 
 #### [Model-Tool Contract](specification/contract/README.md)<a id="contract"/>
 The agreement between the Open Component Model and tools working with content
@@ -192,7 +198,7 @@ execution platform.
 a reference to an element of the component model, see [artifact reference](#artref)
 or [component version reference](#compref)
 
-#### [Relative Resource Refererences](specification/elements/README.md#artifact-references)<a id="relrefs"/>
+#### [Relative Resource References](specification/elements/README.md#artifact-references)<a id="relrefs"/>
 a reference to an [artifact](#artifact) described by a [component version](#compvers) relative to
 a given component version exploiting the [aggregation feature](#aggregation) of the Open Component
 Model. It is part of the [model-tool contract](#contract).

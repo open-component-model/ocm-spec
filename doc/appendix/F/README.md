@@ -3,7 +3,7 @@
 [Artifacts](../../specification/elements/README.md#artifacts),
 [references](../../specification/elements/README.md#aggregation) and
 [component versions](../../specification/elements/README.md#component-versions)
-feature [labels](../../specification/elements/README.md#labels)
+and [providers](../../specification/elements/README.md#provider-information) feature [labels](../../specification/elements/README.md#labels)
 with arbitrarily structured values.
 
 The [Open Component Model (OCM)](../../../README.md) allows defining

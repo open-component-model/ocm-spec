@@ -9,6 +9,8 @@ provided by the Open Component Model.
 [D. Signature types](D/README.md) <br>
 [E. Artifact Types](E/README.md) <br>
 [F. Labels](F/README.md) <br>
+[G. Conventions](G/README.md) <br>
+[H. Value Merge Algorithms](H/README.md) <br>
 
 The specification is based on 4 basic functional extension points:
 - The storage backend technologies to use to store OCM elements (available

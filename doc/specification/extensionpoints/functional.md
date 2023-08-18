@@ -14,3 +14,5 @@ The specification is based on 4 basic functional extension points:
   [appendix C](../../appendix/C/README.md)).
 - Defined [signing](../elements/README.md#signing) extensions can be found in
   [appendix D](../../appendix/D/README.md)).
+- [Merge algorithms](../formats/formats.md#label-specifications) used for merging non-signature relevant labels during a transport step can be found in
+  [appendix H](../../appendix/H/README.md).
