@@ -122,6 +122,10 @@ The following chapters provide a formal description of the format to describe so
       3. [Blob Mapping](doc/04-persistence/04-s3.md#blob-mapping)
 5.  [Glossary](doc/glossary.md)
 
+## Central OCM project web page
+
+Check out the main project [web page](https://ocm.software) to find out more about OCM. It is your central entry point to all kind of ocm related [docs and guides](https://ocm.software/docs/overview/context), this [spec](https://ocm.software/spec/) and all project related [github repositories](https://github.com/open-component-model). It also offers a [Getting Started](https://ocm.software/docs/guides/getting-started-with-ocm) to quickly make your hands dirty with ocm, its toolset and concepts :-)
+
 ## Contributing
 
 Code contributions, feature requests, bug reports, and help requests are very welcome. Please refer to the [Contributing Guide in the Community repository](https://github.com/open-component-model/community/blob/main/CONTRIBUTING.md) for more information on how to contribute to OCM.
