@@ -51,9 +51,11 @@ The formal type of an artifact uniquely specifies the logical interpretation of 
 
 If there are different possible technical representations, the access specification determines the concrete format given by a media type used for the returned blob.
 
-For example, a helm chart (type `helmChart`) can be represented as OCI artifact or helm chart archive. Nevertheless, the technical meaning is the same. In both cases the artifact (resource)`type` will be `helmChart`. The acess specification however will be different. In the first case it will refer to the helm-chart archive. In the second case it the access type will be `ociImage`.
+For example, a helm chart (type `helmChart`) can be represented as OCI artifact or helm chart archive. Nevertheless, the technical meaning is the same. In both cases the artifact (resource)`type` will be `helmChart`. The acess specification however will be different. In the first case it will refer to the helm-chart archive. In the second case the access type will be `ociImage`.
 
 ```yaml
+...
+  resources:
   - access:
       helmChart: mariadb:12.2.7
       helmRepository: https://charts.bitnami.com/bitnami
@@ -68,7 +70,7 @@ For example, a helm chart (type `helmChart`) can be represented as OCI artifact 
 ...
   resources:
   - name: mariadb-chart
-    relation: local
+    relation: external
     type: helmChart
     version: 12.2.7
     access:
@@ -79,7 +81,8 @@ For example, a helm chart (type `helmChart`) can be represented as OCI artifact 
 The access type `ociArtifact` however is also used for container images:
 
 ```yaml
-  resources:
+...
+resources:
   - name: mariadb-image
     version: 10.11.2
     relation: external
@@ -97,7 +100,7 @@ There are two kinds of types:
 
 - Centrally defined type names managed by the OCM organization
 
-  These types use flat names following a camel case scheme with the first character in lower case (for example `ociArtifact`).
+  These types use flat names following a camel case scheme with the first character in lower case, for example `ociArtifact`.
 
   Their format is described by the following regular expression:
 
@@ -109,7 +112,7 @@ There are two kinds of types:
 
   Any organization may define dedicated types on their own. Nevertheless, the meaning of those types must be defined. There may be multiple such types provided by different organizations with the same meaning. Organizations should share and reuse such types instead of introducing new type names.
 
-  To support a unique namespace for those type names vendor specific types MUST follow a hierarchical naming scheme based on DNS domain names. Every type name has to be preceded by a DNS domain owned by the providing organization (for example `landscaper.gardener.cloud/blueprint`). The local type must follow the above rules for centrally defined type names
+  To support a unique namespace for those type names vendor specific types MUST follow a hierarchical naming scheme based on DNS domain names. Every type name has to be preceded by a DNS domain owned by the providing organization, like `landscaper.gardener.cloud/blueprint`. The local type must follow the above rules for centrally defined type names
   and is appended, separated by a slash (`/`).
 
   So, the complete pattern looks as follows:
@@ -529,12 +532,12 @@ For example, the access method `ociBlob` requires the OCI repository reference a
 
 Access methods are used to access the content of artifacts of a component version. The type of the methods defines how to access the artifact and the access specification provides the required attributes to identify the blob and its location.
 
-The following access types are defined in core model. This list can be extended by custom access methods or by later extensions of the specification:
+The following access types are defined in the core model. This list can be extended by custom access methods or by later extensions of the specification:
 
 ---
 #### gitHub
 
-access to a commit in Git repository
+Access to a commit in a Git repository.
 
 *Synopsis:*
 ```
@@ -569,6 +572,8 @@ Supported specification version is `v1`
 ---
 #### helm
 
+Access to a Helm chart in a Helm repository.
+
 *Synopsis:*
 ```
 type: helm/v1
@@ -598,7 +603,7 @@ Supported specification version is `v1`
 ---
 #### localBlob
 
-access to a resource blob stored along with the component descriptor
+Access to a resource blob stored along with the component descriptor.
 
 It's implementation of an OCM repository type how to read the component descriptor. Every repository implementation may decide how and where local blobs are stored, but it MUST provide an implementation for this access method.
 
@@ -635,7 +640,7 @@ type: localBlob/v1
 ---
 #### npm
 
-access to an NodeJS package in an NPM registry.
+Access to an NodeJS package in an NPM registry.
 
 *Synopsis:*
 ```
@@ -662,7 +667,7 @@ Supported specification version is `v1`
 ---
 #### ociArtifact
 
-Access of an OCI artifact stored in an OCI registry
+Access of an OCI artifact stored in an OCI registry.
 
 *Synopsis:*
 
@@ -721,7 +726,7 @@ Supported specification version is `v1`
 ---
 #### s3
 
-access to a blob stored in an S3 API compatible bucket
+Access to a blob stored in an S3 API compatible bucket.
 
 *Synopsis:*
 ```
@@ -750,7 +755,7 @@ Supported specification version is `v1`
 There are several elements in the component descriptor, which
 can be annotated by labels:
 
-- The component version itself
+- the component version itself
 - resource specifications
 - source specifications
 - component version references
