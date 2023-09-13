@@ -91,7 +91,8 @@ profiles:
     #   exclude_team_maintainers: false
     #
     allowed_voters:
-      teams: []
+      teams:
+        - core
       users: []
 
     # Periodic status check
