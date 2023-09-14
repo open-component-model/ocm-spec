@@ -31,10 +31,10 @@ A transport might be done with various options:
 
 ## Kinds of Transports
 
-A transport of a component version from one [omponent repositoryinto another one can be done in several ways:
+A transport of a component version from one component repository into another one can be done in several ways:
 
 - directly from an OCM repository to another one: To support transport by value requires the availability of a blob state in the target environment.
-- indirectly using an intermedite file based format: This format must be capable to store blobs that have to be transported side-by-side with the component descriptors. In this format the component descriptor must be capable to describe the access to those locally stored blobs.
+- indirectly using an intermediate file based format: This format must be capable to store blobs that have to be transported side-by-side with the component descriptors. In this format the component descriptor must be capable to describe the access to those locally stored blobs.
 
 To simplify and unify the handling of those two scenarios, and generally the handling of blobs in various environments, a component repository must also include support for storing blobs under the identity of the component descriptor. A repository implementation may forward this task to a predefinied other blob store or handle this part of the API in its own way.
 
