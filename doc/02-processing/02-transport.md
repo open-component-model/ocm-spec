@@ -24,7 +24,7 @@ A transport might be done with various options:
 - *by-value or by-reference*
 
   It is possible to transfer component version as they are. This means, only the
-  component version meta information including the component descriptor and the local blobs are transferred, but externally referenced artifacts are kept at their current location (by reference).
+  component version meta information including the component descriptor and the local blobs are transferred, but externally referenced artifacts are kept at their current location.
 
   If a transport is done by-value the content of the external artifacts is transferred too.
   By default, the content is transformed to a blob representation which is stored as local blob along with the component descriptor in the target repository. Optional artifacts can be imported into its native repository format. So by default, OCI artifacts SHOULD be transferred to regular OCI artifacts if the target OCM repository is an OCI registry. In this way external tools can reference them as before (e.g. an image reference).
