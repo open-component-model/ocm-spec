@@ -76,7 +76,7 @@ The following chapters provide a formal description of the format to describe so
 
 3. [Operations](doc/03-operations/README.md)
    1. [Model Operations](doc/03-operations/01-operations.md#model-operations)
-   2. [2.2 Abstract Operations defined by the Open Component Model](doc/03-operations/01-operations.md#abstract-operations-defined-by-the-open-component-model)
+   2. [Abstract Operations defined by the Open Component Model](doc/03-operations/01-operations.md#abstract-operations-defined-by-the-open-component-model)
       1. [Repository Operations](doc/03-operations/01-operations.md#repository-operations)
          1. [Mandatory Operations](doc/03-operations/01-operations.md#mandatory-operations)
          2. [Optional Operations](doc/03-operations/01-operations.md#optional-operations)
