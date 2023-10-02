@@ -636,14 +636,19 @@ Once the artifact content has been converted to a blob and stored as local blob 
 
 ### Blob Uploaders
 
-An *Uploader* can be used as part of a transport process to automatically provide transported artifacts in technology specific local storage systems, again (e.g. OCI registries). The Open Component Model allows to change access locations of artifact content during a transport step. Therefore such an automatic uploading with the modification of the access method in general is allowed. But, in such scenarios dedicated rules must be obeyed to assure the integrity of digests and signatures.
+can be used as part of the transport process to automatically
+provide transported artifacts in technology specific local storage systems, e.g. OCI registries.
+The Open Component Model allows to change access locations
+of artifact content during transport, therefore an automatic upload
+with modification of the access method is principally allowed. In such scenarios, it's essential 
+to adhere to specific rules to ensure the integrity of digests and signatures.
 
-If a blob uploader is used to upload the artifact to a remote repository again the access method can potentially be changed. But this MUST guarantee the same digest calculation. The new access method must provide a blob again with a media type and digest handler combination, providing the same digest.
+If a blob uploader is used to upload the artifact to a remote repository again, the access method can potentially be changed. But this MUST guarantee the same digest calculation. The new access method must provide a blob again with a media type and digest handler combination, providing the same digest.
 
 For example, storing an OCI artifact delivered as local blob in an OCI repository again the manifest digest will be the same. This is guaranteed because it is the identity of artifact according to the OCI specification. As a result, a new transformation to a blob representation in combination with the digest handler will always provide the same artifact digest. The access method can be switched again, from `localBlob` to `ociArtifact` regardless of the artifact type.
 
 If this can not be guaranteed, once a blob representation is chosen, it must be kept as it is. In such a case a blob uploader must preserve the local access method, even if it uploads the content to an external storage system.
 
-This can be described in the component version by adding this new remote access specification as part of the existing local one using the `globalAccess` attribute.
+This can be described in the component version by adding the new remote access specification as part of the existing local one using the `globalAccess` attribute.
 
-The artifact digest is always calculated based on the local access, but tools may use the information provided by the global access for their purposes to use technology native ways to access the artifact.
+The artifact digest is always calculated based on the local access, but tools may use the information provided by the global access to use technology native ways to access the artifact.
