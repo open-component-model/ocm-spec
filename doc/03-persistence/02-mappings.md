@@ -18,7 +18,7 @@ These mappings describe:
 
 Mappings for the following technologies are defined:
 
-- [OCIRegistry](02-oci.md) OCM content in OCI registries
+- [OCIRegistry](04-oci.md) OCM content in OCI registries
 - [FileSystem (CTF)](03-files.md) OCM content as filesystem structure
 - [FileSystem (Component Archive)](03-files.md) Single component version as content as filesystem structure
-- [AWS S3](04-s3.md) OCM content in AWS S3 buckets
+- [AWS S3](05-s3.md) OCM content in AWS S3 buckets
