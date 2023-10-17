@@ -43,7 +43,7 @@ This is only an example how to describe a particular product version with OCM as
 *Component Versions* are the central concept of OCM. A *Component Version* describes what belongs to a particular version of a software component and how to access it. This includes:
 
 - resources, i.e. technical artifacts like binaries, docker images, ...
-- sources like code in github
+- sources like code in GitHub
 - references to other software component versions
 
 ### Component Name and Version
