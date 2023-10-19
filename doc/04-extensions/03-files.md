@@ -1,4 +1,4 @@
-# Common Transport Format (CTF)
+# Storage Backend (file-based): Common Transport Format (CTF)
 
 This section describes how to store component versions in a file format.
 
@@ -121,7 +121,7 @@ The manifest list in the `artifact-descriptor.json` contains the tags for the tw
 }
 ```
 
-# Component Archive Format
+# Storage Backend: Component Archive Format
 
 This section describes how a single component version is stored in a file format.
 

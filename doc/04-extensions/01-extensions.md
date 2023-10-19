@@ -423,5 +423,3 @@ After the digest for the normalised component-descriptor is calculated, it can b
 
 signed using RSASSA-PKCS1-V1_5 as signature.algorithm. The corresponding signature is stored hex encoded in `signature.value` with a `mediaType` of
 `application/vnd.ocm.signature.rsa`.
-
-# Storage Backends
