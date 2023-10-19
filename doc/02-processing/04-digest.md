@@ -17,14 +17,8 @@ Together with the digest and its digesting algorithm (e.g. SHA-256) a normalizat
 
 If the digest algorithm `NO-DIGEST` is specified for an artifact, this artifact content is not included into the component version digest. This is typically configured for source artifacts, which are not deliverable.
 
-### Digest Algorithms
+The digest algorithms are listed in the [extensible parts](../04-extensions/01-extensions.md#digest-algorithms) of the specification
 
-Digest algorithms describe the way digests are calculated from a byte stream.
-
-The following digest algorithms are defined:
-
-- `SHA-256`
-- `SHA-512`
 
 ## Normalization Types
 
@@ -45,29 +39,13 @@ Normalization algorithm types may be versioned and SHOULD match the following re
 
 For example: `ociArtifactDigest/v1` or `jsonNormalisationV2`
 
-The following algorithms are centrally defined and available in the OCM toolset:
-
-- `NO-DIGEST`: Blob content is ignored for the signing process.
-
-  This is a possibility for referencing volatile artifact content.
-
-- `genericBlobDigest/v1` (*default*): Blob byte stream digest
-
-  This is the default normalization algorithm. It just uses the blob content
-  provided by the access method of an OCM artifact to calculate the digest.
-  It is always used, if no special digester is available for an artifact type.
-
-- `ociArtifactDigest/v1`: OCI manifest digest
-
-  This algorithm is used for artifact blobs with the media type of an OCI artifact.
-  It just uses the manifest digest of the OCI artifact.
+The normalization algorithms are listed in the [extensible parts](../04-extensions/01-extensions.md#normalization-algorithms) of the specification
 
 ## Serialization Format
 
 A digest for a component version is stored along with a signature in a
 component-descriptor. A component-descriptor can have multiple signatures and with this
-multiple digests. A digest consists of the elements `hashAlgorithm`, `normalisationAlgorithm`,
-and `value`.
+multiple digests.
 
 Example:
 
@@ -305,33 +283,10 @@ A normalized component-descriptor is a subset of the component-descriptor elemen
 - field is map with two keys 'name', 'value'
 
 Like for signature algorithms, the model offers the possibility to work with
-different normalization algorithms/formats. Currently the there are two different normalizations defined:
+different normalization algorithms/formats.
 
-- `jsonNormalisationV1`: This is a legacy format, which depends on the format of the
-  component descriptor
-- `jsonNormalisationV2`: This is the new format. which is independent of the
-  chosen representation format of the component descriptor.
+The algorithms used for normalization are listed in the [extensible parts](../04-extensions/01-extensions.md#normalization-algorithms) of the specification
 
-The normalization process is divided into two steps:
-
-- *extraction of the signature relevant information from the component descriptor*
-
-  The result is basically a JSON object, which decsribed the relevant information.
-
-- *normalization of the resulting JSON object*
-
-  Here, the object is serialized to a unique and reproducable byte sequence, which is finally used to determine the digest.
-
-  There are two such normalization methods:
-  - `jsonNormalisationV1`
-  - `jsonNormalisationV2`
-
-## `jsonNormalisationV1` vs `jsonNormalisationV2`
-
-The `JsonNormalisationV1` serialization format is based on the serialization format of the component descriptor. It uses an appropriate JSON object containing the relevant fields as contained in the component descriptors's serialization. The format version fields are included. Therefore, the normalized form is depending on the chosen serialization format. Changing this format version would result in different digests. The resulting JSON object is serialized with the [OCM specific scheme](#generic-normalization-format)
-
-`JsonNormalisationV2` strictly uses only the relevant component descriptor
-information according to the field specification shown below. It is independent of the serialization format used to store the component decsriptor in some storage backend. Therefore, the calculated digest is finally independent of the serialization format chosen for storing the component descriptor in a storage backend. It uses a standard scheme according to [RFC8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785)
 
 ## Relevant information in Component Descriptors
 
@@ -640,7 +595,7 @@ can be used as part of the transport process to automatically
 provide transported artifacts in technology specific local storage systems, e.g. OCI registries.
 The Open Component Model allows to change access locations
 of artifact content during transport, therefore an automatic upload
-with modification of the access method is principally allowed. In such scenarios, it's essential 
+with modification of the access method is principally allowed. In such scenarios, it's essential
 to adhere to specific rules to ensure the integrity of digests and signatures.
 
 If a blob uploader is used to upload the artifact to a remote repository again, the access method can potentially be changed. But this MUST guarantee the same digest calculation. The new access method must provide a blob again with a media type and digest handler combination, providing the same digest.

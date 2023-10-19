@@ -16,9 +16,4 @@ These mappings describe:
 - the repository specification type and format used to specify a dedicated repository instance
 - the mapping of the OCM elements to the elements provided by the storage technology.
 
-Mappings for the following technologies are defined:
-
-- [OCIRegistry](04-oci.md) OCM content in OCI registries
-- [FileSystem (CTF)](03-files.md) OCM content as filesystem structure
-- [FileSystem (Component Archive)](03-files.md) Single component version as content as filesystem structure
-- [AWS S3](05-s3.md) OCM content in AWS S3 buckets
+The mappings are defined as part of the [extensions]():
