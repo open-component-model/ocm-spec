@@ -1,4 +1,4 @@
-# OCM Persistence <Core>
+# OCM Persistence (Core)
 
 * 1.[Model Operations](01-operations.md#model-operations)
 * 2.[Abstract Operations defined by the Open Component Model](01-operations.md#abstract-operations-defined-by-the-open-component-model)

@@ -1,4 +1,4 @@
-# Extensions <extensible part>
+# Extensions (extensible part)
 
 This chapter contains elements being part of the OCM specification that can be extended by users or in specific environments. The elements mentioned here are standardized but can be extended independent of the core parts.
 

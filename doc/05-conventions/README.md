@@ -1,4 +1,4 @@
-# Conventions <non-normative>
+# Conventions (non-normative)
 
 This chapter contains context information to the OCM core specification. The specification itself does not rely on the methods described here but better interoperability is given if these conventions are followed. It is strongly recommended to follow conventions.
 

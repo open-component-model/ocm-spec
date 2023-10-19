@@ -1,4 +1,4 @@
-# Model <Core>
+# Model (Core)
 
 This chapter describes the elements of the Open Component Model and their syntax.
 

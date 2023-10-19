@@ -1,4 +1,4 @@
-# Processing Component Versions <Core>
+# Processing Component Versions (Core)
 
 This chapter explains how to create and use components.
 

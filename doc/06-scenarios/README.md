@@ -1,4 +1,4 @@
-# Scenarios <non-normative>
+# Scenarios (non-normative)
 
 This chapter contains context information to the OCM core specification. It describes scenarios how the specification can be used.
 
