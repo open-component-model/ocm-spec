@@ -14,8 +14,8 @@ delivery and installation artifacts together with metadata. It does not contain
 formal descriptions of the decomposition of such artifacts, like packages or modules
 used to compose/build an artifact (typically meant with the term SBOM).
 
-A component version consists of a set of [technical artifacts](../specification/elements/README.md#artifact-access), e.g. docker images, helm charts, binaries, configuration data etc. Such artifacts are called [**resources**](../specification/elements/README.md#resources).
-Resources are usually build or packaged from something, e.g. code in a git repo,  named [**sources**](../specification/elements/README.md#sources).
+A component version consists of a set of [technical artifacts](../specification/elements/README.md#artifact-access), e.g. Docker images, Helm charts, binaries, configuration data etc. Such artifacts are called [**resources**](../specification/elements/README.md#resources).
+Resources are usually build or packaged from something, e.g. code in a git repository,  named [**sources**](../specification/elements/README.md#sources).
 
 In the Open Component Model a component version is described by a [**Component Descriptor**](../specification/elements/README.md#component-descriptor). 
 It describes the resources, sources and aggregated other component versions belonging to a particular component version.
@@ -42,8 +42,8 @@ This is only an example how to describe a particular product version with OCM as
 **Summary:** \
 *Component Versions* are the central concept of OCM. A *Component Version* describes what belongs to a particular version of a software component and how to access it. This includes:
 
-- resources, i.e. technical artifacts like binaries, docker images, ...
-- sources like code in github
+- resources, i.e. technical artifacts like binaries, Docker images, ...
+- sources like code in GitHub
 - references to other software component versions
 
 ### Component Name and Version
@@ -199,7 +199,7 @@ component:
       value: cb5c1bddd1b5665e1867a7fa1b5fa843a47ee433bbb75d4293888b71def53229
   - name: chart         # -> name of this resource
     version: 0.1.0-dev  # -> version of this resource
-    type: helmChart     # -> type of the resource (here indicating a helm chart)
+    type: helmChart     # -> type of the resource (here indicating a Helm chart)
     relation: local     # -> located in the local registry
     access:             # -> access information how to locate this resource
       imageReference: ghcr.io/jensh007/ctf/github.com/open-component-model/ocmechoserver/echoserver:0.1.0
