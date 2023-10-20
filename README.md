@@ -2,7 +2,11 @@
 
 [![REUSE status](https://api.reuse.software/badge/github.com/open-component-model/ocm-spec)](https://api.reuse.software/info/github.com/open-component-model/ocm-spec)
 
-The _Open Component Model (OCM)_ is an open standard to describe software-bill-of-deliveries (SBOD). OCM is a technology-agnostic and machine-readable format focused on the software artifacts that must be delivered for software products. OCM provides a globally unique identity scheme throughout the entire software lifecycle management process, from build to compliance, to deployment. OCM makes software artifacts queriable: what is inside, where is it from, is it authentic etc.
+The _Open Component Model (OCM)_ is an open standard to describe software-bill-of-deliveries (SBOD). OCM is a technology-agnostic and machine-readable format focused on the software artifacts that must be delivered for software products. OCM provides a globally unique identity scheme which can be used to identify components ad artifacts throughout the entire software lifecycle management process,....
+
+Its focus is to describe versioned sets of artifacts and and to assign globally unique identities. OCM makes those artifacts queryable: what is inside, where is it from, is it authentic etc. But it does not deal with building those artifacts or how to deploy them. Such tasks are left to tools on-top of the model. In this way they are able to access the artifact by its identity. Different tools may keep their own meta data bound together by the identities provided by the model.
+
+OCM provides a common language usable by tools to talk about software artifacts, regardless of the technologies and the processes working on them. Tool specific meta data, like deployment descriptions are handled as own, typed artifacts. This enables the provisioning of content agnostic tools: for example, transporting software between environments, signing and verification, providing compliance data, etc.
 
 ![OCM Overview](doc/OCM.png)
 
