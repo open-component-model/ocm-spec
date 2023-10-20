@@ -2,7 +2,7 @@
 
 The plain Open Component Model itself offers a solid foundation, and its true potential shines when complemented by various tools that interact with the model, enhancing its overall value.
 
-A first example of such a tool is a transport tool. It uses the access information of resources contained in a component version to copy software artifacts from one environment into another. Resource locations will be potentially adapted for the component versions in the target environment. See also section [transport](../02-processing/02-transport.md)
+A first example of such a tool is a transport tool. It uses the access information of resources contained in a component version to copy software artifacts from one environment into another. Resource locations will be potentially adapted for the component versions in the target environment.
 
 Another example could be a deployment tool using component versions to determine the artifacts to be deployed into a target environments.
 
@@ -13,14 +13,11 @@ This contract consists of two parts:
 - All content required to deploy and install software described by a component version must be included as resources in this component version.
 - All resource locations (e.g. image locations) used in a runtime environment must be taken from the access information provided by the used component versions.
 
-This is required to fulfill the promise made by the Open Component Model:
-
 This has various consequences especially for deployment environments, but basically for all tools working with the component model and even the component model itself:
 
 - Deployment descriptions MUST be part of a component version. They have to be stored as additional resources with an appropriate (tool/technology specific) artifact type. There are too many deployment technologies to define them centrally. Deploment descriptions therefore use extensions.
 - Those descriptions MUST use descriptive elements of the component model to locate and access artifacts. It is not allowed to use explicit, absolute or global direct artifact locations.
-- To avoid the need of describing always complete closed sets of artifacts in a single component version the model offers the [component reference/aggregation feature](../02-processing/01-references.md).
-- A component version MUST include all resources, either directly contained in the component version or by referring to other component versions using references. References can contain other references resulting in a graph.
+- A component version MUST include all resources, either directly contained in the component version or by referring to other component versions using references. References can contain other references resulting in a graph. To avoid the need of describing always complete closed sets of artifacts in a single component version the model offers the [component reference/aggregation feature](../02-processing/01-references.md).
 - The artifacts must be resolvable in the context of the component version containing this description as artifact. See also [relative artifact references](../02-processing/01-references.md#relative-artifact-references)
 
 ## Example: Helm deployment

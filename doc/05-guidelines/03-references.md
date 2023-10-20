@@ -20,8 +20,8 @@ Component Version: `A:1.0.0`:
 Component Version: `B:1.0.0`
 
 ```yaml
-- Resources:
-  - name IMAGE
+- resources:
+  - name: IMAGE
     type: ociImage
 ```
 

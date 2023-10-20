@@ -104,18 +104,18 @@ The following chapters provide a formal description of the format to describe so
     * 4.8.3.[Blob Mapping](doc/04-extensions/05-s3.md#blob-mapping)
 *
 
-## Miscellanous Parts
+## Guidelines and Conventions
 
-* 5.[Conventions](docs/05-conventions/README.md)
-    * 5.0.1.[Relative Artifact References](doc/05-conventions/01-references.md#relative-artifact-references)
-    * 5.0.2.[Absolute Artifact References](doc/05-conventions/01-references.md#absolute-artifact-references)
-  * 5.1.[Model Contract](doc/05-conventions/02-contract.md#model-contract)
-    * 5.1.1.[Example: Helm deployment](doc/05-conventions/02-contract.md#example-helm-deployment)
-* 6.[Scenarios](docs/06-scenarios/README.md)
-  * 6.1.[Transport](doc/06-scenarios/01-transport.md#transport)
-    * 6.1.1.[Kinds of Transports](doc/06-scenarios/01-transport.md#kinds-of-transports)
+* 5.[Guidelines](docs/05-guidelines/README.md)
+  * 5.1.[Transport](doc/05-guidelines/01-transport.md#transport)
+    * 5.1.1.[Kinds of Transports](doc/05-guidelines/01-transport.md#kinds-of-transports)
+  * 5.2.[Model Contract](doc/05-guidelines/02-contract.md#model-contract)
+    * 5.2.1.[Example: Helm deployment](doc/05-guidelines/02-contract.md#example-helm-deployment)
+  * 5.3.[References](doc/05-guidelines/03-references.md#references)
+    * 5.3.1.[Relative Artifact References](doc/05-guidelines/03-references.md#relative-artifact-references)
+    * 5.3.2.[Absolute Artifact References](doc/05-guidelines/03-references.md#absolute-artifact-references)
 
-1.  [Glossary](doc/glossary.md)
+6.  [Glossary](doc/glossary.md)
 
 ## Central OCM project web page
 

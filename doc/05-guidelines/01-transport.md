@@ -7,7 +7,7 @@ In some scenarios it is required to transfer artifacts to a different location. 
 
 It is required to transfer delivered artifacts consistently.
 
-The description model provided by OCM can be used to provide a transport tool being able to transfer the complete closure of a component version from one environment to another.
+The model provided by OCM can be used to create a transport tool being able to transfer the complete closure of a component version from one environment to another.
 
 To support this, a component version includes the access information for the described artifacts. If no applicable storage system for an artifact type according to its access method is available it can be stored as local blob along with the component descriptor.
 
@@ -24,9 +24,7 @@ A transport might be done with various options:
 - *by-value or by-reference*
 
   It is possible to transfer component version as they are. This means, only the
-  component version meta information including the component descriptor and the local blobs are transferred, but externally referenced artifacts are kept at their current location.
-
-  If a transport is done by-value the content of the external artifacts is transferred too.
+  component version meta information including the component descriptor and the local blobs are transferred, but externally referenced artifacts are kept at their current location.  If a transport is done by-value the content of the external artifacts is transferred too.
   By default, the content is transformed to a blob representation which is stored as local blob along with the component descriptor in the target repository. Optional artifacts can be imported into its native repository format. So by default, OCI artifacts SHOULD be transferred to regular OCI artifacts if the target OCM repository is an OCI registry. In this way external tools can reference them as before (e.g. an image reference).
 
 ## Kinds of Transports
@@ -44,7 +42,7 @@ This enables:
 - providing a respository implementation for file system formats that can be used transparently by component tools.
 - the usage of a minimal repository environment on the target side of a transport by just using a dedicated component repository.
 
-Therefore, *Component Repositories* MUST provide the possibility to store technical artifacts together with the component descriptors in the component repository itself as so-called *local blobs*. Therefore, a dedicated general access type `localBlob` is used that MUST be implemented by all repository implementations. This allows packing all component versions with their technical artifacts in a *Component Repository* as a completely self-contained package.
+Therefore, *Component Repositories* MUST provide the possibility to store technical artifacts together with the component descriptors in the component repository itself (as *local blobs*). The  general access type `localBlob` MUST be supported by all repository implementations. This allows packing all component versions with their technical artifacts in a *Component Repository* as a completely self-contained package.
 
-As a short example, assume some component needs additional configuration data stored in some YAML file. If in any landscape of your transport chain there is only an OCI registry available to store content, you need to define a format how to store such a YAML file in the OCI registry. With *local blobs* you could just upload the file into the *Component Repository*.
+As example, assume some component needs additional configuration data stored in some YAML file. If in any landscape of your transport chain there is only an OCI registry available to store content, you need to define a format how to store such a YAML file in the OCI registry. With *local blobs* you could just upload the file into the *Component Repository*.
 
