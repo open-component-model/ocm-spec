@@ -2,3 +2,6 @@
 /local
 /tmp
 .idea
+.vscode
+**/__index__.md*
+/scripts/test

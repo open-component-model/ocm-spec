@@ -5,118 +5,103 @@
 ## A
 
 
-#### [Access Method](specification/elements/README.md#artifact-access)<a id="accmeth"/>
-a dedicated procedure how to access the content of an [artifact](#artifact) 
-described by a [component version](#compvers). It is formally represented by an
-[access method type](#acctype).  (see [supported access methods](appendix/B/README.md))
+#### [Access Method](01-model/02-elements.md#access-specification)<a id="accmeth"/>
+defines how to access the content of an [artifact](#artifact)
 
-#### [Access Method Operations](specification/operations/README.md#access-method-operations)<a id="accmethops"/>
+#### [Access Method Operations](03-operations/01-operations.md#access-method-operations)<a id="accmethops"/>
 the operations an implementation of an [access method](#accmeth) has to support.
 
-#### [Access Method Type](specification/formats/types.md#access-method-types)<a id="acctype"/>
+#### [Access Method Type](01-model/02-elements.md/#access-types)<a id="acctype"/>
 the type of an [access specification](#accspec) determining the formal procedure
 to use to access the blob content of an [artifact](#artifact).
 
-#### [Access Specification](specification/elements/README.md#artifact-access)<a id="accspec"/>
+#### [Access Specification](01-model/02-elements.md#access-specification)<a id="accspec"/>
 the specification of the technical access path to the physical blob content of
-an [artifact](#artifact) described by a [component version](#compvers).
+an [artifact](#artifact.
 
-#### [Aggregation](specification/elements/README.md#aggregation)<a id="aggregation"/>
-the ability of the Open Component Model to compose [component versions](#compvers)
+#### [Aggregation](02-processing/01-references.md)<a id="aggregation"/>
+the ability of the Open Component Model to compose component versions
 based on other component versions.
 
-#### [Artifact](specification/elements/README.md#artifacts)<a id="artifact"/>
+#### [Artifact](01-model/02-elements.md#artifacts)<a id="artifact"/>
 some blob content described  by a [component version](#component-version).
 
-#### [Artifact Digest](specification/elements/README.md#digest-info)<a id="artdigest"/>
-the (logical) digest of an [artifact](#artifact) described by a [component version](#component-version).
+#### [Artifact Digest](02-processing/04-digest.md#artifact-digest)<a id="artdigest"/>
+the (logical) digest of an [artifact](#artifact).
 
-#### [Artifact Normalization](specification/formats/artifact_normalization.md)<a id="artnorm"/>
+#### [Artifact Normalization](02-processing/04-digest.md#normalization)<a id="artnorm"/>
 the transformation of a technical blob content of an [artifact](#artifact) depending
-on its [type](#arttype) into a
-serialization-agnostic digest, which is used for signing purposes along a transportation path.
+on its type into a serialization-agnostic digest.
 
-#### [Artifact Reference](specification/elements/README.md#artifact-references)<a id="artref"/>
-a relative or absolute reference to an [artifact](#artifact) described by a 
+#### [Artifact Reference](02-processing/01-references#referencing)<a id="artref"/>
+a relative or absolute reference to an [artifact](#artifact) described by a
 [component version](#compvers).
 
-#### [Artifact Type](specification/formats/types.md#artifact-types)<a id="arttype"/>
+#### [Artifact Type](01-model/02-elements.md#artifact-types)<a id="arttype"/>
 the formal type of an [artifact](#artifact) described by a
 [component version](#compvers). The type implies the logical interpretation of
 the artifact blob.
 
 ## C
 
-#### [Component](specification/elements/README.md#components)<a id="component"/>
+#### [Component](01-model/01-model.md#components-and-component-versions)<a id="component"/>
 an abstract entity describing a dedicated usage context or
 meaning for a provided piece of software.
 
-#### [Component Descriptor](specification/elements/README.md#component-descriptor)<a id="compdesc"/>
+#### [Component Descriptor](01-model/01-model.md#components-and-component-versions)<a id="compdesc"/>
 the formal description of a [component version](#compvers).
 
-#### [Component Descriptor Normalization](specification/formats/componentdescriptor_normalization.md)<a id="compdescnorm"/>
+#### [Component Descriptor Normalization](02-processing/04-digest.md#normalization)<a id="compdescnorm"/>
 the mapping of the elements of a [component descriptor](#compdesc) into an
 immutable format containg only signature relevant information used to calculate a digest.
 
-#### [Component Identity](specification/elements/README.md#components)<a id="compid"/>
+#### [Component Identity](01-model/02-elements.md#identifiers)<a id="compid"/>
 the globally unique identity of a [component](#component).
 
-#### [Component Repository](specification/elements/README.md#repositories)<a id="comprep"/>
+#### [Component Repository](01-model/01-model.md#component-repositories)<a id="comprep"/>
 an entity able to store and retrieve [component versions](#compvers). See also [Normalization](#norm)
 
-#### [Component Version](specification/elements/README.md#component-versions)<a id="compvers"/>
+#### [Component Version](01-model/01-model.md#components-and-component-versions)<a id="compvers"/>
 a dedicated version of a [component](#component) described by the Open Component Model
 described by a [component descriptor](#compdesc) and retrievable from
 a [component repository](#comprep).
 
-#### [Component Version Digest](specification/elements/README.md#signatures)<a id="compdigest"/>
+#### [Component Version Digest](02-processing/04-digest.md#artifact-digest)<a id="compdigest"/>
 the digest of a [component version](#compvers).
 
-#### [Component Version Identity](specification/elements/README.md#component-versions)<a id="compversid"/>
+#### [Component Version Identity](01-model/01-model.md#components-and-component-versions)<a id="compversid"/>
 the globally unique identity of a [component version](#compvers).
 
-#### [Component Version Reference](specification/elements/README.md#aggregation)<a id="compref"/>
+#### [Component Version Reference](02-processing/01-references.md#referencing)<a id="compref"/>
 a reference to a [component versions](#compvers) in a component version to
 describe an aggregation relationship..
 
 ## D
-
-#### [Denotation](specification/denotations/README.md)<a id="denotation"/>
-the possibility to describe identities of [components](#component), 
-[component versions](#compvers),
-[repositories](#comprep) in form of a sole string representation.
-
 
 #### Digest <a id="digest"/>
 see [artifact digest](#artdigest) or [component version digest](#compdigest).
 
 ## E
 
-#### [Element Identity](specification/elements/README.md#identities)<a id="elemid"/>
-the local identity of an element described by a [component version](#compvers).
-There are three classes of identities: [resource](#resource) identities, [source](#source) identities and 
-[reference](#compref) identities.
-
-#### [Extension Point](specification/extensionpoints/README.md)<a id="ext"/>
-parts of the [OCM](#ocm) specification, which may be extended by arbitrary 
+#### [Extension Point](03-operations/01-operations.md#abstract-operations-defined-by-the-open-component-model)<a id="ext"/>
+parts of the [OCM](#ocm) specification, which may be extended by arbitrary
 variations. The specification just defines the meaning, syntax and or functional
 behaviour of such elements.
 
-#### [Extra Identity](specification/elements/README.md#identities)<a id="extraid"/>
-additional parts of the identity of an [element](#elemid) of a [component version](#compvers)
-described as dedicated attributes in a [component descriptor](#compdesc).
+#### [Extra Identity](01-model/02-elements.md#identifiers)<a id="extraid"/>
+additional parts of the identity of an [element](#elemid) of a [component version](#compvers).
 
 ## G
 
-#### [`gitHub`](appendix/B/gitHub.md)<a id="github"/>
+#### [`gitHub`](01-model/02-elements.md/#github)<a id="github"/>
 [access method](#accmeth) used to access Git commits in a GitHub repository.
 
 ## H
 
-#### [`helm`](appendix/B/helm.md)<a id="helm"/>
+#### [`helm`](./01-model/02-elements.md#helm)<a id="helm"/>
 [access method](#accmeth) used to access [Helm Charts](#helmchart) in a Helm repository.
 
-#### [Helm Chart](appendix/B/helm.md)<a id="helmchart"/>
+#### Helm Chart<a id="helmchart"/>
 A set of files describing the deplyoment of a Kubernetes application using
 the [Helm](https://helm.sh/) deployment mechanism.
 
@@ -129,46 +114,41 @@ see [element identity](#elemid), [component identity](#compid), [component versi
 
 ## L
 
-#### [Labels](specification/elements/README.md#labels)<a id="labels"/>
+#### [Labels](01-model/02-elements.md#labels)<a id="labels"/>
 arbitrary typed information snippets attached to [component versions](#compvers),
 [artifacts](#artifacts) and [references](#compref).
 
-#### [`localBlob`](appendix/B/localBlob.md)<a id="localblob"/>
+#### [`localBlob`](01-model/02-elements.md#localblob)<a id="localblob"/>
 [access method](#accmeth) used to access blobs stored along with a component version.
 
-#### [Localization](specification/contract/README.md#real-life-example)<a id="localization"/>
+#### [Localization](01-model/05-contract.md#example-helm-deployment)<a id="localization"/>
 the process of adapting content delivered as [artifacts](#artifacts) in a [component versions](#compvers) to a local repository landscape in a target environment.
 
 ## M
 
-#### [Mapping](specification/operations/README.md)<a id="mapping"/>
-the mapping of the [elements](specification/elements/README.md) of the
-[Open Component Model)](#ocm) onto a dedicated storage backend technology
-described by a [repository type](#repotype).
+#### [Mapping](04-persistence/01-mappings.md#mappings-for-ocm-persistence)<a id="mapping"/>
+the mapping of the [elements](01-model/02-elements.md) of the Open Component Model onto a storage technology described by a [repository type](#repotype).
 
-#### [Model-Tool Contract](specification/contract/README.md)<a id="contract"/>
+#### [Model-Tool Contract](01-model/05-contract.md)<a id="contract"/>
 The agreement between the Open Component Model and tools working with content
 provided by [component versions](#compvers), which regulates the cooperation
 between both.
 
 ## N
 
-#### [Normalization](specification/formats/normalization.md)<a id="norm"/>
-the transformation of a technical content depending on its type into a
-serialization-agnostic format, which can be used to calculate an immutable
-digest for signing purposes along a transportation path.
-There are two normalization procedures, [artifact normalization](#artnorm) and
+#### [Normalization](02-processing/04-digest.md#normalization)<a id="norm"/>
+the transformation which can be used to calculate an immutable digest for signing purposes along a transportation path. There are two normalization procedures, [artifact normalization](#artnorm) and
 [component descriptor normalization](#compdescnorm).
 
-#### [`npm`](appendix/B/npm.md)<a id="npm"/>
+#### [`npm`](./01-model/02-elements.md#npm)<a id="npm"/>
 [access method](#accmeth) used to access NodeJS packages in an NPM repository.
 
 ## O
 
-#### [`ociArtifact`](appendix/B/ociArtifact.md)<a id="ociartifact"/>
+#### [`ociArtifact`](./01-model/02-elements.md#ociartifact)<a id="ociartifact"/>
 [access method](#accmeth) used to access OCI artifacts stored in an OCI registry.
 
-#### [`ociBlob`](appendix/B/ociBlob.md)<a id="ociblob"/>
+#### [`ociBlob`](./01-model/02-elements.md#ociblob)<a id="ociblob"/>
 [access method](#accmeth) used to access blobs stored in an OCI registry.
 
 #### [Open Component Model](../README.md)<a id="ocm"/>
@@ -182,7 +162,7 @@ see [repository operations](#repops), [access methods](#accmeth) and
 
 ## P
 
-### [Platform Convention](appendix/G/README.md#operating-system-and-cpu-architecture) <a id="osarch"/>
+### [Platform Convention](01-model/06-conventions.md#operating-system-and-cpu-architecture)) <a id="osarch"/>
 Using extra identities to express the assignment of an [artifact](#artifact) to a dedicated
 execution platform.
 
@@ -192,30 +172,30 @@ execution platform.
 a reference to an element of the component model, see [artifact reference](#artref)
 or [component version reference](#compref)
 
-#### [Relative Resource Refererences](specification/elements/README.md#artifact-references)<a id="relrefs"/>
+#### [Relative Resource Refererences](02-processing/01-references.md#relative-artifact-references)<a id="relrefs"/>
 a reference to an [artifact](#artifact) described by a [component version](#compvers) relative to
 a given component version exploiting the [aggregation feature](#aggregation) of the Open Component
 Model. It is part of the [model-tool contract](#contract).
 
-#### [Repository Operations](specification/operations/README.md#repository-operations)<a id="repops"/>
+#### [Repository Operations](03-operations/01-operations.md)<a id="repops"/>
 abstract operations that have to be provided by a language binding for a
 [mapping](#mapping) of the [Open Component Model](#ocm) to a dedicated storage
 technology.
 
-#### [Repository Type](specification/formats/types.md#repository-types)<a id="repoptype"/>
+#### [Repository Type](./04-persistence/01-mappings.md#mappings-for-ocm-persistence)<a id="repoptype"/>
 the type of a [mapping](#mapping) of the [Open Component Model](#ocm) specification
-to a dedicated storage technology.
+to a storage technology.
 
-#### [Resource](specification/elements/README.md#resources)<a id="resource"/>
-a delivery artifact described by a [component version](#compvers). 
+#### [Resource](01-model/02-elements.md#resources)<a id="resource"/>
+a delivery artifact described by a [component version](#compvers).
 
 ## S
 
-#### [Signature](specification/elements/README.md#signatures)<a id="signature"/>
+#### [Signature](02-processing/03-signing.md#signing)<a id="signature"/>
 a [component version](#compvers) may be signed by an authority, the signature as
 result of such a signing process is stored along with the component version.
 
-#### [Source](specification/elements/README.md#sources)<a id="source"/>
+#### [Source](01-model/02-elements.md#sources)<a id="source"/>
 an artifact described by a [component version](#compvers) containing sources
 used to generate one or more of the described [resources](#resource).
 
@@ -224,16 +204,16 @@ a format definition for the specification of attributes for
 dedicated variants of some [extension points](#ext). See [access methods](#accmeth),
 [repository types](#repotype), and [labels](#label).
 
-#### [`s3`](appendix/B/s3.md)<a id="s3"/>
-[access method](#accmeth) used to access blobs in an S3 repository.
+#### [`s3`](04-persistence/04-s3.md)<a id="s3"/>
+[access method](#accmeth) used to access blobs in an S3 repository, a [mapping](#mapping) to store content in an S3 repository
 
 ## T
 
-#### [Transport](introduction/transports.md)<a id="transport"/>
+#### [Transport](02-processing/02-transport.md)<a id="transport"/>
 the operation on [component versions](#compvers) transferring content from
 one OCM repository into another one.
 
-#### [Type](specification/formats/types.md)<a id="type"/>
+#### Type<a id="type"/>
 a formal representation of the kind of an [extension point](#ext) of the
 [Open Component Model](#ocm). See [repository type](#repotype),
 [access method type](#acctype), [artifact type](#arttype) [label](#label).
