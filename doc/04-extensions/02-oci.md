@@ -27,7 +27,7 @@ The type specific specification fields are:
 
 - **`baseUrl`** *string*
 
-  OCI registry reference. Thgis is just the hostname, e.g. eu.gcr.io. Any specific repository can be specified using parameter `subPath`.
+  OCI registry reference. This is just the hostname, e.g. eu.gcr.io. Any specific repository can be specified using parameter `subPath`.
 
 - **`subPath`** (optional) *string*
 
