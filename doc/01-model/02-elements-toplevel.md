@@ -158,7 +158,10 @@ In addition to the common artifact information, a resource may optionally descri
 A resource uses the following additional formal fields:
 
 - **`relation`** (required) *string['local', 'external']*
-  Indicates if the resource is part of this component version ('local') or accessed by a separate identity
+  Indicates whether the entity providing a component is also the provider of the resource ('local') or whether the 
+  resource is provided by a separate entity ('external'). This may be useful to determine whether the entity responsible 
+  for the component is also responsible for the resource.  
+  This property is purely informational and completely unrelated to the access type.
 
 - **`digest`** (optional) *Digest Info*
 
