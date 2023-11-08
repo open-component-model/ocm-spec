@@ -39,7 +39,7 @@ component:
   - name: image             # -> name of this resource
     version: "1.0"          # -> version of this resource
     type: ociImage          # -> type of the resource (here indicating a container image)
-    relation: external      # -> located in an external registry
+    relation: external      # -> resource is provided by a different entity than the component
   sources:                  # -> information about the origin (source code) of this component
   - name: echoserver_source # -> name of the source
     version: 0.1.0          # -> version of this source

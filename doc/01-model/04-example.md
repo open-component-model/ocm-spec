@@ -27,7 +27,7 @@ component:
   - name: image             # name of this resource
     version: "1.0"          # version of this resource
     type: ociImage          # type of the resource (here indicating a container image)
-    relation: external      # located in an external registry
+    relation: external      # resource is provided by a different entity than the component
     access:                 # access information how to locate this resource
       imageReference: gcr.io/google_containers/echoserver:1.10
       type: ociArtifact
@@ -38,7 +38,7 @@ component:
   - name: chart             # name of this resource
     version: 0.1.0-dev      # version of this resource
     type: helmChart         # type of the resource (here indicating a helm chart)
-    relation: local         # located in the local registry
+    relation: local         # resource is provided by the same entity as the component
     access:                 # access information how to locate this resource
       imageReference: ghcr.io/jensh007/ctf/github.com/open-component-model/ocmechoserver/echoserver:0.1.0
       type: ociArtifact
@@ -49,7 +49,7 @@ component:
   - name: package           # name of this resource
     version: 0.1.0-dev      # version of this resource
     type: toiPackage        # type of the resource (here indicating a custom tyoe)
-    relation: local         # located in the local registry
+    relation: local         # resource is provided by the same entity as the component
     access:                 # access information how to locate this resource
       globalAccess:
         digest: sha256:57563cb451bb79eb1c4bf0e71c66fdad1daf44fe55e128f12eae5f7e5496a188
