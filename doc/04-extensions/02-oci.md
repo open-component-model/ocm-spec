@@ -27,11 +27,11 @@ The type specific specification fields are:
 
 - **`baseUrl`** *string*
 
-  OCI repository reference
+  OCI registry reference. This is just the hostname, e.g. eu.gcr.io. Any specific repository can be specified using parameter `subPath`.
 
 - **`subPath`** (optional) *string*
 
-  The base repository name used for the OCM repository. The OCM based artifacts will use this path as repository prefix.  An OCI registry may host many OCM repositories with different repository prefixes.
+  The base repository name used for the OCM repository. The OCM based artifacts will use this path as repository prefix. An OCI registry may host many OCM repositories with different repository prefixes.
 
 - **`componentNameMapping`** (optional) *string*
 
