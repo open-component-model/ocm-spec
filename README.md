@@ -16,7 +16,7 @@ The following chapters provide a formal description of the format to describe so
 
 ## Core Parts
 
-* 1.[Model](docs/01-model/README.md)
+* 1.[Model](doc/01-model/README.md)
   * 1.1.[OCM Model](doc/01-model/01-model.md#ocm-model)
     * 1.1.1.[Introduction](doc/01-model/01-model.md#introduction)
     * 1.1.2.[Components and Component Versions](doc/01-model/01-model.md#components-and-component-versions)
@@ -44,7 +44,7 @@ The following chapters provide a formal description of the format to describe so
   * 1.6.[Extending the Open Component Model](doc/01-model/07-extensions.md#extending-the-open-component-model)
     * 1.6.1.[Functional extensions](doc/01-model/07-extensions.md#functional-extensions)
     * 1.6.2.[Semantic extensions](doc/01-model/07-extensions.md#semantic-extensions)
-* 2.[Processing](docs/02-processing/README.md)
+* 2.[Processing](doc/02-processing/README.md)
   * 2.1.[Referencing](doc/02-processing/01-references.md#referencing)
     * 2.1.1.[Example](doc/02-processing/01-references.md#example)
   * 2.2.[Signing](doc/02-processing/03-signing.md#signing)
@@ -65,7 +65,7 @@ The following chapters provide a formal description of the format to describe so
   * 2.6.[Artifact Normalization](doc/02-processing/04-digest.md#artifact-normalization)
     * 2.6.1.[Blob Representation Format for Resource Types](doc/02-processing/04-digest.md#blob-representation-format-for-resource-types)
     * 2.6.2.[Interaction of Local Blobs, Access Methods, Uploaders and Media Types](doc/02-processing/04-digest.md#interaction-of-local-blobs-access-methods-uploaders-and-media-types)
-* 3.[Persistence](docs/03-persistence/README.md)
+* 3.[Persistence](doc/03-persistence/README.md)
   * 3.1.[Model Operations](doc/03-persistence/01-operations.md#model-operations)
   * 3.2.[Abstract Operations defined by the Open Component Model](doc/03-persistence/01-operations.md#abstract-operations-defined-by-the-open-component-model)
     * 3.2.1.[Repository Operations](doc/03-persistence/01-operations.md#repository-operations)
@@ -75,7 +75,7 @@ The following chapters provide a formal description of the format to describe so
 
 ## Extensible Parts
 
-* 4.[Extensions](docs/04-extensions/README.md)
+* 4.[Extensions](doc/04-extensions/README.md)
   * 4.1.[Extensible Field Values](doc/04-extensions/01-extensions.md#extensible-field-values)
     * 4.1.1.[Resource Types](doc/04-extensions/01-extensions.md#resource-types)
     * 4.1.2.[Source Types](doc/04-extensions/01-extensions.md#source-types)
@@ -86,31 +86,15 @@ The following chapters provide a formal description of the format to describe so
     * 4.3.1.[Digesting Content](doc/04-extensions/01-extensions.md#digesting-content)
   * 4.4.[Signature Algorithms](doc/04-extensions/01-extensions.md#signature-algorithms)
     * 4.4.1.[RSA](doc/04-extensions/01-extensions.md#rsa)
-  * 4.5.[Storage Backend: OCI Registries](doc/04-extensions/02-oci.md#storage-backend-oci-registries)
-    * 4.5.1.[Specification Format](doc/04-extensions/02-oci.md#specification-format)
-    * 4.5.2.[Element Mapping](doc/04-extensions/02-oci.md#element-mapping)
-    * 4.5.3.[Version Mapping](doc/04-extensions/02-oci.md#version-mapping)
-    * 4.5.4.[Blob Mappings](doc/04-extensions/02-oci.md#blob-mappings)
-    * 4.5.5.[Example](doc/04-extensions/02-oci.md#example)
-  * 4.6.[Storage Backend (file-based): Common Transport Format (CTF)](doc/04-extensions/03-files.md#storage-backend-file-based-common-transport-format-ctf)
-    * 4.6.1.[Specification Format](doc/04-extensions/03-files.md#specification-format)
-    * 4.6.2.[Element Mapping](doc/04-extensions/03-files.md#element-mapping)
-    * 4.6.3.[Blob Mappings](doc/04-extensions/03-files.md#blob-mappings)
-    * 4.6.4.[Examples](doc/04-extensions/03-files.md#examples)
-  * 4.7.[Storage Backend: Component Archive Format](doc/04-extensions/03-files.md#component-archive-format)
-    * 4.7.1.[Specification Format](doc/04-extensions/03-files.md#specification-format)
-    * 4.7.2.[Element Mapping](doc/04-extensions/03-files.md#element-mapping)
-    * 4.7.3.[Blob Mappings](doc/04-extensions/03-files.md#blob-mappings)
-    * 4.7.4.[Examples](doc/04-extensions/03-files.md#examples)
-  * 4.8.[Storage Backend: AWS S3](doc/04-extensions/05-s3.md#storage-backend-aws-s3)
-    * 4.8.1.[Specification Format](doc/04-extensions/05-s3.md#specification-format)
-    * 4.8.2.[Element Mapping](doc/04-extensions/05-s3.md#element-mapping)
-    * 4.8.3.[Blob Mapping](doc/04-extensions/05-s3.md#blob-mapping)
-*
+  * 4.5.[Storage Backends](doc/04-extensions/05-storage-backends)
+    * 4.5.1 [OCI Registries](doc/04-extensions/05-storage-backends/oci.md)
+    * 4.5.2 [File System: Common Transport Format (CTF)](doc/04-extensions/05-storage-backends/ctf.md)
+    * 4.5.3 [File System: Component Archive](cdoc/04-extensions/05-storage-backends/component-archive.md)
+    * 4.5.4 [AWS S3](doc/04-extensions/05-storage-backends/s3.md)
 
 ## Guidelines and Conventions
 
-* 5.[Guidelines](docs/05-guidelines/README.md)
+* 5.[Guidelines](doc/05-guidelines/README.md)
   * 5.1.[Transport](doc/05-guidelines/01-transport.md#transport)
     * 5.1.1.[Kinds of Transports](doc/05-guidelines/01-transport.md#kinds-of-transports)
   * 5.2.[Model Contract](doc/05-guidelines/02-contract.md#model-contract)

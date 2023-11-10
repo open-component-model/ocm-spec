@@ -1,4 +1,4 @@
-# Storage Backend: OCI Registries
+# OCI Registries
 
 OCM component versions can be stored in OCI registries which are conforming to the [OCI distribution specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md). Additionally, a registry must support a deep repository structure.
 
