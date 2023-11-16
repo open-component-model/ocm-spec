@@ -25,7 +25,7 @@ for the following technologies are defined:
   * 3.1 [Digesting Content](01-extensions.md#digesting-content)
 * 4 [Signature Algorithms](01-extensions.md#signature-algorithms)
   * 4.1 [RSA](01-extensions.md#rsa)
-* 5  [Storage Backends](01-storage-backends)
+* 5  [Storage Backend Mappings](01-storage-backends)
   * 5.1 [OCI Registries](oci.md)
   * 5.2 [File System: Common Transport Format (CTF)](ctf.md)
   * 5.3 [File System: Component Archive](component-archive.md)

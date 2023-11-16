@@ -1,4 +1,4 @@
-# Storage Backends
+# Storage Backend Mappings
 
 The OCM specification describes an interpretation layer on-top of
 well-known storage backend technologies used to store OCM component versions.

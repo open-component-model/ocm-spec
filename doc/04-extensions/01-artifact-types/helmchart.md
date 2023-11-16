@@ -1,6 +1,10 @@
 # Helm Chart
 
-**`helmChart`**
+## Synopsis
+```
+type: helmChart
+[ATTRIBUTES]
+```
 
 ## Description
 A Kubernetes installation resource representing a Helm chart, either stored as OCI artifact or as tar blob.
