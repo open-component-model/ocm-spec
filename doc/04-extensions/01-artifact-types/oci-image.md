@@ -4,16 +4,16 @@
 **`ociImage`**
 
 ## Description
-This type describes an OCI artifact containing an OCI container image. `ociImage` is a dedicated variant using the container image MIME types
+This type describes an OCI artifact containing an OCI container image. `ociImage` is a dedicated variant using the container image Media Types
 used by OCI registries.
 
-A general [ociArtifact](oci-artifact.md) describes any kind of content, depending on the MIME type of its config blob.
+A general [ociArtifact](oci-artifact.md) describes any kind of content, depending on the media type of its config blob.
 
 ## Format Variants
 
 The blob uses the [Artifact Set Archive Format](../common/formatspec.md#artifact-set-archive-format).
 
-MIME types:
+Media Types:
 -  `application/vnd.oci.image.manifest.v1+tar`
 -  `application/vnd.oci.image.manifest.v1+tar+gzip`
 

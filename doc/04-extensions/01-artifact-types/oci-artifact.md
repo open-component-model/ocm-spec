@@ -13,7 +13,7 @@ MUST be used to represent the content of the OCI artifact.
 This format can be used to store multiple versions of an OCI repository
 in a filesystem-compatible manner.
 
-MIME types:
+Media Types:
 
 - `application/vnd.oci.image.manifest.v1+tar+gzip`: OCI image manifests
 - `application/vnd.oci.image.index.v1+tar.gzip`: OCI index manifests

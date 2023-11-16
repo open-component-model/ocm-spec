@@ -9,5 +9,5 @@
 ## Format Variants
 [FORMAT VARIANTS]
 
-MIME types:
+Media Types:
   -  `application/vnd.oci.image.manifest.v1+tar`

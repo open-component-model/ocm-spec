@@ -1,10 +1,10 @@
 # Blob
 
 ## Type Name
-- **`blob`**
+**`blob`**
 
 A blob represents any data without a dedicated logical type.
 
 ## Format Variants
-Any arbitrary MIME type is used to define the logical and/or technical format of the byte-stream represented by the blob.
-By default the MIME type `application/octet-stream` can be used for an anoymous byte sequence. 
+Any arbitrary media type is used to define the logical and/or technical format of the byte-stream represented by the blob.
+By default the media type `application/octet-stream` can be used for an anoymous byte sequence. 
