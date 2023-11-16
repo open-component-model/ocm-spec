@@ -1,10 +1,7 @@
 # Helm Chart
 
-## Synopsis
-```
-type: helmChart
-[ATTRIBUTES]
-```
+## Type Name
+**`helmChart`**
 
 ## Description
 A Kubernetes installation resource representing a Helm chart, either stored as OCI artifact or as tar blob.
@@ -15,10 +12,13 @@ A Kubernetes installation resource representing a Helm chart, either stored as O
   
   A Helm chart might be stored as OCI artifact following the [Artifact Set Archive Format](../common/formatspec.md#artifact-set-archive-format). This format is for example provided by the access type [`ociArtifact`](../02-access-types/oci-artifact.md)
 
-  Mime types:
+  MIME types:
   -  `application/vnd.oci.image.manifest.v1+tar`
   -  `application/vnd.oci.image.manifest.v1+tar+gzip`
 
+  The config blob MIME type described in the OCI manifest MUST be
+  - `application/vnd.cncf.helm.config.v1+json`
+  
 - **Helm Tar Archive**
 
   If stored in the Helm tar format (for the filesystem), the tar media type MUST be used.
