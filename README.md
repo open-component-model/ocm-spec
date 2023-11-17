@@ -16,7 +16,7 @@ The following chapters provide a formal description of the format to describe so
 
 ## Core Parts
 
-* 1.[Model](docs/01-model/README.md)
+* 1.[Model](doc01-model/README.md)
   * 1.1.[OCM Model](doc/01-model/01-model.md#ocm-model)
     * 1.1.1.[Introduction](doc/01-model/01-model.md#introduction)
     * 1.1.2.[Components and Component Versions](doc/01-model/01-model.md#components-and-component-versions)
@@ -44,7 +44,7 @@ The following chapters provide a formal description of the format to describe so
   * 1.6.[Extending the Open Component Model](doc/01-model/07-extensions.md#extending-the-open-component-model)
     * 1.6.1.[Functional extensions](doc/01-model/07-extensions.md#functional-extensions)
     * 1.6.2.[Semantic extensions](doc/01-model/07-extensions.md#semantic-extensions)
-* 2.[Processing](docs/02-processing/README.md)
+* 2.[Processing](doc02-processing/README.md)
   * 2.1.[Referencing](doc/02-processing/01-references.md#referencing)
     * 2.1.1.[Example](doc/02-processing/01-references.md#example)
   * 2.2.[Signing](doc/02-processing/03-signing.md#signing)
@@ -65,7 +65,7 @@ The following chapters provide a formal description of the format to describe so
   * 2.6.[Artifact Normalization](doc/02-processing/04-digest.md#artifact-normalization)
     * 2.6.1.[Blob Representation Format for Resource Types](doc/02-processing/04-digest.md#blob-representation-format-for-resource-types)
     * 2.6.2.[Interaction of Local Blobs, Access Methods, Uploaders and Media Types](doc/02-processing/04-digest.md#interaction-of-local-blobs-access-methods-uploaders-and-media-types)
-* 3.[Persistence](docs/03-persistence/README.md)
+* 3.[Persistence](doc03-persistence/README.md)
   * 3.1.[Model Operations](doc/03-persistence/01-operations.md#model-operations)
   * 3.2.[Abstract Operations defined by the Open Component Model](doc/03-persistence/01-operations.md#abstract-operations-defined-by-the-open-component-model)
     * 3.2.1.[Repository Operations](doc/03-persistence/01-operations.md#repository-operations)
@@ -75,7 +75,7 @@ The following chapters provide a formal description of the format to describe so
 
 ## Extensible Parts
 
-* 4.[Extensions](docs/04-extensions/README.md)
+* 4.[Extensions](doc04-extensions/README.md)
   * 4.1.[Extensible Field Values](doc/04-extensions/01-extensions.md#extensible-field-values)
     * 4.1.1.[Resource Types](doc/04-extensions/01-extensions.md#resource-types)
     * 4.1.2.[Source Types](doc/04-extensions/01-extensions.md#source-types)
@@ -110,7 +110,7 @@ The following chapters provide a formal description of the format to describe so
 
 ## Guidelines and Conventions
 
-* 5.[Guidelines](docs/05-guidelines/README.md)
+* 5.[Guidelines](doc05-guidelines/README.md)
   * 5.1.[Transport](doc/05-guidelines/01-transport.md#transport)
     * 5.1.1.[Kinds of Transports](doc/05-guidelines/01-transport.md#kinds-of-transports)
   * 5.2.[Model Contract](doc/05-guidelines/02-contract.md#model-contract)
@@ -123,7 +123,7 @@ The following chapters provide a formal description of the format to describe so
 
 ## Central OCM project web page
 
-Check out the main project [web page](https://ocm.software) to find out more about OCM. It is your central entry point to all kind of ocm related [docs and guides](https://ocm.software/docs/overview/context), this [spec](https://ocm.software/spec/) and all project related [github repositories](https://github.com/open-component-model). It also offers a [Getting Started](https://ocm.software/docs/guides/getting-started-with-ocm) to quickly make your hands dirty with ocm, its toolset and concepts :-)
+Check out the main project [web page](https://ocm.software) to find out more about OCM. It is your central entry point to all kind of ocm related [docs and guides](https://ocm.software/docoverview/context), this [spec](https://ocm.software/spec/) and all project related [github repositories](https://github.com/open-component-model). It also offers a [Getting Started](https://ocm.software/docguides/getting-started-with-ocm) to quickly make your hands dirty with ocm, its toolset and concepts :-)
 
 ## Contributing
 
