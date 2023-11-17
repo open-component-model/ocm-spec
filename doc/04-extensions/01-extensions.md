@@ -59,6 +59,7 @@ Currently the there are two different normalizations defined:
 
 - `jsonNormalisationV1`: This is a legacy format, which depends on the format of the
   component descriptor
+
 - `jsonNormalisationV2`: This is the new format. which is independent of the
   chosen representation format of the component descriptor.
 
@@ -76,9 +77,11 @@ The normalization process is divided into two steps:
   - `jsonNormalisationV1`
   - `jsonNormalisationV2`
 
-## `jsonNormalisationV1` vs `jsonNormalisationV2`
+## `jsonNormalisationV1`
 
 The `JsonNormalisationV1` serialization format is based on the serialization format of the component descriptor. It uses an appropriate JSON object containing the relevant fields as contained in the component descriptors's serialization. The format version fields are included. Therefore, the normalized form is depending on the chosen serialization format. Changing this format version would result in different digests. The resulting JSON object is serialized with the [OCM specific scheme](#generic-normalization-format)
+
+## `jsonNormalisationV2`
 
 `JsonNormalisationV2` strictly uses only the relevant component descriptor
 information according to the field specification. It is independent of the serialization format used to store the component decsriptor in some storage backend. Therefore, the calculated digest is finally independent of the serialization format chosen for storing the component descriptor in a storage backend. It uses a standard scheme according to [RFC8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785)
