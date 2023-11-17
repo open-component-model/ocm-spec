@@ -18,7 +18,7 @@ This chapter describes the elements of the Open Component Model and their syntax
 * 3.[Model Summary](02-elements-toplevel.md#model-summary)
   * 3.1.[Identifiers](03-elements-sub.md#identifiers)
   * 3.2.[Access Specification](03-elements-sub.md#access-specification)
-  * 3.3.[Access Types](03-elements-sub.md#access-types)
+  * 3.3.[Access Method Types](03-elements-sub.md#access-types)
   * 3.4.[Labels](03-elements-sub.md#labels)
     * 3.4.1.[Predefined  Labels](03-elements-sub.md#predefined--labels)
   * 3.5.[Repository Contexts](03-elements-sub.md#repository-contexts)

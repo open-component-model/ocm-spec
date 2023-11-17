@@ -51,7 +51,7 @@ The formal type of an artifact uniquely specifies the logical interpretation of 
 
 If there are different possible technical representations, the access specification determines the concrete format given by a media type used for the returned blob.
 
-For example, a helm chart (type `helmChart`) can be represented as OCI artifact or helm chart archive. Nevertheless, the technical meaning is the same. In both cases the artifact (resource)`type` will be `helmChart`. The acess specification however will be different. In the first case it will refer to the helm-chart archive. In the second case the access type will be `ociArtifact`.
+For example, a helm chart (type `helmChart`) can be represented as OCI artifact or helm chart archive. Nevertheless, the technical meaning is the same. In both cases the artifact (resource)`type` will be `helmChart`. The acess specification however will be different. In the first case it will refer to the helm-chart archive. In the second case the access method type will be `ociArtifact`.
 
 ```yaml
 ...
@@ -78,7 +78,7 @@ For example, a helm chart (type `helmChart`) can be represented as OCI artifact 
       imageReference: ghcr.io/open-component-model/helmexample/charts/mariadb:12.2.7
 ```
 
-The access type `ociArtifact` however is also used for container images:
+The access method type `ociArtifact` however is also used for container images:
 
 ```yaml
 ...
@@ -161,7 +161,7 @@ A resource uses the following additional formal fields:
   Indicates whether the entity providing a component is also the provider of the resource ('local') or whether the 
   resource is provided by a separate entity ('external'). This may be useful to determine whether the entity responsible 
   for the component is also responsible for the resource.  
-  This property is purely informational and completely unrelated to the access type.
+  This property is purely informational and completely unrelated to the access method type.
 
 - **`digest`** (optional) *Digest Info*
 

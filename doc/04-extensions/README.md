@@ -18,7 +18,7 @@ for the following technologies are defined:
 * 1 [Extensible Field Values](01-extensions.md#extensible-field-values)
   * 1.1 [Resource Types](01-extensions.md#resource-types)
   * 1.2 [Source Types](01-extensions.md#source-types)
-  * 1.3 [Access Types](01-extensions.md#access-types)
+  * 1.3 [Access Method Types](01-extensions.md#access-types)
 * 2 [Normalization Algorithms](01-extensions.md#normalization-algorithms)
   * 2.1 [jsonNormalisationV1](01-extensions.md#jsonnormalisationv1)
 * 3 [Digest Algorithms](01-extensions.md#digest-algorithms)

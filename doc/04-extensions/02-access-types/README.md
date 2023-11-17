@@ -1,7 +1,7 @@
-# Access Types
+# Access Method Types
 
-Access methods are used to access the content of artifacts described by a component version. Every access method has an access type.
-All access types are used for **resource** as well as **source** elements.  
+Access methods are used to access the content of artifacts described by a component version. Every access method has an access method type.
+All access method types are used for **resource** as well as **source** elements.  
 
 The type of the access methods defines the access procedure and the access specification format used to provide the appropriate attributes
 required to identify the blob and its location.

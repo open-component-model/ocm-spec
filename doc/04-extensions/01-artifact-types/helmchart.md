@@ -10,7 +10,7 @@ A Kubernetes installation resource representing a Helm chart, either stored as O
 
 - **OCI Artifact**
   
-  A Helm chart might be stored as OCI artifact following the [Artifact Set Archive Format](../common/formatspec.md#artifact-set-archive-format). This format is for example provided by the access type [`ociArtifact`](../02-access-types/oci-artifact.md)
+  A Helm chart might be stored as OCI artifact following the [Artifact Set Archive Format](../common/formatspec.md#artifact-set-archive-format). This format is for example provided by the access method type [`ociArtifact`](../02-access-types/oci-artifact.md)
 
   Media types:
   -  `application/vnd.oci.image.manifest.v1+tar`

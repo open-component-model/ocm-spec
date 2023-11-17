@@ -561,9 +561,9 @@ The central task of a component version is to provide information about versione
 An access method must always be able to return a blob representation for the accessed artifact. If there are native storage technologies for dedicated artifact types they
 must deliver such a blob too.
 
-Whenever a new resource type is supported, corresponding blob formats must be defined for this type. Type-agnostic access types, like `localBlob` or `ociBlob` never need to know anything about their internal format. But specific access methods, e.g. the `ociArtifact` method may provide dedicated blob formats.
+Whenever a new resource type is supported, corresponding blob formats must be defined for this type. Type-agnostic access method types, like `localBlob` or `ociBlob` never need to know anything about their internal format. But specific access methods, e.g. the `ociArtifact` method may provide dedicated blob formats.
 
-These blob formats may depend on the combination of artifact type and access type. Therefore, a blob always has a *media type* specifying the technical format. For every artifact type the possible media types with their technical format specifications must be defined.
+These blob formats may depend on the combination of artifact type and access method type. Therefore, a blob always has a *media type* specifying the technical format. For every artifact type the possible media types with their technical format specifications must be defined.
 
 When using the component repository to transport content from one repository to
 another the access information may change. But all variants MUST describe the same

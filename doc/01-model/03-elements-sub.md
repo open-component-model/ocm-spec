@@ -174,7 +174,7 @@ For example, the access method `ociBlob` requires the OCI repository reference a
       type: ociArtefact
 ```
 
-## Access Types
+## Access Method Types
 
 Access methods are used to access the content of artifacts of a component version. The type of the methods defines how to access the artifact and the access specification provides the required attributes to identify the blob and its location. The full list is [here](03-extensible-values.md#access-types)
 

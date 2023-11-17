@@ -24,6 +24,7 @@ The following table contains all artifact types defined in the core specificatio
 | [`ociArtifact`](oci-artifact.md)                | A generic OCI artifact following the [open containers image specification](https://github.com/spec/blob/main/spec.md) |
 | [`ociImage`](#oci-image.md)                     | An OCI image or image list  |
 | [`executable`](executable.md)                   | A blob describing an executable program |
+| [`sbom`](sbom.md)                               | A list of ingredients that make up software components (https://www.cisa.gov/sbom) |
 
 Some additional types are defined, but not part of the core specification. Support is optional, but the list of names is reserved.
 
