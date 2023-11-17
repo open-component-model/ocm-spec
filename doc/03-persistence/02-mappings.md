@@ -16,4 +16,4 @@ These mappings describe:
 - the repository specification type and format used to specify a dedicated repository instance
 - the mapping of the OCM elements to the elements provided by the storage technology.
 
-The mappings are defined as part of the [extensions]():
+The mappings are defined as part of the [extensions](../04-extensions/03-storage-backends/README.md)
