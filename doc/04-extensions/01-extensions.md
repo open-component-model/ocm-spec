@@ -38,7 +38,9 @@ All access method types are used for **resource** as well as **source** elements
 The type of the access methods defines the access procedure and the access specification format used to provide the appropriate attributes
 required to identify the blob and its location.
 
-The following access method types are centrally defined. This list can be extended by custom access methods or by later extensions of the specification. More detailed information, including the attribute specification can be found [here](../04-extensions/02-access-types/README.md) and behind the links in the table.
+The following access method types are centrally defined. This list can be extended by custom types or by later extensions of the specification.
+More detailed information, including the attribute specification can be found [here](../04-extensions/02-access-types/README.md)
+and behind the links in the table.
 
 | TYPE NAME | DESCRIPTION |
 |---------------------------------|-----------------------------------------------------|
@@ -49,8 +51,6 @@ The following access method types are centrally defined. This list can be extend
 | [`gitHub`](github.md)           | A commit in a GitHub-based Git repository           |
 | [`s3`](s3.md)                   | A blob stored in an AWS S3 bucket                   |
 | [`npm`](npm.md)                 | A NodeJS package stored in an NPM repository        |         
-
-
 
 
 # Normalization Algorithms
