@@ -75,7 +75,7 @@ The following chapters provide a formal description of the format to describe so
 
 ## Extensible Parts
 
-* 4.[Extensions](doc04-extensions/README.md)
+* 4.[Extensions](doc/04-extensions/README.md)
   * 4.1.[Extensible Field Values](doc/04-extensions/01-extensions.md#extensible-field-values)
     * 4.1.1.[Resource Types](doc/04-extensions/01-extensions.md#resource-types)
     * 4.1.2.[Source Types](doc/04-extensions/01-extensions.md#source-types)
