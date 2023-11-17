@@ -11,7 +11,8 @@ To describe a repository context for an OCM repository conforming to this specif
 ### Synopsis
 
 ```
-type: CommonTransportFormat/v1
+type: CommonTransportFormat[/VERSION]
+[ATTRIBUTES]
 ```
 
 ### Description

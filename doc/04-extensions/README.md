@@ -9,7 +9,7 @@ The two elements of extensions are:
 [ Extensible Parts of the OCM model](01-extensions.md)
 
 ## Storage Backend Mappings
-[ Storage Backend MAppings of the OCM model](03-storage-backends/README.md)
+[ Storage Backend Mappings of the OCM model](03-storage-backends/README.md)
 
 
 # Table of Content

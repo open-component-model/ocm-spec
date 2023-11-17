@@ -9,17 +9,22 @@ To describe a repository context for an OCM repository conforming to this specif
 ### Synopsis
 
 ```
-type: OCIRegistry/v1
-type: ociRegistry/v1
+type: OCIRegistry[/VERSION]
+[ATTRIBUTES]
+```
+```
+type: ociRegistry[/VERSION]
+[ATTRIBUTES]
 ```
 
 ### Description
 
 Component descriptors and their artifacts will be mapped to an OCI registry according to the [OCI distribution specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md).
 
-Supported specification version is `v1`.
 
 ### Specification Versions
+
+Supported specification version is `v1`.
 
 #### Version `v1`
 
