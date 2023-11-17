@@ -4,7 +4,7 @@ This chapter describes how OCM model elements are mapped to elements of a persis
 
 OCM model elements are mapped to various storage technologies. The interoperability layer for a client tool is typically the API of the storage backend. This avoids the need for providing an OCM server infrastructure.
 
-An implementation of this layer MUST implement this mapping by supporting the [mandatory abstract model operations](../03-operations/README.md#mandatory-operations). It SHOULD implement the [optional operations](../03-operations/README.md#optional-operations) too.
+An implementation of this layer MUST implement this mapping by supporting the [mandatory abstract model operations](01-operations#mandatory-operations). It SHOULD implement the [optional operations](01-operations#optional-operations) too.
 
 ## Storage Backend Mappings for the Open Component Model
 
