@@ -85,7 +85,7 @@ The following chapters provide a formal description of the format to describe so
   * 4.1.6 [ociArtifact](doc/01-artifact-types/oci-artifact.md)                
   * 4.1.7 [ociImage](doc/01-artifact-types/oci-image.md)                     
   * 4.1.8 [executable](doc/01-artifact-types/executable.md)                   
-  * 4.1.9 [sbom](doc/01-artifact-types/sbom.md)                        ]
+  * 4.1.9 [sbom](doc/01-artifact-types/sbom.md)
 * 4.2 [Access Method Types](doc/01-access-types/README.md)
   * 4.2.1 [localBlob](doc/01-access-types/localblob.md)     
   * 4.2.2 [ociArtifact](doc/01-access-types/ociartifact.md) 
