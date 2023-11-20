@@ -75,7 +75,7 @@ The following chapters provide a formal description of the format to describe so
 
 ## Extensible Parts
 
-* 4.[Extensions](doc/04-extensions/README.md)
+* 4[Extensions](doc/04-extensions/README.md)
 * 4.1 [Artifact Types](01-artifact-types/README.md)
   * 4.1.1 [`blob`](01-artifact-types/blob.md)                               
   * 4.1.2 [`directoryTree`, `fileSystem`](01-artifact-types/file-system.md) 
