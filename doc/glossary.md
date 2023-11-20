@@ -55,7 +55,7 @@ the formal description of a [component version](#compvers).
 the mapping of the elements of a [component descriptor](#compdesc) into an
 immutable format containg only signature relevant information used to calculate a digest.
 
-#### [Component Identity](01-model/02-elements.md#identifiers)<a id="compid"/>
+#### [Component Identity](01-model/03-elements-sub.md#identifiers)<a id="compid"/>
 the globally unique identity of a [component](#component).
 
 #### [Component Repository](01-model/01-model.md#component-repositories)<a id="comprep"/>
@@ -83,22 +83,22 @@ see [artifact digest](#artdigest) or [component version digest](#compdigest).
 
 ## E
 
-#### [Extension Point](03-operations/01-operations.md#abstract-operations-defined-by-the-open-component-model)<a id="ext"/>
+#### [Extension Point](./03-persistence/01-operations.md#abstract-operations-defined-by-the-open-component-model)<a id="ext"/>
 parts of the [OCM](#ocm) specification, which may be extended by arbitrary
 variations. The specification just defines the meaning, syntax and or functional
 behaviour of such elements.
 
-#### [Extra Identity](01-model/02-elements.md#identifiers)<a id="extraid"/>
+#### [Extra Identity](./01-model/03-elements-sub.md#identifiers)<a id="extraid"/>
 additional parts of the identity of an [element](#elemid) of a [component version](#compvers).
 
 ## G
 
-#### [`gitHub`](01-model/02-elements.md/#github)<a id="github"/>
+#### [`gitHub`](./04-extensions/02-access-types/github.md)<a id="github"/>
 [access method](#accmeth) used to access Git commits in a GitHub repository.
 
 ## H
 
-#### [`helm`](./01-model/02-elements.md#helm)<a id="helm"/>
+#### [`helm`](./04-extensions/02-access-types/helm.md)<a id="helm"/>
 [access method](#accmeth) used to access [Helm Charts](#helmchart) in a Helm repository.
 
 #### Helm Chart<a id="helmchart"/>
@@ -114,22 +114,22 @@ see [element identity](#elemid), [component identity](#compid), [component versi
 
 ## L
 
-#### [Labels](01-model/02-elements.md#labels)<a id="labels"/>
+#### [Labels](01-model/03-elements-sub.md#labels)<a id="labels"/>
 arbitrary typed information snippets attached to [component versions](#compvers),
 [artifacts](#artifacts) and [references](#compref).
 
-#### [`localBlob`](01-model/02-elements.md#localblob)<a id="localblob"/>
+#### [`localBlob`](./04-extensions/02-access-types/localblob.md)<a id="localblob"/>
 [access method](#accmeth) used to access blobs stored along with a component version.
 
-#### [Localization](01-model/05-contract.md#example-helm-deployment)<a id="localization"/>
+#### [Localization](./05-guidelines/02-contract.md#example-helm-deployment)<a id="localization"/>
 the process of adapting content delivered as [artifacts](#artifacts) in a [component versions](#compvers) to a local repository landscape in a target environment.
 
 ## M
 
-#### [Mapping](04-persistence/01-mappings.md#mappings-for-ocm-persistence)<a id="mapping"/>
+#### [Mapping](./03-persistence/02-mappings.md#mappings-for-ocm-persistence)<a id="mapping"/>
 the mapping of the [elements](01-model/02-elements.md) of the Open Component Model onto a storage technology described by a [repository type](#repotype).
 
-#### [Model-Tool Contract](01-model/05-contract.md)<a id="contract"/>
+#### [Model-Tool Contract](./05-guidelines/02-contract.md)<a id="contract"/>
 The agreement between the Open Component Model and tools working with content
 provided by [component versions](#compvers), which regulates the cooperation
 between both.
@@ -140,15 +140,15 @@ between both.
 the transformation which can be used to calculate an immutable digest for signing purposes along a transportation path. There are two normalization procedures, [artifact normalization](#artnorm) and
 [component descriptor normalization](#compdescnorm).
 
-#### [`npm`](./01-model/02-elements.md#npm)<a id="npm"/>
+#### [`npm`](./04-extensions/02-access-types/npm.md)<a id="npm"/>
 [access method](#accmeth) used to access NodeJS packages in an NPM repository.
 
 ## O
 
-#### [`ociArtifact`](./01-model/02-elements.md#ociartifact)<a id="ociartifact"/>
+#### [`ociArtifact`](./04-extensions/02-access-types/ociartifact.md)<a id="ociartifact"/>
 [access method](#accmeth) used to access OCI artifacts stored in an OCI registry.
 
-#### [`ociBlob`](./01-model/02-elements.md#ociblob)<a id="ociblob"/>
+#### [`ociBlob`](./04-extensions/02-access-types/ociblob.md)<a id="ociblob"/>
 [access method](#accmeth) used to access blobs stored in an OCI registry.
 
 #### [Open Component Model](../README.md)<a id="ocm"/>
@@ -177,7 +177,7 @@ a reference to an [artifact](#artifact) described by a [component version](#comp
 a given component version exploiting the [aggregation feature](#aggregation) of the Open Component
 Model. It is part of the [model-tool contract](#contract).
 
-#### [Repository Operations](03-operations/01-operations.md)<a id="repops"/>
+#### [Repository Operations](03-persistence/0-operations.md)<a id="repops"/>
 abstract operations that have to be provided by a language binding for a
 [mapping](#mapping) of the [Open Component Model](#ocm) to a dedicated storage
 technology.
@@ -186,7 +186,7 @@ technology.
 the type of a [mapping](#mapping) of the [Open Component Model](#ocm) specification
 to a storage technology.
 
-#### [Resource](01-model/02-elements.md#resources)<a id="resource"/>
+#### [Resource](01-model/02-elements-toplevel.md#resources)<a id="resource"/>
 a delivery artifact described by a [component version](#compvers).
 
 ## S
@@ -195,7 +195,7 @@ a delivery artifact described by a [component version](#compvers).
 a [component version](#compvers) may be signed by an authority, the signature as
 result of such a signing process is stored along with the component version.
 
-#### [Source](01-model/02-elements.md#sources)<a id="source"/>
+#### [Source](01-model/02-elements-toplevel.md#sources)<a id="source"/>
 an artifact described by a [component version](#compvers) containing sources
 used to generate one or more of the described [resources](#resource).
 
@@ -204,12 +204,12 @@ a format definition for the specification of attributes for
 dedicated variants of some [extension points](#ext). See [access methods](#accmeth),
 [repository types](#repotype), and [labels](#label).
 
-#### [`s3`](04-persistence/04-s3.md)<a id="s3"/>
+#### [`s3`](./04-extensions/02-access-types/s3.md)<a id="s3"/>
 [access method](#accmeth) used to access blobs in an S3 repository, a [mapping](#mapping) to store content in an S3 repository
 
 ## T
 
-#### [Transport](02-processing/02-transport.md)<a id="transport"/>
+#### [Transport](02-guidelines/01-transport.md)<a id="transport"/>
 the operation on [component versions](#compvers) transferring content from
 one OCM repository into another one.
 
