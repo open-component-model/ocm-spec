@@ -23,5 +23,5 @@ Semantic extensions offer the possibility to describe the semantics and structur
 
 Extension points are:
 
-- Artifact types describe the meaning of an artifact independent of their technical representation in a blob format. The artifact types defined by the core model (this specification) are described in section [Artifact Types](02-elements.md#artifact-types)
+- Artifact types describe the meaning of an artifact independent of their technical representation in a blob format. The artifact types defined by the core model (this specification) are described in section [Artifact Types](02-elements-toplevel.md#artifact-types)
 - Dynamic attribution of artifacts with additional information is possible using labels. The meaning of label names is globally unique. Labels are defined in section [Labels](02-elements.md#labels).
