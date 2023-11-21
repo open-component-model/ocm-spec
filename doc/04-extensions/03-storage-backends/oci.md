@@ -86,13 +86,6 @@ identifier stored in the `localBlob` access specification is the OCI *blob diges
 of the blob. The media type of the blob is the one specified in the
 access specification.
 
-<div align="center">
-
-<img src="ocm2oci-mapping.png" alt="drawing" width="800"/>
-
-</div>
-
-
 ## Version Mapping
 
 The Open Component Model supports version names according to [semantic versioning](https://semver.org/).
