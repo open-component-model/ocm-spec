@@ -9,7 +9,7 @@ to achieve a common understanding about the meaning of content.
 
 ## Intended Environments
 
-There are several scenarios where artifacts will be provided as content of [component versions](./02-elements-toplevel.md#components-and-component-versions), which might be bound to a dedicated (runtime) environment. If a component version should provide several flavors of the same artifact intended for different environments they should use the same element name and version, and the environment should be reflected by one or more [extra identity properties](./03-elements-sub.md#identifiers).
+There are several scenarios where artifacts will be provided as content of [component versions](./02-elements-toplevel.md#components-and-component-versions), which might be bound to a dedicated runtime environment. If a component version should provide several flavors of the same artifact intended for different environments they should use the same element name and version, and the environment should be reflected by one or more [extra identity properties](./03-elements-sub.md#identifiers).
 
 ### Operating System and CPU Architecture
 
