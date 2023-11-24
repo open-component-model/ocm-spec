@@ -6,8 +6,9 @@ The signing of a component version is based on three things:
 * the content of the described artifacts
 * the referenced component versions.
 
-A signature of a component version is based on digests of the involved elements. Therefore, there must be a defined way, how to calculate digests. This has to happen in a recursive way
-to handle aggregations.
+A signature of a component version is based on digests of the involved elements.
+Therefore, there must be a defined way, how to calculate digests.
+This has to happen in a recursive way to handle aggregations.
 
 ## Artifact Digest
 
