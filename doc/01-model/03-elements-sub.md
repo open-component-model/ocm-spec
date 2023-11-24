@@ -143,14 +143,67 @@ For example, access method `ociBlob` requires the OCI repository reference and t
 
 ## Labels
 
-*Labels* can be used to add additional formal information to a component model element, which do not have static formal fields in the component descriptor. Its usage is left to users of the component model. The usage of labels is left to the creator of a component version, therefore the set of labels must be extensible. They can appear ar various locations:
+*Labels* can be used to add additional formal information to a component model element,
+which do not have static formal fields in the component descriptor.
+Its usage is left to users of the component model. The usage of labels is left to the creator of a component version,
+therefore the set of labels must be extensible. They can appear ar various locations:
 
 - the component version itself
 - resource specifications
 - source specifications
 - component version references
 
-To be able to evaluate labels for any component version, the same label name must have the same meaning, regardless by which component provider they are generated. To assure that this information has a globally unique interpretation or meaning, labels must comply with some naming scheme and use a common structure.
+Elements featuring labels have an additional attribute `labels`,
+which is a list of label entries.
+
+A label entry consists of a dedicated set of meta attributes with a predefined meaning.
+While arbitrary values are allowed for the label `value`, additional (vendor/user specific)
+attributes are not allowed at the label entry level.
+
+- `name` (required) *string*
+
+  The label name according to the specification above.
+
+- `value` (required) *any*
+
+  The label value may be an arbitrary JSON compatible YAML value.
+
+- `version` (optional) *string*
+
+  The specification version for the label content. If no version is
+  specified, implicitly the version `v1` is assumed.
+
+- `signing` (optional) *bool*:  (default: `false`)
+
+  If this attribute is set to `true`, the label with its value will be incorporated
+  into the signatures of the component version.
+
+  By default, labels are not part of the signature.
+
+- `merge` (optional) *merge spec*
+
+  non-signature relevant labels (the default) can be modified without breaking a potential signature.
+  They can be changed in any repository the component version has been transferred to.
+  This is supported to attach evolving information to a component version.
+  But it also implies, that a component version must be updatable (re-transferable) in a certain target repository.
+  This may lead to conflicting changes which might need to be resolved in a non-trivial way. 
+
+  The merge behaviour can be specified together with the label definition using the `merge` attribute.
+  It has the following fields:
+
+  - `algorithm` (optional) *string*
+
+    The name of the algorithm used to merge the label during a transport step. This is an [extension point](./07-extensions.md#label-merge-algorithms)
+    of the model.
+
+  - `config` (optional) *any*
+
+    A configuration specific for the chosen algorithm.
+
+To be able to evaluate labels for any component version, the same label name must have the same meaning,
+regardless by which component provider they are generated.
+To assure that this information has a globally unique interpretation or meaning,
+labels must comply with some naming scheme and use a common structure.
 
 
 ## Repository Contexts

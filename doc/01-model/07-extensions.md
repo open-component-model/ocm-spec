@@ -16,6 +16,7 @@ There are two different kinds of extensions: functional and semantic.
   - [Storage backends](#storage-backends)
   - [Signing Algorithms](#signing-algorithms)
   - [Artifact Digest Normalization](#artifact-digest-normalization)
+  - [Label Merge Algorithms](#lable-merge-algorithms)
 
 - Semantic extensions
   
@@ -116,6 +117,7 @@ For example, the access method `ociBlob` requires the OCI repository reference a
 
 
 
+### Label Merge Algorithms
 
 ### Storage Backends
 
