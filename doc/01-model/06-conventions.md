@@ -22,7 +22,7 @@ The following extra identity properties are defined:
 
 This convention is also used by the OCM command line command [ocm download resource -x ...](https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_resources.md) to download an executable for the actual runtime environment.
 
-If platform specific images are described as separate resources instead of using a multiarch image, these extra identities should be used, also.
+If platform specific images are described as separate resources instead of using a multiarch image, these extra identities should also be used.
 
 ## Selection of Usage Scenarios
 
