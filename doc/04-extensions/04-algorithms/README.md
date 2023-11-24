@@ -54,7 +54,7 @@ The following digest algorithms are defined:
 - `SHA-256`
 - `SHA-512`
 
-# Digesting Content
+# Artifact Normalization Types
 The following algorithms are defined:
 
 - `NO-DIGEST`: Blob content is ignored for the signing process.

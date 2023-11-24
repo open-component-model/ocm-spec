@@ -12,16 +12,35 @@ Functional extensions offer the possibility to enrich an implementation of the O
 
 The functional extension points are:
 
-- [Access specifications](../01-model/02-elements-sub.md#access-specification)
-- [Signing extensions](../02-processing/03-signing.md)
-- [Digest calculations](../02-processing/04-digest.md)
+- [Access Methods](#access-methods)
 - [Storage backends](../03-persistence/02-mappings.md)
+- [Signing Algorithms](../02-processing/03-signing.md)
+- [Artifact Digest Normalization](../02-processing/04-digest.md)
+
+### Access Methods
+
+The task of an access method is to provide access to the physical content of an artifact described by a component version.
+The content is always provided as blob with a dedicated media type, either depending on the access method itself
+or on the [artifact type](#artifact-types-describe-the-meaning-of-an-artifact-independent-of-their-technical-representation-in-a-blob-format).
+
+
+### Storage Backends
+
+### Signing Algorithms
+
+### Artifact Digest Normalization
+
+
 
 ## Semantic extensions
 
-Semantic extensions offer the possibility to describe the semantics and structure of an element by arbitrary types not defined by the Open Component Model itself.
+Semantic extensions offer the possibility to describe the semantics and structure of an element
+by arbitrary types not defined by the Open Component Model itself.
 
 Extension points are:
 
-- Artifact types describe the meaning of an artifact independent of their technical representation in a blob format. The artifact types defined by the core model (this specification) are described in section [Artifact Types](02-elements-toplevel.md#artifact-types)
-- Dynamic attribution of artifacts with additional information is possible using labels. The meaning of label names is globally unique. Labels are defined in section [Labels](02-elements-sub.md#labels).
+### Artifact types describe the meaning of an artifact independent of their technical representation in a blob format.
+  The artifact types defined by the core model (this specification) are described
+  in section [Artifact Types](02-elements-toplevel.md#artifact-types)
+### Dynamic attribution of artifacts with additional information is possible using labels.
+  The meaning of label names is globally unique. Labels are defined in section [Labels](02-elements-sub.md#labels).
