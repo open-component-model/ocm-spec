@@ -1,4 +1,4 @@
-# Normalization
+# Signing Process
 
 The signing of a component version is based on three things:
 
