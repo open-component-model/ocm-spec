@@ -22,14 +22,14 @@ The digest algorithms are listed in the [extensible parts](../04-extensions/01-e
 
 ## Normalization Types
 
-To be able to sign a component version, the content of described artifacts must be incorporated. Therefore, a digest for the artifact content is calculated.
+To be able to sign a component version, the content of the described artifacts must be incorporated and a digest for the artifact content needs to be calculated.
 
 By default, this digest is calculated based on the blob provided by the access specification of an artifact. There might be technology specific ways to uniquely identify the content for specific artifact types.
 
-Together with the digest and its algorithm, an artifact normalization algorithm is specified in the component descriptor
+Together with the digest and its algorithm, an artifact normalization algorithm is specified in the component descriptor.
 
-This is done in the same way for the component descriptor. It contains signature
-relevant information and volatile information (e.g. the access specification). Therefore, there is a normalization for component descriptors
+It contains signature
+relevant information and volatile information (e.g. the access specification). Therefore, there is a normalization for component descriptors.
 
 Normalization algorithm types may be versioned and SHOULD match the following regexp
 
@@ -44,7 +44,7 @@ The normalization algorithms are listed in the [extensible parts](../04-extensio
 ## Serialization Format
 
 A digest for a component version is stored along with a signature in a
-component-descriptor. A component-descriptor can have multiple signatures and with this
+component descriptor. A component descriptor can have multiple signatures and with this
 multiple digests.
 
 Example:
@@ -58,9 +58,7 @@ digest:
 
 ## Recursive Digest Calculation
 
-A digest for a component version can be calculated recursively including all referenced component versions. For each referenced component the component-descriptor will get a `digest` section for each `reference` contained in `spec`.
-
-Example:foo
+A digest for a component version is calculated recursively including all referenced component versions. For each referenced component the component descriptor will get a `digest` section for each `reference` contained in `spec`:
 
 ```yaml
 spec:
@@ -74,11 +72,11 @@ spec:
     name: myhelperapp
     version: 0.1.0
 ```
-# Example
+# Examples for Signing of Component Versions
 
-## Simple Component-Version
+## Simple Component Version
 
-The component-descriptor to be signed is:
+The component descriptor to be signed is:
 
 ```
 apiVersion: ocm.software/v3alpha1
@@ -117,15 +115,15 @@ spec:
     version: 0.1.0
 ```
 
-The normalized form in `jsonNormalisation/v2` is then:
+The normalized form of the component descriptor in `jsonNormalisation/v2` is the string:
 
 ```
 [{"component":[{"componentReferences":[]},{"name":"ocm.software/simpleapp"},{"provider":[{"name":"ocm.software"}]},{"resources":[[{"digest":[{"hashAlgorithm":"SHA-256"},{"normalisationAlgorithm":"ociArtifactDigest/v1"},{"value":"5e28862f7ad5b71f3f5c5dc7a4ccc8c3d3cb87f5e5774458d895d831d3765548"}]},{"name":"chart"},{"relation":"local"},{"type":"helmChart"},{"version":"0.1.0"}],[{"digest":[{"hashAlgorithm":"SHA-256"},{"normalisationAlgorithm":"ociArtifactDigest/v1"},{"value":"cb5c1bddd1b5665e1867a7fa1b5fa843a47ee433bbb75d4293888b71def53229"}]},{"name":"image"},{"relation":"external"},{"type":"ociImage"},{"version":"1.0"}]]},{"sources":[[{"name":"source"},{"type":"filesytem"},{"version":"0.1.0"}]]},{"version":"0.1.0"}]}]
 ```
 
-The sha-256 digest of this string is: `01c211f5c9cfd7c40e5b84d66a2fb7d19cb0d65174b06c57b403c2ad9fdf8ed2`
+The `SHA-256` digest of this string is: `01c211f5c9cfd7c40e5b84d66a2fb7d19cb0d65174b06c57b403c2ad9fdf8ed2`
 
-The signed component-descriptor is then:
+Adding the signature and digests for all artifacts leads to this signed component descriptor:
 
 ```
 apiVersion: ocm.software/v3alpha1
@@ -182,9 +180,9 @@ spec:
     version: 0.1.0
 ```
 
-## Component-Version With Reference
+## Component Version with Reference
 
-Here is a component-descriptor containing a reference to the component from the previous section.
+Here is a component descriptor containing a reference to the component in the previous [example](#simple-component-version).
 
 ```
 apiVersion: ocm.software/v3alpha1
@@ -210,16 +208,15 @@ spec:
     version: "1.0"
 ```
 
-
-Normalized form:
+The normalized form of the component descriptor in `jsonNormalisation/v2` is the string:
 
 ```
 [{"component":[{"componentReferences":[[{"componentName":"ocm.software/simpleapp"},{"digest":[{"hashAlgorithm":"SHA-256"},{"normalisationAlgorithm":"jsonNormalisation/v2"},{"value":"01c211f5c9cfd7c40e5b84d66a2fb7d19cb0d65174b06c57b403c2ad9fdf8ed2"}]},{"name":"myhelperapp"},{"version":"0.1.0"}]]},{"name":"ocm.software/complexapp"},{"provider":[{"name":"ocm.software"}]},{"resources":[[{"digest":[{"hashAlgorithm":"SHA-256"},{"normalisationAlgorithm":"ociArtifactDigest/v1"},{"value":"927d98197ec1141a368550822d18fa1c60bdae27b78b0c004f705f548c07814f"}]},{"name":"image"},{"relation":"external"},{"type":"ociImage"},{"version":"1.0"}]]},{"sources":[]},{"version":"0.1.0"}]}]
 ```
 
-The sha-256 digest of this string is: `01801dfb56ba7b4033b8177e53e689644f1447c8270004b2c05c5fe45aa1063f`
+The `SHA-256` digest of this string is: `01801dfb56ba7b4033b8177e53e689644f1447c8270004b2c05c5fe45aa1063f`
 
-The signed component-descriptor then is:
+Adding the signature and digests for all artifacts leads to this signed component descriptor:
 
 ```
 apiVersion: ocm.software/v3alpha1
@@ -263,42 +260,44 @@ spec:
     version: "1.0"
 ```
 
-Note that the `references` section in `spec` now contains a `digest` for the referenced component. The value of the digest is the same as in the previous section.
+Note that the `references` section in `spec` now contains a `digest` for the referenced component `ocm.software/simpleapp`. The value of the digest therefore is the same as in the previous example.
 
 # Component Descriptor Normalization
 
 The component descriptor contains several kinds of information:
 - volatile label settings, which might be changeable.
 - artifact access information, which might be changed during transport steps.
-- static information describing the features and artifacts of a component
-  version.
+- static information describing the features and artifacts of a component version.
 
 The digest of a component descriptor is calculated on a normalized form of the
-elements of a component descriptor. The normalized form contains only the signature relevant information and is the source to calculate a digest. The digest is finally signed (and verified).
+elements of the component descriptor. The normalized form contains only the signature
+relevant information, everything else gets removed during the normalization process. 
+The resulting string is the source for calculating the digest. This digest is then finally signed (and verified).
 
-A normalized component-descriptor is a subset of the component-descriptor elements containing signing-relevant properties, only.
+A normalized component descriptor is a subset of its elements containing only the properties relevant for signing:
 
 - based on JSON
 - map serializes as alphanumerically ordered list of fields (to define unique order)
 - field is map with two keys 'name', 'value'
 
 Like for signature algorithms, the model offers the possibility to work with
-different normalization algorithms/formats.
+different normalization algorithms and formats.
 
-The algorithms used for normalization are listed in the [extensible parts](../04-extensions/01-extensions.md#normalization-algorithms) of the specification
+The algorithms used for normalization are listed in the [extensible parts](../04-extensions/01-extensions.md#normalization-algorithms) of the specification.
 
 
-## Relevant information in Component Descriptors
+## Signing-relevant Information in Component Descriptors
 
 A component descriptor contains static information and
-information, which may change over time (for example, the access methods
-specifications might be changed during a transport step). A digest should be
+information, which may change over time, e.g. access method
+specifications might be changed during transport steps. A digest should be
 stable even after a transport and therefore should only hash static
-information. Therefore, a component descriptor is transformed to format
-containing only immutable fields, which are finally relevant for the signing
-process to assure the data integrity.
+information. Therefore, a component descriptor is transformed into a format
+that only contains immutable fields, finally relevant for the signing
+process and assuring data integrity.
 
-Relevant fields and their mapping to the normalized data structure for `JsonNormalisationV2`:
+Relevant fields and their mapping to the normalized data structure for `JsonNormalisationV2` are:
+
 - Component Name: mapped to `component.name`
 - Component Version: mapped to `component.version`
 - Component Labels: mapped to `component.labels` (see [Labels](#labels)])
@@ -310,15 +309,15 @@ Relevant fields and their mapping to the normalized data structure for `JsonNorm
 ### Access Methods
 
 Access method specifications are completely ignored.
-A resource/source is ignored, if the access method type is `none`.
+A resource or source is ignored, if the access method type is `none`.
 
 ## Labels
 
-Labels are removed before signing but can be marked with a special boolean
-property `signing`. This property indicates that the label should be
-signing-relevant and therefore part of the digest. As a consequence such
-labels cannot be changed anymore during the lifecycle of a component version
-any may only describe static information.
+Labels by default are removed before signing, but can be marked with a special boolean
+property `signing`. This property indicates that the label is
+signing-relevant and therefore becomes part of the digest. As a consequence such
+labels cannot be changed during the lifecycle of a component version anymore
+and should only describe static information.
 The structure of signing-relevant labels is preserved from the component
 descriptor version `v2`.
 
@@ -333,8 +332,8 @@ labels:
   signing: true
 ```
 
-`label1` will be excluded from the digest, `label2` will be included.
-The label value is taken as it is, preserving a potentially deeply nested structure.
+`label1` will be excluded from the digest, whereas `label2` will be included.
+The value of any label is taken as is, preserving a potentially deeply nested structure.
 
 ## Exclude Resources from Normalization/Signing
 
@@ -350,20 +349,20 @@ digest:
 ## Generic Normalization Format
 
 The generic format is based on a data structure consisting of dictionaries, lists and
-simple values (like strings and integers).
+simple values, like strings and integers.
 
 The signing relevant information described by a component descriptor is mapped
 to such a data structure according to the format specifications described below.
 
-This data structure is then mapped to a formal JSON representation, which
-only contains clearly ordered elements. It is marshalled without white-spaces contained
-in the representation. Therefor, the resulting byte stream is directly defined
+This data structure is mapped to a formal JSON representation, which
+only contains clearly ordered elements. It is marshalled without whitespaces contained
+in the representation. The resulting byte stream is directly defined
 by the inbound data structure and independent of the order of marshalling
 dictionaries/objects.
-Its digest can be used as basis to calculate a signature.
+Its digest can be used as basis for calculating a signature.
 
-To map lists and dictionaries into such clearly ordered elements the rules described
-below are used. The inbound data structures in the examples below are shown in
+To map lists and dictionaries into such clearly ordered elements the rules
+below are used. The inbound data structures in the examples are shown in
 YAML notation.
 
 ### Simple Values
@@ -379,9 +378,10 @@ will result in :
 ```json
   "bob"
 ```
+
 ### Dictionary
 
-All dictionaries are converted to a list where each element is a single-entry
+All dictionaries are converted into lists where each element is a single-entry
 dictionary containing the key/value pair of the original entry. This list is
 ordered by lexicographical order of the keys.
 
@@ -399,6 +399,7 @@ will result in :
 The values are converted according to the same rules, recursively.
 
 Example:
+
 ```yaml
   people:
     bob: 26
@@ -412,7 +413,7 @@ will result in :
 
 ### Lists
 
-Lists are converted to JSON arrays and preserve the order of the elements
+Lists are converted into JSON arrays and preserve the order of the elements.
 
 Example:
 ```yaml
@@ -459,13 +460,13 @@ resources:
   version: 1
 ```
 
-normalized to
+This will be normalized to
 
 ```json
 [{"resources":[[{"access":[{"localReference":"blob"},{"mediaType":"text/plain"},{"referenceName":"ref"},{"type":"localBlob"}]},{"extraIdentity":[{"additional":"value"},{"other":"othervalue"}]},{"name":"elem1"},{"relation":"local"},{"type":"elemtype"},{"version":1}]]}]
 ```
 
-formatted with white spaces for better readability it looks like:
+Formatted with whitespaces for better readability it looks like:
 
 ```json
 [
@@ -541,7 +542,8 @@ myList: null
 ```yaml
 myList:
 ```
-are all normalized to:
+
+and are all normalized to:
 
 ```json
 []
@@ -549,61 +551,88 @@ are all normalized to:
 
 # Artifact Normalization
 
-To be able to sign a component version a digest for the artifact *content* must be determined.
+To be able to sign a component version a digest for the artifact **content** must be determined.
 
 By default, this digest is calculated based on the blob provided by the access specification.
-There might be technology specific ways to uniquely identify the content for dedicated artifact types. Therefore an artifact normalization algorithm is kept in the component descriptor.
+There might be technology specific ways to uniquely identify the content for dedicated artifact types.
+Therefore an artifact normalization algorithm is kept in the component descriptor.
 
 ## Blob Representation Format for Resource Types
 
-The central task of a component version is to provide information about versioned sets of resources. For the component model such content of resources is just seen as simple typed blobs. The evaluation of an access specification always results in a simple blob representing the content of the described resource. This way blobs can be stored in any supported external blob store.
+The central task of a component version is to provide information about versioned sets of resources.
+For the component model such content of resources are just simple typed blobs.
+The evaluation of an access specification always results in a simple blob, representing the content of the described resource.
+This way blobs can be stored in any supported external blob store.
 
-An access method must always be able to return a blob representation for the accessed artifact. If there are native storage technologies for dedicated artifact types they
-must deliver such a blob too.
+An access method MUST always be able to return a blob representation for the accessed artifact.
+If there are native storage technologies for dedicated artifact types they must also deliver such a blob.
 
-Whenever a new resource type is supported, corresponding blob formats must be defined for this type. Type-agnostic access method types, like `localBlob` or `ociBlob` never need to know anything about their internal format. But specific access methods, e.g. the `ociArtifact` method may provide dedicated blob formats.
+Whenever a new resource type is supported, corresponding blob formats MUST be defined for this type.
+Type-agnostic access method types, like `localBlob` or `ociBlob` never need to know anything about their internal format.
+But specific access methods, e.g. the `ociArtifact` method, MAY provide dedicated blob formats.
 
-These blob formats may depend on the combination of artifact type and access method type. Therefore, a blob always has a *media type* specifying the technical format. For every artifact type the possible media types with their technical format specifications must be defined.
+These blob formats may depend on the combination of artifact type and access method type.
+Therefore, a blob always has a *media type* specifying the technical format.
+For every artifact type the possible media types with their technical format specifications MUST be defined.
 
 When using the component repository to transport content from one repository to
 another the access information may change. But all variants MUST describe the same
 content.
 
 If multiple media types are possible for blobs, the digest of the artifact content
-must be immutable to avoid invalidating signatures. Therefore, in such a case, a
-dedicated artifact normalization algorithm has to be provided for such media types.
+MUST be immutable to avoid invalidating signatures. In such a case a
+dedicated artifact normalization algorithm MUST be provided for such media types.
 
-Available artifact normalization types can be found [above](#normalization-types)
+Available artifact normalization types can be found [above](#normalization-types).
 
 ## Interaction of Local Blobs, Access Methods, Uploaders and Media Types
 
-The Open component model is desiged to support transports. To assure the integrity of digests and signatures some rules must be obeyed by the involved model extensions.
+The Open Component Model is desiged to support transports of artifacts.
+To assure the integrity of digests and signatures some rules must be obeyed by the involved model extensions.
 
 ### Access Methods
 
 A remote access method MUST return the artifact content as blob.
 
-By default, this blob is used to calculate the content digest for an artifact. Therefore, this blob byte-stream must be deterministic. Multiple calls for the same content must return the identical blob. If this cannot be guaranteed, a blob digest handler for the media type of this blob format MUST be defined.
+By default, this blob is used to calculate the content digest for an artifact.
+Therefore, the byte-stream of this blob must be deterministic.
+Multiple calls for the same content must return the identical blob.
+If this cannot be guaranteed, a blob digest handler for the media type of this blob format MUST be defined.
 
-For example. the `ociArtifact access method provides content as artifact set blob, with a format based on the OCI artifact structure, which is defined by a dedicated media type. For this media type a digest handler is defined, which replaces the default blob digest by the manifest digest of the artifact. This way the digest is independent from the creation of the archive blob containing the artifact.
+For example, the `ociArtifact` access method provides content as artifact set blob,
+with a format based on the OCI artifact structure, which is defined by a dedicated media type.
+For this media type a digest handler is defined, which replaces the default blob digest by the manifest digest of the artifact.
+This way the digest is independent from the creation of the archive blob containing the artifact.
 
-Once the artifact content has been converted to a blob and stored as local blob this blob is by  default kept for further transport steps. This way, the digest calculation always provides the same result.
+Once the artifact content has been converted to a blob and stored as local blob,
+this blob is by default kept for further transport steps.
+This way, the digest calculation always provides the same result.
 
 ### Blob Uploaders
 
-can be used as part of the transport process to automatically
+Blob Uploaders can be used as part of the transport process, to automatically
 provide transported artifacts in technology specific local storage systems, e.g. OCI registries.
 The Open Component Model allows to change access locations
-of artifact content during transport, therefore an automatic upload
-with modification of the access method is principally allowed. In such scenarios, it's essential
-to adhere to specific rules to ensure the integrity of digests and signatures.
+of artifact content during transport. Therefore an automatic upload
+with modification of the access method is principally allowed.
+In such scenarios, it's essential to adhere to specific rules to ensure the integrity of digests and signatures.
 
-If a blob uploader is used to upload the artifact to a remote repository again, the access method can potentially be changed. But this MUST guarantee the same digest calculation. The new access method must provide a blob again with a media type and digest handler combination, providing the same digest.
+If a blob uploader is used to upload the artifact to a remote repository after a transfer again,
+the access method can potentially be changed. But this MUST guarantee the same digest calculation.
+The new access method must again provide a blob with a media type and digest handler combination, providing the same digest.
 
-For example, storing an OCI artifact delivered as local blob in an OCI repository again the manifest digest will be the same. This is guaranteed because it is the identity of artifact according to the OCI specification. As a result, a new transformation to a blob representation in combination with the digest handler will always provide the same artifact digest. The access method can be switched again, from `localBlob` to `ociArtifact` regardless of the artifact type.
+For example, storing an OCI artifact delivered as local blob in an OCI repository again, the manifest digest will be the same.
+This is guaranteed because it is the identity of the artifact according to the OCI specification.
+As a result, a new transformation to a blob representation in combination with the digest handler
+will always provide the same artifact digest. The access method can be switched again,
+from `localBlob` to `ociArtifact` regardless of the artifact type.
 
-If this can not be guaranteed, once a blob representation is chosen, it must be kept as it is. In such a case a blob uploader must preserve the local access method, even if it uploads the content to an external storage system.
+If this can not be guaranteed, once a blob representation is chosen, it must be kept as it is.
+In such a case a blob uploader must preserve the local access method,
+even if it uploads the content to an external storage system.
 
-This can be described in the component version by adding the new remote access specification as part of the existing local one using the `globalAccess` attribute.
+This can be described in the component version by adding the new remote access specification
+as part of the existing local one, using the `globalAccess` attribute.
 
-The artifact digest is always calculated based on the local access, but tools may use the information provided by the global access to use technology native ways to access the artifact.
+The artifact digest is always calculated based on the local access,
+but tools may use the information provided by the global access to use technology native ways to access the artifact.
