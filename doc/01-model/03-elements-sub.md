@@ -4,7 +4,7 @@ A *Component* is technically defined by a globally unique identifier.
 
 A component identifier uses the following naming scheme:
 
-<div align="center">
+<div>
 
 *&lt;DNS domain>* `/` *&lt;name component> {* `/` *&lt;name component> }*
 
