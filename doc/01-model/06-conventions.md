@@ -1,14 +1,15 @@
 # Conventions
 
-There are some conventions, which should be applied to provide a uniforms
-usage accorss tools working with content provided by the component model.
+To ensure uniformity across tools that interact with content from the component model,
+certain conventions should be adhered to.
 
-These conventiones are not covered by the [model-tool contract](../05-guidelines/02-contract.md#model-contract). They are not part of the specifications
-but should be obeyed to achieve some common understanding about the meaning of content.
+These conventiones are not covered by the [model-tool contract](../05-guidelines/02-contract.md#model-contract).
+They are also not part of the specificationsbut should be obeyed
+to achieve a common understanding about the meaning of content.
 
 ## Intended Environments
 
-There are several scenarios where artifacts will be provided as content of [component versions](./02-elements-toplevel.md#components-and-component-versions), which might be bound to a dedicated (runtime) environment. If a component version should provide several flavors of the same artifact intended for different environments they should use the same element name (and version) and the environment should be reflected by one or more [extra identity properties](./03-elements-sub.md#identifiers).
+There are several scenarios where artifacts will be provided as content of [component versions](./02-elements-toplevel.md#components-and-component-versions), which might be bound to a dedicated (runtime) environment. If a component version should provide several flavors of the same artifact intended for different environments they should use the same element name and version, and the environment should be reflected by one or more [extra identity properties](./03-elements-sub.md#identifiers).
 
 ### Operating System and CPU Architecture
 
@@ -16,7 +17,7 @@ For executables and container images the specification for [OCI image indices](h
 
 The following extra identity properties are defined:
 
-- **`os`**: the operating system the element is intended for. It should use values listed in the Go Language document for [GOOS](https://go.dev/doc/install/source#environment).
+- **`os`**: the operating system the element is intended for. It SHOULD use values listed in the Go Language document for [GOOS](https://go.dev/doc/install/source#environment).
 - **`architecture`**: the CPU architecture the element is intended for. It should use values listed in the Go Language document for [GOARCH](https://go.dev/doc/install/source#environment).
 
 This convention is also used by the OCM command line command [ocm download resource -x ...](https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_download_resources.md) to download an executable for the actual runtime environment.
