@@ -62,11 +62,11 @@ of constraints is then just a partial match of the set of identity attributes.
 For example:
 
 You want to describe different image versions to be used
-for different Kubernetes versions and for multiple purposes. With the identity
-attributes this can easily be modeled by using
+for different Kubernetes versions deployed on different OS platforms and CPU architecturesand.
+With identity attributes this can easily be modeled by using
 - the `name` attribute for the purpose (e.g. DNS controller)
 - the `version` attribute for the image version
-- and an extra identity attribute for the intended Kubernetes Version.
+- and an extra identity attribute for the intended Kubernetes OS platform and architecture.
 
 ```yaml
 ...
@@ -74,7 +74,7 @@ component:
   name: github.com/open-component-model/ocmcli
   version: 0.3.0
   extraIdentity:
-    arch: amd64
+    architecture: amd64
     os: linux
   resources:
   ...
