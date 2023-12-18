@@ -352,7 +352,7 @@ Relevant fields and their mapping to the normalized data structure for `JsonNorm
 Access method specifications are completely ignored.
 A resource or source is ignored, if the access method type is `none`.
 
-## Labels
+### Labels
 
 Labels by default are removed before signing, but can be marked with a special boolean
 property `signing`. This property indicates that the label is

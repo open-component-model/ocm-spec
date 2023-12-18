@@ -24,7 +24,7 @@ There are two different kinds of extensions: functional and semantic.
 - Semantic extensions
   
   Semantic extensions offer the possibility to describe the semantics and structure of an element
-  by arbitrary types not defined by the Open Component Model itself.
+  by arbitrary types, not defined by the Open Component Model itself.
 
   The semantic extension points are:
 
@@ -260,7 +260,7 @@ and stream access for the denoted blob is required.
 
 ## Digest Algorithms
 
-Digest algorithms describe the way digests are calculated from a byte stream. The defined algorithms can be found [here](../04-extensions/04-algorithms/README.md#digest-algorithms)
+Digest algorithms describe the way digests are calculated from a byte stream. The defined algorithms can be found [here](../04-extensions/04-algorithms/README.md#digest-algorithms).
 
 
 ## Signing Algorithms
@@ -272,7 +272,7 @@ The algorithm is denoted by a name following the syntax
 [A-Z][A-Z0-9-_]*
 ```
 
-The result of a signing is a structured data set wirth the following fields:
+The result of a signing is a structured data set with the following fields:
 
 - **`mediatype`** (required) *string*
 
@@ -303,23 +303,40 @@ The result of a signing is a structured data set wirth the following fields:
 
 ## Component Descriptor Normalization
 
-A component descriptor contains static information and
-information, which may change over time, e.g. access method
-specifications might be changed during transport steps. A digest should be
-stable even after a transport and therefore should only hash static
-information. Therefore, a component descriptor is transformed into a format
-that only contains immutable fields, finally relevant for the signing
-process and assuring data integrity.
+The component descriptor contains several kinds of information:
+- volatile label settings, which might be changeable.
+- artifact access information, which might be changed during transport steps.
+- static information describing the features and artifacts of a component version.
+
+The digest of a component descriptor is calculated on a normalized form of the
+elements of the component descriptor. The normalized form contains only the signature
+relevant information, everything else gets removed during the normalization process. 
+The resulting string is the source for calculating the digest.
+This digest is then finally signed (and verified).
+
+A normalized component descriptor is a subset of its elements containing only the properties relevant for signing:
+
+- based on JSON
+- map serializes as alphanumerically ordered list of fields (to define unique order)
+- field is map with two keys 'name', 'value'
+
+Like for signature algorithms, the model offers the possibility to work with
+different normalization algorithms and formats.
+
+The algorithms used for normalization are listed in the [extensions](../04-extensions/04-algorithms/README.md#normalization-algorithms).
+
+### Signing-relevant Information in Component Descriptors
 
 Relevant fields and their mapping to the normalized data structure for `JsonNormalisationV2` are:
 
 - Component Name: mapped to `component.name`
 - Component Version: mapped to `component.version`
-- Component Labels: mapped to `component.labels` (see [Labels](#labels)])
+- Component Labels: mapped to `component.labels`
 - Component Provider: mapped to `component.provider`
-- Resources: mapped to `component.resources`, always empty list enforced, without the source references (see [Labels](#labels)] and [Access Methods](#access-methods)])
-- Sources: mapped to `component.sources`, always empty list enforced, (see [Labels](#labels)] and [Access Methods](#access-methods)])
-- References: mapped to `component.references`, always empty list enforced, (see [Labels](#labels)])
+- Resources: mapped to `component.resources`, always empty list enforced,
+  without the source references
+- Sources: mapped to `component.sources`, always empty list enforced
+- References: mapped to `component.references`, always empty list enforced
 
 ### Access Methods
 
