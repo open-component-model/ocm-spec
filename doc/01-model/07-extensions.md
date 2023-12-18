@@ -334,7 +334,26 @@ the normalization is a *digest specification* with the following fields
   The HEX encoded digest value.
 
 The already defined digesters can be found [here](../04-extensions/04-algorithms/README.md#artifact-normalization-types).
- 
+
+Example: 
+
+```yaml
+...
+resources:
+  - name: apiserver-proxy
+    version: v0.14.0
+    type: ociImage
+    access:
+      type: ociRegistry
+      imageReference: >-
+        mycompany.com/myrepo/apiserver-proxy:v0.14.0-mod1
+    digest:
+      hashAlgorithm: SHA-256
+      normalisationAlgorithm: ociArtifactDigest/v1
+      value: 9dc9c7c74abe301e0ee2cb168c004051179e7365d269719db434d3582a12dcb6
+    relation: local
+...
+```
 
 ## Component Descriptor Normalization
 
@@ -343,17 +362,13 @@ The component descriptor contains several kinds of information:
 - artifact access information, which might be changed during transport steps.
 - static information describing the features and artifacts of a component version.
 
-The digest of a component descriptor is calculated on a normalized form of the
-elements of the component descriptor. The normalized form contains only the signature
+The digest of a component descriptor is calculated on a normalized form of its
+elements. The normalized form contains only the signature
 relevant information, everything else gets removed during the normalization process. 
 The resulting string is the source for calculating the digest.
 This digest is then finally signed (and verified).
 
-A normalized component descriptor is a subset of its elements containing only the properties relevant for signing:
-
-- based on JSON
-- map serializes as alphanumerically ordered list of fields (to define unique order)
-- field is map with two keys 'name', 'value'
+A normalized component descriptor is a subset of its elements containing only the properties relevant for signing.
 
 Like for signature algorithms, the model offers the possibility to work with
 different normalization algorithms and formats.
@@ -362,30 +377,30 @@ The algorithms used for normalization are listed in the [extensions](../04-exten
 
 ### Signing-relevant Information in Component Descriptors
 
-Relevant fields and their mapping to the normalized data structure for `JsonNormalisationV2` are:
+Relevant fields are:
 
-- Component Name: mapped to `component.name`
-- Component Version: mapped to `component.version`
-- Component Labels: mapped to `component.labels`
-- Component Provider: mapped to `component.provider`
-- Resources: mapped to `component.resources`, if no resource is present, an empty list is enforced
-- Sources: mapped to `component.sources`, if no source is present, an empty list is enforced
-- References: mapped to `component.references`, if no reference is present, an empty list is enforced
+- Component Name
+- Component Version
+- Component Labels (only signature-relevant labels, see [below](#labels))
+- Component Provider
+- Resources without access method specification see [below](#artifacts))
+- Sources without access method specification see [below](#artifacts))
+- References see [below](#references))
 
-### Access Methods
+### Artifacts
 
-Access method specifications are completely ignored.
-A resource or source is ignored, if the access method type is `none`.
+Access method specifications for sources and resources are completely ignored.
+A resource or source is ignored, if the access method type is `none`
+or the hash algorithm of the digest specification is `NO-DIGEST` and the 
+normalization algorithm is `EXCLUDE-FROM-SIGNATURE`.
 
 ### Labels
 
 Labels by default are removed before signing, but can be marked with a special boolean
-property `signing`. This property indicates that the label is
+property `signing` set to `true`. This property indicates that the label is
 signing-relevant and therefore becomes part of the digest. As a consequence such
-labels cannot be changed during the lifecycle of a component version anymore
-and should only describe static information.
-The structure of signing-relevant labels is preserved from the component
-descriptor version `v2`.
+labels cannot be changed during the lifecycle of a component version anyomre
+and SHOULD only describe static information.
 
 Example:
 
@@ -400,6 +415,36 @@ labels:
 
 `label1` will be excluded from the digest, whereas `label2` will be included.
 The value of any label is taken as is, preserving a potentially deeply nested structure.
+
+### References 
+
+If a component version contains references to other component versions,
+their digests are stored along with the reference as digest descriptor.
+The digest descriptor is similar to the [artifact digest](#artifact-normalization).
+Hereby the component descriptor normalization algorithm is registered instead of the
+artifact normalization algorithm.
+
+Example:
+
+```yaml
+...
+componentReferences:
+  - name: etcd-druid
+    componentName: github.com/gardener/etcd-druid
+    version: v0.21.0
+    digest:
+      hashAlgorithm: SHA-256
+      normalisationAlgorithm: jsonNormalisation/v1
+      value: 7f5255bc89cdfc1eb06ce20dba7fb6e1d93a065533354ca9fccfe958c90eac73
+...
+```
+
+### Applying Normalization Algorithms
+
+The normalization algorithm provides a stable deserialization format based on the 
+elements of a component descriptor, excluding the fields not relevant for signing.
+Afterwards the resulting byte stream is hashed using a [digest algorithm](#digest-algorithms).
+The resulting digest is the digest of the component version.
 
 ## Label Merge Algorithms
 

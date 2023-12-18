@@ -4,7 +4,7 @@
   - [`jsonNormalisationV1`](#jsonnormalisationv1)
   - [`jsonNormalisationV2`](#jsonnormalisationv2)
 - [Digest Algorithms](#digest-algorithms)
-- [Digesting Content](#digesting-content)
+- [Artifact Normalization Types](#artifact-normalization-types)
 - [Signature Algorithms](#signature-algorithms)
   - [RSA](#rsa)
 
@@ -44,6 +44,16 @@ The resulting JSON object is serialized with the [OCM specific scheme](#generic-
 
 `JsonNormalisationV2` strictly uses only the relevant component descriptor
 information according to the field specification. It is independent of the serialization format used to store the component decsriptor in some storage backend. Therefore, the calculated digest is finally independent of the serialization format chosen for storing the component descriptor in a storage backend. It uses a standard scheme according to [RFC8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785)
+
+Relevant fields and their mapping to the normalized data structure for `JsonNormalisationV2` are:
+
+- Component Name: mapped to `component.name`
+- Component Version: mapped to `component.version`
+- Component Labels: mapped to `component.labels`
+- Component Provider: mapped to `component.provider`
+- Resources: mapped to `component.resources`, if no resource is present, an empty list is enforced
+- Sources: mapped to `component.sources`, if no source is present, an empty list is enforced
+- References: mapped to `component.references`, if no reference is present, an empty list is enforced
 
 # Digest Algorithms
 
