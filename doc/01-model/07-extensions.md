@@ -17,7 +17,7 @@ There are two different kinds of extensions: functional and semantic.
   - [Access Methods](#access-methods)
   - [Digest Algorithms](#digest-algorithms)
   - [Signing Algorithms](#signing-algorithms)
-  - [Artifact Digest Normalization](#artifact-digest-normalization)
+  - [Artifact Normalization](#artifact-normalization)
   - [Component Descriptor Normalization](#component-descriptor-normalization)
   - [Label Merge Algorithms](#label-merge-algorithms)
 
@@ -278,7 +278,7 @@ The result of a signing is a structured data set with the following fields:
 
   The mediatype used to represent the signature value. Possible values:
 
-  - `application/x-pem-file` signature is stored as multi-block pem document.
+  - `application/x-pem-file` signature is stored as multi-block PEM document.
     The signature block uses the type `SIGNATURE`. This block might describe the 
     signature algorithm with the block header `Signature Algorithm`. 
     Additionally there might be blocks describing the certificate chain of the used public key.
@@ -299,7 +299,42 @@ The result of a signing is a structured data set with the following fields:
   The distinguished name of the subject of the public key certificate.
 
 
-## Artifact Digest Normalization
+## Artifact Normalization
+
+If a component is signed this signature should cover the content provided by the component resources.
+Therefore a digest is calculated for the resource content blobs.
+To be able to provide a format-independent digest, the resource blob can be normalized
+before a digest is calculated. For example, an OCI artifact is represented 
+as blob following the [OCI Image Layout Specification](https://github.com/opencontainers/image-spec/blob/main/image-layout.md).
+
+Unfortunately the byte stream of the resulting artifact blob is not stable,
+it depends on the used archiving tool, timestamps and the archiving order of the files.
+So, reccreating an OCI artifact in an OCI repository and recreating it into an archive
+does not necessaryily provide the same byte sequence. Therfore the natural blob digest
+is not necessarily a source of providing stable digests for signing.
+Hence OCM provides a mechanism to calculate digests for resources based on the logical
+content of an artifact. This mechanism is called *Artifact Normalization*.
+
+Hereby a stable digest is provided for an artifact, independent of the physical byte representation.
+The normalization is selected based on the resource type and the artifact media type. The result of
+the normalization is a *digest specification* with the following fields
+
+- **`normalizationType`** (required) *string*
+
+  The name of the algorithm used to provide a digest for an artifact blob.
+  The default digets algorithm is `genericBlobDigest/v1`, which calculates
+  the byte stream digest of the blob.
+
+- **`hashAlgorithm`** (required) *string*
+
+  The [type of the digest](#digest-algorithms) provided.
+
+- **`value`** (required) *string*
+
+  The HEX encoded digest value.
+
+The already defined digesters can be found [here](../04-extensions/04-algorithms/README.md#artifact-normalization-types).
+ 
 
 ## Component Descriptor Normalization
 
@@ -323,7 +358,7 @@ A normalized component descriptor is a subset of its elements containing only th
 Like for signature algorithms, the model offers the possibility to work with
 different normalization algorithms and formats.
 
-The algorithms used for normalization are listed in the [extensions](../04-extensions/04-algorithms/README.md#normalization-algorithms).
+The algorithms used for normalization are listed in the [extensions](../04-extensions/04-algorithms/README.md#normalization-algorithms) section.
 
 ### Signing-relevant Information in Component Descriptors
 
@@ -333,10 +368,9 @@ Relevant fields and their mapping to the normalized data structure for `JsonNorm
 - Component Version: mapped to `component.version`
 - Component Labels: mapped to `component.labels`
 - Component Provider: mapped to `component.provider`
-- Resources: mapped to `component.resources`, always empty list enforced,
-  without the source references
-- Sources: mapped to `component.sources`, always empty list enforced
-- References: mapped to `component.references`, always empty list enforced
+- Resources: mapped to `component.resources`, if no resource is present, an empty list is enforced
+- Sources: mapped to `component.sources`, if no source is present, an empty list is enforced
+- References: mapped to `component.references`, if no reference is present, an empty list is enforced
 
 ### Access Methods
 
