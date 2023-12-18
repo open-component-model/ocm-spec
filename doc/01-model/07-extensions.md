@@ -381,11 +381,11 @@ Relevant fields are:
 
 - Component Name
 - Component Version
-- Component Labels (only signature-relevant labels, see [below](#labels))
+- Labels (for component, provider, resources, sources and references) (only signature-relevant labels, see [below](#labels))
 - Component Provider
-- Resources without access method specification see [below](#artifacts))
-- Sources without access method specification see [below](#artifacts))
-- References see [below](#references))
+- Resources without access method specification see [below](#artifacts)
+- Sources without access method specification see [below](#artifacts)
+- References see [below](#references)
 
 ### Artifacts
 
