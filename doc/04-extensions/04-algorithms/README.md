@@ -67,7 +67,7 @@ The following digest algorithms are defined:
 # Artifact Normalization Types
 The following algorithms are defined:
 
-- `NO-DIGEST`: Blob content is ignored for the signing process.
+- `EXCLUDE-FROM-SIGNATURE`: Blob content is ignored for the signing process.
 
   This is a possibility for referencing volatile artifact content.
 
