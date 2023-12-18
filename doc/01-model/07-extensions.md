@@ -266,7 +266,7 @@ Digest algorithms describe the way digests are calculated from a byte stream. Th
 ## Signing Algorithms
 
 A signing algorithm is used to provide a signature byte sequence for a given digest.
-The algorithm is denoted by a name following the syntax 
+The algorithm is denoted by a name following the syntax
 
 ```regexp
 [A-Z][A-Z0-9-_]*
