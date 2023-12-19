@@ -1,6 +1,6 @@
 # Component Descriptor Serialization Formats
 
-This specification covers two serialization version for
+This specification covers two serialization versions for
 component descriptors:
 
 - [v2](v2.md) the version used prior to this specification
