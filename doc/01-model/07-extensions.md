@@ -40,7 +40,7 @@ specifying the concrete represenation of the model elements of a component versi
 The defined formats are described [here](../04-extensions/00-component-descriptor/README.md).
   
     
-    
+
 ## Storage Backends
 
 The Open Component Model specification does not describe a dedicated remotely accessible 
@@ -74,13 +74,13 @@ and a formal specification how the abstract model operations are mapped to opera
 By defining the language-independent part used for those operations the interoperability
 between different implementations is assured.
 
-### Data Formats
+#### Data Formats
 
 The metadata of a component version is defined by the [serialization format of a component descriptor](#component-descriptor-serialization).
 It is stored as single blob in the storage backend together with the format version.
 It must be possible to store any supported format version.
 
-### Mandatory Operations
+#### Mandatory Operations
 
 The following operations are mandatory:
 
