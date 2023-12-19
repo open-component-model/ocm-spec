@@ -17,7 +17,7 @@ The following table contains all artifact types defined in the core specificatio
 | TYPE NAME                                     | DESCRIPTION                                                                                                                                |
 |-----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
 | [`blob`](blob.md)                               | Any anonymous untyped blob data                                       |
-| [`directoryTree`, `fileSystem`](file-system.md) | Files from a file system (typically provided by a *tar* or *tgz* archive). The mime type of the blob e format |
+| [`directoryTree`<br>`fileSystem`](file-system.md) | Files from a file system (typically provided by a *tar* or *tgz* archive). The mime type of the blob e format |
 | [`gitOpsTemplate`](gitops.md)                   | Filesystem content (tar, tgz) used as GitOps Template, e.g. to set up a git repo used for continuous e using FluxCD  |
 | [`helmChart`](helmchart.md)                     | A Helm Chart stored as OCI artifact or as tar blob (`mediaType` tar) |
 | [`npmPackage`](npm.md)                          | A Node Package Manager [npm](https://www.npmjs.com) archive |
