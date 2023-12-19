@@ -121,7 +121,7 @@ The following operations are mandatory:
 
   List all the known versions of a component specified by its component identity.
 
-### Optional Operations
+####  Optional Operations
 
 Optional operations might be:
 
@@ -155,14 +155,14 @@ or the [artifact type](#artifact-types). To fulfill its task an access method ge
 
 The list of centrally defined access methods types can be found [here](../04-extensions/02-access-types/README.md)
 
-### Access Specification
+####  Access Specification
 
 The technical access to the physical content of an artifact described as part of a Component Version is expressed
 by an *Access Specification*. It specifies which access method to use and additionaly the type-specific attributes,
 which are required by the access method to access the content. In an implementation the *Access Method Type* is mapped
 to code for finally accessing the content of an artifact.
 
-### Access Method Names
+####  Access Method Names
 
 Regardless of the creator of a component version, an access method must be uniquely identifyable. 
 Therefore the names of access methods must be globally unique.
@@ -201,7 +201,7 @@ There are two flavors of method names:
   [a-z][a-zA-Z0-9]*\.<DNS domain name>
   ```
 
-### Access specification format
+####  Access specification format
 
 Every access method MUST define a specification of the attributes required to locate the content.
 This specification MAY be versioned. The type of the access specification MUST contain the access method name
@@ -233,7 +233,7 @@ For example, the access method `ociBlob` requires the OCI repository reference a
     imageReference: ghcr.io/jensh007/ctf/github.com/open-component-model/ocmechoserver/echoserver:0.1.0
 ```
 
-### Access Method Operations
+####  Access Method Operations
 
 There must be an implementation for all supported external access methods
 according to their specifications. The local access method is mapped
@@ -375,7 +375,7 @@ different normalization algorithms and formats.
 
 The algorithms used for normalization are listed in the [extensions](../04-extensions/04-algorithms/component-descriptor-normalization-algorithms.md) section.
 
-### Signing-relevant Information in Component Descriptors
+####  Signing-relevant Information in Component Descriptors
 
 Relevant fields are:
 
@@ -387,14 +387,14 @@ Relevant fields are:
 - Sources without access method specification see [below](#artifacts)
 - References see [below](#references)
 
-### Artifacts
+####  Artifacts
 
 Access method specifications for sources and resources are completely ignored.
 A resource or source is ignored, if the access method type is `none`
 or the hash algorithm of the digest specification is `NO-DIGEST` and the 
 normalization algorithm is `EXCLUDE-FROM-SIGNATURE`.
 
-### Labels
+####  Labels
 
 Labels by default are removed before signing, but can be marked with a special boolean
 property `signing` set to `true`. This property indicates that the label is
@@ -416,7 +416,7 @@ labels:
 `label1` will be excluded from the digest, whereas `label2` will be included.
 The value of any label is taken as is, preserving a potentially deeply nested structure.
 
-### References 
+####  References 
 
 If a component version contains references to other component versions,
 their digests are stored along with the reference as digest descriptor.
@@ -439,7 +439,7 @@ componentReferences:
 ...
 ```
 
-### Applying Normalization Algorithms
+####  Applying Normalization Algorithms
 
 The normalization algorithm provides a stable deserialization format based on the 
 elements of a component descriptor, excluding the fields not relevant for signing.
@@ -547,7 +547,7 @@ There are two flavors of labels:
   <DNS domain name>/[a-z][a-zA-Z0-9]*
   ```
 
-### Format Versions
+####  Format Versions
 
 To be interpretable by tools, every label MUST define a specification of its attributes,
 to describe its value space. This specification may be versioned.
@@ -558,6 +558,6 @@ The version must match the following regexp
 v[0-9]+([a-z][a-z0-9]*)?
 ```
 
-### Predefined Labels
+####  Predefined Labels
 
 So far, no centrally predefined labels have been defined.
