@@ -1,3 +1,5 @@
+# Model Elements - Some Basics
+
 ## Identifiers
 
 A *Component* is technically defined by a globally unique identifier.
@@ -145,7 +147,8 @@ For example, access method `ociBlob` requires the OCI repository reference and t
 
 *Labels* can be used to add additional formal information to a component model element,
 which do not have static formal fields in the component descriptor.
-Its usage is left to users of the component model. The usage of labels is left to the creator of a component version,
+The usage of a model element is left to users of the component model.
+The usage of labels is left to the creator of a component version,
 therefore the set of labels must be extensible. They can appear ar various locations:
 
 - the component version itself
@@ -193,22 +196,30 @@ attributes are not allowed at the label entry level.
 
   - `algorithm` (optional) *string*
 
-    The name of the algorithm used to merge the label during a transport step. This is an [extension point](./07-extensions.md#label-merge-algorithms)
+    The name of the algorithm used to merge the label during a transport step.
+    This is an [extension point](./07-extensions.md#label-merge-algorithms)
     of the model.
 
   - `config` (optional) *any*
 
     A configuration specific for the chosen algorithm.
 
-To be able to evaluate labels for any component version, the same label name must have the same meaning,
+To be able to evaluate labels for any component version,
+the same label name must have the same meaning,
 regardless by which component provider they are generated.
 To assure that this information has a globally unique interpretation or meaning,
 labels must comply with some naming scheme and use a common structure.
 
+Label types are covered by the OCM extension concept, so you can also find information [here](./07-extensions.md#label-types).
 
 ## Repository Contexts
 
-A *Repository Context* describes the access to an OCM Repository. This access is described by a formal and typed specification. A component descriptor MAY contain information about the transport history by keeping a list of repository contexts. It SHOULD at least describe the last repository context for an OCM repository it was transported into.
+A *Repository Context* describes the access to an OCM Repository.
+This access is described by a formal and typed specification.
+A component descriptor MAY contain information about the transport history
+by keeping a list of repository contexts.
+It SHOULD at least describe the last repository context
+for an OCM repository it was transported into.
 
 ## Signatures
 

@@ -98,9 +98,11 @@ A formal specification must describe any repository that can be used to store co
 
 Such a specification is usable by a language binding to gain access to this repository.
 In a concrete environment all those repositories are usable, for which an
-implementation of the [abstract model operations](../03-operations/README.md) exists.
+implementation of the [abstract model operations](../03-persistence/01-operations.md) exists.
 
-A repository specification has a type, the *Repository Type* used to identify the required [mapping](../04-persistence/01-mappings.md) and the information required to identity a concrete repository instance.
+A repository specification has a type, the *Repository Type*
+used to identify the required [mapping](../03-persistence/02-mappings.md)
+and the information required to identity a concrete repository instance.
 
 There are two kinds of types:
 
@@ -112,7 +114,7 @@ There are two kinds of types:
   [A-Z][a-zA-Z0-9]*
   ```
 
-  The defined types with their meaning and format can be found in [a later chapter](../04-persistence/README.md)
+  The defined types with their meaning and format can be found in [a later chapter](../04-extensions/03-storage-backends/README.md)
 
 - Vendor specific types
 

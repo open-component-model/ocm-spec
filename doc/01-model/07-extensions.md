@@ -6,7 +6,7 @@ Those extension points are used to cover technology-specific aspects to be known
 
 There are two different kinds of extensions: functional and semantic.
 
-- Functional extensions
+### Functional extensions
 
   Functional extensions offer the possibility to enrich an implementation of the Open Component Model with technology-specific parts to support more technology environments, like storage backends for the model or artifacts described by the model.
 
@@ -21,7 +21,7 @@ There are two different kinds of extensions: functional and semantic.
   - [Component Descriptor Normalization](#component-descriptor-normalization)
   - [Label Merge Algorithms](#label-merge-algorithms)
 
-- Semantic extensions
+### Semantic extensions
   
   Semantic extensions offer the possibility to describe the semantics and structure of an element
   by arbitrary types, not defined by the Open Component Model itself.
@@ -465,9 +465,9 @@ standard names and vendor specific names.
 Standard algorithms always use flat names. All non-standard algorithms MUST use
 a hierarchical name prefixed at least with a DNS-like domain owned by the provider of the algorithm.
 
-´´´
-
-´´´
+  ```regexp
+  <DNS domain name>/[a-z][a-zA-Z0-9]*
+  ```
 
 The merge algorithm is described by a specification descriptor optionally provided 
 by the field `merge` as part of a label descriptor. It has the following fields:

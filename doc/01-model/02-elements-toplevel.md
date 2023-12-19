@@ -198,7 +198,7 @@ Example:
       type: ociArtefact
 ```
 
-The full list of resource types is [here](03-extensible-values.md#resource-types).
+The full list of resource types is [here](../04-extensions/01-artifact-types/README.md).
 
 ## References
 
@@ -246,6 +246,6 @@ Example:
 ```
 
 
-# Model Summary
+## Summary
 
-The OCM model describes component versions. A component version is stored in a component repository and consists of sources, resources and references. The component version itself as well as each resource, source and reference has an identity. Only sources and resources have content and therefore an access specification and an optional digest. All elements  can have labels.
+The OCM model describes component versions. A component version is stored in a component repository and consists of sources, resources and references. The component version itself as well as each resource, source and reference has an identity. Only sources and resources have content and therefore an access specification and an optional digest. All elements can have labels.
