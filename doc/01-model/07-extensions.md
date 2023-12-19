@@ -329,7 +329,7 @@ the normalization is a *digest specification* with the following fields
 
 - **`hashAlgorithm`** (required) *string*
 
-  The [type of the digest](#digest-algorithms) provided.
+  The type of the provided [digest algorithm](../04-extensions/04-algorithms/digest-algorithms.md).
 
 - **`value`** (required) *string*
 
