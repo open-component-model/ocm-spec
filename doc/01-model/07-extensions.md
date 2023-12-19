@@ -508,11 +508,11 @@ The currently specified algorithms for label merge can be found in the [extensio
 
 Artifact types describe the meaning of an artifact independent of their technical representation in a blob format.
 The artifact types defined by the core model (this specification) are described
-in section [Artifact Types](02-elements-toplevel.md#artifact-types)
+in section [Artifact Types](../04-extensions/01-artifact-types/README.md)
 
 ## Label Types
 
-Dynamic attribution of model elements with additional information is possible using [*Labels*](./03-elements-sub.md#labels)].
+Dynamic attribution of model elements with additional information is possible using [*Labels*](./03-elements-sub.md#labels).
 To be interpretable by tools the meaning of a label must be uniquely derivable from its name,
 regardless of the creator of a concrete label entry in a component version.
 To assure that every consumer of a component version has the same understanding odf the label,
