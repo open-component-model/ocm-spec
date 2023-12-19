@@ -37,8 +37,10 @@ There are two different kinds of extensions: functional and semantic.
 The elements used to describe a component version can be represented in a serialized format,
 typically as yaml document. This document must contain a format specification version
 specifying the concrete represenation of the model elements of a component version.
-The defined formats are described [here](../04-extensions/00-component-descriptor/README.md)
-
+The defined formats are described [here](../04-extensions/00-component-descriptor/README.md).
+  
+    
+    
 ## Storage Backends
 
 The Open Component Model specification does not describe a dedicated remotely accessible 
