@@ -460,6 +460,15 @@ This is done by executing value merge algorithms for changed label values.
 
 If no specific algorithm is configured for a label, the algorithm used is `default`.
 
+An algorithm is uniquely defined by its name. Therefore we distinguish between
+standard names and vendor specific names.
+Standard algorithms always use flat names. All non-standard algorithms MUST use
+a hierarchical name prefixed at least with a DNS-like domain owned by the provider of the algorithm.
+
+´´´
+
+´´´
+
 The merge algorithm is described by a specification descriptor optionally provided 
 by the field `merge` as part of a label descriptor. It has the following fields:
 
