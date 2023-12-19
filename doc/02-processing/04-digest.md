@@ -49,12 +49,9 @@ Normalization algorithm types may be versioned and SHOULD match the following re
 
 For example: `ociArtifactDigest/v1` or `jsonNormalisationV2`
 
-
 If the digest algorithm `NO-DIGEST` is specified for an artifact,
 this artifact content is not included into the component version digest.
 This is typically configured for source artifacts, which are not deliverable.
-
-
 
 The artifact digest normalization algorithms are listed in the [extensions](../04-extensions/04-algorithms/README.md#artifact-normalization-types)
 section of the specification.

@@ -1,6 +1,6 @@
 # Extending the Open Component Model
 
-The OCM specification is designed to be extended in several ways. The definition of such elements is restricted to a minimum set of attributes and may include functional behavior. It typically consists of a type attribute.
+The OCM specification is designed to be extended in several ways. The definition of such elements is restricted to a minimum set of attributes and may include functional behavior. It typically consists of a `type` attribute.
 
 Those extension points are used to cover technology-specific aspects to be known either by dedicated implementations of the model or by applications using the model.
 
@@ -260,7 +260,7 @@ and stream access for the denoted blob is required.
 
 ## Digest Algorithms
 
-Digest algorithms describe the way digests are calculated from a byte stream. The defined algorithms can be found [here](../04-extensions/04-algorithms/README.md#digest-algorithms).
+Digest algorithms describe the way digests are calculated from a byte stream. The defined algorithms can be found [here](../04-extensions/04-algorithms/digest-algorithms.md).
 
 
 ## Signing Algorithms
@@ -333,12 +333,11 @@ the normalization is a *digest specification* with the following fields
 
   The HEX encoded digest value.
 
-The already defined digesters can be found [here](../04-extensions/04-algorithms/README.md#artifact-normalization-types).
+The already defined digesters can be found [here](../04-extensions/04-algorithms/artifact-normalization-types.md).
 
 Example: 
 
 ```yaml
-...
 resources:
   - name: apiserver-proxy
     version: v0.14.0
@@ -352,7 +351,6 @@ resources:
       normalisationAlgorithm: ociArtifactDigest/v1
       value: 9dc9c7c74abe301e0ee2cb168c004051179e7365d269719db434d3582a12dcb6
     relation: local
-...
 ```
 
 ## Component Descriptor Normalization
@@ -373,7 +371,7 @@ A normalized component descriptor is a subset of its elements containing only th
 Like for signature algorithms, the model offers the possibility to work with
 different normalization algorithms and formats.
 
-The algorithms used for normalization are listed in the [extensions](../04-extensions/04-algorithms/README.md#normalization-algorithms) section.
+The algorithms used for normalization are listed in the [extensions](../04-extensions/04-algorithms/component-descriptor-normalization-algorithms.md) section.
 
 ### Signing-relevant Information in Component Descriptors
 
@@ -448,8 +446,52 @@ The resulting digest is the digest of the component version.
 
 ## Label Merge Algorithms
 
+Value merge algorithms are used during a transfer of a component version into a target repository 
+to merge label values, in case the transferred version is already present
+and the new content does not hamper the digest of the old one.
+ 
+This scenario is used to re-transfer updated content of non-signature relevant labels
+(for example updated routing slips).
+ 
+Hereby, potential changes in the target must be merged with the new inbound content.
+This is done by executing value merge algorithms for changed label values.
 
+If no specific algorithm is configured for a label, the algorithm used is `default`.
 
+The merge algorithm is described by a specification descriptor optionally provided 
+by the field `merge` as part of a label descriptor. It has the following fields:
+
+- **`algorithm`** (required) *string*
+  
+  The name of the merge algorithm to be used.
+
+- **`config`** (optional) *any*
+
+  An arbitrary description of the config. The structure depends on the selected algorithm.
+
+Example:
+
+```yaml
+labels:
+  - name: mylabel
+    value: ...
+    merge: 
+      algorithm: mapListMerge
+      config:
+        keyField: name
+        entries:
+          algorithm: ...
+          config: ...
+```
+
+The configuration may recursively contain further merge specifications used
+for nested parts of the label value, depending on the outer algorithm.
+
+A model implementation MUST provide the possibility to declare merge algorithms
+for dedicated label names to be able to omit merge specifications
+as part of the component descriptor.
+
+The currently specified algorithms for label merge can be found in the [extensions](../04-extensions/04-algorithms/label-merge-algorithms.md)section.
 
 ## Artifact Types 
 

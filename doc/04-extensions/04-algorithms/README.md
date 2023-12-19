@@ -1,97 +1,11 @@
-# Table of Content
-- [Table of Content](#table-of-content)
-- [Normalization Algorithms](#normalization-algorithms)
-  - [`jsonNormalisationV1`](#jsonnormalisationv1)
-  - [`jsonNormalisationV2`](#jsonnormalisationv2)
-- [Digest Algorithms](#digest-algorithms)
-- [Artifact Normalization Types](#artifact-normalization-types)
-- [Signature Algorithms](#signature-algorithms)
-  - [RSA](#rsa)
+# Algorithms
 
+This chapter lists the different algorithms used within the component model.
 
-# Normalization Algorithms
-
-Currently the there are two different normalizations defined:
-
-- `jsonNormalisationV1`: This is a legacy format, which depends on the format of the
-  component descriptor
-- `jsonNormalisationV2`: This is the new format. which is independent of the
-  chosen representation format of the component descriptor.
-
-The normalization process is divided into two steps:
-
-- *extraction of the signature relevant information from the component descriptor*
-
-  The result is basically a JSON object, which decsribed the relevant information.
-
-- *normalization of the resulting JSON object*
-
-  Here, the object is serialized to a unique and reproducable byte sequence, which is finally used to determine the digest.
-
-  There are two such normalization methods:
-  - `jsonNormalisationV1`
-  - `jsonNormalisationV2`
-
-## `jsonNormalisationV1`
-
-The `JsonNormalisationV1` serialization format is based on the serialization format of the component descriptor.
-It uses an appropriate JSON object containing the relevant fields as contained in the component descriptors's serialization.
-The format version fields are included. Therefore, the normalized form is depending on the chosen serialization format.
-Changing this format version would result in different digests.
-The resulting JSON object is serialized with the [OCM specific scheme](#generic-normalization-format)
-
-## `jsonNormalisationV2`
-
-`JsonNormalisationV2` strictly uses only the relevant component descriptor
-information according to the field specification. It is independent of the serialization format used to store the component decsriptor in some storage backend. Therefore, the calculated digest is finally independent of the serialization format chosen for storing the component descriptor in a storage backend. It uses a standard scheme according to [RFC8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785)
-
-Relevant fields and their mapping to the normalized data structure for `JsonNormalisationV2` are:
-
-- Component Name: mapped to `component.name`
-- Component Version: mapped to `component.version`
-- Component Labels: mapped to `component.labels`
-- Component Provider: mapped to `component.provider`
-- Resources: mapped to `component.resources`, if no resource is present, an empty list is enforced
-- Sources: mapped to `component.sources`, if no source is present, an empty list is enforced
-- References: mapped to `component.references`, if no reference is present, an empty list is enforced
-
-# Digest Algorithms
-
-Digest algorithms describe the way digests are calculated from a byte stream.
-
-The following digest algorithms are defined:
-
-- `SHA-256`
-- `SHA-512`
-- `NO-DIGEST` (only used together with artifact normalization type `EXCLUDE-FROM-SIGNATURE`)
-
-# Artifact Normalization Types
-The following algorithms are defined:
-
-- `EXCLUDE-FROM-SIGNATURE`: Blob content is ignored for the signing process.
-
-  This is a possibility for referencing volatile artifact content.
-
-- `genericBlobDigest/v1` (*default*): Blob byte stream digest
-
-  This is the default algorithm. It just uses the blob content
-  provided by the access method of an OCM artifact to calculate the digest.
-  It is always used, if no special digester is available for an artifact type.
-
-- `ociArtifactDigest/v1`: OCI manifest digest
-
-  This algorithm is used for artifact blobs with the media type of an OCI artifact.
-  It just uses the manifest digest of the OCI artifact.
-
-# Signature Algorithms
-
-Signing a component descriptor requires a hash of the normalized component descriptor,
-which will the be signed with the selected signing algorithm.
-
-## RSA
-
-*Algorith Name:* `RSASSA-PKCS1-V1_5`
-
-After the digest for the normalised component descriptor is calculated, it can be signed using RSASSA-PKCS1-V1_5
-as signature.algorithm. The corresponding signature is stored hex encoded in `signature.value` with a `mediaType` of
-`application/vnd.ocm.signature.rsa`.
+| ALGORITHM KIND | DESCRIPTION |
+|----------------|-------------|
+| [*Artifact Normalization*](artifact-normalization-types.md) | Logical digest calculation for artifact blobs |
+| [*Digest Algorithms*](digest-algorithms.md) | Kind of used digest |
+| [*Label Merge Algorithms*](label-merge-algorithms.md) | Algorithms to merge label values during delta transport |
+| [*Component Descriptor Normalization Algorithms*](component-descriptor-normalization-algorithms.md) | Algorithms used to normalize component descriptors for signing |
+| [*Signing Algorithms*](signing-algorithms.md) | Algorithms used to sign a normlaized component version |
