@@ -493,7 +493,7 @@ A model implementation MUST provide the possibility to declare merge algorithms
 for dedicated label names to be able to omit merge specifications
 as part of the component descriptor.
 
-The currently specified algorithms for label merge can be found in the [extensions](../04-extensions/04-algorithms/label-merge-algorithms.md)section.
+The currently specified algorithms for label merge can be found in the [extensions](../04-extensions/04-algorithms/label-merge-algorithms.md) section.
 
 ## Artifact Types 
 
