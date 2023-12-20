@@ -36,6 +36,8 @@ There are two different kinds of extensions: functional and semantic.
   - [Artifact Types](#artifact-types)
   - [Label Types](#label-types)
 
+<br>
+<br>
 
 ## Component Descriptor Serialization
 
