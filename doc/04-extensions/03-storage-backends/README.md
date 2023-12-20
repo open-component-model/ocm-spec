@@ -32,11 +32,14 @@ The following diagram illustrates the embedding of implementation based
 extensions (like for the storage backends) into a dedicated language
 binding to achieve interoperability among those implementations.
 
-- *Layer 1* contains the specification of the OCM model. A dedicated language binding provides an API implementation according to this specification. This API is then used by consumers requiring access to OCM component versions in a dedicated programming language (model language binding).
+- *Layer 1* contains the specification of the OCM model.
+  A dedicated language binding provides an API implementation according to this specification.
+  This API is then used by consumers requiring access to OCM component versions
+  in a dedicated programming language (model language binding).
 
 - *Layer 2* is the abstract extension specification with formats and
-  operations. Here, it specifies how to embed storage backends
-  technologies. (language independent)
+  operations. Here, it specifies how to embed storage backend
+  technologies (language independent).
 
 - *Layer 3* is the abstract specification of the extension mapping for a
   dedicated backend technology, describing how extension elements and
@@ -47,7 +50,7 @@ binding to achieve interoperability among those implementations.
   language binding for the backend API.
 
 - *Layer 4* is finally the API layer of a concrete supported storage
-  backend. The driver implements the abstract storage backend mappin
+  backend. The driver implements the abstract storage backend mapping
   supporting the actual model embedding based on a language binding for the
   backend storage technology.
 
@@ -56,7 +59,11 @@ binding to achieve interoperability among those implementations.
 ![language bindings](ocmembedding.png)
 
 <br>
-The specification for layer 1 is described in the [model element specification section](../../01-model/README.md).
-The specification of the extension points can be found [here](../../01-model/07-extensions.md). The storage backend extension specification is [here](../../01-model/07-extensions.md#storage-backends).
 
-This sections describes the abstract model mapping for the storage backend extensions according to layer 3. Different implementations (for different language bindings) must implement this mapping to achieve interoperability among different environments. 
+The specification for layer 1 is described in the [model element specification section](../../01-model/README.md).
+The specification of the extension points can be found [here](../../01-model/07-extensions.md).
+The storage backend extension specification is [here](../../01-model/07-extensions.md#storage-backends).
+
+This sections describes the abstract model mapping for the storage backend extensions according to layer 3.
+Different implementations (for different language bindings) MUST implement this mapping
+to achieve interoperability among different environments. 
