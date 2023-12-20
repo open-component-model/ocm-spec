@@ -8,4 +8,4 @@ This chapter lists the different algorithms used within the component model.
 | [Digest Algorithms](digest-algorithms.md) | Kind of used digest |
 | [Label Merge Algorithms](label-merge-algorithms.md) | Algorithms to merge label values during delta transport |
 | [Component Descriptor Normalization Algorithms](component-descriptor-normalization-algorithms.md) | Algorithms used to normalize component descriptors for signing |
-| [Signing Algorithms](signing-algorithms.md) | Algorithms used to sign a normlaized component version |
+| [Signing Algorithms](signing-algorithms.md) | Algorithms used to sign a normalized component version |
