@@ -1,4 +1,4 @@
-# ociBlob
+# ociBlob — Blob hosted in OCI Repository
 
 ## Synopsis
 ```

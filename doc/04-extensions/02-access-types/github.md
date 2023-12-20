@@ -1,6 +1,6 @@
-# gitHub
+# gitHub — Git Commit hosted by GitHub
 
-##Synopsis
+## Synopsis
 ```
 type: gitHub/v1
 ```

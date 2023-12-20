@@ -1,4 +1,4 @@
-# localBlob
+# localBlob — Blob Hosted in OCM Repository
 
 ## Synopsis
 ```

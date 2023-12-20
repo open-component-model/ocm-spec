@@ -1,6 +1,6 @@
-#ociArtifact
+# ociArtifact — Artifact hosted in OCI Repository
 
-##Synopsis
+## Synopsis
 
 ```
 type: ociArtifact[/VERSION]

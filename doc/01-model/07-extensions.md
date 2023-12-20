@@ -43,14 +43,14 @@ The defined formats are described [here](../04-extensions/00-component-descripto
 ## Storage Backends
 
 The Open Component Model specification does not describe a dedicated remotely accessible 
-repository API (like for example the [OCI distribution specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md)).
+repository API (like for example the [OCI distribution specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md)). Instead, the model is intended
+to be stored in any kind of storage sub system, which is able to store a potentially unlimited
+number of blobs with an adequate addressing scheme, supporting arbitrary names.
 
-The model is intended to be stored in any kind of storage sub system,
-which is able to store a potentially unlimited number of blobs with an adequate addressing scheme, 
-upporting arbitrary names.
-
-For example, an OCI repository with a deep repository structure,
+For example, an OCI registry with a deep repository structure,
 is suitable to host OCM components (see [OCI mapping Scheme](../04-extensions/03-storage-backends/README.md)).
+
+An OCM repository is therefore always backed by another technical repository, the storage backend.
 
 On the client side, a suitable implementation or language binding must be available
 to work with component information stored in such a storage backend.
@@ -73,38 +73,76 @@ and a formal specification how the abstract model operations are mapped to opera
 By defining the language-independent part used for those operations the interoperability
 between different implementations is assured.
 
-#### Repository Specification
+### Repository Specification
 
-A formal specification must describe any repository  
-that can be used to store content according to the Open Component Model.
+A concrete OCM repository is defined by the type of the storage backend and a set of attributes
+specific for this type, which specify the instance of the used backend. For example, this could
+be an URL. This set of attributes is called  *Repository Specification*. It is formal set of attributes
+consisting at least of the following fields:
 
-Such a specification is usable by a language binding to gain access to this repository.
+- **`type`** (required) *string*
+
+  The globally unique type of the storage backend.
+
+- (optional) additional type specific attributes
+
+Every OCM repository can therefore be described by such a Repository 
+specification. It is usable by a language binding to gain access to
+this repository. The type is used to identify the backend end
+implementation and the additional attributes are used ba the
+implementation to provide access to the concrete repository instance. 
+
 In a concrete environment all those repositories are usable, for which an
 implementation of the [abstract model operations](../03-persistence/01-operations.md) exists.
 
-A repository specification has a type, the *Repository Type*
-used to identify the required [mapping](../03-persistence/02-mappings.md)
-and the information required to identity a concrete repository instance.
+The repository type used in a repository specification consists of
+two parts:
+- a repository type name
+- a version
 
-#### Repository Type Names
+The type name specified the kind of storage backend mapping to be 
+used to implement an OCM repository interface.
 
-There are two kinds of types:
+The version is used to specify the attribute structure used to describe
+the repository instance as part of the repository specification.
+
+Regardless of the creator of a component version, an access method must be uniquely identifyable.
+Therefore, the names of access methods must be globally unique.
+
+There are two kinds of type name:
 
 - Centrally defined type names managed by the OCM organization
 
-  The format of a repository type is described by the following regexp:
+  Those methods should be implemented by OCM compliant libraries and
+  tools. Using only such access methods guarantees universal access.
+
+  The format of a repository type name is described by the following
+  regexp:
 
   ```regex
   [A-Z][a-zA-Z0-9]*
   ```
 
-  The defined types with their meaning and format can be found in [a later chapter](../04-extensions/03-storage-backends/README.md)
+  The defined types with their meaning and formats can be found in [here](../04-extensions/03-storage-backends/README.md)
 
 - Vendor specific types
 
-  Any organization using the open component model may define repository types on their own. Nevertheless, the meaning and purpose of those types must be clearly defined. Organizations should share and reuse existing types instead of introducing new type names.
+  Any organization using the open component model may define repository
+  types on their own. Nevertheless, the meaning and purpose of those
+  types must be clearly and uniquely defined. Organizations should share
+  and reuse existing types instead of introducing new type names.
 
-  To support a unique namespace for those type names, vendor specific types have to follow a hierarchical naming scheme based on DNS domain names. Every type name has to be suffixed by a DNS domain owned by the providing organization (for example `myspecialrepo.acme.com`). The local type must follow the above rules for centrally defined type names and prepended, separated by a dot (`.`).
+  Using vendor specific repository types always
+  means a restriction on using tools implementing these access methods.
+  For exchanging such tools involved parties must agree on
+  the repository support of the used toolset.
+
+  To support a unique namespace for those type names, vendor specific
+  types have to follow a hierarchical naming scheme based on DNS domain
+  names. Every type name has to be suffixed by a DNS domain owned by the
+  providing organization (for example `myspecialrepo.acme.com`). The
+  local type must follow the above rules for centrally defined type
+  names and prepended, separated by a dot (`.`).
 
   So, the complete pattern looks as follows:
 
@@ -112,13 +150,23 @@ There are two kinds of types:
   [a-z][a-zA-Z0-9].<DNS domain name>
   ```
 
-#### Data Formats
+The version follows the following regexp:
+
+ ```regex
+  v[1-9][0-9]*
+ ```
+
+The repository specification type consists of the 
+repository type name optionally followed by a version separated by a 
+slash (`/`). If not specified the version `v1` is assumed.
+
+### Data Formats
 
 The metadata of a component version is defined by the [serialization format of a component descriptor](#component-descriptor-serialization).
-It is stored as single blob in the storage backend together with the format version.
+It is stored in the storage backend together with the format version.
 It must be possible to store any supported format version.
 
-#### Mandatory Operations
+### Mandatory Operations
 
 The following operations are mandatory:
 
@@ -159,7 +207,7 @@ The following operations are mandatory:
 
   List all the known versions of a component specified by its component identity.
 
-####  Optional Operations
+### Optional Operations
 
 Optional operations might be:
 
@@ -196,48 +244,87 @@ The list of centrally defined access methods types can be found [here](../04-ext
 ####  Access Specification
 
 The technical access to the physical content of an artifact described as part of a Component Version is expressed
-by an *Access Specification*. It specifies which access method to use and additionaly the type-specific attributes,
+by an *Access Specification*. It specifies which access method to use and additionally the type-specific attributes,
 which are required by the access method to access the content. In an implementation the *Access Method Type* is mapped
 to code for finally accessing the content of an artifact.
 
-####  Access Method Names
+An access specification consists at least of the following fields:
 
-Regardless of the creator of a component version, an access method must be uniquely identifyable. 
-Therefore the names of access methods must be globally unique.
+- **`type`** (required) *string*
 
-There are two flavors of method names:
+  The globally unique type of the access method.
 
-- Centrally provided access methods
+- (optional) additional type specific attributes
 
-  Those methods should be implemented by OCM compliant libraries and tools. Using only such
-  access methods guarantees universal access.
+The access type used in a access specification consists of
+two parts:
+- an access type name
+- a version
 
-  These types use flat names following a camel case scheme with the first character in lower case (for example `ociArtifact`).
+The type name specifies the kind of access method to be
+used to access the content of an artifact.
 
-  Their format is described by the following regexp:
+The version is used to specify the attribute structure used to describe
+the information to identify the artifact in sme repository as part of
+the access specification.
 
-  ```regexp
+Regardless of the creator of a component version, an access method must be uniquely identifyable.
+Therefore, the names of access methods must be globally unique.
+
+There are two kinds of type name:
+
+- Centrally defined type names managed by the OCM organization
+
+  Those methods should be implemented by OCM compliant libraries and
+  tools. Using only such access methods guarantees universal access.
+
+  The format of an access type name is described by the following regexp:
+
+  ```regex
   [a-z][a-zA-Z0-9]*
   ```
 
+  The defined types with their meaning and formats can be found in [here](../04-extensions/02-access-types/README.md)
+
 - Vendor specific types
 
-  Any organization using the open component model may define additional access methods on their own.
-  Their name MUST be globally unique. There may be multiple such types provided by different organizations with the same meaning.
-  Organizations should share such types and reuse existing types instead of introducing new type names.
+  Any organization using the open component model may define access method
+  types on their own. Nevertheless, the meaning and purpose of those
+  types must be clearly and uniquely defined. Organizations should share
+  and reuse existing types instead of introducing new type names.
 
-  Using component versions with vendor specific access methods always means a restriction on using tools
-  implementing these access methods. FOr exchanging such component versions involved parties must agree on the used toolset.
+  Using component versions with vendor specific access methods always
+  means a restriction on using tools implementing these access methods.
+  For exchanging such component versions involved parties must agree on
+  the used toolset.
 
-  To support a unique namespace for those type names vendor specific types MUST follow a hierarchical naming scheme
-  based on DNS domain names. Every type name has to be suffixed by a DNS domain owned by the providing organization.
-  The local type must follow the above rules for centrally defined type names and suffixed by the namespace separated by a dot (`.`)
+  To support a unique namespace for those type names, vendor specific
+  types have to follow a hierarchical naming scheme based on DNS domain
+  names. Every type name has to be suffixed by a DNS domain owned by the
+  providing organization (for example `myspecialaccess.acme.com`). The
+  local type must follow the above rules for centrally defined type
+  names and prepended, separated by a dot (`.`).
 
   So, the complete pattern looks as follows:
 
-  ```regexp
-  [a-z][a-zA-Z0-9]*\.<DNS domain name>
   ```
+  [a-z][a-zA-Z0-9].<DNS domain name>
+  ```
+
+The version follows the following regexp:
+
+ ```regex
+  v[1-9][0-9]*
+ ```
+
+The access specification type consists of the
+access method type name optionally followed by a version separated by a
+slash (`/`). If not specified the version `v1` is assumed.
+
+Examples:
+- `ociArtifact/v1`
+- `myprotocol.acme.org/v1alpha1`
+
 
 ####  Access specification format
 

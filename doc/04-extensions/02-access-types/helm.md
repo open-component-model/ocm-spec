@@ -1,4 +1,4 @@
-# helm
+# helm — Helm Package in Helm Repository
 
 *Synopsis:*
 ```
