@@ -1,14 +1,19 @@
 # Extending the Open Component Model
 
-The OCM specification is designed to be extended in several ways. The definition of such elements is restricted to a minimum set of attributes and may include functional behavior. It typically consists of a `type` attribute.
+The OCM specification is designed to be extended in several ways.
+The definition of such elements is restricted to a minimum set of attributes and may include functional behavior.
+It typically consists of a `type` attribute.
 
-Those extension points are used to cover technology-specific aspects to be known either by dedicated implementations of the model or by applications using the model.
+Those extension points are used to cover technology-specific aspects
+to be known either by dedicated implementations of the model or by applications using the model.
 
 There are two different kinds of extensions: functional and semantic.
 
 ### Functional extensions
 
-  Functional extensions offer the possibility to enrich an implementation of the Open Component Model with technology-specific parts to support more technology environments, like storage backends for the model or artifacts described by the model.
+  Functional extensions offer the possibility to enrich an implementation of the Open Component Model core 
+  with technology-specific parts to support more technology environments,
+  like storage backends or artifact types.
 
   The functional extension points are:
 
@@ -43,9 +48,10 @@ The defined formats are described [here](../04-extensions/00-component-descripto
 ## Storage Backends
 
 The Open Component Model specification does not describe a dedicated remotely accessible 
-repository API (like for example the [OCI distribution specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md)). Instead, the model is intended
-to be stored in any kind of storage sub system, which is able to store a potentially unlimited
-number of blobs with an adequate addressing scheme, supporting arbitrary names.
+repository API (like for example the [OCI distribution specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md)).
+Instead, the model is intended to be stored in any kind of storage sub system,
+which is able to store a potentially unlimited number of blobs with
+an adequate addressing scheme, supporting arbitrary names.
 
 For example, an OCI registry with a deep repository structure,
 is suitable to host OCM components (see [OCI mapping Scheme](../04-extensions/03-storage-backends/README.md)).
@@ -67,18 +73,19 @@ which allows to map the OCM functionality onto any blobstore-like storage system
 A concrete implementation of a storage backend extension consists of two parts:
 
 - a language-independent mapping of the OCM elements to the elements available in the storage backend
-and a formal specification how the abstract model operations are mapped to operations provided by the storage backend.
+and a formal specification how the abstract model operations are mapped
+to operations provided by the storage backend.
 - a language-specific binding of the formerly described mapping 
 
 By defining the language-independent part used for those operations the interoperability
 between different implementations is assured.
 
-### Repository Specification
+#### Repository Specification
 
-A concrete OCM repository is defined by the type of the storage backend and a set of attributes
+An OCM repository is defined by the type of the storage backend and a set of attributes
 specific for this type, which specify the instance of the used backend. For example, this could
-be an URL. This set of attributes is called  *Repository Specification*. It is formal set of attributes
-consisting at least of the following fields:
+be an URL. The set of attributes is called  *Repository Specification*
+and consists at least of the following fields:
 
 - **`type`** (required) *string*
 
@@ -86,11 +93,11 @@ consisting at least of the following fields:
 
 - (optional) additional type specific attributes
 
-Every OCM repository can therefore be described by such a Repository 
-specification. It is usable by a language binding to gain access to
-this repository. The type is used to identify the backend end
-implementation and the additional attributes are used ba the
-implementation to provide access to the concrete repository instance. 
+Every OCM repository can therefore be described by such a *Repository Specification*.
+This specification can be utilized by a language binding to access the repository.
+The type is employed to distinguish the backend implementation,
+and the additional attributes are leveraged by the implementation
+to faciliprovide access to the specific repository instance.
 
 In a concrete environment all those repositories are usable, for which an
 implementation of the [abstract model operations](../03-persistence/01-operations.md) exists.
@@ -100,10 +107,10 @@ two parts:
 - a repository type name
 - a version
 
-The type name specified the kind of storage backend mapping to be 
+The type name specifies the kind of storage backend mapping to be 
 used to implement an OCM repository interface.
 
-The version is used to specify the attribute structure used to describe
+The version is used to specify the attribute structure that describes
 the repository instance as part of the repository specification.
 
 Regardless of the creator of a component version, an access method must be uniquely identifyable.
@@ -123,14 +130,16 @@ There are two kinds of type name:
   [A-Z][a-zA-Z0-9]*
   ```
 
-  The defined types with their meaning and formats can be found in [here](../04-extensions/03-storage-backends/README.md)
+  The defined types with their meaning and formats can be found
+  [here](../04-extensions/03-storage-backends/README.md)
 
 - Vendor specific types
 
-  Any organization using the open component model may define repository
-  types on their own. Nevertheless, the meaning and purpose of those
-  types must be clearly and uniquely defined. Organizations should share
-  and reuse existing types instead of introducing new type names.
+  Any organization using the Open Component Model may define own repository
+  types. However, the significance and function of these types must be distinctly
+  and uniquely defined.
+  Organizations are encouraged to share and reuse existing types,
+  rather than introducing new type names.
 
   Using vendor specific repository types always
   means a restriction on using tools implementing these access methods.
@@ -144,29 +153,30 @@ There are two kinds of type name:
   local type must follow the above rules for centrally defined type
   names and prepended, separated by a dot (`.`).
 
-  So, the complete pattern looks as follows:
+ The compattern for `name` is:
 
   ```
   [a-z][a-zA-Z0-9].<DNS domain name>
   ```
 
-The version follows the following regexp:
+The `version` follows this regexp:
 
  ```regex
   v[1-9][0-9]*
  ```
 
 The repository specification type consists of the 
-repository type name optionally followed by a version separated by a 
-slash (`/`). If not specified the version `v1` is assumed.
+repository type name, optionally followed by a version separated by a 
+slash (`/`). If not specified, version `v1` is assumed.
 
-### Data Formats
+#### Data Formats
 
-The metadata of a component version is defined by the [serialization format of a component descriptor](#component-descriptor-serialization).
+The metadata of a component version is defined by the
+[serialization format of a component descriptor](#component-descriptor-serialization).
 It is stored in the storage backend together with the format version.
 It must be possible to store any supported format version.
 
-### Mandatory Operations
+#### Mandatory Operations
 
 The following operations are mandatory:
 
@@ -201,13 +211,14 @@ The following operations are mandatory:
 
 - **`GetBlob(ComponentId, VersionName, BlobIdentity) (Blob, error)`**
 
-  Retrieve a formerly stored blob, again, using the blob identity provided by the store operation. Technically this should be a stream or the blob content.
+  Retrieve a formerly stored blob, again, using the blob identity provided by the store operation.
+  Technically this should be a stream or the blob content.
 
 - **`ListComponentVersions(ComponentId) ([]VersionName, error)`**
 
   List all the known versions of a component specified by its component identity.
 
-### Optional Operations
+#### Optional Operations
 
 Optional operations might be:
 
@@ -387,7 +398,8 @@ and stream access for the denoted blob is required.
 
 ## Digest Algorithms
 
-Digest algorithms describe the way digests are calculated from a byte stream. The defined algorithms can be found [here](../04-extensions/04-algorithms/digest-algorithms.md).
+Digest algorithms describe the way digests are calculated from a byte stream.
+The defined algorithms can be found [here](../04-extensions/04-algorithms/digest-algorithms.md).
 
 
 ## Signing Algorithms
@@ -498,7 +510,8 @@ A normalized component descriptor is a subset of its elements containing only th
 Like for signature algorithms, the model offers the possibility to work with
 different normalization algorithms and formats.
 
-The algorithms used for normalization are listed in the [extensions](../04-extensions/04-algorithms/component-descriptor-normalization-algorithms.md) section.
+The algorithms used for normalization are listed in the
+[extensions](../04-extensions/04-algorithms/component-descriptor-normalization-algorithms.md) section.
 
 ####  Signing-relevant Information in Component Descriptors
 
@@ -627,7 +640,8 @@ A model implementation MUST provide the possibility to declare merge algorithms
 for dedicated label names to be able to omit merge specifications
 as part of the component descriptor.
 
-The currently specified algorithms for label merge can be found in the [extensions](../04-extensions/04-algorithms/label-merge-algorithms.md) section.
+The currently specified algorithms for label merge can be found in the
+[extensions](../04-extensions/04-algorithms/label-merge-algorithms.md) section.
 
 ## Artifact Types 
 
@@ -637,7 +651,8 @@ in section [Artifact Types](../04-extensions/01-artifact-types/README.md)
 
 ## Label Types
 
-Dynamic attribution of model elements with additional information is possible using [*Labels*](./03-elements-sub.md#labels).
+Dynamic attribution of model elements with additional information is possible using
+[*Labels*](./03-elements-sub.md#labels).
 To be interpretable by tools the meaning of a label must be uniquely derivable from its name,
 regardless of the creator of a concrete label entry in a component version.
 To assure that every consumer of a component version has the same understanding odf the label,
