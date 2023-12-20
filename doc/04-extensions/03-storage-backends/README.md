@@ -51,8 +51,11 @@ binding to achieve interoperability among those implementations.
   supporting the actual model embedding based on a language binding for the
   backend storage technology.
 
+<br>
+
 ![language bindings](ocmembedding.png)
 
+<br>
 The specification for layer 1 is described in the [model element specification section](../../01-model/README.md).
 The specification of the extension points can be found [here](../../01-model/07-extensions.md). The storage backend extension specification is [here](../../01-model/07-extensions.md#storage-backends).
 
