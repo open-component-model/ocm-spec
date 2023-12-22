@@ -204,7 +204,7 @@ The full list of resource types is [here](03-extensible-values.md#resource-types
 
 A component version may refer to other component versions by adding a *reference* to the component version.
 
-An *reference* does not habe a  blob but it has:
+A *reference* does not have a blob but it has:
 
 - an *Identity* in the context of the component version
 - a set of labels
