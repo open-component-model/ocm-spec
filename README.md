@@ -8,7 +8,7 @@ Its focus is to describe versioned sets of artifacts and and to assign globally 
 
 OCM provides a common language usable by tools to talk about software artifacts, regardless of the technologies and the processes working on them. Tool specific meta data, like deployment descriptions are handled as own, typed artifacts. This enables the provisioning of content agnostic tools: for example, transporting software between environments, signing and verification, providing compliance data, etc.
 
-![OCM Overview](doc/OCM-Overview.png)
+![OCM Overview](doc/OCM-Ecosystem.png)
 
 The following chapters provide a formal description of the format to describe software artifacts and a storage layer to persist those and make them available from remote.
 
