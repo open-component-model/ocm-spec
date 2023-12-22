@@ -16,7 +16,7 @@ This chapter describes the elements of the Open Component Model and their syntax
   * 2.4.[Resources](02-elements-toplevel.md#resources)
   * 2.5.[References](02-elements-toplevel.md#references)
   * 2.6.[Summary](02-elements-toplevel.md#summary)
-* 3.[Model Elements - Some Basics](03-elements-sub.md#model-elements-some-basics)
+* 3.[Model Elements - Fundamentals](03-elements-sub.md#model-elements-fundamentals)
   * 3.1.[Identifiers](03-elements-sub.md#identifiers)
   * 3.2.[Access Specification](03-elements-sub.md#access-specification)
   * 3.4.[Labels](03-elements-sub.md#labels)
