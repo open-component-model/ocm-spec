@@ -2,11 +2,11 @@
 
 [![REUSE status](https://api.reuse.software/badge/github.com/open-component-model/ocm-spec)](https://api.reuse.software/info/github.com/open-component-model/ocm-spec)
 
-The _Open Component Model (OCM)_ is an open standard to describe software-bill-of-deliveries (SBOD). OCM is a technology-agnostic and machine-readable format focused on the software artifacts that must be delivered for software products. OCM provides a globally unique identity scheme which can be used to identify components ad artifacts throughout the entire software lifecycle management process,....
+The _Open Component Model (OCM)_ is an open standard to describe software-bill-of-deliveries (SBOD). OCM is a technology-agnostic and machine-readable format focused on the software artifacts that must be delivered for software products. OCM provides a globally unique identity scheme which can be used to identify components and artifacts throughout the entire software lifecycle management process,...
 
-Its focus is to describe versioned sets of artifacts and and to assign globally unique identities. OCM makes those artifacts queryable: what is inside, where is it from, is it authentic etc. But it does not deal with building those artifacts or how to deploy them. Such tasks are left to tools on-top of the model. In this way they are able to access the artifact by its identity. Different tools may keep their own meta data bound together by the identities provided by the model.
+Its focus is to describe versioned sets of artifacts and to assign globally unique identities. OCM makes those artifacts queryable: what is inside, where is it from, is it authentic, etc. But it does not deal with building those artifacts or how to deploy them. Such tasks are left to tools on top of the model. In this way, they are able to access the artifact by its identity. Different tools may keep their own metadata bound together by the identities provided by the model.
 
-OCM provides a common language usable by tools to talk about software artifacts, regardless of the technologies and the processes working on them. Tool specific meta data, like deployment descriptions are handled as own, typed artifacts. This enables the provisioning of content agnostic tools: for example, transporting software between environments, signing and verification, providing compliance data, etc.
+OCM provides a common language usable by tools to talk about software artifacts, regardless of the technologies and the processes working on them. Tool specific metadata, like deployment descriptions, are handled as own, typed artifacts. This enables the provisioning of content-agnostic tools: for example, transporting software between environments, signing and verification, providing compliance data, etc.
 
 ![OCM Overview](doc/OCM-Ecosystem.png)
 
@@ -122,7 +122,7 @@ The following chapters provide a formal description of the format to describe so
 
 ## Central OCM project web page
 
-Check out the main project [web page](https://ocm.software) to find out more about OCM. It is your central entry point to all kind of ocm related [docs and guides](https://ocm.software/docs/overview/context), this [spec](https://ocm.software/spec/) and all project related [github repositories](https://github.com/open-component-model). It also offers a [Getting Started](https://ocm.software/docs/guides/getting-started-with-ocm) to quickly make your hands dirty with ocm, its toolset and concepts :-)
+Check out the main project [web page](https://ocm.software) to find out more about OCM. It is your central entry point to all kinds of ocm related [docs and guides](https://ocm.software/docoverview/context), this [spec](https://ocm.software/spec/) and all project-related [github repositories](https://github.com/open-component-model). It also offers a [Getting Started](https://ocm.software/docguides/getting-started-with-ocm) to quickly make your hands dirty with ocm, its toolset and concepts :-)
 
 ## Contributing
 
