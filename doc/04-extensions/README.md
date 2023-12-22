@@ -1,60 +1,38 @@
-# Extensions (extensible part)
+# Extensions
 
-This chapter contains elements being part of the OCM specification that can be extended by users or in specific environments. The elements mentioned here are standardized but can be extended independent of the core parts.
+The core specification does not rely on a fixed set of certain fields.
+However, the specification defines a set of known values for certain types
+listed in the following sections. These sets can be extended by new specification versions,
+addendums or for customer-specific environments.
 
-# Model Elements
-- [ Extensible Parts of the OCM model](01-extensions.md)
+# Table of Content
 
-# Storage Mappings
-for the following technologies are defined:
-
-- [OCIRegistry](03-oci.md) OCM content in OCI registries
-- [FileSystem (CTF)](04-files.md) OCM content as filesystem structure
-- [FileSystem (Component Archive)](04-files.md) Single component version as content as filesystem structure
-- [AWS S3](05-s3.md) OCM content in AWS S3 buckets
-
-# Table Of Content
-
-* 1.[Extensible Field Values](01-extensions.md#extensible-field-values)
-  * 1.1.[Resource Types](01-extensions.md#resource-types)
-  * 1.2.[Source Types](01-extensions.md#source-types)
-  * 1.3.[Access Types](01-extensions.md#access-types)
-* 2.[Normalization Algorithms](01-extensions.md#normalization-algorithms)
-  * 2.1.[jsonNormalisationV1](01-extensions.md#jsonnormalisationv1)
-* 3.[Digest Algorithms](01-extensions.md#digest-algorithms)
-  * 3.1.[Digesting Content](01-extensions.md#digesting-content)
-* 4.[Signature Algorithms](01-extensions.md#signature-algorithms)
-  * 4.1.[RSA](01-extensions.md#rsa)
-* 5.[Storage Backend: OCI Registries](02-oci.md#storage-backend-oci-registries)
-  * 5.1.[Specification Format](02-oci.md#specification-format)
-    * 5.1.1.[Synopsis](02-oci.md#synopsis)
-    * 5.1.2.[Description](02-oci.md#description)
-    * 5.1.3.[Specification Versions](02-oci.md#specification-versions)
-  * 5.2.[Element Mapping](02-oci.md#element-mapping)
-  * 5.3.[Version Mapping](02-oci.md#version-mapping)
-  * 5.4.[Blob Mappings](02-oci.md#blob-mappings)
-  * 5.5.[Example](02-oci.md#example)
-* 6.[Storage Backend (file-based): Common Transport Format (CTF)](03-files.md#storage-backend-file-based-common-transport-format-ctf)
-  * 6.1.[Specification Format](03-files.md#specification-format)
-    * 6.1.1.[Synopsis](03-files.md#synopsis)
-    * 6.1.2.[Description](03-files.md#description)
-    * 6.1.3.[Specification Versions](03-files.md#specification-versions)
-  * 6.2.[Element Mapping](03-files.md#element-mapping)
-  * 6.3.[Blob Mappings](03-files.md#blob-mappings)
-  * 6.4.[Examples](03-files.md#examples)
-    * 6.4.1.[Example of a transport archive containing two artifacts](03-files.md#example-of-a-transport-archive-containing-two-artifacts)
-* 7.[Storage Backend: Component Archive Format](03-files.md#component-archive-format)
-  * 7.1.[Specification Format](03-files.md#specification-format)
-    * 7.1.1.[Synopsis](03-files.md#synopsis)
-    * 7.1.2.[Description](03-files.md#description)
-    * 7.1.3.[Specification Versions](03-files.md#specification-versions)
-  * 7.2.[Element Mapping](03-files.md#element-mapping)
-  * 7.3.[Blob Mappings](03-files.md#blob-mappings)
-  * 7.4.[Examples](03-files.md#examples)
-* 8.[Storage Backend: AWS S3](05-s3.md#storage-backend-aws-s3)
-  * 8.1.[Specification Format](05-s3.md#specification-format)
-    * 8.1.1.[Synopsis](05-s3.md#synopsis)
-    * 8.1.2.[Description](05-s3.md#description)
-    * 8.1.3.[Specification Versions](05-s3.md#specification-versions)
-  * 8.2.[Element Mapping](05-s3.md#element-mapping)
-  * 8.3.[Blob Mapping](05-s3.md#blob-mapping)
+* 1 [Artifact Types](01-artifact-types/README.md)
+  * 1.1 [blob](01-artifact-types/blob.md)                               
+  * 1.2 [directoryTree, fileSystem](01-artifact-types/file-system.md) 
+  * 1.3 [gitOpsTemplate](01-artifact-types/gitops.md)                   
+  * 1.4 [helmChart](01-artifact-types/helmchart.md)                     
+  * 1.5 [npmPackage](01-artifact-types/npm.md)                          
+  * 1.6 [ociArtifact](01-artifact-types/oci-artifact.md)                
+  * 1.7 [ociImage](01-artifact-types/oci-image.md)                     
+  * 1.8 [executable](01-artifact-types/executable.md)                   
+  * 1.9 [sbom](01-artifact-types/sbom.md)       
+* 2 [Access Method Types](02-access-types/README.md)
+  * 2.1 [localBlob](02-access-typeslocalblob.md)     
+  * 2.2 [ociArtifact](02-access-typesociartifact.md) 
+  * 2.3 [ociBlob](02-access-typesociblob.md)         
+  * 2.4 [helm](h02-access-typeselm.md)               
+  * 2.5 [gitHub](02-access-typesgithub.md)           
+  * 2.6 [s3](02-access-typess3.md)                   
+  * 2.7 [npm](02-access-typesnpm.md)     
+* 3 [Storage Backend Mappings](03-storage-backends/README.md)
+  * 3.1 [OCIRegistry](03-storage-backendsoci.md)                                  
+  * 3.2 [FileSystem (CTF)](03-storage-backendsctf.md)                             
+  * 3.3 [FileSystem (Component Archive)](03-storage-backendscomponent-archive.md) 
+  * 3.4 [AWS S3](03-storage-backendss3.md)       
+* 4 [Algorithms](04-algorithms/README.md)
+  * 4.1 [Artifact Normalization](04-algorithms/artifact-normalization-types.md)
+  * 4.2 [Digest Algorithms](04-algorithms/label-merge-algorithms.md)
+  * 4.3 [Label Merge Algorithm](04-algorithms/digest-algorithms.md)
+  * 4.4 [Component Descriptor Normalization Algorithms](04-algorithms/component-descriptor-normalization-algorithms.md)
+  * 4.5 [Signing Algorithms](04-algorithms/signing-algorithms.md)

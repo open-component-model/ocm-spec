@@ -1,10 +1,12 @@
+# Model Elements - Fundamentals
+
 ## Identifiers
 
 A *Component* is technically defined by a globally unique identifier.
 
 A component identifier uses the following naming scheme:
 
-<div align="center">
+<div>
 
 *&lt;DNS domain>* `/` *&lt;name component> {* `/` *&lt;name component> }*
 
@@ -62,11 +64,11 @@ of constraints is then just a partial match of the set of identity attributes.
 For example:
 
 You want to describe different image versions to be used
-for different Kubernetes versions and for multiple purposes. With the identity
-attributes this can easily be modeled by using
+for different Kubernetes versions deployed on different OS platforms and CPU architecturesand.
+With identity attributes this can easily be modeled by using
 - the `name` attribute for the purpose (e.g. DNS controller)
 - the `version` attribute for the image version
-- and an extra identity attribute for the intended Kubernetes Version.
+- and an extra identity attribute for the intended Kubernetes OS platform and architecture.
 
 ```yaml
 ...
@@ -74,7 +76,7 @@ component:
   name: github.com/open-component-model/ocmcli
   version: 0.3.0
   extraIdentity:
-    arch: amd64
+    architecture: amd64
     os: linux
   resources:
   ...
@@ -106,7 +108,7 @@ by the Gardener team developing the component `external-dns-management`.
 
 ## Access Specification
 
-The technical access to the physical content of an artifact described as part of a Component Version is expressed by an *Access Specification*. It describes the type of the *access method* and the type-specific access path to the content. In an implementation the *Access Method Type* is mapped to code for finally accessing the content of an artifact.
+The technical access to the physical content of an artifact described as part of a Component Version is expressed by an *Access Specification*. It describes the type of the *access method* and the type-specific access path to the content. In an implementation the *Access Method Type* is mapped to code for finally accessing the content of an artifact. Access methods and their specification versions can arbitrarely extended. This is a major [extension point](./07-extensions.md#access-methods) of the model.
 
 The content of a described artifact is accessible by applying its global identity triple to the following procedure:
 
@@ -118,129 +120,106 @@ The content of a described artifact is accessible by applying its global identit
 <img src="ocmresourceaccess.png" alt="Structure of OCM Specification" width="800"/>
 </div>
 
-The access specification of an artifact may change when component versions are transported among repositories. The set of access methods is not fixed. Because of this extensibility the names of access methods must be globally unique.
+The access specification of an artifact may change when component versions are transported among repositories. 
 
-There are two flavors of method names:
+Examples for access specification types are:
 
-- Centrally provided access methods
-
-  Those methods should be implemented by OCM compliant libraries and tools. Using only such
-  access methods guarantees universal access.
-
-  These types use flat names following a camel case scheme with the first character in lower case (for example `ociArtifact`).
-
-  Their format is described by the following regexp:
-
-  ```regex
-  [a-z][a-zA-Z0-9]*
-  ```
-
-- Vendor specific types
-
-  Any organization using the open component model may define additional access methods on their own. Their name MUST be globally unique. There may be multiple such types provided by different organizations with the same meaning. Organizations should share such types and reuse existing types instead of introducing new type names.
-
-  Using component versions with vendor specific access methods always means a restriction on using tools implementing these access methods. FOr exchanging such component versions involved parties must agree on the used toolset.
-
-  To support a unique namespace for those type names vendor specific types MUST follow a hierarchical naming scheme based on DNS domain names. Every type name has to be suffixed by a DNS domain owned by the providing organization. The local type must follow the above rules for centrally defined type names and suffixed by the namespace separated by a dot (`.`)
-
-  So, the complete pattern looks as follows:
-
-  ```
-  [a-z][a-zA-Z0-9]*\.<DNS domain name>
-  ```
-
-Every access method type must define a specification of the attributes required to locate the content. This specification may be versioned. Therefore, the type name used in an access specification may include a specification version appended by a slash (`/`). The version must match the following regular expression:
-
-```
-v[0-9]+([a-z][a-z0-9]*)?
-```
-
-Examples:
 - `ociArtifact/v1`
 - `myprotocol.acme.org/v1alpha1`
 
 If no version is specified, implicitly the version `v1` is assumed.
 
-The access method type is part of the access specification. The access method type may define additional specification attributes required to specify the access path to the artifact blob.
+The access method type is part of the access specification type. The access specification type may
+define additional attributes required by the access method to provide the described artifact blob.
 
-For example, the access method `ociBlob` requires the OCI repository reference and the blob digest to be able to access the blob.
+For example, access method `ociBlob` requires the OCI repository reference and the blob digest to be able to access the blob.
 
 ```yaml
 ...
   resources:
   - ...
     access:
-      imageReference: ghcr.io/jensh007/ctf/github.com/open-component-model/ocmechoserver/echoserver:0.1.0
       type: ociArtefact
+      imageReference: ghcr.io/jensh007/ctf/github.com/open-component-model/ocmechoserver/echoserver:0.1.0
 ```
-
-## Access Types
-
-Access methods are used to access the content of artifacts of a component version. The type of the methods defines how to access the artifact and the access specification provides the required attributes to identify the blob and its location. The full list is [here](03-extensible-values.md#access-types)
-
 
 ## Labels
 
-*Labels* can be used to add additional formal information to a component model element, which do not have static formal fields in the component descriptor. Its usage is left to users of the component model. The usage of labels is left to the creator of a component version, therefore the set of labels must be extensible. They can appear ar various locations:
+*Labels* can be used to add additional formal information to a component model element,
+which do not have static formal fields in the component descriptor.
+The usage of a model element is left to users of the component model.
+The usage of labels is left to the creator of a component version,
+therefore the set of labels must be extensible. They can appear ar various locations:
 
 - the component version itself
 - resource specifications
 - source specifications
 - component version references
 
-To be able to evaluate labels for any component version, the same label name must have the same meaning, regardless by which component provider they are generated. To assure that this information has a globally unique interpretation or meaning, labels must comply with some naming scheme and use a common structure.
+Elements featuring labels have an additional attribute `labels`,
+which is a list of label entries.
 
-There are two flavors of labels:
+A label entry consists of a dedicated set of meta attributes with a predefined meaning.
+While arbitrary values are allowed for the label `value`, additional (vendor/user specific)
+attributes are not allowed at the label entry level.
 
-- labels with a predefined meaning for the component model itself.
+- `name` (required) *string*
 
-  Those labels are used by the standard OCM library and tool set to control some behaviour like signing. Labels without a namespace are relevant for the component model itself.
+  The label name according to the specification above.
 
-  Such labels use flat names following a camel case scheme with the first character in lower case.
+- `value` (required) *any*
 
-  Their format is described by the following regexp:
+  The label value may be an arbitrary JSON compatible YAML value.
 
-  ```regex
-  [a-z][a-zA-Z0-9]*
-  ```
+- `version` (optional) *string*
 
-- vendor specific labels
+  The specification version for the label content. If no version is
+  specified, implicitly the version `v1` is assumed.
 
-  any organization using the open component model may define labels
-  on their own. Nevertheless, their names must be globally unique.
-  Basically there may be multiple such labels provided by different organizations
-  with the same meaning. Such label names feature a namespace.
+- `signing` (optional) *bool*:  (default: `false`)
 
-  To support a unique namespace for those label names vendor specific labels
-  have to follow a hierarchical naming scheme based on DNS domain names.
-  Every label name has to be preceded by a DNS domain owned by the providing
-  organization (for example `landscaper.gardener.cloud/blueprint`).
-  The local name must follow the above rules for centrally defined names
-  and is appended, separated by a slash (`/`).
+  If this attribute is set to `true`, the label with its value will be incorporated
+  into the signatures of the component version.
 
-  So, the complete pattern looks as follows:
+  By default, labels are not part of the signature.
 
-  ```
-  <DNS domain name>/[a-z][a-zA-Z0-9]*
-  ```
+- `merge` (optional) *merge spec*
 
-### Predefined  Labels
+  non-signature relevant labels (the default) can be modified without breaking a potential signature.
+  They can be changed in any repository the component version has been transferred to.
+  This is supported to attach evolving information to a component version.
+  But it also implies, that a component version must be updatable (re-transferable) in a certain target repository.
+  This may lead to conflicting changes which might need to be resolved in a non-trivial way. 
 
-So far, no centrally predefined labels are defined.
-There is a standard structure of a label
-that includes label meta-data and the concrete label-specific attributes.
-Every label must define a specification of its attributes,
-to describe its value space. This specification may be versioned.
-The version must match the following regexp
+  The merge behaviour can be specified together with the label definition using the `merge` attribute.
+  It has the following fields:
 
-```
-v[0-9]+([a-z][a-z0-9]*)?
-```
-So far, no centrally predefined labels are defined.
+  - `algorithm` (optional) *string*
+
+    The name of the algorithm used to merge the label during a transport step.
+    This is an [extension point](./07-extensions.md#label-merge-algorithms)
+    of the model.
+
+  - `config` (optional) *any*
+
+    A configuration specific for the chosen algorithm.
+
+To be able to evaluate labels for any component version,
+the same label name must have the same meaning,
+regardless by which component provider they are generated.
+To assure that this information has a globally unique interpretation or meaning,
+labels must comply with some naming scheme and use a common structure.
+
+Label types are covered by the OCM extension concept, so you can also find information [here](./07-extensions.md#label-types).
 
 ## Repository Contexts
 
-A *Repository Context* describes the access to an OCM Repository. This access is described by a formal and typed specification. A component descriptor MAY contain information about the transport history by keeping a list of repository contexts. It SHOULD at least describe the last repository context for an OCM repository it was transported into.
+A *Repository Context* describes the access to an OCM Repository.
+This access is described by a formal and typed specification.
+A component descriptor MAY contain information about the transport history
+by keeping a list of repository contexts.
+It SHOULD at least describe the last repository context
+for an OCM repository it was transported into.
 
 ## Signatures
 

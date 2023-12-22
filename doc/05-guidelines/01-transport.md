@@ -42,7 +42,7 @@ This enables:
 - providing a respository implementation for file system formats that can be used transparently by component tools.
 - the usage of a minimal repository environment on the target side of a transport by just using a dedicated component repository.
 
-Therefore, *Component Repositories* MUST provide the possibility to store technical artifacts together with the component descriptors in the component repository itself (as *local blobs*). The  general access type `localBlob` MUST be supported by all repository implementations. This allows packing all component versions with their technical artifacts in a *Component Repository* as a completely self-contained package.
+Therefore, *Component Repositories* MUST provide the possibility to store technical artifacts together with the component descriptors in the component repository itself (as *local blobs*). The  general access method type `localBlob` MUST be supported by all repository implementations. This allows packing all component versions with their technical artifacts in a *Component Repository* as a completely self-contained package.
 
 As example, assume some component needs additional configuration data stored in some YAML file. If in any landscape of your transport chain there is only an OCI registry available to store content, you need to define a format how to store such a YAML file in the OCI registry. With *local blobs* you could just upload the file into the *Component Repository*.
 

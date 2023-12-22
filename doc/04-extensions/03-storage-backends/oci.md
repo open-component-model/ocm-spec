@@ -1,4 +1,4 @@
-# Storage Backend: OCI Registries
+# OCI Registries
 
 OCM component versions can be stored in OCI registries which are conforming to the [OCI distribution specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md). Additionally, a registry must support a deep repository structure.
 
@@ -9,17 +9,22 @@ To describe a repository context for an OCM repository conforming to this specif
 ### Synopsis
 
 ```
-type: OCIRegistry/v1
-type: ociRegistry/v1
+type: OCIRegistry[/VERSION]
+[ATTRIBUTES]
+```
+```
+type: ociRegistry[/VERSION]
+[ATTRIBUTES]
 ```
 
 ### Description
 
 Component descriptors and their artifacts will be mapped to an OCI registry according to the [OCI distribution specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md).
 
-Supported specification version is `v1`.
 
 ### Specification Versions
+
+Supported specification version is `v1`.
 
 #### Version `v1`
 
@@ -80,13 +85,6 @@ OCM *Local Blobs* are stored in additional OCI *Image Layers*. The local blob
 identifier stored in the `localBlob` access specification is the OCI *blob digest*
 of the blob. The media type of the blob is the one specified in the
 access specification.
-
-<div align="center">
-
-<img src="ocm2oci-mapping.png" alt="drawing" width="800"/>
-
-</div>
-
 
 ## Version Mapping
 

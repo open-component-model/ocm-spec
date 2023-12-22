@@ -1,7 +1,11 @@
 
 # Model Elements
 
-The following section describes how a component (version) is specified in more detail. Please note that this section intends to give an overview and explain the principal elements and their structure. It is not a complete specification. See the [schemas](https://github.com/open-component-model/ocm/tree/main/resources) for a full definition.
+The following section describes how a component (version) is specified in more detail.
+Please note that this section intends to give an overview and explain the principal
+elements and their structure. It is not a complete specification.
+See the [schemas](https://github.com/open-component-model/ocm/tree/main/resources)
+for a full definition.
 
 ## Components and Component Versions
 
@@ -36,7 +40,8 @@ Those attributes are described by formal fields in the component descriptor:
 
 - **`type`** (required) *string*
 
-  The type of an artifact  specifies the logical interpretation of an artifact and is independent of its concrete technical representation.
+  The type of an artifact  specifies the logical interpretation of an artifact
+  and is independent of its concrete technical representation.
 
 - **`labels`** (optional) *[]Label*
 
@@ -47,11 +52,17 @@ Those attributes are described by formal fields in the component descriptor:
 
 ### Artifact Types
 
-The formal type of an artifact uniquely specifies the logical interpretation of an artifact and its kind, independent of its concrete technical representation.
+The formal type of an artifact uniquely specifies the logical interpretation of an artifact and its kind,
+independent of its concrete technical representation.
 
-If there are different possible technical representations, the access specification determines the concrete format given by a media type used for the returned blob.
+If there are different possible technical representations,
+the access specification determines the concrete format given by a media type used for the returned blob.
 
-For example, a helm chart (type `helmChart`) can be represented as OCI artifact or helm chart archive. Nevertheless, the technical meaning is the same. In both cases the artifact (resource)`type` will be `helmChart`. The acess specification however will be different. In the first case it will refer to the helm-chart archive. In the second case the access type will be `ociArtifact`.
+For example, a helm chart (type `helmChart`) can be represented as OCI artifact
+or helm chart archive. Nevertheless, the technical meaning is the same.
+In both cases the artifact (resource)`type` will be `helmChart`.
+The acess specification however will be different. In the first case it will refer to the helm-chart archive.
+In the second case the access method type will be `ociArtifact`.
 
 ```yaml
 ...
@@ -78,7 +89,7 @@ For example, a helm chart (type `helmChart`) can be represented as OCI artifact 
       imageReference: ghcr.io/open-component-model/helmexample/charts/mariadb:12.2.7
 ```
 
-The access type `ociArtifact` however is also used for container images:
+The access method type `ociArtifact` however is also used for container images:
 
 ```yaml
 ...
@@ -92,15 +103,20 @@ resources:
       imageReference: bitnami/mariadb:10.11.2
 ```
 
-The resource type `ociImage` now describes an object that can be used as a container image. So, the technical representation in both cases will be an OCI image manifest. The semantics how these objects can be used are completely different. This is expressed by the `type` of the artifact.
+The resource type `ociImage` now describes an object that can be used as a container image.
+So, the technical representation in both cases will be an OCI image manifest.
+The semantics how these objects can be used are completely different.
+This is expressed by the `type` of the artifact.
 
-An artifact's kind and logical interpretation is encoded into a simple string. The artifact type must be globally unique. OCM defines a naming scheme to guarantee this uniqueness.
+An artifact's kind and logical interpretation is encoded into a simple string.
+The artifact type must be globally unique. OCM defines a naming scheme to guarantee this uniqueness.
 
 There are two kinds of types:
 
 - Centrally defined type names managed by the OCM organization
 
-  These types use flat names following a camel case scheme with the first character in lower case, for example `ociArtifact`.
+  These types use flat names following a camel case scheme with the first character
+  in lower case, for example `ociArtifact`.
 
   Their format is described by the following regular expression:
 
@@ -110,16 +126,26 @@ There are two kinds of types:
 
 - Vendor specific types
 
-  Any organization may define dedicated types on their own. Nevertheless, the meaning of those types must be defined. There may be multiple such types provided by different organizations with the same meaning. Organizations should share and reuse such types instead of introducing new type names.
+  Any organization may define dedicated types on their own.
+  Nevertheless, the meaning of those types must be defined.
+  There may be multiple such types provided by different organizations with the same meaning.
+  Organizations should share and reuse such types instead of introducing new type names.
 
-  To support a unique namespace for those type names vendor specific types MUST follow a hierarchical naming scheme based on DNS domain names. Every type name has to be preceded by a DNS domain owned by the providing organization, like `landscaper.gardener.cloud/blueprint`. The local type must follow the above rules for centrally defined type names
-  and is appended, separated by a slash (`/`).
+  To support a unique namespace for those type names vendor specific types
+  MUST follow a hierarchical naming scheme based on DNS domain names.
+  Every type name has to be preceded by a DNS domain owned by the providing organization,
+  like `landscaper.gardener.cloud/blueprint`. The local type must follow the above rules
+  for centrally defined type names and is appended, separated by a slash (`/`).
 
   So, the complete pattern looks as follows:
 
   ```
   <DNS domain name>/[a-z][a-zA-Z0-9]*
   ```
+
+  [Artifact Types](../01-model/07-extensions.md#artifact-types) are an extension point within the OCM model.
+  All existing artifact types are listed [here](../04-extensions/01-artifact-types/README.md).
+
 ## Sources
 
 A *Source* is an artifact which describes the sources that were used to generate one or more of the resources. Source elements do not have specific additional formal attributes.
@@ -161,7 +187,7 @@ A resource uses the following additional formal fields:
   Indicates whether the entity providing a component is also the provider of the resource ('local') or whether the 
   resource is provided by a separate entity ('external'). This may be useful to determine whether the entity responsible 
   for the component is also responsible for the resource.  
-  This property is purely informational and completely unrelated to the access type.
+  This property is purely informational and completely unrelated to the access method type.
 
 - **`digest`** (optional) *Digest Info*
 
@@ -198,13 +224,13 @@ Example:
       type: ociArtefact
 ```
 
-The full list of resource types is [here](03-extensible-values.md#resource-types).
+The full list of resource types is [here](../04-extensions/01-artifact-types/README.md).
 
 ## References
 
 A component version may refer to other component versions by adding a *reference* to the component version.
 
-An *reference* does not habe a  blob but it has:
+A *reference* does not have a blob but it has:
 
 - an *Identity* in the context of the component version
 - a set of labels
@@ -246,6 +272,6 @@ Example:
 ```
 
 
-# Model Summary
+## Summary
 
-The OCM model describes component versions. A component version is stored in a component repository and consists of sources, resources and references. The component version itself as well as each resource, source and reference has an identity. Only sources and resources have content and therefore an access specification and an optional digest. All elements  can have labels.
+The OCM model describes component versions. A component version is stored in a component repository and consists of sources, resources and references. The component version itself as well as each resource, source and reference has an identity. Only sources and resources have content and therefore an access specification and an optional digest. All elements can have labels.

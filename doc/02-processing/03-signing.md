@@ -22,7 +22,7 @@ digest for the referenced component descriptor. If digests fields for resources 
 component references already exist, they have to be compared against
 the calculated digest and rejected if different.
 
-The algorithms used for signing are listed in the [extensible parts](../04-extensions/01-extensible-values.md#signature-algorithms) of the specification
+The algorithms used for signing are listed in the [extensions](../04-extensions/04-algorithms/README.md#signature-algorithms).
 
 ## Verification Procedure
 
