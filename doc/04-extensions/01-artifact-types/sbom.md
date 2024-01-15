@@ -20,4 +20,10 @@ An SBOM is a nested inventory, a list of ingredients that make up software compo
   - `text/spdx` for SPDX files in tag-value format   
   - `application/spdx+xml` for SPDX files in RDF format   
   - `application/spdx+json` for SPDX files in JSON format   
-  - `application/spdx+yaml` for SPDX files in YAML format   
+  - `application/spdx+yaml` for SPDX files in YAML format
+
+- **SWID** ([NIST](https://csrc.nist.gov/projects/software-identification-swid/guidelines) and [ISO](https://www.iso.org/standard/65666.html))
+  
+  Media Types:
+  - `application/swid+xml` 
+  
