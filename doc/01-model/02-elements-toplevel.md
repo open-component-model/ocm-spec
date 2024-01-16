@@ -250,7 +250,7 @@ A reference element has the following fields:
 
   The version of the referenced component.
 
-- **`extraIdentity`** (optional) *string*
+- **`extraIdentity`** (optional) *map[string]string*
 
   The extra identity of the referenced component.
 
