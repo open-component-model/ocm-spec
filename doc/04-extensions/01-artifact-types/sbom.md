@@ -27,3 +27,7 @@ An SBOM is a nested inventory, a list of ingredients that make up software compo
   Media Types:
   - `application/swid+xml` for SWID files in XML format 
   
+- **Syft** (https://github.com/anchore/syft)
+  
+  Media Types:
+  - `application/vnd.syft+json` for Syft generated SBOMs in JSON format
