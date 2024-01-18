@@ -1,5 +1,5 @@
 
-# Model Elements
+# Elements of a Component Version
 
 The following section describes how a component (version) is specified in more detail.
 Please note that this section intends to give an overview and explain the principal
@@ -9,7 +9,7 @@ for a full definition.
 
 ## Components and Component Versions
 
-A component version describes several kinds of elements.
+A component version describes artifacts, using several kinds of elements.
 
 - Artifacts represent technical content. They appear in two different flavors:
   - *Sources* describe the sources a component version  has been composed/generated from.
