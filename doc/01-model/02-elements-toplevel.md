@@ -1,5 +1,4 @@
-
-# Elements of a Component Version
+# Core Elements of a Component Version
 
 The following section describes how a component (version) is specified in more detail.
 Please note that this section intends to give an overview and explain the principal
@@ -7,16 +6,38 @@ elements and their structure. It is not a complete specification.
 See the [schemas](https://github.com/open-component-model/ocm/tree/main/resources)
 for a full definition.
 
-## Components and Component Versions
-
-A component version describes artifacts, using several kinds of elements.
+A component version describes artifacts, using several core elements.
 
 - Artifacts represent technical content. They appear in two different flavors:
-  - *Sources* describe the sources a component version  has been composed/generated from.
-  - *Resources* describe the delivery artifacts contained in the component version.
+  - *Sources* describe the sources a component version has been composed/generated from.
+  - *Resources* describe the delivery artifacts contained in a component version.
 - References describe the aggregation of other component versions.
 
 All those described elements share a common set of metadata.
+
+## Component Identity
+
+A *Component* is technically defined by a globally unique identifier.
+
+The component identity uses the following naming scheme:
+
+<div>
+
+*&lt;DNS domain>* `/` *&lt;name component> {* `/` *&lt;name component> }*
+
+</div>
+
+Hereby the DNS domain plus optionally any number of leading name components MUST
+be owned by the provider of a component. For example, `github.com`, as DNS domain
+is shared by lots of organizations. Therefore, all component identities provided
+based on this DNS name, must include the owner prefix of the providing
+organization, e.g. `github.com/my-org`.
+
+The component acts as a namespace to host multiple *Component Versions*.
+
+A component version has a unique identity composed of the component identity
+and a version name following the [semantic versioning](https://semver.org)
+specification (e.g. `github.com/gardener/external-dns-management:0.15.1`).
 
 ## Artifacts (Resources and Sources)
 
@@ -36,7 +57,8 @@ Every artifact described by the component version has
 
 Those attributes are described by formal fields in the component descriptor:
 
-- the identity fields are directly embedded
+- The [element identity](./03-elements-sub.md#element-identity)
+  fields are directly embedded
 
 - **`type`** (required) *string*
 
@@ -230,13 +252,13 @@ The full list of resource types is [here](../04-extensions/01-artifact-types/REA
 
 A component version may refer to other component versions by adding a *reference* to the component version.
 
-A *reference* does not have a blob but it has:
+A *reference* does not have a blob, but it has:
 
 - an *Identity* in the context of the component version
 - a set of labels
 - an optional digest
--
-A reference element has the following fields:
+
+A `references` element has the following fields:
 
 - **`name`** (required) *string*
 
@@ -270,7 +292,6 @@ Example:
     version: 0.1.0
     componentName: github.com/open-component-model/ocmhelminstaller
 ```
-
 
 ## Summary
 

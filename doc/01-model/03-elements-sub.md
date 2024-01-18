@@ -1,28 +1,11 @@
-# Model Elements - Fundamentals
+# Attributes of Elements of a Component Version
 
-## Identifiers
+## Element Identity
 
-A *Component* is technically defined by a globally unique identifier.
+Similar to component identity, the element identity is composed by the fields `name` and `version`.
+In additon to that sources, resources and references can have an `extraIdentity` if required.
 
-A component identifier uses the following naming scheme:
-
-<div>
-
-*&lt;DNS domain>* `/` *&lt;name component> {* `/` *&lt;name component> }*
-
-</div>
-
-Hereby the DNS domain plus optionally any number of leading name components MUST
-be owned by the provider of a component. For example, `github.com`, as DNS domain
-is shared by lots of organizations. Therefore, all component identities provided
-based on this DNS name, must include the owner prefix of the providing
-organization, e.g. `github.com/my-org`.
-
-The component acts as a namespace to host multiple *Component Versions*.
-
-A component version has a unique identity composed of the component identity and a version name following the [semantic versioning](https://semver.org) specification (e.g. `github.com/gardener/external-dns-management:0.15.1`).
-
-The element identity is composed by the following formal fields of an element:
+A valid element identity has the following formal fields:
 
 - **`name`** (required) *string*
 
@@ -61,29 +44,46 @@ single attribute value. Instead, different attributes can be used to represent
 the dedicated selection dimensions. Selecting all artifacts for a partial set
 of constraints is then just a partial match of the set of identity attributes.
 
-For example:
+*Example:*
 
 You want to describe different image versions to be used
-for different Kubernetes versions deployed on different OS platforms and CPU architecturesand.
-With identity attributes this can easily be modeled by using
-- the `name` attribute for the purpose (e.g. DNS controller)
-- the `version` attribute for the image version
-- and an extra identity attribute for the intended Kubernetes OS platform and architecture.
+for different Kubernetes versions deployed on different OS platforms and CPU architectures.
+With identity attributes this can be easily modeled by using
+- the `name` attribute for the purpose (e.g. OCM CLI)
+- the `version` attribute for the version
+- and an `extraIdentity` attribute for the intended Kubernetes OS platform and architecture
+  (here for Linux on arm64 and amd64)
 
 ```yaml
-...
 component:
   name: github.com/open-component-model/ocmcli
-  version: 0.3.0
-  extraIdentity:
-    architecture: amd64
-    os: linux
+  version: 0.5.0
+  provider:
+    name: ocm.software
   resources:
-  ...
-...
+  - name: ocmcli
+    version: v0.5.0
+    access:
+      imageReference: ghcr.io/open-component-model/ocm/ocm.software/ocmcli/ocmcli-image_linux_amd64:0.5.0
+      type: ociRegistry
+    relation: external
+    type: ociImage
+    extraIdentity:
+      architecture: amd64
+      os: linux
+ - name: ocmcli
+    version: v0.5.0
+    access:
+      imageReference: ghcr.io/open-component-model/ocm/ocm.software/ocmcli/ocmcli-image_linux_arm64:0.5.0
+      type: ociRegistry
+    relation: external
+    type: ociImage
+    extraIdentity:
+      architecture: arm64
+      os: linux
 ```
 
-Then you don't need to derive artificially unique artifact names, instead
+Then you don't need to derive artificially unique artifact names. Instead
 the identity of the artifact can naturally be composed by using appropriate
 attributes. Selecting all artifacts for a dedicated purpose is possible
 by selecting all artifacts with the appropriate `name` attribute, without the
