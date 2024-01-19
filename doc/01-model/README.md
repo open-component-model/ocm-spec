@@ -8,7 +8,7 @@ This chapter describes the elements of the Open Component Model and their syntax
   * 1.3.[Component Repositories](01-model.md#component-repositories)
     * 1.3.1.[Repository Types](01-model.md#repository-types)
   * 1.4.[Summary](01-model.md#summary)
-* 2.[Model Elements](02-elements-toplevel.md#core-elements-of-a-component-version)
+* 2.[Core Elements of a Component Version](02-elements-toplevel.md#core-elements-of-a-component-version)
   * 2.1.[Component Identity](02-elements-toplevel.md#component-identity)
   * 2.2.[Artifacts (Resources and Sources)](02-elements-toplevel.md#artifacts-resources-and-sources)
     * 2.2.1.[Artifact Types](02-elements-toplevel.md#artifact-types)
