@@ -92,9 +92,7 @@ The component repository acts as the access point to the elements of the compone
 
 A component descriptor contains references to all other elements belonging to a component version. Those elements may be stored in the same repository or in other storages. Blob content may be stored along with the component descriptor as a special case. Those blobs are called local blobs.
 
-### Repository Types
-
-A formal specification must describe any repository that can be used to store content according to the Open Component Model.
+All repositories that can be used to store content according to the Open Component Model, need to be described by a specification.
 
 Such a specification is usable by a language binding to gain access to this repository.
 In a concrete environment all those repositories are usable, for which an
@@ -103,30 +101,6 @@ implementation of the [abstract model operations](../03-persistence/01-operation
 A repository specification has a type, the *Repository Type*
 used to identify the required [mapping](../03-persistence/02-mappings.md)
 and the information required to identity a concrete repository instance.
-
-There are two kinds of types:
-
-- Centrally defined type names managed by the OCM organization
-
-  The format of a repository type is described by the following regexp:
-
-  ```regex
-  [A-Z][a-zA-Z0-9]*
-  ```
-
-  The defined types with their meaning and format can be found in [a later chapter](../04-extensions/03-storage-backends/README.md)
-
-- Vendor specific types
-
-  Any organization using the open component model may define repository types on their own. Nevertheless, the meaning and purpose of those types must be clearly defined. Organizations should share and reuse existing types instead of introducing new type names.
-
-  To support a unique namespace for those type names, vendor specific types have to follow a hierarchical naming scheme based on DNS domain names. Every type name has to be suffixed by a DNS domain owned by the providing organization (for example `myspecialrepo.acme.com`). The local type must follow the above rules for centrally defined type names and prepended, separated by a dot (`.`).
-
-  So, the complete pattern looks as follows:
-
-  ```
-  [a-z][a-zA-Z0-9].<DNS domain name>
-  ```
 
 ## Summary
 
