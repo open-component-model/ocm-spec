@@ -2,12 +2,13 @@
 
 ## Synopsis
 
-```
+```text
 type: ociArtifact[/VERSION]
 [ATTRIBUTES]
 ```
 
 ## Description
+
 Access of an OCI artifact stored in an OCI registry.
 
 ## Supported Media Types
@@ -28,6 +29,5 @@ Attributes:
 - **`imageReference`** *string*
 
   OCI image/artifact reference following the possible docker schemes:
-    - `<repo>/<artifact>:<digest>@<tag>`
-    - `<host>[<port>]/repo path>/<artifact>:<version>@<tag>`
-
+  - `<repo>/<artifact>:<digest>@<tag>`
+  - `<host>[<port>]/repo path>/<artifact>:<version>@<tag>`

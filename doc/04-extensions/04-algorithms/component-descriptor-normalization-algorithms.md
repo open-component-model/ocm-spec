@@ -27,7 +27,7 @@ The `JsonNormalisationV1` serialization format is based on the serialization for
 It uses an appropriate JSON object containing the relevant fields as contained in the component descriptors's serialization.
 The format version fields are included. Therefore, the normalized form is depending on the chosen serialization format.
 Changing this format version would result in different digests.
-The resulting JSON object is serialized with the [OCM specific scheme](#generic-normalization-format)
+The resulting JSON object is serialized with the [OCM specific scheme](../../02-processing/05-component-descriptor-normalization.md#generic-normalization-format)
 
 ## `jsonNormalisationV2`
 

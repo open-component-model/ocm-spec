@@ -9,6 +9,7 @@ A component version reference refers to another component version by using its i
 ## Example
 
 Let's take the following component:
+
 ```yaml
 component:
   name: github.com/jensh007/mariadb
@@ -50,5 +51,5 @@ component:
 meta:
   ...
 ```
-The reference target is described by the component version identifier and not by the repository location.
 
+The reference target is described by the component version identifier and not by the repository location.

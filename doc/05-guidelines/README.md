@@ -12,4 +12,3 @@ The specification itself does not rely on the information of this chapter. For i
 * 3 [References](03-references.md#references)
   * 3.1 [Relative Artifact References](03-references.md#relative-artifact-references)
   * 3.2 [Absolute Artifact References](03-references.md#absolute-artifact-references)
-

@@ -1,17 +1,19 @@
 # helm — Helm Package in Helm Repository
 
 *Synopsis:*
-```
+
+```text
 type: helm[/VERSION]
 [ATTRIBUTES]
 ```
 
 ## Description
+
 Access to a Helm chart in a Helm repository.
 
 ## Supported Media Types
 
-  - `application/vnd.cncf.helm.chart.content.v1.tar+gzip`
+- `application/vnd.cncf.helm.chart.content.v1.tar+gzip`
 
 ## Specification Version
 

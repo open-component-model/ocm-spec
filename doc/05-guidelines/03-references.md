@@ -8,7 +8,7 @@ A composite, consisting of an artifact identity and a sequence of reference iden
 
 Component Version: `A:1.0.0`:
 
-```
+```yaml
 apiVersion: ocm.software/v3alpha1
 kind: ComponentVersion
 metadata:
@@ -33,7 +33,7 @@ Here we define a component version `A` with a resource having a custom type. Fur
 
 Then we have a second component `B:1.0.0` with on OCI image resource:
 
-```
+```yaml
 apiVersion: ocm.software/v3alpha1
 kind: ComponentVersion
 metadata:

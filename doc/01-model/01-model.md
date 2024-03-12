@@ -8,7 +8,6 @@ The Open Compoment Model consists of a core model plus extensions. The core mode
 
 The following chapters will provide more details about these concepts.
 
-
 ## Components and Component Versions
 
 Usually, complex software products are divided into logical units (called components in this specification). A component is typically maintained in a version control system. It has a build procedure generating binary artifacts from source code and a release process to make it available for consumers. Usually, releases are repeated from time to time, making new versions available. A component is a logical unit within a software product. It is a semantic bracket around software pieces belonging together because they fulfill a specific purpose. E.g. like, "This is the Frontend Component," "This is the Database component," and "This is the Kubernetes vertical autoscale component."

@@ -9,22 +9,22 @@ to be known either by dedicated implementations of the model or by applications 
 
 There are two different kinds of extensions: functional and semantic.
 
-### Functional extensions
+## Functional extensions
 
-  Functional extensions offer the possibility to enrich an implementation of the Open Component Model core 
+  Functional extensions offer the possibility to enrich an implementation of the Open Component Model core
   with technology-specific parts to support more technology environments,
   like storage backends or artifact types.
 
   The functional extension points are:
 
-  - [Component Descriptor Serialization](#component-descriptor-serialization)
-  - [Storage Backends](#storage-backends)
-  - [Access Methods](#access-methods)
-  - [Digest Algorithms](#digest-algorithms)
-  - [Signing Algorithms](#signing-algorithms)
-  - [Artifact Normalization](#artifact-normalization)
-  - [Component Descriptor Normalization](#component-descriptor-normalization)
-  - [Label Merge Algorithms](#label-merge-algorithms)
+- [Component Descriptor Serialization](#component-descriptor-serialization)
+- [Storage Backends](#storage-backends)
+- [Access Methods](#access-methods)
+- [Digest Algorithms](#digest-algorithms)
+- [Signing Algorithms](#signing-algorithms)
+- [Artifact Normalization](#artifact-normalization)
+- [Component Descriptor Normalization](#component-descriptor-normalization)
+- [Label Merge Algorithms](#label-merge-algorithms)
 
 ### Semantic extensions
   
@@ -33,8 +33,8 @@ There are two different kinds of extensions: functional and semantic.
 
   The semantic extension points are:
 
-  - [Artifact Types](#artifact-types)
-  - [Label Types](#label-types)
+- [Artifact Types](#artifact-types)
+- [Label Types](#label-types)
 
 <br>
 <br>
@@ -45,11 +45,10 @@ The elements used to describe a component version can be represented in a serial
 typically as yaml document. This document MUST contain a format specification version
 with the concrete representation of the model elements of a component version.
 The defined formats are described [here](../04-extensions/00-component-descriptor/README.md).
-    
 
 ## Storage Backends
 
-The Open Component Model specification does not describe a dedicated remotely accessible 
+The Open Component Model specification does not describe a dedicated remotely accessible
 repository API (like for example the [OCI distribution specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md)).
 Instead, the model is intended to be stored in any kind of storage sub system,
 which is able to store a potentially unlimited number of blobs with
@@ -77,12 +76,12 @@ A concrete implementation of a storage backend extension consists of two parts:
 - a language-independent mapping of the OCM elements to the elements available in the storage backend
 and a formal specification how the abstract model operations are mapped
 to operations provided by the storage backend.
-- a language-specific binding of the formerly described mapping 
+- a language-specific binding of the formerly described mapping
 
 By defining the language-independent part used for those operations the interoperability
 between different implementations is assured.
 
-#### Repository Specification
+### Repository Specification
 
 An OCM repository is defined by the type of the storage backend and a set of attributes
 specific for this type, which specify the instance of the used backend. For example, this could
@@ -106,10 +105,11 @@ implementation of the [abstract model operations](../03-persistence/01-operation
 
 The repository type used in a repository specification consists of
 two parts:
+
 - a repository type name
 - a version
 
-The type name specifies the kind of storage backend mapping to be 
+The type name specifies the kind of storage backend mapping to be
 used to implement an OCM repository interface.
 
 The version is used to specify the attribute structure that describes
@@ -157,7 +157,7 @@ There are two kinds of type name:
 
  The compattern for `name` is:
 
-  ```
+  ```text
   [a-z][a-zA-Z0-9].<DNS domain name>
   ```
 
@@ -167,8 +167,8 @@ The `version` follows this regexp:
   v[1-9][0-9]*
  ```
 
-The repository specification type consists of the 
-repository type name, optionally followed by a version separated by a 
+The repository specification type consists of the
+repository type name, optionally followed by a version separated by a
 slash (`/`). If not specified, version `v1` is assumed.
 
 #### Data Formats
@@ -254,7 +254,7 @@ or the [artifact type](#artifact-types). To fulfill its task an access method ge
 
 The list of centrally defined access methods types can be found [here](../04-extensions/02-access-types/README.md)
 
-####  Access Specification
+### Access Specification
 
 The technical access to the physical content of an artifact described as part of a Component Version is expressed
 by an *Access Specification*. It specifies which access method to use and additionally the type-specific attributes,
@@ -271,6 +271,7 @@ An access specification consists at least of the following fields:
 
 The access type used in a access specification consists of
 two parts:
+
 - an access type name
 - a version
 
@@ -320,7 +321,7 @@ There are two kinds of type name:
 
   So, the complete pattern looks as follows:
 
-  ```
+  ```text
   [a-z][a-zA-Z0-9].<DNS domain name>
   ```
 
@@ -335,11 +336,11 @@ access method type name optionally followed by a version separated by a
 slash (`/`). If not specified the version `v1` is assumed.
 
 Examples:
+
 - `ociArtifact/v1`
 - `myprotocol.acme.org/v1alpha1`
 
-
-####  Access specification format
+#### Access specification format
 
 Every access method MUST define a specification of the attributes required to locate the content.
 This specification MAY be versioned. The type of the access specification MUST contain the access method name
@@ -354,9 +355,9 @@ v[1-9][0-9]*
 ```
 
 Examples:
+
 - `ociArtifact/v1`
 - `myprotocol.acme.org/v1alpha1`
-
 
 If no version is specified, implicitly the version `v1` is assumed.
 
@@ -371,7 +372,7 @@ For example, the access method `ociBlob` requires the OCI repository reference a
     imageReference: ghcr.io/jensh007/ctf/github.com/open-component-model/ocmechoserver/echoserver:0.1.0
 ```
 
-####  Access Method Operations
+#### Access Method Operations
 
 There must be an implementation for all supported external access methods
 according to their specifications. The local access method is mapped
@@ -397,12 +398,10 @@ and stream access for the denoted blob is required.
   of its access specification. If this operation is not supported or proveds an empty string,
   an identity will be calculated based on accessing the byte stream.
 
-
 ## Digest Algorithms
 
 Digest algorithms describe the way digests are calculated from a byte stream.
 The defined algorithms can be found [here](../04-extensions/04-algorithms/digest-algorithms.md).
-
 
 ## Signing Algorithms
 
@@ -420,12 +419,12 @@ The result of a signing is a structured data set with the following fields:
   The mediatype used to represent the signature value. Possible values:
 
   - `application/x-pem-file` signature is stored as multi-block PEM document.
-    The signature block uses the type `SIGNATURE`. This block might describe the 
-    signature algorithm with the block header `Signature Algorithm`. 
+    The signature block uses the type `SIGNATURE`. This block might describe the
+    signature algorithm with the block header `Signature Algorithm`.
     Additionally there might be blocks describing the certificate chain of the used public key.
   - `application/vnd.ocm.signature.rsa` signature is stored as HEX encoded byte stream.
 
-- **`value`** (required) *string* 
+- **`value`** (required) *string*
   
   The signature byte stream according to the specified media type.
 
@@ -439,13 +438,12 @@ The result of a signing is a structured data set with the following fields:
   
   The distinguished name of the subject of the public key certificate.
 
-
 ## Artifact Normalization
 
 If a component is signed this signature should cover the content provided by the component resources.
 Therefore a digest is calculated for the resource content blobs.
 To be able to provide a format-independent digest, the resource blob can be normalized
-before a digest is calculated. For example, an OCI artifact is represented 
+before a digest is calculated. For example, an OCI artifact is represented
 as blob following the [OCI Image Layout Specification](https://github.com/opencontainers/image-spec/blob/main/image-layout.md).
 
 Unfortunately the byte stream of the resulting artifact blob is not stable,
@@ -476,7 +474,7 @@ the normalization is a *digest specification* with the following fields
 
 The already defined digesters can be found [here](../04-extensions/04-algorithms/artifact-normalization-types.md).
 
-Example: 
+Example:
 
 ```yaml
 resources:
@@ -497,13 +495,14 @@ resources:
 ## Component Descriptor Normalization
 
 The component descriptor contains several kinds of information:
+
 - volatile label settings, which might be changeable.
 - artifact access information, which might be changed during transport steps.
 - static information describing the features and artifacts of a component version.
 
 The digest of a component descriptor is calculated on a normalized form of its
 elements. The normalized form contains only the signature
-relevant information, everything else gets removed during the normalization process. 
+relevant information, everything else gets removed during the normalization process.
 The resulting string is the source for calculating the digest.
 This digest is then finally signed (and verified).
 
@@ -515,7 +514,7 @@ different normalization algorithms and formats.
 The algorithms used for normalization are listed in the
 [extensions](../04-extensions/04-algorithms/component-descriptor-normalization-algorithms.md) section.
 
-####  Signing-relevant Information in Component Descriptors
+### Signing-relevant Information in Component Descriptors
 
 Relevant fields are:
 
@@ -527,14 +526,14 @@ Relevant fields are:
 - Sources without access method specification see [below](#artifacts)
 - References see [below](#references)
 
-####  Artifacts
+#### Artifacts
 
 Access method specifications for sources and resources are completely ignored.
 A resource or source is ignored, if the access method type is `none`
-or the hash algorithm of the digest specification is `NO-DIGEST` and the 
+or the hash algorithm of the digest specification is `NO-DIGEST` and the
 normalization algorithm is `EXCLUDE-FROM-SIGNATURE`.
 
-####  Labels
+#### Labels
 
 Labels by default are removed before signing, but can be marked with a special boolean
 property `signing` set to `true`. This property indicates that the label is
@@ -556,7 +555,7 @@ labels:
 `label1` will be excluded from the digest, whereas `label2` will be included.
 The value of any label is taken as is, preserving a potentially deeply nested structure.
 
-####  References 
+#### References
 
 If a component version contains references to other component versions,
 their digests are stored along with the reference as digest descriptor.
@@ -579,22 +578,22 @@ componentReferences:
 ...
 ```
 
-####  Applying Normalization Algorithms
+#### Applying Normalization Algorithms
 
-The normalization algorithm provides a stable deserialization format based on the 
+The normalization algorithm provides a stable deserialization format based on the
 elements of a component descriptor, excluding the fields not relevant for signing.
 Afterwards the resulting byte stream is hashed using a [digest algorithm](#digest-algorithms).
 The resulting digest is the digest of the component version.
 
 ## Label Merge Algorithms
 
-Value merge algorithms are used during a transfer of a component version into a target repository 
+Value merge algorithms are used during a transfer of a component version into a target repository
 to merge label values, in case the transferred version is already present
 and the new content does not hamper the digest of the old one.
- 
+
 This scenario is used to re-transfer updated content of non-signature relevant labels
 (for example updated routing slips).
- 
+
 Hereby, potential changes in the target must be merged with the new inbound content.
 This is done by executing value merge algorithms for changed label values.
 
@@ -609,7 +608,7 @@ a hierarchical name prefixed at least with a DNS-like domain owned by the provid
   <DNS domain name>/[a-z][a-zA-Z0-9]*
   ```
 
-The merge algorithm is described by a specification descriptor optionally provided 
+The merge algorithm is described by a specification descriptor optionally provided
 by the field `merge` as part of a label descriptor. It has the following fields:
 
 - **`algorithm`** (required) *string*
@@ -626,7 +625,7 @@ Example:
 labels:
   - name: mylabel
     value: ...
-    merge: 
+    merge:
       algorithm: mapListMerge
       config:
         keyField: name
@@ -645,7 +644,7 @@ as part of the component descriptor.
 The currently specified algorithms for label merge can be found in the
 [extensions](../04-extensions/04-algorithms/label-merge-algorithms.md) section.
 
-## Artifact Types 
+## Artifact Types
 
 Artifact types describe the meaning of an artifact independent of their technical representation in a blob format.
 The artifact types defined by the core model (this specification) are described
@@ -658,7 +657,7 @@ Dynamic attribution of model elements with additional information is possible us
 To be interpretable by tools the meaning of a label must be uniquely derivable from its name,
 regardless of the creator of a concrete label entry in a component version.
 To assure that every consumer of a component version has the same understanding odf the label,
-label names MUST be globally unique. 
+label names MUST be globally unique.
 
 To combine globally uniqueness and arbitrarely extensibility of label names,
 they must comply with some namespaced naming scheme.
@@ -698,7 +697,7 @@ There are two flavors of labels:
   <DNS domain name>/[a-z][a-zA-Z0-9]*
   ```
 
-####  Format Versions
+### Format Versions
 
 To be interpretable by tools, every label MUST define a specification of its attributes,
 to describe its value space. This specification may be versioned.
@@ -709,6 +708,6 @@ The version must match the following regexp
 v[0-9]+([a-z][a-z0-9]*)?
 ```
 
-####  Predefined Labels
+#### Predefined Labels
 
 So far, no centrally predefined labels have been defined.

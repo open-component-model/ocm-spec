@@ -8,11 +8,12 @@ To describe a repository context for an OCM repository conforming to this specif
 
 ### Synopsis
 
-```
+```text
 type: OCIRegistry[/VERSION]
 [ATTRIBUTES]
 ```
-```
+
+```text
 type: ociRegistry[/VERSION]
 [ATTRIBUTES]
 ```
@@ -20,7 +21,6 @@ type: ociRegistry[/VERSION]
 ### Description
 
 Component descriptors and their artifacts will be mapped to an OCI registry according to the [OCI distribution specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md).
-
 
 ### Specification Versions
 
@@ -76,7 +76,6 @@ According to the [OCI image specification](https://github.com/opencontainers/ima
   always must be layer 0 of the manifest. It uses the media type
   `application/vnd.ocm.software.component-descriptor.v2+yaml+tar`
 
-
 The descriptor layer contains a tar archive with at least a single file
 with the name `component-descriptor.yaml` containing the component descriptor of the
 component version. This file should always be the first file in the tar archive.
@@ -93,9 +92,11 @@ The tags used to represent versions in the [OCI specification](https://github.co
 to OCI-compliant tag names.
 
 The followinmg mapping for version is used, here:
+
 - the optional plus `+` character used to attach build information in semantic versions is mapped to the sequence (`.build-`)
 
 Mapping tags back to versions uses the following mappings:
+
 - the last character sequence (`.build-`) is mapped to a plus (`+`) character.
 
 This way the formal parts of a pre-release of semantic version (separated by dots) are kept
@@ -198,6 +199,7 @@ The OCI image manifest will then have three layers (one for the component-descri
 ```
 
 The image configuration is:
+
 ```yaml
 {
   "componentDescriptorLayer": {
@@ -210,7 +212,7 @@ The image configuration is:
 
 If the repo-url is `ghcr.io/open-component-model/spec-example` individual blobs can be accessed using references like
 
-```
+```text
 ghcr.io/open-component-model/spec-example/component-descriptors/github.com/open-component-model/spec-example@sha256:f5ba8322a580272bbaf93678c48881aa799795bafb9998600655fa669f6ea7bd
 ghcr.io/open-component-model/spec-example/component-descriptors/github.com/open-component-model/mymaspec-exampleriadb@sha256:0e75813f479e5486985747d6f741ee63d824097c8ee7e48b558bac608bded669
 ghcr.io/open-component-model/spec-example/component-descriptors/github.com/open-component-model/spec-example@sha256:7acd701465611ed8a45d7889b4f3f6ed5e1450ca446f90fd6406cc59ea2baea8

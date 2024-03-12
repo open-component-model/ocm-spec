@@ -10,7 +10,7 @@ To describe a repository context for an OCM repository conforming to this specif
 
 ### Synopsis
 
-```
+```text
 type: CommonTransportFormat[/VERSION]
 [ATTRIBUTES]
 ```
@@ -35,17 +35,16 @@ The type specific specification fields are:
 - **`fileFormat`** *string*
 
   The file format to use:
-    - `directory`: stored as file hierarchy in a directory
-    - `tar`: stored as file hierarchy in a TAR file
-    - `tgz`: stored as file hierarchy in a GNU-zipped TAR file (tgz)
+  - `directory`: stored as file hierarchy in a directory
+  - `tar`: stored as file hierarchy in a TAR file
+  - `tgz`: stored as file hierarchy in a GNU-zipped TAR file (tgz)
 
 - **`accessMode`** (optional) *byte*
 
   Access mode used to access the content:
-    - 0: write access
-    - 1: read-only
-    - 2: create id not existent, yet
-
+  - 0: write access
+  - 1: read-only
+  - 2: create id not existent, yet
 
 ## Element Mapping
 

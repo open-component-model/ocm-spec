@@ -17,11 +17,11 @@ The transport target might even be an archive or filesystem. This enables the tr
 
 A transport might be done with various options:
 
-- *recursive or non-recursive*
+* *recursive or non-recursive*
 
   If a component version should be transferred into a local environment all referenced component versions have to be transferred too. This is called a recursive transport.
 
-- *by-value or by-reference*
+* *by-value or by-reference*
 
   It is possible to transfer component version as they are. This means, only the
   component version meta information including the component descriptor and the local blobs are transferred, but externally referenced artifacts are kept at their current location.  If a transport is done by-value the content of the external artifacts is transferred too.
@@ -31,18 +31,17 @@ A transport might be done with various options:
 
 A transport of a component version from one component repository into another one can be done in several ways:
 
-- directly from an OCM repository to another one: To support transport by value requires the availability of a blob state in the target environment.
-- indirectly using an intermediate file based format: This format must be capable to store blobs that have to be transported side-by-side with the component descriptors. In this format the component descriptor must be capable to describe the access to those locally stored blobs.
+* directly from an OCM repository to another one: To support transport by value requires the availability of a blob state in the target environment.
+* indirectly using an intermediate file based format: This format must be capable to store blobs that have to be transported side-by-side with the component descriptors. In this format the component descriptor must be capable to describe the access to those locally stored blobs.
 
 To simplify and unify the handling of those two scenarios, and generally the handling of blobs in various environments, a component repository must also include support for storing blobs under the identity of the component descriptor. A repository implementation may forward this task to a predefinied other blob store or handle this part of the API in its own way.
 
 This enables:
 
-- a simple usage of a component repository to store any content without the need of always requiring other external stores for (possibly specific types of) resources, e.g. for storing simple configuration data along with the component descriptor.
-- providing a respository implementation for file system formats that can be used transparently by component tools.
-- the usage of a minimal repository environment on the target side of a transport by just using a dedicated component repository.
+* a simple usage of a component repository to store any content without the need of always requiring other external stores for (possibly specific types of) resources, e.g. for storing simple configuration data along with the component descriptor.
+* providing a respository implementation for file system formats that can be used transparently by component tools.
+* the usage of a minimal repository environment on the target side of a transport by just using a dedicated component repository.
 
 Therefore, *Component Repositories* MUST provide the possibility to store technical artifacts together with the component descriptors in the component repository itself (as *local blobs*). The  general access method type `localBlob` MUST be supported by all repository implementations. This allows packing all component versions with their technical artifacts in a *Component Repository* as a completely self-contained package.
 
 As example, assume some component needs additional configuration data stored in some YAML file. If in any landscape of your transport chain there is only an OCI registry available to store content, you need to define a format how to store such a YAML file in the OCI registry. With *local blobs* you could just upload the file into the *Component Repository*.
-

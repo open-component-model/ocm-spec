@@ -1,6 +1,7 @@
 # Signing
 
 Signing of a component version consists of several steps:
+
 1. digests for all reference component versions are determined and put
    into the dedicated reference element of the component descriptor.
    This is done by recursively following this procedure, but without the signing step.
@@ -31,19 +32,19 @@ Verifying a component descriptor consist of three steps. Any failing step
 
 1. Verify the digest of all resources and component references. Recursively follow component references and create an in-memory representation of the referenced component-descriptor by accessing and digesting all resources and references. Do not trust any digest data in child component-descriptors. The digest of the normalised in-memory representation of a component-reference **MUST** match the digest in the root component-descriptor (that contains a signature we verify in the next step).
 
-```go
-func digestForComponentDescriptor(cd) -> digest:
-  for reference in cd.component.componentReferences:
-    referencedCd = loadCdForReference(reference)
-    reference.Digest = digestForComponentDescriptor(referencedCd)
+   ```go
+   func digestForComponentDescriptor(cd) -> digest:
+   for reference in cd.component.componentReferences:
+      referencedCd = loadCdForReference(reference)
+      reference.Digest = digestForComponentDescriptor(referencedCd)
 
-  for resource in cd.component.Resource:
-    resource.Digest = loadAndDigestResource(resource)
+   for resource in cd.component.Resource:
+      resource.Digest = loadAndDigestResource(resource)
 
-  normalisedCd = normaliseComponentDescriptor(cd)
-  digest = createDigestForNormalisedCd
-  return digest
-```
+   normalisedCd = normaliseComponentDescriptor(cd)
+   digest = createDigestForNormalisedCd
+   return digest
+   ```
 
 2. check if calculated digest of the normalized component descriptor matches the
    digest in signatures.digest with hashAlgorithm, NormalisationAlgorithm and Value

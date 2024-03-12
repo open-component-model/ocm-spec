@@ -12,7 +12,7 @@ tree or an OCI artifact blob, as described by a mime type. The access method alw
 
 The definition of an artifact type MUST contain a unique name, the meaning of the content and possible blob formats in form of mime types.
 
-The following table contains all artifact types defined in the core specification. 
+The following table contains all artifact types defined in the core specification.
 
 | TYPE NAME                                     | DESCRIPTION                                                                                                                                |
 |-----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
@@ -21,16 +21,15 @@ The following table contains all artifact types defined in the core specificatio
 | [`gitOpsTemplate`](gitops.md)                   | Filesystem content (tar, tgz) used as GitOps Template, e.g. to set up a git repo used for continuous e using FluxCD  |
 | [`helmChart`](helmchart.md)                     | A Helm Chart stored as OCI artifact or as tar blob (`mediaType` tar) |
 | [`npmPackage`](npm.md)                          | A Node Package Manager [npm](https://www.npmjs.com) archive |
-| [`ociArtifact`](oci-artifact.md)                | A generic OCI artifact following the [open containers image specification](https://github.com/spec/blob/main/spec.md) |
-| [`ociImage`](#oci-image.md)                     | An OCI image or image list  |
+| [`ociArtifact`](oci-artifact.md)                | A generic OCI artifact following the [open containers image specification](https://github.com/opencontainers/image-spec/blob/main/spec.md) |
+| [`ociImage`](oci-image.md)                     | An OCI image or image list  |
 | [`executable`](executable.md)                   | A blob describing an executable program |
-| [`sbom`](sbom.md)                               | A list of ingredients that make up software components (https://www.cisa.gov/sbom) |
+| [`sbom`](sbom.md)                               | A list of ingredients that make up software components (<https://www.cisa.gov/sbom>) |
 
 Some additional types are defined, but not part of the core specification. Support is optional, but the list of names is reserved.
 
 | TYPE NAME          |DESCRIPTION                          |
 |--------------------|-------------------------------------|
 | [`blueprint`](blueprint.md)                   | An installation description for the [landscaper](https://github.com/gardener/landscaper) installation               |
-| [`toiExecutor`](toiExecutor.md)               | A toolset for simple installation in the [OCM CLI](https://github.com/open-component-model/ocm/blob/cm_toi.md) installation environment.    |
-| [`toiPackage`](toiPackackage.md)              | A YAML resource describing the installation for the [OCM CLI](https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_toi.md) TOI installation. |
-
+| [`toiExecutor`](toiexecutor.md)               | A toolset for simple installation in the [OCM CLI](https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_toi.md) installation environment.    |
+| [`toiPackage`](toipackage.md)              | A YAML resource describing the installation for the [OCM CLI](https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_toi.md) TOI installation. |

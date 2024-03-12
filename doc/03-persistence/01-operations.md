@@ -2,7 +2,7 @@
 
 This chapter describes the abstract operations an implementation must provide to interact with  model elements stored in an OCM persistence.
 
-# Abstract Operations defined by the Open Component Model
+## Abstract Operations defined by the Open Component Model
 
 The Open Component Model defines abstract operations that must be available to work with a component repository view as interpretation layer on-top of dedicated well-known storage subsystems (like an OCI registry or an S3 blob store). These operations build the first extension point of OCM, which allows to map the OCM functionality onto any blobstore-like storage system.
 
@@ -12,7 +12,7 @@ The concrete incarnation of those repository and access method operations depend
 
 By defining the data formats used for those operations the interoperability between different implementations is enabled.
 
-## Repository Operations
+### Repository Operations
 
 The Open Component Model specification does not describe a dedicated remotely accessible repository API (like for example the [OCI distribution specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md)).
 
@@ -26,7 +26,7 @@ to work with component information stored in such a storage backend.
 Every such binding must support at least the mandatory set of abstract operations
 working with elements of the component model (see below).
 
-### Mandatory Operations
+#### Mandatory Operations
 
 The following operations are mandatory:
 
@@ -63,7 +63,7 @@ The following operations are mandatory:
 
   List all the known versions of a component specified by its component identity.
 
-### Optional Operations
+#### Optional Operations
 
 Optional operations might be:
 
@@ -89,7 +89,7 @@ Optional operations might be:
   It should not only return component identities, that are direct children,
   but traverse the complete subtree.
 
-## Access Method Operations
+### Access Method Operations
 
 There must be an implementation for all supported external access methods
 according to their specifications. The local access method is mapped to the local blob access provided by the repository.
@@ -103,4 +103,3 @@ They have to support read access, only. At least a media type and stream access 
 - **`<method>.GetStream(RepositoryContext, ComponentVersion, AccessSpecification) (Byte Stream, error)`**
 
   Provide access to the blob content described by a dedicated access specification.
-
