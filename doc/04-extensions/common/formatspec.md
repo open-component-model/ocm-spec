@@ -172,7 +172,7 @@ It is a directory containing
 
 - **`component-descriptor.yaml`** *YAML file*
 
-  This yaml is the serialized form of a [component descriptor](../../specification/elements#component-descriptor).
+  This yaml is the serialized form of a [component descriptor](../../01-model/01-model.md#components-and-component-versions).
 
 - **`blobs`** *directory*
 
@@ -182,7 +182,7 @@ It is a directory containing
   Hereby the algorithm separator character is replaced by a dot (".").
   Every file SHOULD be referenced, directly or indirectly, in the
   component descriptor by a
-  [`localBlob` access specification](../../appendix/B/localBlob.md). The `localReference` value is the file name of the blob file in the `blobs` directory.
+  [`localBlob` access specification](../../04-extensions/01-artifact-types/blob.md). The `localReference` value is the file name of the blob file in the `blobs` directory.
 
 This format might be used in various technical forms: as structure of an
 operating system file system, a virtual file system or as content of

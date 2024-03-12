@@ -20,7 +20,7 @@ A normalized component descriptor is a subset of its elements containing only th
 Like for signature algorithms, the model offers the possibility to work with
 different normalization algorithms and formats.
 
-The algorithms used for normalization are listed in the [extensible parts](../04-extensions/01-extensions.md#normalization-algorithms) of the specification.
+The algorithms used for normalization are listed in the [extensible parts](../04-extensions/04-algorithms/component-descriptor-normalization-algorithms.md) of the specification.
 
 ## Signing-relevant Information in Component Descriptors
 

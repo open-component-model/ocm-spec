@@ -11,5 +11,5 @@ steps based on content described by the Open Component Model
 A TOI executor is YAML resource describing the features of an
 TOI executor image.
 
-It is used by a [`toiPackage` resource](toiPackage.md), which
+It is used by a [`toiPackage` resource](./toipackage.md), which
 describes its instantiation for a dedicated installation object.

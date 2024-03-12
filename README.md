@@ -104,7 +104,7 @@ The following chapters provide a formal description of the format to describe so
   * 4.4.2 [Digest Algorithms](doc/04-extensions/04-algorithms/label-merge-algorithms.md)
   * 4.4.3 [Label Merge Algorithm](doc/04-extensions/04-algorithms/digest-algorithms.md)
   * 4.4.4 [Component Descriptor Normalization Algorithms](doc/04-extensions/04-algorithms/component-descriptor-normalization-algorithms.md)
-  * 4.4.5 [Signing Algorithms](doc/04-algorithms/04-algorithms/signing-algorithms.md)
+  * 4.4.5 [Signing Algorithms](doc/04-extensions/04-algorithms/signing-algorithms.md)
 
 ### Guidelines and Conventions
 

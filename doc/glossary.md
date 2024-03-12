@@ -8,11 +8,11 @@
 
 defines how to access the content of an [artifact](#artifact)
 
-### [Access Method Operations](03-operations/01-operations.md#access-method-operations)<a id="accmethops"/>
+### [Access Method Operations](01-model/07-extensions.md#access-method-operations)<a id="accmethops"/>
 
 the operations an implementation of an [access method](#accmeth) has to support.
 
-### [Access Method Type](01-model/02-elements.md/#access-types)<a id="acctype"/>
+### [Access Method Type](04-extensions/02-access-types/README.md)<a id="acctype"/>
 
 the type of an [access specification](#accspec) determining the formal procedure
 to use to access the blob content of an [artifact](#artifact).
@@ -40,7 +40,7 @@ the (logical) digest of an [artifact](#artifact).
 the transformation of a technical blob content of an [artifact](#artifact) depending
 on its type into a serialization-agnostic digest.
 
-### [Artifact Reference](02-processing/01-references#referencing)<a id="artref"/>
+### [Artifact Reference](02-processing/01-references.md#referencing)<a id="artref"/>
 
 a relative or absolute reference to an [artifact](#artifact) described by a
 [component version](#compvers).
@@ -156,7 +156,7 @@ the process of adapting content delivered as [artifacts](#artifacts) in a [compo
 
 ### [Mapping](./03-persistence/02-mappings.md#mappings-for-ocm-persistence)<a id="mapping"/>
 
-the mapping of the [elements](01-model/02-elements.md) of the Open Component Model onto a storage technology described by a [repository type](#repotype).
+the mapping of the [elements](01-model/02-elements-toplevel.md) of the Open Component Model onto a storage technology described by a [repository type](#repotype).
 
 ### [Model-Tool Contract](./05-guidelines/02-contract.md)<a id="contract"/>
 
@@ -216,13 +216,13 @@ a reference to an [artifact](#artifact) described by a [component version](#comp
 a given component version exploiting the [aggregation feature](#aggregation) of the Open Component
 Model. It is part of the [model-tool contract](#contract).
 
-### [Repository Operations](03-persistence/0-operations.md)<a id="repops"/>
+### [Repository Operations](03-persistence/01-operations.md#repository-operations)<a id="repops"/>
 
 abstract operations that have to be provided by a language binding for a
 [mapping](#mapping) of the [Open Component Model](#ocm) to a dedicated storage
 technology.
 
-### [Repository Type](./04-persistence/01-mappings.md#mappings-for-ocm-persistence)<a id="repoptype"/>
+### [Repository Type](./03-persistence/02-mappings.md#mappings-for-ocm-persistence)<a id="repoptype"/>
 
 the type of a [mapping](#mapping) of the [Open Component Model](#ocm) specification
 to a storage technology.
@@ -233,7 +233,7 @@ a delivery artifact described by a [component version](#compvers).
 
 ## S
 
-### [Signature](02-processing/03-signing.md#signing)<a id="signature"/>
+### [Signature](02-processing/02-signing.md#signing)<a id="signature"/>
 
 a [component version](#compvers) may be signed by an authority, the signature as
 result of such a signing process is stored along with the component version.
@@ -255,7 +255,7 @@ dedicated variants of some [extension points](#ext). See [access methods](#accme
 
 ## T
 
-### [Transport](02-guidelines/01-transport.md)<a id="transport"/>
+### [Transport](05-guidelines/01-transport.md)<a id="transport"/>
 
 the operation on [component versions](#compvers) transferring content from
 one OCM repository into another one.

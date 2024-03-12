@@ -31,5 +31,5 @@ Some additional types are defined, but not part of the core specification. Suppo
 | TYPE NAME          |DESCRIPTION                          |
 |--------------------|-------------------------------------|
 | [`blueprint`](blueprint.md)                   | An installation description for the [landscaper](https://github.com/gardener/landscaper) installation               |
-| [`toiExecutor`](toiExecutor.md)               | A toolset for simple installation in the [OCM CLI](https://github.com/open-component-model/ocm/blob/cm_toi.md) installation environment.    |
-| [`toiPackage`](toiPackackage.md)              | A YAML resource describing the installation for the [OCM CLI](https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_toi.md) TOI installation. |
+| [`toiExecutor`](toiexecutor.md)               | A toolset for simple installation in the [OCM CLI](https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_toi.md) installation environment.    |
+| [`toiPackage`](toipackage.md)              | A YAML resource describing the installation for the [OCM CLI](https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_toi.md) TOI installation. |

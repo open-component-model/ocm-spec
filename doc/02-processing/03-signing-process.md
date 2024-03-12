@@ -76,7 +76,7 @@ Normalization algorithm types may be versioned and SHOULD match the following re
 
 For example: `ociArtifactDigest/v1` or `jsonNormalisationV2`
 
-The normalization algorithms are listed in the [extensible parts](../04-extensions/01-extensions.md#normalization-algorithms) of the specification
+The normalization algorithms are listed in the [extensible parts](../04-extensions/04-algorithms/component-descriptor-normalization-algorithms.md) of the specification
 
 ## Serialization Format
 
