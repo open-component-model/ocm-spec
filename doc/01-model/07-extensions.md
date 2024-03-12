@@ -625,7 +625,7 @@ Example:
 labels:
   - name: mylabel
     value: ...
-    merge: 
+    merge:
       algorithm: mapListMerge
       config:
         keyField: name
