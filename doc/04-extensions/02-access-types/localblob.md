@@ -1,7 +1,8 @@
 # localBlob — Blob Hosted in OCM Repository
 
 ## Synopsis
-```
+
+```text
 type: localBlob/[VERSION]
 [ATTRIBUTES]
 ```
@@ -49,5 +50,3 @@ Attributes:
   If a resource blob is stored locally, the repository implementation may decide to provide an external access information (usable by non OCM-aware tools). For example, an OCI artifact stored as local blob can be additionally stored as regular OCI artifact in an OCI registry.
 
   This additional external access information can be added using a second external access method specification.
-
-

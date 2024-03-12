@@ -1,12 +1,14 @@
 # OCI Artifact or Artifact Index
 
 ## Type Name
+
 **`ociArtifact`**
 
 ## Description
+
 A generic OCI artifact following the [open containers image specification](https://github.com/opencontainers/image-spec/blob/main/spec.md).
 
-## Format Variants:
+## Format Variants
 
 When provided as a blob, the [Artifact Set Archuive Format](../common/formatspec.md#artifact-set-archive-format)
 MUST be used to represent the content of the OCI artifact.
@@ -18,7 +20,7 @@ Media Types:
 - `application/vnd.oci.image.manifest.v1+tar+gzip`: OCI image manifests
 - `application/vnd.oci.image.index.v1+tar.gzip`: OCI index manifests
 
-## Special Support:
+## Special Support
 
 There is a dedicated uploader available for local blobs. It converts a blob with the media type shown above into a regular OCI artifact in an OCI repository.
 

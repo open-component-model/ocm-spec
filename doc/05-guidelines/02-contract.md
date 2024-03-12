@@ -29,11 +29,13 @@ A helm chart describes Kubernetes resources, which are templated using values pr
 Typically, a helm chart contains container image references (often provided as a default value for a template variable). Using such a default value violates the above contract: the location of resources must be taken from the component version describing the deployment (the helm chart). This step is also called *image localization*: All images in a chart must be templated to be able to specify the concrete values by a deployment configuration. An OCM conformant deployment tool must provide the values from the resources of a component version.
 
 A tool used to deploy a component version with helm therefore requires several resources:
+
 - all the images required for the helm chart
 - the helm chart
 - a helm specific description containig a mapping of value names to image locations of the component version.
 
 The OCM-compliant deploy tool (ocm-helm-adapter) must:
+
 - take the helm chart as a resource from the component version
 - know the format of the mapping description and generate the values for helm.
 

@@ -49,6 +49,7 @@ of constraints is then just a partial match of the set of identity attributes.
 You want to describe different image versions to be used
 for different Kubernetes versions deployed on different OS platforms and CPU architectures.
 With identity attributes this can be easily modeled by using
+
 - the `name` attribute for the purpose (e.g. OCM CLI)
 - the `version` attribute for the version
 - and an `extraIdentity` attribute for the intended Kubernetes OS platform and architecture
@@ -120,7 +121,7 @@ The content of a described artifact is accessible by applying its global identit
 <img src="ocmresourceaccess.png" alt="Structure of OCM Specification" width="800"/>
 </div>
 
-The access specification of an artifact may change when component versions are transported among repositories. 
+The access specification of an artifact may change when component versions are transported among repositories.
 
 Examples for access specification types are:
 
@@ -189,7 +190,7 @@ attributes are not allowed at the label entry level.
   They can be changed in any repository the component version has been transferred to.
   This is supported to attach evolving information to a component version.
   But it also implies, that a component version must be updatable (re-transferable) in a certain target repository.
-  This may lead to conflicting changes which might need to be resolved in a non-trivial way. 
+  This may lead to conflicting changes which might need to be resolved in a non-trivial way.
 
   The merge behaviour can be specified together with the label definition using the `merge` attribute.
   It has the following fields:
@@ -245,7 +246,6 @@ Every signature entry has the following formal fields:
 - **`signature`** (required) *Signature Info*
 
   The signature for the specified digest.
-
 
 ## Digest Info
 

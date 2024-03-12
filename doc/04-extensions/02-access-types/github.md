@@ -1,11 +1,13 @@
 # gitHub — Git Commit hosted by GitHub
 
 ## Synopsis
-```
+
+```text
 type: gitHub/v1
 ```
 
 ## Description
+
 Access to a commit in a Git repository.
 
 ## Supported Media Types

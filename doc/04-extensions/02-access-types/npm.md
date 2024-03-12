@@ -1,17 +1,19 @@
 # npm — Node Package Manager archive
 
-# Synopsis
-```
+## Synopsis
+
+```text
 type: npm[/VERSION]
 [ATTRIBUTES]
 ```
 
-# Description
+## Description
+
 Access to an NodeJS package in an NPM registry.
 
 ## Supported Media Types
 
-  -  `application/x-tar`
+- `application/x-tar`
 
 ## Specification Version
 

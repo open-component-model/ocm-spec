@@ -21,11 +21,7 @@ A *Component* is technically defined by a globally unique identifier.
 
 The component identity uses the following naming scheme:
 
-<div>
-
-*&lt;DNS domain>* `/` *&lt;name component> {* `/` *&lt;name component> }*
-
-</div>
+*\<DNS domain>* `/` *\<name component>* { `/` *\<name component>* }
 
 Hereby the DNS domain plus optionally any number of leading name components MUST
 be owned by the provider of a component. For example, `github.com`, as DNS domain
@@ -42,6 +38,7 @@ specification (e.g. `github.com/gardener/external-dns-management:0.15.1`).
 ## Artifacts (Resources and Sources)
 
 The Open Component Model distinguishes two kinds of artifacts:
+
 - *Sources* are optional artifacts that contain the sources, which
   were used to generate the deployment-relevant *Resources*.
 - *Resources* are artifacts that finally make up the deployment-relevant set of artifacts.
@@ -70,7 +67,6 @@ Those attributes are described by formal fields in the component descriptor:
 - **`access`** (required) *Access Specification*
 
   The access specification for the actual artifact (see below)
-
 
 ### Artifact Types
 
@@ -161,7 +157,7 @@ There are two kinds of types:
 
   So, the complete pattern looks as follows:
 
-  ```
+  ```text
   <DNS domain name>/[a-z][a-zA-Z0-9]*
   ```
 
@@ -206,8 +202,8 @@ In addition to the common artifact information, a resource may optionally descri
 A resource uses the following additional formal fields:
 
 - **`relation`** (required) *string['local', 'external']*
-  Indicates whether the entity providing a component is also the provider of the resource ('local') or whether the 
-  resource is provided by a separate entity ('external'). This may be useful to determine whether the entity responsible 
+  Indicates whether the entity providing a component is also the provider of the resource ('local') or whether the
+  resource is provided by a separate entity ('external'). This may be useful to determine whether the entity responsible
   for the component is also responsible for the resource.  
   This property is purely informational and completely unrelated to the access method type.
 
@@ -223,12 +219,12 @@ A resource uses the following additional formal fields:
   This field is used to describe the sources used to generate the resource.
   The selection is done by the following two fields:
 
-    - **`identitySelector`** *map[string]string*
+  - **`identitySelector`** *map[string]string*
 
       Identity attributes determining an appropriate source
       element.
 
-    - **`labels`** (optional) *[]Label*
+  - **`labels`** (optional) *[]Label*
 
       A list of arbitrary labels
 
@@ -285,6 +281,7 @@ A `references` element has the following fields:
   The extra identity of the referenced component.
 
 Example:
+
 ```yaml
 ...
   references:

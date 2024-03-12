@@ -1,12 +1,14 @@
 # ociBlob — Blob hosted in OCI Repository
 
 ## Synopsis
-```
+
+```text
 type: ociBlob[/VERSION]
 [ATTRIBUTES]
 ```
 
-# Description
+## Description
+
 Access of an OCI blob stored in an OCI repository.
 
 ## Supported Media Types

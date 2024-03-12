@@ -1,4 +1,5 @@
 # Artifact Normalization Types
+
 The following algorithms are defined:
 
 - `EXCLUDE-FROM-SIGNATURE`: Blob content is ignored for the signing process.

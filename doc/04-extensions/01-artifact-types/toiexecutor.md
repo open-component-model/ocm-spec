@@ -6,7 +6,7 @@ a possibility to run images taken from a component version with user
 configuration and feed them with the content of this component version.
 It is some basic mechanism which can be used to execute simple installation
 steps based on content described by the Open Component Model
-(see https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_toi-bootstrapping.md).
+(see <https://github.com/open-component-model/ocm/blob/main/docs/reference/ocm_toi-bootstrapping.md>).
 
 A TOI executor is YAML resource describing the features of an
 TOI executor image.

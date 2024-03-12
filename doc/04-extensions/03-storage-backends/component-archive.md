@@ -10,7 +10,7 @@ To describe a repository context for an OCM repository conforming to this specif
 
 ### Synopsis
 
-```
+```text
 type: ComponentArchive/v1
 ```
 
@@ -36,7 +36,6 @@ The type specific specification fields are:
   - `directory`: stored as directory structure
   - `tar`: stored as directory structure in a tar file
   - `tgz`: stored as directory structure in a tar file compressed by GNU Zip
-
 
 ## Element Mapping
 

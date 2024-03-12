@@ -13,6 +13,7 @@ The OCM specification describes an interpretation layer on-top of well-known sto
 Therefore, for every storage technology a mapping must be defined to ensure interoperability between different OCM implementations.
 
 These mappings describe:
+
 - the repository specification type and format used to specify a dedicated repository instance
 - the mapping of the OCM elements to the elements provided by the storage technology.
 
