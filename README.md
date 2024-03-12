@@ -48,8 +48,8 @@ The following chapters provide a formal description of the format to describe so
 * 2. [Processing](doc/02-processing/README.md)
   * 2.1 [Referencing](doc/02-processing/01-references.md#referencing)
     * 2.1.1 [Example](doc/02-processing/01-references.md#example)
-  * 2.2 [Signing](doc/02-processing/03-signing.md#signing)
-    * 2.2.1 [Verification Procedure](doc/02-processing/03-signing.md#verification-procedure)
+  * 2.2 [Signing](doc/02-processing/02-signing.md#signing)
+    * 2.2.1 [Verification Procedure](doc/02-processing/02-signing.md#verification-procedure)
   * 2.3 [Normalization](doc/02-processing/03-signing-process.md#signing-process-and-normalization)
     * 2.3.1 [Artifact Digest](doc/02-processing/03-signing-process.md#determing-the-artifact-digests)
     * 2.3.2 [Normalization Types](doc/02-processing/03-signing-process.md#normalization-types)
@@ -95,15 +95,15 @@ The following chapters provide a formal description of the format to describe so
   * 4.2.6 [s3](doc/04-extensions/02-access-types/s3.md)
   * 4.2.7 [npm](doc/04-extensions/02-access-types/npm.md)
 * 4.3 [Storage Backend Mappings](doc/04-extensions/03-storage-backends/README.md)
-  * 4.3.1 [OCIRegistry](doc/04-extensions/03-storage-backend/soci.md)
+  * 4.3.1 [OCIRegistry](doc/04-extensions/03-storage-backends/oci.md)
   * 4.3.2 [FileSystem (CTF)](doc/04-extensions/03-storage-backends/ctf.md)
   * 4.3.3 [FileSystem (Component Archive)](doc/04-extensions/03-storage-backends/component-archive.md)
   * 4.3.4 [AWS S3](doc/04-extensions/03-storage-backends/s3.md)
 * 4.4 [Algorithms](doc/04-extensions/04-algorithms/README.md)
-  * 4.4.1 [Artifact Normalization](doc/04-algorithms/04-algorithms/artifact-normalization-types.md)
-  * 4.4.2 [Digest Algorithms](doc/04-algorithms/04-algorithms/label-merge-algorithms.md)
-  * 4.4.3 [Label Merge Algorithm](doc/04-algorithms/04-algorithms/digest-algorithms.md)
-  * 4.4.4 [Component Descriptor Normalization Algorithms](doc/04-algorithms/04-algorithms/component-descriptor-normalization-algorithms.md)
+  * 4.4.1 [Artifact Normalization](doc/04-extensions/04-algorithms/artifact-normalization-types.md)
+  * 4.4.2 [Digest Algorithms](doc/04-extensions/04-algorithms/label-merge-algorithms.md)
+  * 4.4.3 [Label Merge Algorithm](doc/04-extensions/04-algorithms/digest-algorithms.md)
+  * 4.4.4 [Component Descriptor Normalization Algorithms](doc/04-extensions/04-algorithms/component-descriptor-normalization-algorithms.md)
   * 4.4.5 [Signing Algorithms](doc/04-algorithms/04-algorithms/signing-algorithms.md)
 
 ### Guidelines and Conventions
@@ -123,7 +123,7 @@ The following chapters provide a formal description of the format to describe so
 
 ## Central OCM project web page
 
-Check out the main project [web page](https://ocm.software) to find out more about OCM. It is your central entry point to all kinds of ocm related [docs and guides](https://ocm.software/docoverview/context), this [spec](https://ocm.software/spec/) and all project-related [github repositories](https://github.com/open-component-model). It also offers a [Getting Started](https://ocm.software/docs/guides/getting-started-with-ocm) to quickly make your hands dirty with ocm, its toolset and concepts :-)
+Check out the main project [web page](https://ocm.software) to find out more about OCM. It is your central entry point to all kinds of ocm related [docs and guides](https://ocm.software/docs/overview/context/), this [spec](https://ocm.software/spec/) and all project-related [github repositories](https://github.com/open-component-model). It also offers a [Getting Started](https://ocm.software/docs/guides/getting-started-with-ocm) to quickly make your hands dirty with ocm, its toolset and concepts :-)
 
 ## Contributing
 
