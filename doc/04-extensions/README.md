@@ -21,7 +21,7 @@ addendums or for customer-specific environments.
   * 2.1 [localBlob](02-access-types/localblob.md)
   * 2.2 [ociArtifact](02-access-types/ociartifact.md)
   * 2.3 [ociBlob](02-access-types/ociblob.md)
-  * 2.4 [helm](h02-access-types/elm.md)
+  * 2.4 [helm](02-access-types/elm.md)
   * 2.5 [gitHub](02-access-types/github.md)
   * 2.6 [s3](02-access-types/s3.md)
   * 2.7 [npm](02-access-types/npm.md)
