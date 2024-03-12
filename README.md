@@ -12,9 +12,9 @@ OCM provides a common language usable by tools to talk about software artifacts,
 
 The following chapters provide a formal description of the format to describe software artifacts and a storage layer to persist those and make them available from remote.
 
-# Specification
+## Specification
 
-## Core Parts
+### Core Parts
 
 * 1. [Model](doc/01-model/README.md)
   * 1.1. [OCM Model](doc/01-model/01-model.md#ocm-model)
@@ -74,7 +74,7 @@ The following chapters provide a formal description of the format to describe so
   * 3.3. [Mappings for OCM Persistence](doc/03-persistence/02-mappings.md#mappings-for-ocm-persistence)
     * 3.3.1. [Storage Backend Mappings for the Open Component Model](doc/03-persistence/02-mappings.md#storage-backend-mappings-for-the-open-component-model)
 
-## Extensible Parts
+### Extensible Parts
 
 * 4 [Extensions](doc/04-extensions/README.md)
 * 4.1 [Artifact Types](doc/04-extensions/01-artifact-types/README.md)
@@ -107,7 +107,7 @@ The following chapters provide a formal description of the format to describe so
   * 4.4.4 [Component Descriptor Normalization Algorithms](doc/04-algorithms/04-algorithms/component-descriptor-normalization-algorithms.md)
   * 4.4.5 [Signing Algorithms](doc/04-algorithms/04-algorithms/signing-algorithms.md)
 
-## Guidelines and Conventions
+### Guidelines and Conventions
 
 * 5. [Guidelines](doc/05-guidelines/README.md)
   * 5.1. [Transport](doc/05-guidelines/01-transport.md#transport)
@@ -118,7 +118,7 @@ The following chapters provide a formal description of the format to describe so
     * 5.3.1. [Relative Artifact References](doc/05-guidelines/03-references.md#relative-artifact-references)
     * 5.3.2. [Absolute Artifact References](doc/05-guidelines/03-references.md#absolute-artifact-references)
 
-## Glossary
+### Glossary
 
 * 6. [Glossary](doc/glossary.md)
 
