@@ -1,4 +1,5 @@
 default: true
 
 MD013: false #https://github.com/DavidAnson/markdownlint/blob/HEAD/doc/Rules.md#md013
+MD029: false #https://github.com/DavidAnson/markdownlint/blob/HEAD/doc/Rules.md#md033
 MD033: false #https://github.com/DavidAnson/markdownlint/blob/HEAD/doc/Rules.md#md033
