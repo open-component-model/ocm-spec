@@ -58,6 +58,10 @@ the artifact blob.
 an abstract entity describing a dedicated usage context or
 meaning for a provided piece of software.
 
+### Component Constructor<a id="component constructor"/>
+
+a file that acts as input for the OCM CLI to construct one or multiple component version(s).
+
 ### [Component Descriptor](01-model/01-model.md#components-and-component-versions)<a id="compdesc"/>
 
 the formal description of a [component version](#compvers).
