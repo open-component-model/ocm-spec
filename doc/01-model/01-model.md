@@ -4,7 +4,7 @@ This chapter describes the elements and data formats the Open Component Model de
 
 ## Introduction
 
-The Open Compoment Model consists of a core model plus extensions. The core model describes the key elements *Component*, *Component Version* being stored in *Component Registries*. *Component Versions* have a type and an identity, and consist of *sources*, *resources* and *references. *Component Registries* are containers persisting component versions and may exist in various types for different storage technologies. Many parts of the Open-Component-Model can be extended to provide flexibility and adaption to different environments. Some of these extension are defined in this specification. Others may be defined customer-specific or for dedicated environments.
+The Open Compoment Model consists of a core model plus extensions. The core model describes the key elements *Component*, *Component Version* being stored in *Component Registries*. *Component Versions* have a type and an identity, and consist of *sources*, *resources* and *references*. *Component Registries* are containers persisting component versions and may exist in various types for different storage technologies. Many parts of the Open-Component-Model can be extended to provide flexibility and adaption to different environments. Some of these extension are defined in this specification. Others may be defined customer-specific or for dedicated environments.
 
 The following chapters will provide more details about these concepts.
 
