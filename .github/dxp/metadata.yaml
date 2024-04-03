@@ -13,12 +13,6 @@ spec:
     lifecycle: production
   team:
     name: ocm
-    productOwner: D041187
-    technicalOwner: D032610
-    contactChannels:
-      - channelType: slack
-        value: sap-tech-ocm
-        link: https://my.slack.com/archives/C03B338HG3H
   logo: https://ocm.software/images/logo-image.png
   # ci:
   #   pipelineLinks:
