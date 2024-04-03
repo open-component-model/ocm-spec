@@ -1,0 +1,51 @@
+kind: Component
+metadata:
+  name: ocm-spec
+  displayName: OCM Specification
+  description: OCM Specification
+  tags:
+    - ocm
+    - open-source
+    - open-component-model
+spec:
+  type:
+    name: schema
+    lifecycle: production
+  team:
+    name: ocm
+    productOwner: D041187
+    technicalOwner: D032610
+    contactChannels:
+      - channelType: slack
+        value: sap-tech-ocm
+        link: https://my.slack.com/archives/C03B338HG3H
+  logo: https://ocm.software/images/logo-image.png
+  # ci:
+  #   pipelineLinks:
+  #     - name: ci-pipeline
+  #       url: https://sample.com
+  #       icon: .sap-icon--factory
+  #       description: Link to the build job
+  docs:
+    techDocsLinks:
+      - name: OCM Specification
+        url: https://github.com/open-component-model/ocm-spec/blob/main/README.md
+        icon: .sa-icon--sys-help-2
+        description: OCM Specification
+  issues:
+    issueTrackerLinks:
+      - name: Issues
+        url: https://github.com/open-component-model/ocm-spec/issues
+        icon: .sa-icon--task
+        description: Issues created for the component
+  links:
+    - name: Getting Started with Flux & OCM
+      url: https://ocm.software/docs/guides/getting-started-with-ocm-flux/
+      icon: .sa-icon--factory
+  innerSource:
+    motivation: Open for any SAP contribution
+    contributions:
+      - any
+    skills:
+      - "Go"
+      - "SBOM"
