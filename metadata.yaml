@@ -9,7 +9,7 @@ metadata:
     - open-component-model
 spec:
   type:
-    name: schema
+    name: specification
     lifecycle: production
   team:
     name: ocm
