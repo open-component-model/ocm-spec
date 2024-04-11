@@ -6,7 +6,7 @@
 
 ### [Access Method](01-model/07-extensions.md#access-methods)<a id="accmeth"/>
 
-defines how to access the content of an [artifact](#artifact)
+defines how to access the content of an [artifact](#artifact).
 
 ### [Access Method Operations](01-model/07-extensions.md#access-method-operations)<a id="accmethops"/>
 
@@ -20,7 +20,7 @@ to use to access the blob content of an [artifact](#artifact).
 ### [Access Specification](01-model/07-extensions.md#access-specification)<a id="accspec"/>
 
 the specification of the technical access path to the physical blob content of
-an [artifact](#artifact.
+an [artifact](#artifact).
 
 ### [Aggregation](02-processing/01-references.md)<a id="aggregation"/>
 
@@ -96,7 +96,7 @@ the globally unique identity of a [component version](#compvers).
 ### [Component Version Reference](02-processing/01-references.md#referencing)<a id="compref"/>
 
 a reference to a [component versions](#compvers) in a component version to
-describe an aggregation relationship..
+describe an aggregation relationship.
 
 ## D
 
@@ -135,10 +135,10 @@ additional parts of the identity of an [element](#elemid) of a [component versio
 
 ### Helm Chart<a id="helmchart"/>
 
-A set of files describing the deplyoment of a Kubernetes application using
+a set of files describing the deplyoment of a Kubernetes application using
 the [Helm](https://helm.sh/) deployment mechanism.
 
-see [element identity](#elemid), [component identity](#compid), [component version identity](#compversid)
+See [element identity](#elemid), [component identity](#compid), [component version identity](#compversid)
 
 ## I
 
@@ -151,7 +151,7 @@ see [element identity](#elemid), [component identity](#compid), [component versi
 ### [Labels](01-model/03-elements-sub.md#labels)<a id="labels"/>
 
 arbitrary typed information snippets attached to [component versions](#compvers),
-[artifacts](#artifacts) and [references](#compref).
+[artifacts](#artifact) and [references](#compref).
 
 ### [`localBlob`](./04-extensions/02-access-types/localblob.md)<a id="localblob"/>
 
@@ -159,7 +159,8 @@ arbitrary typed information snippets attached to [component versions](#compvers)
 
 ### [Localization](./05-guidelines/02-contract.md#example-helm-deployment)<a id="localization"/>
 
-the process of adapting content delivered as [artifacts](#artifacts) in a [component versions](#compvers) to a local repository landscape in a target environment.
+the process of adapting content delivered as [artifacts](#artifact) in a [component versions](#compvers)
+to a local repository landscape in a target environment.
 
 ## M
 
@@ -231,7 +232,7 @@ abstract operations that have to be provided by a language binding for a
 [mapping](#mapping) of the [Open Component Model](#ocm) to a dedicated storage
 technology.
 
-### [Repository Type](./03-persistence/02-mappings.md#mappings-for-ocm-persistence)<a id="repoptype"/>
+### [Repository Type](./03-persistence/02-mappings.md#mappings-for-ocm-persistence)<a id="repotype"/>
 
 the type of a [mapping](#mapping) of the [Open Component Model](#ocm) specification
 to a storage technology.
@@ -256,7 +257,7 @@ used to generate one or more of the described [resources](#resource).
 
 a format definition for the specification of attributes for
 dedicated variants of some [extension points](#ext). See [access methods](#accmeth),
-[repository types](#repotype), and [labels](#label).
+[repository types](#repotype), and [labels](#labels).
 
 ### [`s3`](./04-extensions/02-access-types/s3.md)<a id="s3"/>
 
@@ -273,4 +274,4 @@ one OCM repository into another one.
 
 a formal representation of the kind of an [extension point](#ext) of the
 [Open Component Model](#ocm). See [repository type](#repotype),
-[access method type](#acctype), [artifact type](#arttype) [label](#label).
+[access method type](#acctype), [artifact type](#arttype) [label](#labels).
