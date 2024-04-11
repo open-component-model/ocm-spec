@@ -4,6 +4,7 @@ metadata:
   displayName: OCM Specification
   description: OCM Specification
   tags:
+    - inner-source
     - ocm
     - open-source
     - open-component-model

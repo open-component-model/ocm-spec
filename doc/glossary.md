@@ -58,7 +58,7 @@ the artifact blob.
 an abstract entity describing a dedicated usage context or
 meaning for a provided piece of software.
 
-### Component Constructor<a id="compconst"/>
+### [Component Constructor](https://github.com/open-component-model/ocm-website/blob/main/content/en/docs/guides/getting-started-with-ocm.md#all-in-one)<a id="compconst"/>
 
 a file that acts as input for the OCM CLI to construct one or multiple component version(s).
 
@@ -71,7 +71,7 @@ the formal description of a [component version](#compvers).
 the mapping of the elements of a [component descriptor](#compdesc) into an
 immutable format containg only signature relevant information used to calculate a digest.
 
-### [Component Identity](01-model/03-elements-sub.md#identifiers)<a id="compid"/>
+### [Component Identity](01-model/02-elements-toplevel.md#component-identity)<a id="compid"/>
 
 the globally unique identity of a [component](#component).
 
@@ -106,13 +106,18 @@ see [artifact digest](#artdigest) or [component version digest](#compdigest).
 
 ## E
 
+### [Element Identity](./01-model/03-elements-sub.md#element-identity)<a id="elemid"/>
+
+similar to component identity, the element identity is composed by the fields `name` and `version`.
+In additon to that sources, resources and references can have an [extraIdentity](#extraid) if required.
+
 ### [Extension Point](./03-persistence/01-operations.md#abstract-operations-defined-by-the-open-component-model)<a id="ext"/>
 
 parts of the [OCM](#ocm) specification, which may be extended by arbitrary
 variations. The specification just defines the meaning, syntax and or functional
 behaviour of such elements.
 
-### [Extra Identity](./01-model/03-elements-sub.md#identifiers)<a id="extraid"/>
+### [Extra Identity](./01-model/03-elements-sub.md#element-identity)<a id="extraid"/>
 
 additional parts of the identity of an [element](#elemid) of a [component version](#compvers).
 
