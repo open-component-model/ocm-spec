@@ -32,7 +32,7 @@ Attributes:
   The media type of the blob used to store the resource. It may add
   format information like `+tar` or `+gzip`.
 
-- **`header`** (optional) *map[string][]string*
+- **`header`** (optional) *map\[string\][]string*
 
   The header describes the http headers to be set in the http request to the server.
 
@@ -48,4 +48,3 @@ Attributes:
 - **`noredirect`** (optional) *bool*
 
   The noredirect describes whether http redirects should be disabled.
-
