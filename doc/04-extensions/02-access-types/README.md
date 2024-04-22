@@ -8,8 +8,8 @@ required to identify the blob and its location.
 
 The following access method types are centrally defined:
 
-| TYPE NAME | DESCRIPTION |
-|-----------|-------------|
+| TYPE NAME                       | DESCRIPTION                                         |
+|---------------------------------|-----------------------------------------------------|
 | [`localBlob`](localblob.md)     | an artifact stored along with the component version |
 | [`ociArtifact`](ociartifact.md) | an artifact in a repository of an OCI registry      |
 | [`ociBlob`](ociblob.md)         | a blob in a repository of an OCI registry           |
@@ -17,3 +17,5 @@ The following access method types are centrally defined:
 | [`gitHub`](github.md)           | a commit in a GitHub-based Git repository           |
 | [`s3`](s3.md)                   | a blob stored in an AWS S3 bucket                   |
 | [`npm`](npm.md)                 | a NodeJS package stored in an NPM repository        |
+| [`wget`](wget.md)               | a blob stored on an HTTP server                     |
+
