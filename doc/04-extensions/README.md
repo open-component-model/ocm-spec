@@ -25,6 +25,7 @@ addendums or for customer-specific environments.
   * 2.5 [gitHub](02-access-types/github.md)
   * 2.6 [s3](02-access-types/s3.md)
   * 2.7 [npm](02-access-types/npm.md)
+  * 2.8 [wget](02-access-types/wget.md)
 * 3 [Storage Backend Mappings](03-storage-backends/README.md)
   * 3.1 [OCIRegistry](03-storage-backends/oci.md)
   * 3.2 [FileSystem (CTF)](03-storage-backends/ctf.md)
