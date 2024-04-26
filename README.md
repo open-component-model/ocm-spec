@@ -94,6 +94,7 @@ The following chapters provide a formal description of the format to describe so
   * 4.2.5 [gitHub](doc/04-extensions/02-access-types/github.md)
   * 4.2.6 [s3](doc/04-extensions/02-access-types/s3.md)
   * 4.2.7 [npm](doc/04-extensions/02-access-types/npm.md)
+  * 4.2.8 [wget](doc/04-extensions/02-access-types/wget.md)
 * 4.3 [Storage Backend Mappings](doc/04-extensions/03-storage-backends/README.md)
   * 4.3.1 [OCIRegistry](doc/04-extensions/03-storage-backends/oci.md)
   * 4.3.2 [FileSystem (CTF)](doc/04-extensions/03-storage-backends/ctf.md)
