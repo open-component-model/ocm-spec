@@ -94,6 +94,7 @@ The following chapters provide a formal description of the format to describe so
   * 4.2.5 [gitHub](doc/04-extensions/02-access-types/github.md)
   * 4.2.6 [s3](doc/04-extensions/02-access-types/s3.md)
   * 4.2.7 [npm](doc/04-extensions/02-access-types/npm.md)
+  * 4.2.8 [wget](doc/04-extensions/02-access-types/wget.md)
 * 4.3 [Storage Backend Mappings](doc/04-extensions/03-storage-backends/README.md)
   * 4.3.1 [OCIRegistry](doc/04-extensions/03-storage-backends/oci.md)
   * 4.3.2 [FileSystem (CTF)](doc/04-extensions/03-storage-backends/ctf.md)
@@ -123,7 +124,7 @@ The following chapters provide a formal description of the format to describe so
 
 ## Central OCM project web page
 
-Check out the main project [web page](https://ocm.software) to find out more about OCM. It is your central entry point to all kinds of ocm related [docs and guides](https://ocm.software/docs/overview/context/), this [spec](https://ocm.software/spec/) and all project-related [github repositories](https://github.com/open-component-model). It also offers a [Getting Started](https://ocm.software/docs/guides/getting-started-with-ocm) to quickly make your hands dirty with ocm, its toolset and concepts :-)
+Check out the main project [web page](https://ocm.software) to find out more about OCM. It is your central entry point to all kinds of ocm related [docs and guides](https://ocm.software/docs/getting-started/first-steps-with-ocm/), this [spec](https://ocm.software/docs/overview/specification/) and all project-related [github repositories](https://github.com/open-component-model). It also offers a [Getting Started](https://ocm.software/docs/getting-started/first-steps-with-ocm/) to quickly make your hands dirty with ocm, its toolset and concepts :-)
 
 ## Contributing
 
