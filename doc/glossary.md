@@ -84,7 +84,6 @@ The globally unique identity of a [component version](#compvers).
 
 ### [Component Version Reference](02-processing/01-references.md#referencing)<a id="compref"/>
 
-A reference to a [component versions](#compvers) in a component version to describe an aggregation relationship.
 A reference to one or multiple other [component versions](#compvers) in a component version to describe an aggregation relationship.
 
 ## D
