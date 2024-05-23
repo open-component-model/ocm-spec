@@ -178,6 +178,10 @@ An [access method](#accmeth) used to access blobs stored in an OCI registry.
 
 A technology- and location-agnostic description model for software delivery artifacts with attached meta-data, providing environment-specific access path to described [artifacts](#artifact).
 
+### OCM Coordinates
+
+Hierarchically organized identifiers for the versions of OCM components (called `Component Identity`) and contained artifacts (called `Artifact Identity`).
+
 ### Operations <a id="ops"/>
 
 See [repository operations](#repops), [access methods](#accmeth), and [access method operations](#accmethops).
