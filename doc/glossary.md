@@ -6,7 +6,7 @@
 
 ### [Access Method](01-model/07-extensions.md#access-methods)<a id="accmeth"/>
 
-Defines how to access the content of an [artifact](#artifact).
+Defines how to access the [content](#content) of an [artifact](#artifact).
 
 ### [Access Method Operations](01-model/07-extensions.md#access-method-operations)<a id="accmethops"/>
 
@@ -14,19 +14,19 @@ The operations an implementation of an [access method](#accmeth) has to support.
 
 ### [Access Method Type](04-extensions/02-access-types/README.md)<a id="acctype"/>
 
-The type of an [access specification](#accspec) determining the formal procedure to use to access the blob content of an [artifact](#artifact).
+The type of an [access specification](#accspec) determining the formal procedure to use to access the [content](#content) of an [artifact](#artifact).
 
 ### [Access Specification](01-model/07-extensions.md#access-specification)<a id="accspec"/>
 
-The specification of the technical access path to the physical blob content of an [artifact](#artifact).
+Technical access path to the [content](#content) of an [artifact](#artifact).
 
 ### [Aggregation](02-processing/01-references.md)<a id="aggregation"/>
 
-The ability of the Open Component Model to compose component versions based on other component versions.
+Grouping multiple OCM component versions by referencing from a root component version.
 
 ### [Artifact](01-model/02-elements-toplevel.md#artifacts-resources-and-sources)<a id="artifact"/>
 
-Blob content described by a [component version](#component-version).
+[Content](#content) described by a [component version](#component-version).
 
 ### [Artifact Digest](02-processing/03-signing-process.md#determing-the-artifact-digests)<a id="artdigest"/>
 
@@ -34,7 +34,7 @@ The (logical) digest of an [artifact](#artifact).
 
 ### [Artifact Normalization](02-processing/06-artifact-normalization.md)<a id="artnorm"/>
 
-The transformation of a technical blob content of an [artifact](#artifact) depending on its type into a serialization-agnostic digest.
+The transformation of a technical [content](#content) of an [artifact](#artifact) depending on its type into a serialization-agnostic digest.
 
 ### [Artifact Reference](02-processing/01-references.md#referencing)<a id="artref"/>
 
@@ -42,7 +42,7 @@ A relative or absolute reference to an [artifact](#artifact) described by a [com
 
 ### [Artifact Type](01-model/02-elements-toplevel.md#artifact-types)<a id="arttype"/>
 
-The formal type of an [artifact](#artifact) described by a [component version](#compvers). The type implies the logical interpretation of the artifact blob.
+The formal type of an [artifact](#artifact) described by a [component version](#compvers). The type implies the logical interpretation of the artifact.
 
 ## C
 
@@ -60,11 +60,15 @@ The formal description of a [component version](#compvers).
 
 ### [Component Descriptor Normalization](02-processing/05-component-descriptor-normalization.md)<a id="compdescnorm"/>
 
-The mapping of the elements of a [component descriptor](#compdesc) into an immutable format containing only signature relevant information used to calculate a digest.
+The mapping of the elements of a [component descriptor](#compdesc) into stable format containing only signature relevant information used to calculate a digest.
 
 ### [Component Identity](01-model/02-elements-toplevel.md#component-identity)<a id="compid"/>
 
 The globally unique identity of a [component](#component).
+
+### Component Name<a id="compname"/>
+
+Identifies a component.
 
 ### [Component Repository](01-model/01-model.md#component-repositories)<a id="comprep"/>
 
@@ -72,7 +76,7 @@ An entity able to store and retrieve [component versions](#compvers). See also [
 
 ### [Component Version](01-model/01-model.md#components-and-component-versions)<a id="compvers"/>
 
-A dedicated version of a [component](#component) described by the Open Component Model described by a [component descriptor](#compdesc) and retrievable from a [component repository](#comprep).
+A dedicated version of a [component](#component) described by a [component descriptor](#compdesc) and retrievable from a [component repository](#comprep). If used with a [component name](#compname), identifies a specific component version.
 
 ### [Component Version Digest](02-processing/05-component-descriptor-normalization.md#component-descriptor-normalization)<a id="compdigest"/>
 
@@ -85,6 +89,10 @@ The globally unique identity of a [component version](#compvers).
 ### [Component Version Reference](02-processing/01-references.md#referencing)<a id="compref"/>
 
 A reference to one or multiple other [component versions](#compvers) in a component version to describe an aggregation relationship.
+
+### Content
+
+Machine-readable data, typically organized into octets.
 
 ## D
 
@@ -142,7 +150,7 @@ An [access method](#accmeth) used to access blobs stored along with a component 
 
 ### [Localization](./05-guidelines/02-contract.md#example-helm-deployment)<a id="localization"/>
 
-The process of adapting content delivered as [artifacts](#artifact) in a [component versions](#compvers) to a local repository landscape in a target environment.
+The process of adapting [content](#content) delivered as [artifacts](#artifact) in a [component versions](#compvers) to a local repository landscape in a target environment.
 
 ## M
 
@@ -152,7 +160,7 @@ The mapping of the [elements](01-model/02-elements-toplevel.md) of the Open Comp
 
 ### [Model-Tool Contract](./05-guidelines/02-contract.md)<a id="contract"/>
 
-The agreement between the Open Component Model and tools working with content provided by [component versions](#compvers), which regulates the cooperation between both.
+The agreement between the Open Component Model and tools working with [content](#content) provided by [component versions](#compvers), which regulates the cooperation between both.
 
 ## N
 
@@ -230,13 +238,13 @@ A format definition for the specification of attributes for dedicated variants o
 
 ### [s3](./04-extensions/02-access-types/s3.md)<a id="s3"/>
 
-An [access method](#accmeth) used to access blobs in an S3 repository, a [mapping](#mapping) to store content in an S3 repository
+An [access method](#accmeth) used to access blobs in an S3 repository, a [mapping](#mapping) to store [content](#content) in an S3 repository
 
 ## T
 
 ### [Transport](05-guidelines/01-transport.md)<a id="transport"/>
 
-The operation on [component versions](#compvers) transferring content from one OCM repository into another one.
+The operation on [component versions](#compvers) transferring [content](#content) from one OCM repository into another one.
 
 ### Type<a id="type"/>
 
