@@ -2,43 +2,65 @@
 
 ## Element Identity
 
-Similar to component identity, the element identity is composed by the fields `name` and `version`.
-In additon to that sources, resources and references can have an `extraIdentity` if required.
+Every element described by a component version feature a unique identity in the
+context of the component version and the kind of element (local element identity).
+Element kinds are resources, sources and (component version) references. The identity
+is an arbitrary attribute set consisting of name value pairs with at least the 
+attribute `name`. The values of the attributes are strings. All kinds of element
+descriptions in the component descriptor use the same formal fields to describe the
+element identity.
 
-A valid element identity has the following formal fields:
+It is composed based on the following element fields found in the component
+descriptor.
 
 - **`name`** (required) *string*
 
-  The name of the element. In most of the cases the name should be chosen
-  to be unique in the context of the list of elements.
+  The name of the element is used as name attribute of the identity.
+  In most of the cases the name should be chosen to be unique in the context
+  of the list of elements of a dedicated kind.
   It basically also expresses the meaning or purpose of the element in the
   context of the component version. But it might be the
   case that multiple elements should be used for the same purpose. For example,
-  a component version is used to describe multiple versions of an artifact,
-  which should be selected for different environment versions for deployment.
+  a component version is used to describe multiple variants of an artifact,
+  which should be selected for different environments (for example platform)
+  for deployment.
   Then, they could share the same name, to be able to easily find all those
   elements. In such a case the name is not sufficient to uniquely identify
   a dedicated element.
 
-- **`version`** (optional) *string*
-
-  This optional attribute version describes the version of the element.
-  If given, and the name of the element is not unique in its context, the
-  version is added to the identity attribute set.
-
 - **`extraIdentity`** (optional) *map[string]string*
 
-  If name and version are not sufficient to provide a unique selection
-  scheme, any arbitrary identity dimension can be added by using this field.
-  If given, all those attributes contribute to the identity of the element
-  and must be given to uniquely identify an element. The identity scheme can
-  be chosen differently per element, by all effective identities of elements
-  of a dedicated class (resources, sources, references) in a component must be
-  unique.
+  If the name is not sufficient to provide a unique selection
+  scheme, any arbitrary identity dimension can be added by using the
+  `extraIdentity` field.
+  If given, all those attributes contribute to the identity attribute set of
+  the element and must be given to uniquely identify an element.
+  This field may not contain the attribute `name`. The identity scheme can
+  be chosen differently per element, but all effective identities of elements
+  of a dedicated kind (resources, sources, references) in a component version
+  must be  unique at least after incorporating the optional version name.
 
-Using multiple attributes of an artifact for its identity makes it easier to formally
+- **`version`** (optional) *string*
+
+  This optional field version describes the version of the element.
+  If given, and the name and extra identity of the element is not unique in its
+  context, the  version is implicitly added to the identity attribute set.
+  The resulting identity must be unique.
+
+By default, the version of an element in *not* part of the element identity
+to achieve a stable local element identity across multiple versions
+of a component. The same element identity should be usable to denote an
+element for a dedicated purpose regardless of the component version in question.
+THis is important for example for deployment systems. They will be configured
+to use a dedicated resource as deplyoment description. If the version is
+part of the identity of this resource in the context of the chosen component
+version, the configuration would have to be changed with every version update of
+the component, because typically with a new component version a new version
+of the resource is coming.
+
+Using multiple attributes for an element identity makes it easier to formally
 describe the identity and to select a dedicated artifact from the set of
-described artifacts. It avoids the need to
+described elements. It avoids the need to
 marshal a dedicated identity scheme for an intended usage scenario into a
 single attribute value. Instead, different attributes can be used to represent
 the dedicated selection dimensions. Selecting all artifacts for a partial set
@@ -72,7 +94,7 @@ component:
     extraIdentity:
       architecture: amd64
       os: linux
- - name: ocmcli
+  - name: ocmcli
     version: v0.5.0
     access:
       imageReference: ghcr.io/open-component-model/ocm/ocm.software/ocmcli/ocmcli-image_linux_arm64:0.5.0
@@ -84,7 +106,7 @@ component:
       os: linux
 ```
 
-Then you don't need to derive artificially unique artifact names. Instead
+Then you don't need to derive artificially unique artifact names. Instead,
 the identity of the artifact can naturally be composed by using appropriate
 attributes. Selecting all artifacts for a dedicated purpose is possible
 by selecting all artifacts with the appropriate `name` attribute, without the
@@ -93,6 +115,8 @@ need of parsing an artificial structure imprinted on the name attribute.
 <div align="center">
 <img src="ocmidentity.png" alt="Identities" width="800"/>
 </div>
+
+### Global Element Identity
 
 Every identity carrying element described by the Open Component Model can
 therefore be identified by the triple *(Component Identity, Version Name,
@@ -109,7 +133,7 @@ by the Gardener team developing the component `external-dns-management`.
 
 ## Access Specification
 
-The technical access to the physical content of an artifact described as part of a Component Version is expressed by an *Access Specification*. It describes the type of the *access method* and the type-specific access path to the content. In an implementation the *Access Method Type* is mapped to code for finally accessing the content of an artifact. Access methods and their specification versions can arbitrarely extended. This is a major [extension point](./07-extensions.md#access-methods) of the model.
+The technical access to the physical content of an artifact described as part of a Component Version is expressed by an *Access Specification*. It describes the type of the *access method* and the type-specific access path to the content. In an implementation the *Access Method Type* is mapped to code for finally accessing the content of an artifact. Access methods and their specification versions can arbitrarily be extended. This is a major [extension point](./07-extensions.md#access-methods) of the model.
 
 The content of a described artifact is accessible by applying its global identity triple to the following procedure:
 
