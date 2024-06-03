@@ -5,7 +5,7 @@
 Every element described by a component version feature a unique identity in the
 context of the component version and the kind of element (local element identity).
 Element kinds are resources, sources and (component version) references. The identity
-is an arbitrary attribute set consisting of name value pairs with at least the 
+is an arbitrary attribute set consisting of name value pairs with at least the
 attribute `name`. The values of the attributes are strings. All kinds of element
 descriptions in the component descriptor use the same formal fields to describe the
 element identity.
