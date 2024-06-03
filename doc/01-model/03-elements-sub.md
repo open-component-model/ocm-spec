@@ -51,8 +51,8 @@ By default, the version of an element in *not* part of the element identity
 to achieve a stable local element identity across multiple versions
 of a component. The same element identity should be usable to denote an
 element for a dedicated purpose regardless of the component version in question.
-THis is important for example for deployment systems. They will be configured
-to use a dedicated resource as deplyoment description. If the version is
+This is important for example for deployment systems. They will be configured
+to use a dedicated resource as deployment description. If the version is
 part of the identity of this resource in the context of the chosen component
 version, the configuration would have to be changed with every version update of
 the component, because typically with a new component version a new version
