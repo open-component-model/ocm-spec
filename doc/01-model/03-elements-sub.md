@@ -43,9 +43,9 @@ descriptor.
 - **`version`** (optional) *string*
 
   This optional field version describes the version of the element.
-  If given, and the name and extra identity of the element is not unique in its
-  context, the  version is implicitly added to the identity attribute set.
-  The resulting identity must be unique.
+  If given, and the `name` and `extraIdentity` attributes of the element
+  are not unique in the context, **the version is implicitly added to the
+  identity attribute set**. The resulting identity must be unique.
 
 By default, the version of an element in *not* part of the element identity
 to achieve a stable local element identity across multiple versions
