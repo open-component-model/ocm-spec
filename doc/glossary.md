@@ -50,7 +50,7 @@ The formal type of an [artifact](#artifact) described by a [component version](#
 
 An abstract entity describing a dedicated usage context or meaning for a provided piece of software.
 
-### [Component Constructor](https://ocm.software/docs/getting-started/first-steps-with-ocm/#all-in-one)<a id="compconst"/>
+### [Component Constructor](https://ocm.software/docs/getting-started/getting-started-with-ocm/create-a-component-version/#all-in-one)<a id="compconst"/>
 
 A file that acts as input for the OCM CLI to construct one or multiple component version(s).
 
