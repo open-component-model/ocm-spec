@@ -92,7 +92,7 @@ profiles:
     #
     allowed_voters:
       teams:
-        - core
+        - Maintainers
       users: []
 
     # Periodic status check
@@ -154,4 +154,4 @@ profiles:
     pass_threshold: 50
     allowed_voters:
       teams:
-        - ocm-dev
+        - Maintainers
