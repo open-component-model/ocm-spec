@@ -10,7 +10,7 @@ A generic OCI artifact following the [open containers image specification](https
 
 ## Format Variants
 
-When provided as a blob, the [Artifact Set Archuive Format](../common/formatspec.md#artifact-set-archive-format)
+When provided as a blob, the [Artifact Set Archive Format](../common/formatspec.md#artifact-set-archive-format)
 MUST be used to represent the content of the OCI artifact.
 This format can be used to store multiple versions of an OCI repository
 in a filesystem-compatible manner.
