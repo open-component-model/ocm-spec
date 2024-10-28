@@ -4,7 +4,7 @@ The OCM specification describes an interpretation layer on-top of
 well-known storage backend technologies used to store OCM component versions.
 
 Therefore, for every supported storage technology a dedicated mapping
-of OCM model elements to backend elements must be defined to ensure
+of OCM elements to backend elements must be defined to ensure
 the interoperability of different OCM implementations.
 
 These mappings describe:
@@ -25,7 +25,7 @@ Mappings for the following technologies are defined:
 | [FileSystem (Component Archive)](component-archive.md) | Single component version as content as filesystem structure |
 | [AWS S3](s3.md)                                        | OCM content in AWS S3 buckets |
 
-Depending on the used language binding for the OCM model (for example the
+Depending on the used language binding for the OCM (for example the
 [reference implementation in Go](https://github.com/open-component-model/ocm))
 an appropriate binding-specific embedding of this mapping must be provided.
 
@@ -33,7 +33,7 @@ The following diagram illustrates the embedding of implementation based
 extensions (like for the storage backends) into a dedicated language
 binding to achieve interoperability among those implementations.
 
-- *Layer 1* contains the specification of the OCM model.
+- *Layer 1* contains the specification of the OCM.
   A dedicated language binding provides an API implementation according to this specification.
   This API is then used by consumers requiring access to OCM component versions
   in a dedicated programming language (model language binding).

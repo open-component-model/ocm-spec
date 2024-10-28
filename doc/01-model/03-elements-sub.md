@@ -1,4 +1,4 @@
-# Attributes of Elements of a Component Version
+# Element attributes of a component version
 
 ## Element Identity
 
@@ -22,7 +22,7 @@ descriptor.
   context of the component version. But it might be the
   case that multiple elements should be used for the same purpose. For example,
   a component version is used to describe multiple variants of an artifact,
-  which should be selected for different environments (for example platform)
+  which should be selected for different environments (e.g. platform)
   for deployment.
   Then, they could share the same name, to be able to easily find all those
   elements. In such a case the name is not sufficient to uniquely identify

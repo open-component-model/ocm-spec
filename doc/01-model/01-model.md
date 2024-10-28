@@ -1,10 +1,10 @@
-# OCM Model
+# Open Component Model (OCM)
 
 This chapter describes the elements and data formats the Open Component Model deals with. All implementations MUST provide a binding for those kinds of elements.
 
 ## Introduction
 
-The Open Compoment Model consists of a core model plus extensions. The core model describes the key elements *Component*, *Component Version* being stored in *Component Registries*. *Component Versions* have a type and an identity, and consist of *sources*, *resources* and *references*. *Component Registries* are containers persisting component versions and may exist in various types for different storage technologies. Many parts of the Open-Component-Model can be extended to provide flexibility and adaption to different environments. Some of these extension are defined in this specification. Others may be defined customer-specific or for dedicated environments.
+The Open Component Model consists of a core model plus extensions. The core model describes the key elements *Component*, *Component Version* being stored in *Component Registries*. *Component Versions* have a type and an identity, and consist of *sources*, *resources* and *references*. *Component Registries* are containers persisting component versions and may exist in various types for different storage technologies. Many parts of the Open-Component-Model can be extended to provide flexibility and adaption to different environments. Some of these extension are defined in this specification. Others may be defined customer-specific or for dedicated environments.
 
 The following chapters will provide more details about these concepts.
 
@@ -14,7 +14,7 @@ Usually, complex software products are divided into logical units (called compon
 
 In the Open Component Model, a *Component Version* is described by a *Component Descriptor*. It describes the resources, sources, and aggregated other Component Versions belonging to a particular Component Version. A Component Descriptor is stored in a yaml file following this [schema](https://github.com/open-component-model/ocm/blob/main/resources/component-descriptor-ocm-v3-schema.yaml).
 
-A component itself is described by a globally unique identity. Each component version is described be the identity of the component plus a version number following the [semantic versioning](https://semver.org) specification.
+A component itself is described by a globally unique identity. Each component version is described by the identity of the component plus a version number following the [semantic versioning](https://semver.org) specification.
 
 Example:
 

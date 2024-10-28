@@ -2,7 +2,7 @@
 
 This chapter describes the elements of the Open Component Model and their syntax.
 
-* 1.[OCM Model](01-model.md#ocm-model)
+* 1.[Model](01-model.md#model)
   * 1.1.[Introduction](01-model.md#introduction)
   * 1.2.[Components and Component Versions](01-model.md#components-and-component-versions)
   * 1.3.[Component Repositories](01-model.md#component-repositories)

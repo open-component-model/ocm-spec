@@ -1,7 +1,7 @@
 # Artifact Types
 
 The formal type of an artifact uniquely specifies the logical interpretation of an artifact, independent of its concrete technical representation.
-Artifacts appear in two flavors in the OCM model, as resources and as sources. They have three main characteristics:
+Artifacts appear in two flavors in the OCM, as resources and as sources. They have three main characteristics:
 
 - content (byte sequence or blob)
 - technical format of the blobs (media type)

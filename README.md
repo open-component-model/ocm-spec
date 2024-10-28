@@ -17,7 +17,7 @@ The following chapters provide a formal description of the format to describe so
 ### Core Parts
 
 * 1. [Model](doc/01-model/README.md)
-  * 1.1 [OCM Model](doc/01-model/01-model.md#ocm-model)
+  * 1.1 [Model](doc/01-model/01-model.md#model)
     * 1.1.1 [Introduction](doc/01-model/01-model.md#introduction)
     * 1.1.2 [Components and Component Versions](doc/01-model/01-model.md#components-and-component-versions)
     * 1.1.3 [Component Repositories](doc/01-model/01-model.md#component-repositories)

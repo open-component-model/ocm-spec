@@ -151,7 +151,7 @@ There are two kinds of type name:
   To support a unique namespace for those type names, vendor specific
   types have to follow a hierarchical naming scheme based on DNS domain
   names. Every type name has to be suffixed by a DNS domain owned by the
-  providing organization (for example `myspecialrepo.acme.com`). The
+  providing organization (e.g. `myspecialrepo.acme.com`). The
   local type must follow the above rules for centrally defined type
   names and prepended, separated by a dot (`.`).
 
@@ -315,7 +315,7 @@ There are two kinds of type name:
   To support a unique namespace for those type names, vendor specific
   types have to follow a hierarchical naming scheme based on DNS domain
   names. Every type name has to be suffixed by a DNS domain owned by the
-  providing organization (for example `myspecialaccess.acme.com`). The
+  providing organization (e.g. `myspecialaccess.acme.com`). The
   local type must follow the above rules for centrally defined type
   names and prepended, separated by a dot (`.`).
 
@@ -687,7 +687,7 @@ There are two flavors of labels:
   To support a unique namespace vendor specific labels
   have to follow a hierarchical naming scheme based on DNS domain names.
   Every label name has to be preceded by a DNS domain owned by the providing
-  organization (for example `landscaper.gardener.cloud/blueprint`).
+  organization (e.g. `landscaper.gardener.cloud/blueprint`).
   The local name MUST follow the above rules for centrally defined names
   and is appended, separated by a slash (`/`).
 

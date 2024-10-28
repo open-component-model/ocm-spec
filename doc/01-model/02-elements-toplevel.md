@@ -35,7 +35,7 @@ A component version has a unique identity composed of the component identity
 and a version name following the [semantic versioning](https://semver.org)
 specification (e.g. `github.com/gardener/external-dns-management:0.15.1`).
 
-## Artifacts (Resources and Sources)
+## Artifacts ([Resources](#resources) and [Sources](#sources))
 
 The Open Component Model distinguishes two kinds of artifacts:
 
@@ -161,7 +161,7 @@ There are two kinds of types:
   <DNS domain name>/[a-z][a-zA-Z0-9]*
   ```
 
-  [Artifact Types](../01-model/07-extensions.md#artifact-types) are an extension point within the OCM model.
+  [Artifact Types](../01-model/07-extensions.md#artifact-types) are an extension point within the OCM.
   All existing artifact types are listed [here](../04-extensions/01-artifact-types/README.md).
 
 ## Sources
@@ -201,7 +201,7 @@ In addition to the common artifact information, a resource may optionally descri
 
 A resource uses the following additional formal fields:
 
-- **`relation`** (required) *string['local', 'external']*
+- **`relation`** *string['local', 'external']*
   Indicates whether the entity providing a component is also the provider of the resource ('local') or whether the
   resource is provided by a separate entity ('external'). This may be useful to determine whether the entity responsible
   for the component is also responsible for the resource.  
@@ -292,4 +292,4 @@ Example:
 
 ## Summary
 
-The OCM model describes component versions. A component version is stored in a component repository and consists of sources, resources and references. The component version itself as well as each resource, source and reference has an identity. Only sources and resources have content and therefore an access specification and an optional digest. All elements can have labels.
+The OCM describes component versions. A component version is stored in a component repository and consists of sources, resources and references. The component version itself as well as each resource, source and reference has an identity. Only sources and resources have content and therefore an access specification and an optional digest. All elements can have labels.

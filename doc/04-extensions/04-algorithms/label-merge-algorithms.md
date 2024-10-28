@@ -12,7 +12,7 @@ There is a set of globally defined standard algorithms:
 
     - `local`  keep the local value found in the target
 
-    - `inbound` overwrite the local value with the transferred values. THis is the default for this merge algorithm
+    - `inbound` overwrite the local value with the transferred values. This is the default for this merge algorithm
 
 - `simpleListMerge` just merge the list.
 
@@ -39,7 +39,7 @@ There is a set of globally defined standard algorithms:
   conflicting entries will be merged with the specified merge specification.
   Otherwise, the default resolution is `none`
 
-- `simplemMapListNerge` merge maps used as list entries.
+- `mapListMerge` merge maps used as list entries.
 
   If a list contains map entries which feature an identity,
   list entries with the same identity can be merged.
