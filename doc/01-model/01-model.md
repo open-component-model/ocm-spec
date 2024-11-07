@@ -14,7 +14,7 @@ Usually, complex software products are divided into logical units (called compon
 
 In the Open Component Model, a *Component Version* is described by a *Component Descriptor*. It describes the resources, sources, and aggregated other Component Versions belonging to a particular Component Version. A Component Descriptor is stored in a yaml file following this [schema](https://github.com/open-component-model/ocm/blob/main/resources/component-descriptor-ocm-v3-schema.yaml).
 
-A component itself is described by a globally unique identity. Each component version is described be the identity of the component plus a version number following the [semantic versioning](https://semver.org) specification.
+A component itself is described by a globally unique identity. Each component version is described by the identity of the component plus a version number following the [semantic versioning](https://semver.org) specification.
 
 Example:
 
