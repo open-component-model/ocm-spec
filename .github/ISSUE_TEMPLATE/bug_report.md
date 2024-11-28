@@ -1,10 +1,10 @@
 ---
 name: Bug Report
 about: Report a bug
-labels: kind/bug
-
+labels: kind/bugfix
 ---
 
+<!-- markdownlint-disable MD041 -->
 **What happened**:
 
 **What you expected to happen**:
