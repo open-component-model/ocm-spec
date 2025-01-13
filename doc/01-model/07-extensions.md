@@ -656,7 +656,7 @@ Dynamic attribution of model elements with additional information is possible us
 [*Labels*](./03-elements-sub.md#labels).
 To be interpretable by tools the meaning of a label must be uniquely derivable from its name,
 regardless of the creator of a concrete label entry in a component version.
-To assure that every consumer of a component version has the same understanding odf the label,
+To assure that every consumer of a component version has the same understanding of the label,
 label names MUST be globally unique.
 
 To combine globally uniqueness and arbitrarely extensibility of label names,
