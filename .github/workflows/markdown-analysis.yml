@@ -1,4 +1,6 @@
 name: markdown-analysis-workflow
+permissions:
+    contents: read
 
 on:
     push:
