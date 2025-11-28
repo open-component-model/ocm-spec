@@ -343,7 +343,7 @@ The following manifest shows a valid OCI Artifact Manifest containing the OCM Co
   ],
   "annotations": {
     "org.opencontainers.image.authors": "Builtin OCI Repository Plugin",
-    "org.opencontainers.image.description": "\nThis is an OCM OCI Artifact Manifest that contains the component descriptor for the component github.com/acme.org/helloworld.\nIt is used to store the component descriptor in an OCI registry and can be referrenced by the official OCM Binding Library.\n",
+    "org.opencontainers.image.description": "This is an OCM OCI Artifact Manifest that contains the component descriptor for the component github.com/acme.org/helloworld.\nIt is used to store the component descriptor in an OCI registry and can be referrenced by the official OCM Binding Library.",
     "org.opencontainers.image.documentation": "https://ocm.software",
     "org.opencontainers.image.source": "https://github.com/open-component-model/open-component-model",
     "org.opencontainers.image.title": "OCM Component Descriptor OCI Artifact Manifest for github.com/acme.org/helloworld in version 1.0.0",
