@@ -97,7 +97,7 @@ This document is authoritative for all interactions between OCM and OCI registry
 
 ## 2. Conformance Terminology
 
-The key words **MUST**, ****MUST** NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**, **SHOULD**, **SHOULD NOT**, **MAY**, and **OPTIONAL** are to be interpreted as described in RFC 2119 and RFC 8174.
+The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**, **SHOULD**, **SHOULD NOT**, **MAY**, and **OPTIONAL** are to be interpreted as described in RFC 2119 and RFC 8174.
 
 ## 3. OCI Registry Requirements
 
@@ -108,7 +108,7 @@ An OCI registry used with OCM:
 3. **MAY** support HTTP if explicitly enabled via a scheme in the base URL.
 4. **MAY** host multiple OCM repositories concurrently.
 
-Registries that do not support nested repository paths ****MUST** NOT** be used with this specification.
+Registries that do not support nested repository paths **MUST NOT** be used with this specification.
 
 ## 4. Repository Specification Format
 
@@ -464,7 +464,7 @@ These annotations:
 * Distinguish resources from sources
 * Identify resources located within the component descriptor and serve as back-reference.
 
-OCI resolution ****MUST** NOT** depend on these annotations.
+OCI resolution **MUST NOT** depend on these annotations.
 
 Resolution **MUST** be driven by `localReference`.
 
@@ -499,7 +499,7 @@ The Component Index serves three normative purposes:
 
 2. **Immutable Discovery Anchor**
    The Component Index **MUST** have a stable byte representation, digest, size, and descriptor.
-   It ****MUST** NOT** change across component versions or OCM releases.
+   It **MUST NOT** change across component versions or OCM releases.
 
 3. **Compatibility Layer**
    When the registry supports the OCI Referrers API, the index becomes the authoritative discovery mechanism.
@@ -528,7 +528,7 @@ Clients **MUST** treat the manifest as opaque and immutable.
 The descriptor for the Component Index:
 
 * **MUST** include the exact stable digest and size of the canonical JSON representation
-* ****MUST** NOT** be regenerated or altered after publication
+* **MUST NOT** be regenerated or altered after publication
 
 Implementations **MUST** validate descriptor correctness when creating or loading a Component Index.
 
@@ -538,7 +538,7 @@ When preparing a repository:
 
 1. The Component Index manifest layer **MUST** be present; if not, it **MUST** be uploaded.
 2. The Component Index manifest **MUST** be present; if not, it **MUST** be uploaded using its canonical descriptor.
-3. Clients ****MUST** NOT** rewrite or mutate an existing Component Index, but only reference it via its `subject`
+3. Clients **MUST NOT** rewrite or mutate an existing Component Index, but only reference it via its `subject`
 
 These requirements apply uniformly across registries, irrespective of tag semantics.
 
@@ -552,7 +552,7 @@ If a registry rejects subject references due to limited API support:
 
 * The component version **MUST** still be stored,
 * The implementation **MAY** warn about unsupported referrers,
-* The Component Index ****MUST** NOT** be modified.
+* The Component Index **MUST NOT** be modified.
 
 ### 13.6 Discovery Behavior
 
@@ -620,7 +620,7 @@ It **SHOULD** be configurable in the repository implementation. If not configura
 
 ### 13.8.1 `ReferrerTrackingPolicyNone`
 
-* The implementation ****MUST** NOT** attempt to record referrers.
+* The implementation **MUST NOT** attempt to record referrers.
 * Discovery relies on tag listing only.
 
 ### 13.8.2 `ReferrerTrackingPolicyByIndexAndSubject`
@@ -643,7 +643,7 @@ Implementations performing index creation:
     * Canonical JSON of the index manifest **MUST** be generated.
     * The manifest **MUST** be pushed using the exact descriptor.
 
-Existing indexes ****MUST** NOT** be regenerated or altered.
+Existing indexes **MUST NOT** be regenerated or altered.
 
 ## 14. Descriptor Encoding Formats
 
@@ -922,5 +922,5 @@ If no tag is available:
 
 1. Both manifest-based and index-based storage **SHOULD** be supported by all clients, but write support **MAY** be limited to one of these formats.
 2. Legacy descriptor formats (YAML, JSON, TAR) **SHOULD** be supported by all clients. At least one format **MUST** be supported for writing.
-3. Index-based representation ****MUST** NOT** deprecate manifest-based representation.
+3. Index-based representation **MUST NOT** deprecate manifest-based representation.
 4. The Component Index referrers mechanism **MAY** be used when supported by the registry.
