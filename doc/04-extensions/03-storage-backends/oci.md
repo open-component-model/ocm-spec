@@ -23,7 +23,7 @@ The specification also introduces a Component Index artifact used for referrer-b
   * [5. OCI Repository Reference Grammar](#5-oci-repository-reference-grammar)
     * [5.1 Grammar](#51-grammar)
   * [6. Component Repository Mapping](#6-component-repository-mapping)
-  * [**6.1 Example](#61-example)
+  * [6.1 Example](#61-example)
     * [6.1.1 Input](#611-input)
     * [6.1.2 Resolved OCI Reference](#612-resolved-oci-reference)
   * [7. Component Version Representations](#7-component-version-representations)
@@ -228,7 +228,7 @@ The `componentNameMapping` field determines the transformation of `<component-id
 
 All component versions for the component appear under this repository.
 
-## **6.1 Example
+## 6.1 Example
 
 This section illustrates the application of the normative repository-mapping rules defined in Sections 5 and 6.
 
