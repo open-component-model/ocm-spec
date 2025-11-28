@@ -416,7 +416,7 @@ This index:
         "software.ocm.descriptor": "true",
         "org.opencontainers.image.title": "OCM Component Descriptor OCI Artifact Manifest for github.com/acme.org/helloworld in version 1.0.0",
         "org.opencontainers.image.version": "1.0.0",
-        "software.ocm.componentversion": "component-descriptors/github.com/acme.org/helloworld:1.0.0",
+        "software.ocm.componentversion": "github.com/acme.org/helloworld:1.0.0",
         "software.ocm.creator": "Builtin OCI Repository Plugin"
       },
       "artifactType": "application/vnd.ocm.software.component-descriptor.v2"
@@ -438,7 +438,7 @@ This index:
   "annotations": {
     "org.opencontainers.image.title": "OCM Component Descriptor OCI Artifact Manifest Index for github.com/acme.org/helloworld in version 1.0.0",
     "org.opencontainers.image.version": "1.0.0",
-    "software.ocm.componentversion": "component-descriptors/github.com/acme.org/helloworld:1.0.0",
+    "software.ocm.componentversion": "github.com/acme.org/helloworld:1.0.0",
     "software.ocm.creator": "Builtin OCI Repository Plugin"
   }
 }
@@ -897,10 +897,10 @@ That is, applying both transformations in succession **MUST** yield the original
 Every top-level descriptor manifest (manifest- or index-based) **SHOULD** contain:
 
 ```
-software.ocm.componentversion: "<component-repo-path>:<ocm-version>"
+software.ocm.componentversion: "<component-name>:<component-version>"
 ```
 
-Where `<ocm-version>` is produced using the version mapping transformation described in this section.
+Where `<component-version>` is produced using the version mapping transformation described in this section.
 
 This annotation enforces a strong filterable guarantee that can be used to differentiate
 component version manifests from other artifacts stored in the same OCI repository.
