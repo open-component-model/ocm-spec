@@ -349,7 +349,7 @@ The following manifest shows a valid OCI Artifact Manifest containing the OCM Co
     "org.opencontainers.image.title": "OCM Component Descriptor OCI Artifact Manifest for github.com/acme.org/helloworld in version 1.0.0",
     "org.opencontainers.image.url": "https://ocm.software",
     "org.opencontainers.image.version": "1.0.0",
-    "software.ocm.componentversion": "component-descriptors/github.com/acme.org/helloworld:1.0.0",
+    "software.ocm.componentversion": "github.com/acme.org/helloworld:1.0.0",
     "software.ocm.creator": "Builtin OCI Repository Plugin"
   }
 }
