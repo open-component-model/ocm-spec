@@ -171,6 +171,7 @@ https://registry.example.com:5000
 oci://registry.example.com:5000
 docker.io
 ghcr.io
+http://insecure-registry.local:8080
 ```
 
 ### 4.3 `subPath`
@@ -345,15 +346,13 @@ When resolving a component version reference:
 1. Resolve the tag to a descriptor, which **MUST** point to either a manifest or index. 
    The reference resolution must respect versioning rules defined in [12. Tag and Version Mapping Rules](#12-tag-and-version-mapping-rules).
 2. If manifest → it **MUST** be interpreted as the component descriptor root according to [6.1. Manifest Representation](#61-manifest-representation).
-3. If index → enumerate all manifests annotated `software.ocm.descriptor="true"`:
+3. If index → enumerate and find the manifest annotated `software.ocm.descriptor="true"`:
     * If exactly one exists → select it and interpret it according to [6.1. Manifest Representation](#61-manifest-representation).
     * If multiple exist → resolution **MUST** fail.
     * If none exist → select manifest[0] (compatibility rule).
     * Interpret other manifests as regular artifacts roots according to [6.2. Index Representation](#62-index-representation).
 
 ## 8. Component Index (Referrer Anchor)
-
-### 8.1 Requirements
 
 The Component Index is a stable, immutable OCI manifest that functions as the referrer
 anchor for all Component Versions within an OCM repository. Its manifest structure
@@ -362,6 +361,8 @@ and descriptor values are fixed exactly to those defined in the implementation a
 from [8.1 Requirements](#81-requirements), its role during version publication from
 [8.2 Version Behavior](#82-version-behavior), and its role in discovery as described in
 [8.3 Discovery](#83-discovery).
+
+### 8.1 Requirements
 
 The Component Index **MUST** match the exact manifest defined by the OCM implementation:
 
@@ -606,12 +607,6 @@ OCIImage
 
 Compliant writers **SHOULD NOT** emit any of the deprecated identifiers above.
 
-All normative rules in
-[6. Component Version Storage Models](#6-component-version-storage-models),
-[7. Descriptor Selection Logic](#7-descriptor-selection-logic), and
-[10. Local Blob Processing](#10-localblob-processing)
-apply identically regardless of which identifier was used.
-
 ### 11.2 Digest Resolution and Canonicalization Requirements
 
 An `OCIArtifact/v1` access method represents an OCI artifact that may resolve to either a manifest or an index as defined in
@@ -710,7 +705,7 @@ baseUrl: registry.example.com
 
 Interpretation:
 
-* No scheme → clients **MUST** assume HTTPS (§4.2).
+* No scheme → clients **MUST** assume HTTPS ([4.2](#42-baseurl)).
 * The repository root is:
   `registry.example.com`
 * Component descriptors map under:
@@ -723,8 +718,8 @@ type: OCI/v1
 baseUrl: oci://ghcr.io/acme
 ```
 
-* The scheme `oci://` is treated as HTTPS (§4.2).
-* The `/acme` suffix becomes the `subPath` (§4.3).
+* The scheme `oci://` is treated as HTTPS ([4.2](#42-baseurl)).
+* The `/acme` suffix becomes the `subPath` ([4.3](#43-subpath)).
 
 Normalized form:
 
@@ -741,7 +736,7 @@ baseUrl: ghcr.io
 subPath: open-component-model/ocm
 ```
 
-Because `subPath` is explicitly provided, **no normalization** occurs (§4.3).
+Because `subPath` is explicitly provided, **no normalization** occurs ([4.3](#43-subpath)).
 
 ### Repository Grammar Validity
 
@@ -761,7 +756,7 @@ Because `subPath` is explicitly provided, **no normalization** occurs (§4.3).
 | `ghcr..io/repo` | Hostname contains invalid double dot |
 | `http:///repo`  | Scheme without hostname              |
 
-Invalid references **MUST** be rejected (§4.5).
+Invalid references **MUST** be rejected ([4.5](#45-string-reference-grammar)).
 
 ### Component → Repository Mapping
 
@@ -801,6 +796,7 @@ A manifest storing a component version may look like:
   },
   "layers": [
     {
+      "annotations": { "software.ocm.descriptor": "true" },
       "mediaType": "application/vnd.ocm.software.component-descriptor.v2+json",
       "digest": "sha256:componentdesc"
     },
@@ -815,7 +811,8 @@ A manifest storing a component version may look like:
 Key points:
 
 * The descriptor is the layer annotated by media type.
-* Any `localBlob` with digest `sha256:deadbeef` must resolve to the second layer (§10.2).
+* **MUST** contain exactly one layer annotated software.ocm.descriptor="true"
+* Any `localBlob` with digest `sha256:deadbeef` must resolve to the second layer (([10.2](#102-mapping))).
 
 ### Index Representation
 
@@ -862,8 +859,8 @@ Selected descriptor:
 sha256:aaa
 ```
 
-If two descriptor annotations exist → **resolution MUST fail** (§7).
-If none exist → select the **first manifest** for compatibility (§7).
+If two descriptor annotations exist → **resolution MUST fail** ([7](#7-descriptor-selection-logic)).
+If none exist → select the **first manifest** for compatibility ([7](#7-descriptor-selection-logic)).
 
 ### LocalBlob Resolution
 
@@ -877,7 +874,7 @@ Resolution steps:
 
 1. Examine **all** layers, manifests, and index entries reachable from the component version.
 2. Find exactly **one** descriptor whose digest matches `sha256:beef1234`.
-3. If 0 or >1 matches → **fail** (§10.3).
+3. If 0 or >1 matches → **fail** ([10.3](#103-resolution)).
 
 ### Version Mapping
 
@@ -952,7 +949,7 @@ Then:
 
 * Publication **MUST** still succeed.
 * The Component Index **MUST NOT** be regenerated.
-* Discovery may use fallback (§8.5.5).
+* Discovery may use fallback ([8.5.5](#855-fallback-behavior-on-registries-without-referrer-support)).
 
 ### Full OCI Layout Reconstruction
 
@@ -978,7 +975,7 @@ Failure conditions:
 * Digest mismatch
 * Incomplete graph
 
-Any of these **MUST** abort retrieval (§10.4).
+Any of these **MUST** abort retrieval ([10.4](#104-retrieval)).
 
 ### Index vs Manifest Fallback
 
