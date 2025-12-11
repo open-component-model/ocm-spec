@@ -175,12 +175,9 @@ ghcr.io
 
 ### 4.3 `subPath`
 
-OCM repository specifications include a `subPath` field that defines the repository prefix under which OCM artifacts are stored.
-
-* `baseUrl` defines the **registry host**.
-* `subPath` defines the **repository prefix** under which all OCM-managed repositories are located.
-* Multiple OCM repositories MAY share the same registry via different `subPath` values.
-
+OCM repository specifications include a `subPath` field.
+`subPath` defines the **repository prefix** under which all OCM-managed repositories are located.
+Multiple OCM repositories MAY share the same registry via different `subPath` values.
 
 If:
 
@@ -292,7 +289,6 @@ A component version **MUST** be stored as either:
 1. A **manifest** (`application/vnd.oci.image.manifest.v1+json`), or
 2. An **index** (`application/vnd.oci.image.index.v1+json`).
 
-Readers **MUST** support both; writers **MAY** choose either.
 Readers **MUST** accept all supported forms. Writers **MAY** restrict to one of these formats.
 
 Supported representations are defined in [6.1. Manifest Representation](#61-manifest-representation) and [6.2. Index Representation](#62-index-representation).
@@ -334,8 +330,8 @@ software.ocm.artifact: [{"identity": {...}, "kind": "resource|source"}]
 
 This annotation:
 
-* MUST NOT affect resolution
-* MUST NOT override digest-based `localReference` logic
+* **MUST NOT** affect resolution
+* **MUST NOT** override digest-based `localReference` logic
 
 Digest equality **MUST** govern all mapping and resolution.
 
