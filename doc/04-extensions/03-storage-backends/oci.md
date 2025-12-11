@@ -1,926 +1,1019 @@
 # OCI Registries
 
+Status: **Proposal**
+
+_This specification is in proposal status as it is being unified with the rest of the OCM specifications._
+
 The specification defines how OCM repositories, component descriptors, and artifacts are stored and resolved inside OCI registries. 
 It standardizes the repository format, how component names map to OCI paths, and how versions are represented using either OCI manifests or OCI indexes. 
 It prescribes strict rules for descriptor selection, LocalBlob handling, digest validation, and version-to-tag mapping. 
 The specification also introduces a Component Index artifact used for referrer-based version discovery and defines fallback mechanisms for registries lacking referrer support.
 
-## Table of Contents
-
 <!-- TOC -->
 * [OCI Registries](#oci-registries)
-  * [Table of Contents](#table-of-contents)
   * [1. Scope](#1-scope)
   * [2. Conformance Terminology](#2-conformance-terminology)
-  * [3. OCI Registry Requirements](#3-oci-registry-requirements)
+  * [3. Registry Requirements](#3-registry-requirements)
   * [4. Repository Specification Format](#4-repository-specification-format)
-    * [4.1 Synopsis](#41-synopsis)
-    * [4.2 Specification Version](#42-specification-version)
-    * [4.3 Version `v1` Fields](#43-version-v1-fields)
-      * [`baseUrl` (string, REQUIRED)](#baseurl-string-required)
-      * [`subPath` (string, OPTIONAL)](#subpath-string-optional)
-      * [`componentNameMapping` (string, OPTIONAL)](#componentnamemapping-string-optional)
-  * [5. OCI Repository Reference Grammar](#5-oci-repository-reference-grammar)
-    * [5.1 Grammar](#51-grammar)
-  * [6. Component Repository Mapping](#6-component-repository-mapping)
-  * [6.1 Example](#61-example)
-    * [6.1.1 Input](#611-input)
-    * [6.1.2 Resolved OCI Reference](#612-resolved-oci-reference)
-  * [7. Component Version Representations](#7-component-version-representations)
-  * [8. Manifest-Based Representation](#8-manifest-based-representation)
-    * [8.1 Media Type](#81-media-type)
-    * [8.2 Configuration Requirement](#82-configuration-requirement)
-    * [8.3 LocalBlob Mapping (Manifest-Based)](#83-localblob-mapping-manifest-based)
-    * [8.4 Example](#84-example)
-  * [9. Alternative Representation Formats](#9-alternative-representation-formats)
-  * [10. Index-Based Representation](#10-index-based-representation)
-    * [10.1 Descriptor Storage](#101-descriptor-storage)
-    * [10.2 Allowed Additional Manifests](#102-allowed-additional-manifests)
-    * [10.3 Example](#103-example)
-  * [11. Artifact-Level OCM OCI Annotations (Extended)](#11-artifact-level-ocm-oci-annotations-extended)
-  * [12. Descriptor Selection Logic](#12-descriptor-selection-logic)
-  * [**13. Component Index and Referrer Semantics**](#13-component-index-and-referrer-semantics)
-    * [13.1 Purpose](#131-purpose)
-    * [13.2 Media Type and Manifest Requirements](#132-media-type-and-manifest-requirements)
-    * [13.3 Descriptor Requirements](#133-descriptor-requirements)
-    * [13.4 Storage Rules](#134-storage-rules)
-    * [13.5 Subject Reference Requirement](#135-subject-reference-requirement)
-    * [13.6 Discovery Behavior](#136-discovery-behavior)
-      * [13.6.1 Registries Supporting the Referrers API](#1361-registries-supporting-the-referrers-api)
-      * [13.6.2 Registries Not Supporting the Referrers API](#1362-registries-not-supporting-the-referrers-api)
-      * [13.6.3 Hybrid Behavior](#1363-hybrid-behavior)
-    * [13.7 Component Version Lifecycle](#137-component-version-lifecycle)
-      * [13.7.1 On Push](#1371-on-push)
-      * [13.7.2 On Delete](#1372-on-delete)
-      * [13.7.3 On Enumerating Versions](#1373-on-enumerating-versions)
-  * [13.8 Referrer Tracking Policy](#138-referrer-tracking-policy)
-    * [13.8.1 `ReferrerTrackingPolicyNone`](#1381-referrertrackingpolicynone)
-    * [13.8.2 `ReferrerTrackingPolicyByIndexAndSubject`](#1382-referrertrackingpolicybyindexandsubject)
-  * [13.9 Index Creation Rules (`CreateIfNotExists`)](#139-index-creation-rules-createifnotexists)
-  * [14. Descriptor Encoding Formats](#14-descriptor-encoding-formats)
-  * [15. LocalBlob Resolution and OCI Layout Handling](#15-localblob-resolution-and-oci-layout-handling)
-    * [15.1 General Rules](#151-general-rules)
-    * [15.2 Ingestion of LocalBlob Content](#152-ingestion-of-localblob-content)
-    * [15.3 Descriptor Mapping](#153-descriptor-mapping)
-    * [15.4 Resolution of LocalBlob Descriptors](#154-resolution-of-localblob-descriptors)
-    * [15.5 Retrieval of LocalBlob Content](#155-retrieval-of-localblob-content)
-      * [15.5.1 Layer-Based LocalBlob](#1551-layer-based-localblob)
-      * [15.5.2 Manifest- or Index-Based LocalBlob (OCI Layout Reconstruction)](#1552-manifest--or-index-based-localblob-oci-layout-reconstruction)
-    * [15.6 Interaction with Global Access](#156-interaction-with-global-access)
-    * [15.7 Validation Requirements](#157-validation-requirements)
-  * [16. OCIImage Digest Processing](#16-ociimage-digest-processing)
-  * [17. Version Mapping Rules](#17-version-mapping-rules)
-    * [17.1 BNF Grammar Definitions](#171-bnf-grammar-definitions)
-    * [17.2 OCM Version → OCI Tag Transformation](#172-ocm-version--oci-tag-transformation)
-    * [17.3 OCI Tag → OCM Version Transformation](#173-oci-tag--ocm-version-transformation)
-    * [17.4 Manifest Annotation `software.ocm.componentversion`](#174-manifest-annotation-softwareocmcomponentversion)
-  * [18. Blob Repository Mapping](#18-blob-repository-mapping)
-  * [19. Compatibility Requirements](#19-compatibility-requirements)
+    * [4.1 `type`](#41-type)
+    * [4.2 `baseUrl`](#42-baseurl)
+    * [4.3 `subPath`](#43-subpath)
+    * [4.4. `componentNameMapping`](#44-componentnamemapping)
+    * [4.5. String Reference Grammar](#45-string-reference-grammar)
+    * [4.6. Formal Grammar (Informative)](#46-formal-grammar-informative)
+  * [5. Component Repository Mapping](#5-component-repository-mapping)
+  * [6. Component Version Storage Models](#6-component-version-storage-models)
+    * [6.1. Manifest Representation](#61-manifest-representation)
+    * [6.2. Index Representation](#62-index-representation)
+    * [6.3. Artifact-Level Annotations](#63-artifact-level-annotations)
+  * [7. Descriptor Selection Logic](#7-descriptor-selection-logic)
+  * [8. Component Index (Referrer Anchor)](#8-component-index-referrer-anchor)
+    * [8.1 Requirements](#81-requirements)
+    * [8.2 Version Behavior](#82-version-behavior)
+    * [8.3 Discovery](#83-discovery)
+    * [8.4 Referrer Tracking Policy](#84-referrer-tracking-policy)
+    * [8.5 Component Index Lifecycle](#85-component-index-lifecycle)
+      * [8.5.1 Creation](#851-creation)
+      * [8.5.2 Publishing a Component Version](#852-publishing-a-component-version)
+      * [8.5.3 Deleting a Component Version](#853-deleting-a-component-version)
+      * [8.5.4 Version Enumeration](#854-version-enumeration)
+      * [8.5.5 Fallback Behavior on Registries Without Referrer Support](#855-fallback-behavior-on-registries-without-referrer-support)
+  * [9. Descriptor Encoding Formats](#9-descriptor-encoding-formats)
+  * [10. `localBlob` Processing](#10-localblob-processing)
+    * [10.1 Ingestion](#101-ingestion)
+    * [10.2 Mapping](#102-mapping)
+    * [10.3 Resolution](#103-resolution)
+    * [10.4 Retrieval](#104-retrieval)
+  * [11. `OCIArtifact/v1` Processing](#11-ociartifactv1-processing)
+    * [11.1 Legacy Access Type Identifiers](#111-legacy-access-type-identifiers)
+    * [11.2 Digest Resolution and Canonicalization Requirements](#112-digest-resolution-and-canonicalization-requirements)
+    * [11.3 Translation of `localBlob` to `OCIArtifact/v1`](#113-translation-of-localblob-to-ociartifactv1)
+  * [12. Tag and Version Mapping Rules](#12-tag-and-version-mapping-rules)
+  * [13. Compatibility Requirements](#13-compatibility-requirements)
+* [Examples (Informative)](#examples-informative)
+  * [Simple Examples](#simple-examples)
+    * [Repository Specification Examples](#repository-specification-examples)
+      * [A. Minimal HTTPS Example](#a-minimal-https-example)
+      * [B. OCI Scheme with Auto-Derived Subpath](#b-oci-scheme-with-auto-derived-subpath)
+      * [C. Explicit Subpath (No Auto-Extraction)](#c-explicit-subpath-no-auto-extraction)
+    * [Repository Grammar Validity](#repository-grammar-validity)
+      * [Valid References](#valid-references)
+      * [Invalid References](#invalid-references)
+    * [Component → Repository Mapping](#component--repository-mapping)
+  * [Intermediate Examples](#intermediate-examples)
+    * [Manifest Representation](#manifest-representation)
+    * [Index Representation](#index-representation)
+    * [Descriptor Selection Logic](#descriptor-selection-logic)
+    * [LocalBlob Resolution](#localblob-resolution)
+    * [Version Mapping](#version-mapping)
+  * [Advanced End-to-End Examples](#advanced-end-to-end-examples)
+    * [Publishing a Component Version](#publishing-a-component-version)
+      * [Scenario](#scenario)
+      * [1. Repository Mapping](#1-repository-mapping)
+      * [2. Version Tag Mapping](#2-version-tag-mapping)
+      * [3. Manifest Assembly](#3-manifest-assembly)
+      * [4. Component Index Subject](#4-component-index-subject)
+      * [5. LocalBlob Mapping](#5-localblob-mapping)
+    * [Subject Handling When Registry Rejects `subject`](#subject-handling-when-registry-rejects-subject)
+    * [Full OCI Layout Reconstruction](#full-oci-layout-reconstruction)
+    * [Index vs Manifest Fallback](#index-vs-manifest-fallback)
+    * [LocalBlob → OCIArtifact/v1 Conversion](#localblob--ociartifactv1-conversion)
 <!-- TOC -->
 
 ## 1. Scope
 
-This document defines the normative mapping of OCM component repositories, component descriptors, and associated artifacts onto OCI registries conforming to the [OCI Distribution Specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md).
+This specification defines the normative mapping of OCM repositories, component descriptors, and related artifacts onto OCI registries implementing the OCI Distribution Specification.
 It specifies:
 
-* The repository specification format
-* Repository location resolution
-* Component descriptor representation
-* Manifest-based and index-based storage models
-* LocalBlob and OCIImage resource resolution
-* Descriptor selection and lookup
-* Version and digest mapping rules
-* Artifact staging behavior
-* Compatibility constraints
+* Repository specification format and location resolution
+* Mapping of component identifiers and versions to OCI repositories
+* Manifest- and index-based component version storage
+* Descriptor selection rules
+* LocalBlob ingestion, storage, resolution, and retrieval
+* Version mapping between OCM versions and OCI tags
+* Component Index semantics for referrer-driven discovery
+* Compatibility requirements for clients and registries
 
-This document is authoritative for all interactions between OCM and OCI registry systems.
+This document is authoritative for all interactions between OCM and OCI registries.
+This document is normative unless explicitly marked as ‘Informative’.
 
 ## 2. Conformance Terminology
 
-The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**, **SHOULD**, **SHOULD NOT**, **MAY**, and **OPTIONAL** are to be interpreted as described in RFC 2119 and RFC 8174.
+The key words **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT**, **MAY**, and **OPTIONAL** follow RFC 2119 and RFC 8174.
 
-## 3. OCI Registry Requirements
+## 3. Registry Requirements
 
 An OCI registry used with OCM:
 
-1. **MUST** conform to the OCI Distribution Specification.
-2. **MUST** support hierarchical (deep) repository paths.
-3. **MAY** support HTTP if explicitly enabled via a scheme in the base URL.
-4. **MAY** host multiple OCM repositories concurrently.
-
-Registries that do not support nested repository paths **MUST NOT** be used with this specification.
+* **SHOULD** conform to the [OCI Distribution Specification v1.1.1](https://github.com/opencontainers/distribution-spec/releases/tag/v1.1.1).
+* **MAY** allow HTTP when explicitly configured.
+* **MAY** host multiple OCM repositories through different repository prefixes.
 
 ## 4. Repository Specification Format
 
-The following repository specification format **MUST** be used to describe an OCM repository backed by an OCI registry.
-
-### 4.1 Synopsis
+An OCM repository backed by an OCI registry is described using the following structure:
 
 ```
 type: <TYPE>[/VERSION]
-[ATTRIBUTES]
+baseUrl: <registry-base-url>
+subPath: <optional-prefix>
+componentNameMapping: <mapping-mode>   # OPTIONAL
 ```
 
-Where:
+A repository specification determines the registry host, the optional subpath prefix, and how the OCM repository is rooted within the OCI namespace.
+
+
+### 4.1 `type`
+
+The repository type **SHOULD** be exactly:
 
 ```
-<type-name> ::= <canonical-type> | <short-type>
-
-<canonical-type> ::= "OCIRegistry" | "OCIRepository" | "ociRegistry"
-<short-type>     ::= "OCI" | "oci"
+OCI/v1
 ```
 
-### 4.2 Specification Version
+This is the **only supported and non-deprecated** repository type.
+All other identifiers are considered **deprecated**.
 
-Only version **`v1`** is currently defined.
-Clients **MUST** reject unknown versions.
+Clients **SHOULD** accept the following identifiers for backward compatibility and treat them the same as `OCI/v1`:
 
-### 4.3 Version `v1` Fields
-
-#### `baseUrl` (string, REQUIRED)
-
-Defines the registry host.
-The following constraints apply:
-
-* If a scheme is present (`http://`, `https://`, `oci://`), clients **MUST** honor it.
-* If no scheme is present, clients **MUST** assume HTTPS.
-* The host **MUST** be interpreted as the OCI registry root.
-* A fully qualified URL **MAY** be used to force HTTP usage.
-* The path component of a URL **SHOULD** be interpreted as the subPath.
-
-Examples:
+**Deprecated forms:**
 
 ```
-eu.gcr.io
-https://index.docker.io
-http://eu.ghcr.io
-oci://eu.gcr.io/my-project # my-project SHOULD be interpreted as subPath
+oci/v1
+OCIRegistry/v1
+ociRegistry/v1
+OCIRepository/v1
+OCI
+oci
+OCIRegistry
+ociRegistry
+OCIRepository
 ```
 
-#### `subPath` (string, OPTIONAL)
+Compliant writers **SHOULD NOT** emit any deprecated identifier.
 
-Specifies a repository prefix within the registry.
-All component repositories **MUST** resolve under:
+### 4.2 `baseUrl`
 
-```
-<baseUrl>/<subPath>
-```
+`baseUrl` **MUST** identify the registry host and optional port.
+It MAY include an explicit scheme:
 
-If omitted, `<subPath>` is empty.
+* `https://` (recommended)
+* `http://` (only if allowed by policy)
+* `oci://` (treated as HTTPS for transport)
 
-#### `componentNameMapping` (string, OPTIONAL)
+If no scheme is present, clients **MUST** assume **HTTPS**.
 
-Defines the mapping of component identifiers to OCI repository names.
-
-Supported values:
-
-* `urlPath` (default, REQUIRED for forward compatibility)
-* `sha256-digest` (deprecated)
-
-Clients **SHOULD NOT** use deprecated mappings when writing.
-Clients **MAY** ignore unknown values.
-
-## 5. OCI Repository Reference Grammar
-
-An OCM repository corresponds to a single OCI repository reference.
+**Allowed Examples**
 
 ```
-[scheme://]<host>[:<port>][/<repository-path>]
+https://registry.example.com
+https://registry.example.com:5000
+oci://registry.example.com:5000
+docker.io
+ghcr.io
 ```
 
-### 5.1 Grammar
+### 4.3 `subPath`
+
+OCM repository specifications include a `subPath` field that defines the repository prefix under which OCM artifacts are stored.
+
+* `baseUrl` defines the **registry host**.
+* `subPath` defines the **repository prefix** under which all OCM-managed repositories are located.
+* Multiple OCM repositories MAY share the same registry via different `subPath` values.
+
+
+If:
+
+* `subPath` is empty **AND**
+* `baseUrl` contains a path component,
+
+then clients **MUST** automatically normalize the specification by splitting the value:
+
+**Example:**
+
+Input:
 
 ```
-<oci-repository-ref> ::= <scheme-opt> <host> <port-opt> <repo-path-opt>
-
-<scheme-opt> ::= ε | "https://" | "http://" | "oci://"
-<host> ::= <dns-label> { "." <dns-label> }
-<dns-label> ::= <alphanum> { <alphanum | "-" > }
-<port-opt> ::= ε | ":" <port>
-<port> ::= <digit>+
-<repo-path-opt> ::= ε | "/" <repo-path>
-<repo-path> ::= <path-segment> { "/" <path-segment> }
-<path-segment> ::= <alphanum> { <alphanum | "-" | "_" | "." }
+baseUrl = "ghcr.io/open-component-model/ocm"
+subPath = ""
 ```
 
-Registries **MUST** accept repository paths formed according to this grammar.
+Normalized form:
 
+```
+baseUrl = "ghcr.io"
+subPath = "open-component-model/ocm"
+```
 
-## 6. Component Repository Mapping
+If a user supplies an explicit `subPath`, no auto-extraction occurs:
+
+```
+baseUrl = "ghcr.io"
+subPath = "open-component-model/ocm"
+```
+
+### 4.4. `componentNameMapping`
+
+componentNameMapping controls how a component identifier:
+
+```
+<id> ::= <segment>{"/"<segment>}
+```
+
+is mapped into the underlying OCI repository path.
+
+Supported value: `urlPath`
+
+Component identifiers are mapped directly as slash-separated OCI path segments without modification.
+
+Deprecated mappings such as `sha256-digest` **MUST NOT** be used by writers but MAY be accepted by readers for backward compatibility.
+
+### 4.5. String Reference Grammar
+
+An OCI repository string reference has the form:
+
+```
+[scheme://]<host>[:port][/<path>]
+```
+
+This reference form is a string-based representation of the OCI repository reference.
+It can be used in places where a full repository specification is not practical, such as in a CLI.
+
+In this case the repository reference **MUST** be parsed according to the following rules:
+
+* If `scheme://` is missing, assume `https://`.
+* `<host>` **MUST** be a valid DNS hostname.
+* `:port` **MAY** be omitted; if present, it **MUST** be a valid TCP port number.
+* `<path>` **MAY** be omitted; if present, it **MUST** consist of slash-separated segments of `[A-Za-z0-9._-]+`.
+* The entire reference **MUST** conform to URI syntax rules.
+* Invalid references **MUST** be rejected.
+* The parsed reference **MUST** be converted into a repository specification with:
+  * `baseUrl` = `scheme://host[:port]`
+  * `subPath` = `<path>` (if present)
+
+### 4.6. Formal Grammar (Informative)
+
+The following grammar defines the canonical structure of repository references.
+This grammar complements the parsing rules in [4.5](#45-string-reference-grammar)
+and serves as an informative reference for implementers.
+
+```
+<repository-ref> ::= [ <scheme> "://" ] <host> [ ":" <port> ] [ "/" <repo-path> ]
+<scheme>         ::= "http" | "https" | "oci"
+<host>           ::= <dns-label> { "." <dns-label> }
+<dns-label>      ::= <alphanum> { <alphanum> | "-" }
+<port>           ::= <digit> { <digit> }
+<repo-path>      ::= <segment> { "/" <segment> }
+<segment>        ::= <alphanum> { <alphanum> | "-" | "_" | "." }
+<alphanum>       ::= "A".."Z" | "a".."z" | "0".."9" <digit>          ::= "0".."9"
+```
+
+## 5. Component Repository Mapping
 
 A component identifier:
 
 ```
-<component-id> ::= <id-segment> { "/" <id-segment> }
-<id-segment> ::= <alphanum> { <alphanum | "-" | "_" | "." > }
+<id> ::= <segment>{"/"<segment>}
+<segment> ::= [A-Za-z0-9._-]+
 ```
 
-**MUST** be mapped to the following repository structure:
+**MUST** map to:
 
 ```
 <base-repository>/component-descriptors/<component-id>
 ```
 
-The `component-descriptors` sub-path **MUST** be used to store identifiable component descriptors.
-This sub-path **MAY** change in future versions of this API based on configuration.
+All versions of a component reside in this repository.
 
-The `componentNameMapping` field determines the transformation of `<component-id>`.
+## 6. Component Version Storage Models
 
-All component versions for the component appear under this repository.
+A component version **MUST** be stored as either:
 
-## 6.1 Example
+1. A **manifest** (`application/vnd.oci.image.manifest.v1+json`), or
+2. An **index** (`application/vnd.oci.image.index.v1+json`).
 
-This section illustrates the application of the normative repository-mapping rules defined in Sections 5 and 6.
+Readers **MUST** support both; writers **MAY** choose either.
+Readers **MUST** accept all supported forms. Writers **MAY** restrict to one of these formats.
 
-### 6.1.1 Input
+Supported representations are defined in [6.1. Manifest Representation](#61-manifest-representation) and [6.2. Index Representation](#62-index-representation).
+Supported descriptor formats are defined in [9. Descriptor Encoding Formats](#9-descriptor-encoding-formats).
 
-| Field             | Value                            |
-|-------------------|----------------------------------|
-| Component Name    | `github.com/acme.org/helloworld` |
-| Component Version | `1.0.0`                          |
-| Registry Base URL | `ghcr.io/open-component-model/test`   |
+### 6.1. Manifest Representation
 
-The effective OCI repository MUST be derived as:
+A manifest representing a component version:
 
-```
-<registry>/<subpath>/component-descriptors/<component-name>
-```
+* **MUST** contain exactly one layer annotated `software.ocm.descriptor="true"`.
+* **MUST** include a config with media type
+  `application/vnd.ocm.software.component.config.v1+json`.
+* The config **MUST** contain a `componentDescriptorLayer` OCI descriptor.
+* Each `localBlob` **MUST** map to exactly one layer whose digest equals its `localReference`.
+* Optional `globalAccess` **MAY** be present but **MUST NOT** override digest resolution.
 
-Applied to this example:
+### 6.2. Index Representation
 
-```
-ghcr.io/open-component-model/test/component-descriptors/github.com/acme.org/helloworld
-```
+An index representing a component version:
 
-### 6.1.2 Resolved OCI Reference
+* **MUST** contain exactly one manifest annotated `software.ocm.descriptor="true"`.
+* **MUST** include a config with media type
+  `application/vnd.ocm.software.component.config.v1+json`.
+* The config **MUST** contain a `componentDescriptorLayer` OCI descriptor.
+* Additional manifests **MAY** be included.
+* The index config **MUST** reference the descriptor layer as a manifest based on [6.1. Manifest Representation](#61-manifest-representation).
+* Each `localBlob` **MUST** map to either
+  * exactly one layer whose digest equals its `localReference` located within the manifest annotated `software.ocm.descriptor="true"`, or
+  * exactly one manifest or index whose digest equals its `localReference` located within the index.
+    see [10. Local Blob Processing](#10-localblob-processing) for details.
 
-The component version `1.0.0` MUST be mapped to an OCI tag of equal value.
-The resulting fully qualified OCI reference becomes:
+### 6.3. Artifact-Level Annotations
 
-```
-oci://ghcr.io/open-component-model/test/component-descriptors/github.com/acme.org/helloworld:1.0.0
-```
-
-## 7. Component Version Representations
-
-A component version **MUST** be represented using one of:
-
-1. **Manifest-Based Representation** (OCI Image Manifest)
-2. **Index-Based Representation** (OCI Image Index)
-
-Both representations **MUST** be supported by all readers.
-Writers **MAY** choose either.
-
-
-## 8. Manifest-Based Representation
-
-### 8.1 Media Type
-
-A component version stored as a manifest **MUST** use:
+Artifact Entries in the manifest or index (see [6.1. Manifest Representation](#61-manifest-representation) and [6.2. Index Representation](#62-index-representation)) **MAY** include:
 
 ```
-application/vnd.oci.image.manifest.v1+json
+software.ocm.artifact: [{"identity": {...}, "kind": "resource|source"}]
 ```
 
-### 8.2 Configuration Requirement
+This annotation:
 
-The manifest **MUST** include a config whose media type is:
+* MUST NOT affect resolution
+* MUST NOT override digest-based `localReference` logic
 
-```
-application/vnd.ocm.software.component.config.v1+json
-```
+Digest equality **MUST** govern all mapping and resolution.
 
-The config JSON object **MUST** contain:
+This annotation serves purely informational/discovery purposes and actual resolution **MUST** follow the rules in [10. Local Blob Processing](#10-localblob-processing).
 
-```
-componentDescriptorLayer: <OCI descriptor>
-```
+## 7. Descriptor Selection Logic
 
-This descriptor **MUST** reference the descriptor layer containing the component descriptor.
-This descriptor **MAY** be used to lookup the component descriptor layer if the descriptor layer is not locatable at index 0 of the top level manifest
-Any manifest lacking this requirement **MUST** be treated as invalid.
+When resolving a component version reference:
 
-### 8.3 LocalBlob Mapping (Manifest-Based)
+1. Resolve the tag to a descriptor, which **MUST** point to either a manifest or index. 
+   The reference resolution must respect versioning rules defined in [12. Tag and Version Mapping Rules](#12-tag-and-version-mapping-rules).
+2. If manifest → it **MUST** be interpreted as the component descriptor root according to [6.1. Manifest Representation](#61-manifest-representation).
+3. If index → enumerate all manifests annotated `software.ocm.descriptor="true"`:
+    * If exactly one exists → select it and interpret it according to [6.1. Manifest Representation](#61-manifest-representation).
+    * If multiple exist → resolution **MUST** fail.
+    * If none exist → select manifest[0] (compatibility rule).
+    * Interpret other manifests as regular artifacts roots according to [6.2. Index Representation](#62-index-representation).
 
-Each `localBlob` resource in the descriptor:
+## 8. Component Index (Referrer Anchor)
 
-* **MUST** correspond to one OCI manifest layer.
-* The layer digest **MUST** equal the resource’s `localReference`.
-* The layer media type **MUST** equal the resource’s declared `mediaType`.
-* If the resource specifies a digest, the layer **MUST** match that digest.
-* A `globalAccess` entry **MAY** appear and **MAY** refer to any canonical OCI layer reference.
+### 8.1 Requirements
 
-This mapping is deterministic and normative.
+The Component Index is a stable, immutable OCI manifest that functions as the referrer
+anchor for all Component Versions within an OCM repository. Its manifest structure
+and descriptor values are fixed exactly to those defined in the implementation and
+**MUST** never vary. The rules in this section extend the definition of the Component Index
+from [8.1 Requirements](#81-requirements), its role during version publication from
+[8.2 Version Behavior](#82-version-behavior), and its role in discovery as described in
+[8.3 Discovery](#83-discovery).
 
-### 8.4 Example
-
-The following manifest shows a valid OCI Artifact Manifest containing the OCM Component Descriptor for `github.com/acme.org/helloworld` in version `1.0.0`.
+The Component Index **MUST** match the exact manifest defined by the OCM implementation:
 
 ```json
 {
-  "schemaVersion": 2,
+  "schemaVersion" : 2,
+  "mediaType" : "application/vnd.oci.image.manifest.v1+json",
+  "artifactType" : "application/vnd.ocm.software.component-index.v1+json",
+  "config" : {
+    "mediaType" : "application/vnd.oci.empty.v1+json",
+    "digest" : "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "size" : 2,
+    "data" : "e30="
+  },
+  "layers" : [ {
+    "mediaType" : "application/vnd.oci.empty.v1+json",
+    "digest" : "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "size" : 2,
+    "data" : "e30="
+  } ],
+  "annotations" : {
+    "org.opencontainers.image.description" : "This is an OCM component index. It is an empty jsonthat can be used as referrer for OCM component descriptors. It is used as a subjectfor all OCM Component Version Top-Level Manifests and can be used to reference back allOCM Component Versions",
+    "org.opencontainers.image.title" : "OCM Component Index V1"
+  }
+}
+```
+
+The canonical JSON for this manifest **MUST** produce the descriptor:
+
+```
+Digest: sha256:9717cda41c478af11cba7ed29f4aa3e4882bab769d006788169cbccafc0fcd05
+Size: 837
+MediaType: application/vnd.oci.image.manifest.v1+json
+ArtifactType: application/vnd.ocm.software.component-index.v1+json
+```
+
+This descriptor is normative and **MUST NOT** change.
+
+### 8.2 Version Behavior
+
+Each component version:
+
+* **SHOULD** set the Component Index as its OCI `subject`.
+* **MUST NOT** require registry support for referrers to publish successfully.
+
+### 8.3 Discovery
+
+Registries supporting the Referrers API:
+
+* **MUST** return all component versions referencing the Component Index.
+
+Registries lacking referrers:
+
+* Clients **MAY** use deterministic surrogate indexes.
+* Subjects **MUST** remain set even if ignored.
+
+### 8.4 Referrer Tracking Policy
+
+Registries differ in their support for referrers as defined by the OCI Distribution Specification.
+Implementations interacting with Component Indexes **MUST** conform to the following policy:
+
+1. When a registry supports the Referrers API:
+    * Component Version manifests **MUST** appear in the referrers list for the Component Index.
+    * Clients **MUST** enumerate versions exclusively through referrers (see [8.3](#83-discovery)).
+
+2. When a registry does not support referrers:
+    * Clients **MAY** fall back to repository listing.
+    * Clients **MUST NOT** attempt to modify or recreate the Component Index to emulate referrer behavior.
+    * The absence of referrers **MUST NOT** affect Component Index immutability (see [8.5](#85-component-index-lifecycle)).
+
+3. Registries with partial subject/referrer support:
+    * Clients **MUST** tolerate silent dropping of the `subject` field.
+    * Clients **MUST** use a hybrid enumeration strategy combining available APIs and fallback mechanisms.
+
+This policy ensures consistent behavior regardless of registry capability.
+
+### 8.5 Component Index Lifecycle
+
+#### 8.5.1 Creation
+
+Creation follows the normative behavior equivalent and depends
+on the repository structure defined in
+[4. Repository Specification Format](#4-repository-specification-format).
+
+Implementations **MUST** check whether the fixed empty layer exists in the repository,
+and if it does not exist, they **MUST** push it using the exact descriptor and content
+defined by this specification.
+
+Implementations **MUST** check whether the Component Index manifest descriptor exists.
+If it does not, they **MUST** marshal the fixed manifest byte-for-byte and push it using
+the canonical descriptor defined above.
+
+The canonical JSON representation of the manifest **MUST** be identical to the JSON used
+to compute the descriptor’s digest and size.
+
+The Component Index **MUST** be immutable. Implementations **MUST NOT** rewrite, replace,
+or mutate an existing Component Index manifest under any circumstances.
+
+Repeated initialization **MUST** be idempotent.
+
+#### 8.5.2 Publishing a Component Version
+
+Component Version publication interacts with the Component Index according to the
+representation rules in  
+[6. Component Version Storage Models](#6-component-version-storage-models).
+
+Before publishing a Component Version, implementations **MUST** ensure the Component Index exists.
+
+The top-level manifest of a Component Version SHOULD set its `subject` field to the
+Component Index descriptor. If the registry rejects the subject field, the Component
+Version **MUST** still be published without modifying the Component Index.
+
+Publishing a Component Version **MUST NOT** regenerate, rewrite, or replace the Component Index.
+
+If the registry supports the OCI Referrers API, publishing **MUST** cause the Component
+Version to appear as a referrer of the Component Index descriptor.
+
+The Component Index **MUST** remain an empty manifest without references to any component versions.
+
+#### 8.5.3 Deleting a Component Version
+
+Deletion behavior **MUST** preserve Component Index immutability.
+
+Deletion **MUST** remove only the artifacts associated with the specific Component Version.
+
+The Component Index **MUST NOT** be deleted, rewritten, regenerated, or replaced.
+
+Implementations **MUST** tolerate registry-level garbage collection or referrer pruning
+without attempting to recreate or update the Component Index.
+
+The absence of Component Versions **MUST NOT** affect the digest or existence of the Component Index.
+
+#### 8.5.4 Version Enumeration
+
+Version enumeration depends on the discovery behavior defined in  
+[8.3 Discovery](#83-discovery).
+
+If the registry supports the OCI Referrers API, implementations **MUST** enumerate
+Component Versions via the referrers list of the Component Index descriptor.
+
+If the registry does not support referrers, implementations MAY use fallback methods,
+including tag listing or repository metadata, but they **MUST** continue to treat the Component
+Index descriptor as the authoritative anchor.
+
+Any artifact whose `subject.digest` equals the Component Index digest **MUST** be
+recognized as a Component Version.
+
+The Component Index itself **MUST NOT** be considered a Component Version.
+
+Implementations **MUST** remain correct even if Component Versions are externally added or removed.
+
+#### 8.5.5 Fallback Behavior on Registries Without Referrer Support
+
+Registries may ignore subject references. Behavior in such environments **MUST** ensure
+consistent semantics.
+
+Component Versions **MUST** still set their `subject` field to the Component Index descriptor,
+regardless of registry support.
+
+Implementations **MUST NOT** modify the Component Index or create surrogate indexes to emulate referrer behavior.
+
+Implementations MAY maintain internal metadata for enumeration, but such metadata **MUST NOT**
+modify content stored in the OCI registry and **MUST NOT** change the Component Index manifest or descriptor.
+
+The Component Index **MUST** remain unchanged regardless of registry capability.
+
+## 9. Descriptor Encoding Formats
+
+Descriptors **MAY** use:
+
+* `application/vnd.ocm.software.component-descriptor.v2+yaml`
+* `application/vnd.ocm.software.component-descriptor.v2+json`
+* `application/vnd.ocm.software.component-descriptor.v2+yaml+tar`
+  When in TAR form **MUST** contain exactly one `component-descriptor.yaml`.
+
+## 10. `localBlob` Processing
+
+This deals with `localBlob` access methods referencing content stored within the same OCI artifact graph as the component version.
+See [localBlob as an Access Type](../02-access-types/localblob.md)
+
+### 10.1 Ingestion
+
+Content presented as a `localBlob` **MAY** be a raw blob, an [OCI layout](https://github.com/opencontainers/image-spec/blob/v1.1.1/image-layout.md), or an OCM artifact set (deprecated).
+Layout interpretation **MAY** be rejected if unsupported; if accepted, the entire artifact graph **MUST** be ingested.
+If unsupported and not rejected, ingestion **SHOULD** proceed as a manifest layer.
+
+### 10.2 Mapping
+
+Each `localBlob`:
+
+* **MUST** correspond to exactly one OCI descriptor (layer, manifest, or index).
+* The descriptor digest **MUST** equal `localReference`.
+* Declared media types **MUST** match descriptor media types.
+* If `globalAccess` is provided, it **MUST** resolve to a digest-equal artifact.
+
+### 10.3 Resolution
+
+A client:
+
+* **MUST** examine all descriptors reachable from the component version artifact.
+* **MUST** identify exactly one descriptor matching `localReference`.
+* **MUST** fail if zero or multiple matches exist.
+
+### 10.4 Retrieval
+
+* Layer descriptor → fetch blob directly.
+* Manifest/index descriptor → reconstruct a valid OCI Image Layout containing all referenced blobs and descriptors.
+
+Reconstruction failure **MUST** fail retrieval.
+
+If reconstruction is attempted, the following rules apply:
+
+* The root descriptor **MUST** become the sole entry in `index.json`.
+* All referenced blobs **MUST** be written under `blobs/<alg>/<digest>`.
+* Media types **MUST** be preserved exactly.
+* Missing blobs, mismatched digests, or incomplete graphs **MUST** cause reconstruction failure.
+* The resulting layout **MUST** be a valid OCI Image Layout as defined in
+  <https://github.com/opencontainers/image-spec/blob/v1.1.1/image-layout.md>.
+
+This provides a portable format for redistributing version content.
+
+## 11. `OCIArtifact/v1` Processing
+
+This deals with access methods of type `OCIArtifact/v1`, representing OCI artifacts stored in OCI registries.
+See [ociArtifact as an Access Type](../02-access-types/ociartifact.md).
+
+### 11.1 Legacy Access Type Identifiers
+
+Clients **MUST** treat the following legacy identifiers exactly as `OCIArtifact/v1`:
+
+```
+OCIArtifact
+ociArtifact/v1
+ociArtifact
+ociRegistry/v1
+ociRegistry
+ociImage/v1
+ociImage
+OCIImage/v1
+OCIImage
+```
+
+Compliant writers **SHOULD NOT** emit any of the deprecated identifiers above.
+
+All normative rules in
+[6. Component Version Storage Models](#6-component-version-storage-models),
+[7. Descriptor Selection Logic](#7-descriptor-selection-logic), and
+[10. Local Blob Processing](#10-localblob-processing)
+apply identically regardless of which identifier was used.
+
+### 11.2 Digest Resolution and Canonicalization Requirements
+
+An `OCIArtifact/v1` access method represents an OCI artifact that may resolve to either a manifest or an index as defined in
+[6.1. Manifest Representation](#61-manifest-representation) and
+[6.2. Index Representation](#62-index-representation).
+When supplied through a `localBlob`, ingestion and mapping follow
+[10. Local Blob Processing](#10-localblob-processing).
+
+Digest processing for `OCIArtifact/v1` **MUST** satisfy all of the following:
+
+1. **Missing digests**
+   If the provided reference does not include a digest, clients **MUST** resolve the artifact,
+   and **MAY** write back the canonical digest reference corresponding to the resolved manifest or index (see [10.3 Resolution](#103-resolution)).
+
+2. **Digest validation**
+   If the reference includes a digest in its access specification and its resource digest specification, the resolved artifact **MUST** match that digest exactly (see [10.2 Mapping](#102-mapping)).
+   A mismatch **MUST** cause resolution failure.
+
+3. **Deterministic tag resolution**
+   Tag-based references **MUST** resolve deterministically to exactly one artifact.
+
+4. **Canonical reference formatting**
+   The final resolved reference **MUST** be canonicalized in digest form:
+
+   ```
+   <registry>/<repository>@<digest>
+   ```
+   
+This form may be restored by clients after resolution, ingestion, or mapping.
+
+### 11.3 Translation of `localBlob` to `OCIArtifact/v1`
+
+When an artifact originates from a `localBlob` and is translated into `OCIArtifact/v1`, ingestion **MUST** produce a stable digest (see
+[10.1 Ingestion](#101-ingestion) and
+[10.4 Retrieval](#104-retrieval)).
+After upload, the resulting digest reference **MUST** replace any tag-based or non-digest reference,
+but **SHOULD** retain its value if not modified.
+
+The resulting `OCIArtifact/v1` access method **MUST** include:
+* A digest-based `imageReference` pointing to the uploaded artifact.
+* The original media type of the artifact (manifest or index).
+
+## 12. Tag and Version Mapping Rules
+
+Because OCI tags do not allow `+`, OCM versions with build metadata **MUST** encode it as:
+
+```
+.build-<build>
+```
+
+Round-trip conversion between OCM versions and OCI tags **MUST** be exact.
+
+Examples:
+
+| OCI Tag             | OCM Version   |
+|---------------------|---------------|
+| `1.2.3`             | `1.2.3`       |
+| `1.2.3.build-ci.42` | `1.2.3+ci.42` |
+
+Tags **SHOULD** reference a manifest or index (see [6](#6-component-version-storage-models)) whose descriptor **MUST** include the annotation:
+
+```
+software.ocm.componentversion: "<component>:<version>"
+```
+
+## 13. Compatibility Requirements
+
+* Clients **SHOULD** support reading manifest- and index-based storage; write support **MAY** be limited.
+* Descriptor formats (YAML, JSON, TAR) **SHOULD** be read; at least one **MUST** be written.
+* Index-based representation **MUST NOT** deprecate manifest-based.
+* Component Index semantics **MAY** rely on registry referrer support but MUST NOT require it.
+
+# Examples (Informative)
+
+This section contains **non-normative** examples illustrating how the rules in this specification operate in practice.
+The structure, headings, and link anchors remain unchanged, but the example content has been rewritten for clarity and readability.
+
+Examples are grouped into:
+
+* [Simple Examples](#simple-examples)
+* [Intermediate Examples](#intermediate-examples)
+* [Advanced End-to-End Examples](#advanced-end-to-end-examples)
+
+## Simple Examples
+
+### Repository Specification Examples
+
+*(References: [4. Repository Specification Format](#4-repository-specification-format))*
+
+#### A. Minimal HTTPS Example
+
+```
+type: OCI/v1
+baseUrl: registry.example.com
+```
+
+Interpretation:
+
+* No scheme → clients **MUST** assume HTTPS (§4.2).
+* The repository root is:
+  `registry.example.com`
+* Component descriptors map under:
+  `registry.example.com/component-descriptors/<component>`
+
+#### B. OCI Scheme with Auto-Derived Subpath
+
+```
+type: OCI/v1
+baseUrl: oci://ghcr.io/acme
+```
+
+* The scheme `oci://` is treated as HTTPS (§4.2).
+* The `/acme` suffix becomes the `subPath` (§4.3).
+
+Normalized form:
+
+```
+baseUrl: ghcr.io
+subPath: acme
+```
+
+#### C. Explicit Subpath (No Auto-Extraction)
+
+```
+type: OCI/v1
+baseUrl: ghcr.io
+subPath: open-component-model/ocm
+```
+
+Because `subPath` is explicitly provided, **no normalization** occurs (§4.3).
+
+### Repository Grammar Validity
+
+*(References: [4.5. Repository Reference Grammar](#45-string-reference-grammar))*
+
+#### Valid References
+
+| Reference                                        | Why valid                              |
+|--------------------------------------------------|----------------------------------------|
+| `ghcr.io/org/component`                          | Allowed hostname + valid path segments |
+| `https://registry.example.com:5000/repo/subrepo` | Valid scheme, host, port, and segments |
+
+#### Invalid References
+
+| Reference       | Reason                               |
+|-----------------|--------------------------------------|
+| `ghcr..io/repo` | Hostname contains invalid double dot |
+| `http:///repo`  | Scheme without hostname              |
+
+Invalid references **MUST** be rejected (§4.5).
+
+### Component → Repository Mapping
+
+*(References: [5. Component Repository Mapping](#5-component-repository-mapping))*
+
+Given:
+
+```
+Component ID: github.com/acme/helloworld
+baseUrl: ghcr.io
+subPath: ocm/test
+```
+
+The mapped OCI repository becomes:
+
+```
+ghcr.io/ocm/test/component-descriptors/github.com/acme/helloworld
+```
+
+All versions reside under this repository.
+
+## Intermediate Examples
+
+### Manifest Representation
+
+*(References: [6.1. Manifest Representation](#61-manifest-representation))*
+
+A manifest storing a component version may look like:
+
+```json
+{
   "mediaType": "application/vnd.oci.image.manifest.v1+json",
-  "artifactType": "application/vnd.ocm.software.component-descriptor.v2",
   "config": {
     "mediaType": "application/vnd.ocm.software.component.config.v1+json",
-    "digest": "sha256:54f3c7c68e00ecd13141dcdc560c42ce1ad2ab59b8d098b9c60b4e0a7b774d9c",
-    "size": 197
+    "digest": "sha256:abcd1234",
+    "size": 123
   },
   "layers": [
     {
       "mediaType": "application/vnd.ocm.software.component-descriptor.v2+json",
-      "digest": "sha256:a259e8e0f4e82e3564277911b4437cf1f123be37e329415c68ba69b6cc184c4b",
-      "size": 1310
+      "digest": "sha256:componentdesc"
     },
     {
       "mediaType": "text/plain",
-      "digest": "sha256:c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2",
-      "size": 6,
-      "annotations": {
-        "software.ocm.artifact": "[{\"identity\":{\"name\":\"blob\",\"version\":\"1.0.0\"},\"kind\":\"resource\"}]"
-      }
+      "digest": "sha256:deadbeef"
     }
-  ],
-  "annotations": {
-    "org.opencontainers.image.authors": "Builtin OCI Repository Plugin",
-    "org.opencontainers.image.description": "This is an OCM OCI Artifact Manifest that contains the component descriptor for the component github.com/acme.org/helloworld.\nIt is used to store the component descriptor in an OCI registry and can be referrenced by the official OCM Binding Library.",
-    "org.opencontainers.image.documentation": "https://ocm.software",
-    "org.opencontainers.image.source": "https://github.com/open-component-model/open-component-model",
-    "org.opencontainers.image.title": "OCM Component Descriptor OCI Artifact Manifest for github.com/acme.org/helloworld in version 1.0.0",
-    "org.opencontainers.image.url": "https://ocm.software",
-    "org.opencontainers.image.version": "1.0.0",
-    "software.ocm.componentversion": "github.com/acme.org/helloworld:1.0.0",
-    "software.ocm.creator": "Builtin OCI Repository Plugin"
-  }
+  ]
 }
 ```
 
-## 9. Alternative Representation Formats
+Key points:
 
-A component version **MAY** be stored using alternative OCI artifact encodings, provided that all representations conform to the digest-based identity rules and remain fully resolvable through the descriptor selection logic in [Section 12](#12-descriptor-selection-logic).
-Alternative formats exist to support registry compatibility, artifact packaging flexibility, and efficient transport. 
-All formats in this section **MUST** be treated as semantically equivalent ways of storing a component version. 
-Implementations **MUST** support reading all formats. 
-Implementations **MAY** restrict writing to a subset.
+* The descriptor is the layer annotated by media type.
+* Any `localBlob` with digest `sha256:deadbeef` must resolve to the second layer (§10.2).
 
-## 10. Index-Based Representation
+### Index Representation
 
-A component version **MAY** be represented as an [OCI Image Index](https://github.com/opencontainers/image-spec/blob/main/image-index.md):
-
-```
-application/vnd.oci.image.index.v1+json
-```
-
-### 10.1 Descriptor Storage
-
-If represented through an OCI Image Index, this index **MUST** contain:
-
-1. A config referencing the component descriptor layer
-2. **Exactly one** manifest annotated as the descriptor manifest
-3. Any number of additional referenced manifests
-
-### 10.2 Allowed Additional Manifests
-
-Additional referenced manifests representing artifacts **MUST** use:
-
-* `application/vnd.oci.image.manifest.v1+json`
-* `application/vnd.oci.image.index.v1+json`
-
-These represent OCI-native artifacts for local artifact entries.
-
-Additional referenced manifests are allowed but **MAY** be ignored.
-
-### 10.3 Example
-
-The following OCI Image Index illustrates a valid index-based representation of the component version
-`github.com/acme.org/helloworld:1.0.0`.
-
-This index:
-
-* Uses media type `application/vnd.oci.image.index.v1+json`.
-* Contains two referenced manifests:
-  * The **descriptor manifest**, containing the component descriptor (`software.ocm.descriptor=true`).
-  * An **additional artifact manifest**, representing an OCIImage resource.
-* Includes annotations required for OCM component version metadata.
+*(References: [6.2. Index Representation](#62-index-representation))*
 
 ```json
 {
-  "schemaVersion": 2,
   "mediaType": "application/vnd.oci.image.index.v1+json",
   "manifests": [
     {
-      "mediaType": "application/vnd.oci.image.manifest.v1+json",
-      "digest": "sha256:653410c2b330f9f958c2283e8727e547b46e40f3cb8a717b3476a6791d9764a9",
-      "size": 1660,
-      "annotations": {
-        "software.ocm.descriptor": "true",
-        "org.opencontainers.image.title": "OCM Component Descriptor OCI Artifact Manifest for github.com/acme.org/helloworld in version 1.0.0",
-        "org.opencontainers.image.version": "1.0.0",
-        "software.ocm.componentversion": "github.com/acme.org/helloworld:1.0.0",
-        "software.ocm.creator": "Builtin OCI Repository Plugin"
-      },
-      "artifactType": "application/vnd.ocm.software.component-descriptor.v2"
+      "digest": "sha256:desc1",
+      "annotations": { "software.ocm.descriptor": "true" }
     },
     {
-      "mediaType": "application/vnd.oci.image.manifest.v1+json",
-      "digest": "sha256:c2a2aadf9b8acac6e5ff3cd7af42d8d32f4e940f8f69a487d8c8c19d4e109219",
-      "size": 480,
-      "annotations": {
-        "io.containerd.image.name": "docker.io/library/hello-world:v1",
-        "software.ocm.artifact": "[{\"identity\":{\"name\":\"image\",\"version\":\"1.0.0\"},\"kind\":\"resource\"}]"
-      },
-      "platform": {
-        "architecture": "amd64",
-        "os": "linux"
-      }
+      "digest": "sha256:artifact1"
     }
-  ],
-  "annotations": {
-    "org.opencontainers.image.title": "OCM Component Descriptor OCI Artifact Manifest Index for github.com/acme.org/helloworld in version 1.0.0",
-    "org.opencontainers.image.version": "1.0.0",
-    "software.ocm.componentversion": "github.com/acme.org/helloworld:1.0.0",
-    "software.ocm.creator": "Builtin OCI Repository Plugin"
-  }
+  ]
 }
 ```
 
-This example demonstrates all required structural conventions for an index-based representation:
-
-* Exactly one descriptor manifest annotated with `software.ocm.descriptor="true"`.
-* Optional additional manifests for resources or sources.
-* Correct OCM component version annotations at the index level.
-
-## 11. Artifact-Level OCM OCI Annotations (Extended)
-
-OCI artifacts **MAY** include an annotation pointing back to its origin artifact representation in
-the component descriptor:
+The descriptor root is:
 
 ```
-software.ocm.artifact: [{ identity: {...}, kind: "resource|source" }]
+sha256:desc1
 ```
 
-These annotations:
+Additional manifests are regular artifacts.
 
-* Distinguish resources from sources
-* Identify resources located within the component descriptor and serve as back-reference.
+### Descriptor Selection Logic
 
-OCI resolution **MUST NOT** depend on these annotations.
+*(References: [7. Descriptor Selection Logic](#7-descriptor-selection-logic))*
 
-Resolution **MUST** be driven by `localReference`.
+Given an index:
 
-## 12. Descriptor Selection Logic
+| Digest     | Annotation        |
+| ---------- | ----------------- |
+| sha256:aaa | descriptor="true" |
+| sha256:bbb | —                 |
+| sha256:ccc | —                 |
 
-When resolving a version reference (OCI tag):
-
-1. The tag **MUST** be resolved to an OCI artifact.
-2. If the artifact is a manifest:
-    * It **MUST** be treated as the component descriptor.
-3. If the artifact is an index:
-    * All manifests with annotation `software.ocm.descriptor="true"` **MUST** be enumerated.
-    * If **exactly one** exists: it **MUST** be selected.
-    * If **more than one** exists: resolution **MUST** fail.
-    * If **none** exist:
-        * The **first** manifest in the index (index 0) **MUST** be selected.
-        * This ensures backward compatibility.
-
-## **13. Component Index and Referrer Semantics**
-
-A **Component Index** is an optional canonical, immutable OCI artifact that functions as the stable “subject root” for all component versions published in a repository. 
-It provides a registry-native discovery mechanism using the OCI Referrers API and ensures consistent version enumeration across registries with differing levels of referrer support.
-It allows efficient versioning queries without having to use the OCI tag API.
-
-### 13.1 Purpose
-
-The Component Index serves three normative purposes:
-
-1. **Stable Subject Reference**
-   All component versions **MUST** reference the Component Index as their OCI `subject`.
-   This enables registry-native enumeration of all component versions via a single referrers query.
-
-2. **Immutable Discovery Anchor**
-   The Component Index **MUST** have a stable byte representation, digest, size, and descriptor.
-   It **MUST NOT** change across component versions or OCM releases.
-
-3. **Compatibility Layer**
-   When the registry supports the OCI Referrers API, the index becomes the authoritative discovery mechanism.
-   When unsupported, fallback mechanisms **MAY** be used without altering component versions.
-
-### 13.2 Media Type and Manifest Requirements
-
-The Component Index **MUST** use the media type:
+Selected descriptor:
 
 ```
-application/vnd.ocm.software.component-index.v1+json
+sha256:aaa
 ```
 
-The artifact **MUST** be encoded as an OCI Image Manifest (`SchemaVersion: 2`) with:
+If two descriptor annotations exist → **resolution MUST fail** (§7).
+If none exist → select the **first manifest** for compatibility (§7).
 
-* `ArtifactType` set to the Component Index media type
-* A single empty config (`DescriptorEmptyJSON`)
-* At least one zero-byte layer referenced by descriptor
-* Annotations describing its purpose
-* A canonical JSON encoding that produces a deterministic digest and size
+### LocalBlob Resolution
 
-Clients **MUST** treat the manifest as opaque and immutable.
-
-### 13.3 Descriptor Requirements
-
-The descriptor for the Component Index:
-
-* **MUST** include the exact stable digest and size of the canonical JSON representation
-* **MUST NOT** be regenerated or altered after publication
-
-Implementations **MUST** validate descriptor correctness when creating or loading a Component Index.
-
-### 13.4 Storage Rules
-
-When preparing a repository:
-
-1. The Component Index manifest layer **MUST** be present; if not, it **MUST** be uploaded.
-2. The Component Index manifest **MUST** be present; if not, it **MUST** be uploaded using its canonical descriptor.
-3. Clients **MUST NOT** rewrite or mutate an existing Component Index, but only reference it via its `subject`
-
-These requirements apply uniformly across registries, irrespective of tag semantics.
-
-### 13.5 Subject Reference Requirement
-
-Every top-level Component Version artifact (manifest-based or index-based):
-
-* **SHOULD** set the Component Index descriptor as its OCI `subject`.
-
-If a registry rejects subject references due to limited API support:
-
-* The component version **MUST** still be stored,
-* The implementation **MAY** warn about unsupported referrers,
-* The Component Index **MUST NOT** be modified.
-
-### 13.6 Discovery Behavior
-
-#### 13.6.1 Registries Supporting the Referrers API
-
-* A referrers query on the Component Index descriptor **MUST** return all component version manifests in that repository.
-* Returned entries **MUST** include all artifacts whose `subject.digest` matches the Component Index.
-
-This is the authoritative method for version discovery.
-
-#### 13.6.2 Registries Not Supporting the Referrers API
-
-When referrers are unsupported (see [Section on Unavailable Referrers in OCI Distribution Spec](https://github.com/opencontainers/distribution-spec/blob/main/spec.md#unavailable-referrers-api)):
-
-* Implementations **MAY** create and manage a fallback “surrogate index” manifest referencing all versions.
-* This fallback index **MUST** have a deterministic tag (e.g., `<index-digest>.ocm.index`).
-* Component versions **SHOULD** retain their `subject` fields even if the registry ignores them.
-
-#### 13.6.3 Hybrid Behavior
-
-If the registry partially supports referrers:
-
-* Implementations **SHOULD** attempt the Referrers API first.
-* If the query fails or yields incomplete results, implementations **MAY** use fallback mechanisms.
-
-### 13.7 Component Version Lifecycle
-
-#### 13.7.1 On Push
-
-When adding a component version:
-
-1. Ensure the Component Index exists (creating it if necessary)
-2. Set the Component Index descriptor as the version’s `subject` in its top level manifest.
-3. Push all component version artifacts.
-
-If the registry supports referrers, an entry **MUST** added to the referrers list.
-If it does not, fallback tagging logic **MAY** be used.
-
-#### 13.7.2 On Delete
-
-Deleting a component version:
-
-* **MUST** remove only the version’s own artifacts.
-* **MUST NOT** delete or modify the Component Index.
-
-Registries **MAY** automatically prune stale referrers.
-Garbage Collection of Referrers **MAY** only be supported by OCI registries with support for blob deletion.
-
-#### 13.7.3 On Enumerating Versions
-
-Implementations **MUST** enumerate versions using:
-
-1. **Preferred:** Referrers API on the Component Index descriptor
-2. **Fallback:**
-    * Repository tag listing
-    * Surrogate index (if present)
-    * Registry-native metadata
-
-Any valid component version discovered via these methods **MUST** be accepted.
-
-## 13.8 Referrer Tracking Policy
-
-The `ReferrerTrackingPolicy` dictates how subject references and fallback indexes are used.
-It **SHOULD** be configurable in the repository implementation. If not configurable, the default behavior **MUST** represent `ReferrerTrackingPolicyNone`.
-
-### 13.8.1 `ReferrerTrackingPolicyNone`
-
-* The implementation **MUST NOT** attempt to record referrers.
-* Discovery relies on tag listing only.
-
-### 13.8.2 `ReferrerTrackingPolicyByIndexAndSubject`
-
-* Component versions **MUST** set the Component Index as their subject.
-* If the registry supports referrers:
-    * No fallback index is required.
-* If unsupported:
-    * A deterministic surrogate index **MAY** be created and tagged.
-
-This is the recommended policy for full interoperability across registries.
-
-## 13.9 Index Creation Rules (`CreateIfNotExists`)
-
-Implementations performing index creation:
-
-1. **MUST** check whether the empty index layer exists; if not, it **MUST** be pushed.
-2. **MUST** check whether the Component Index manifest exists using its descriptor.
-3. If absent:
-    * Canonical JSON of the index manifest **MUST** be generated.
-    * The manifest **MUST** be pushed using the exact descriptor.
-
-Existing indexes **MUST NOT** be regenerated or altered.
-
-## 14. Descriptor Encoding Formats
-
-Descriptors **MAY** be stored using:
-
-| Category | Media Type                                                      |
-|----------|-----------------------------------------------------------------|
-| YAML     | `application/vnd.ocm.software.component-descriptor.v2+yaml`     |
-| JSON     | `application/vnd.ocm.software.component-descriptor.v2+json`     |
-| TAR      | `application/vnd.ocm.software.component-descriptor.v2+yaml+tar` |
-
-When using the TAR format:
-
-* The TAR **MUST** contain a single file named `component-descriptor.yaml`.
-
-Only format version `v2` is presently defined.
-
-
-## 15. LocalBlob Resolution and OCI Layout Handling
-
-This section defines the normative behavior for ingestion, storage, resolution, and retrieval of `localBlob` resources, including handling via OCI Image Layouts.
-
-### 15.1 General Rules
-
-1. Each `localBlob` access in the component descriptor:
-    - **MUST** correspond to exactly one OCI descriptor in the component version’s artifact graph.
-    - **MUST** be addressable by `localReference`, which **MUST** equal the descriptor’s digest.
-    - **MAY** be represented as:
-        - A single OCI layer.
-        - An OCI image manifest.
-        - An OCI image index.
-
-2. Resolution of `localBlob` backed resources:
-    - **MUST** be driven by `localReference` digest equality.
-    - **MUST** be independent of any optional annotations on OCI artifacts.
-    - **MUST** NOT depend on tag names.
-
-3. A `localBlob` resource with `globalAccess`:
-    - **MUST** treat `globalAccess` as an alternative access path.
-    - **MUST** NOT change the semantics of `localReference`-based resolution.
-
-### 15.2 Ingestion of LocalBlob Content
-
-1. When a [`localBlob`](../02-access-types/localblob.md) resource is added through the repository interface, its content:
-    - **MAY** be a single raw blob.
-    - **MAY** be an OCI Image Layout (including a tar representation).
-    - **MAY** be an [OCM Artifact Set Archive](../common/formatspec.md) with a `main` artifact
-
-2. If the content is an OCI Image Layout, the implementation:
-    - **MAY** reject the content if the implementation does not know how to introspect OCI Image Layouts.
-    - **MAY** interpret the OCI Image Layout as a single layer tar archive (**legacy behavior**).
-    - **MAY** interpret the OCI Image Layout as a manifest or index with its content graph co-located (recommended behavior). 
-      If support for OCI Image Layouts is available in the implementation, 
-      - the repository **MUST** interpret it according to the [OCI Image Layout Specification](https://github.com/opencontainers/image-spec/blob/main/image-layout.md).
-      - **MAY** identify exactly one main artifact (manifest or index) as the root of the layout.
-      - If multiple roots are accepted, it **MAY** create a virtual root descriptor referencing all roots present in the layout.
-
-3. For each ingested `localBlob` based artifact interpreted as an OCI artifact in form of an OCI Image Layout:
-    - The implementation **MUST** upload the complete corresponding OCI artifact graph (manifest or index and all referenced blobs) to the target OCI repository concurrently.
-    - The implementation **MUST** record the resulting root descriptor for later association with the component version.
-
-4. blob ingestion:
-    - **MUST** defer final association with the component version until `AddComponentVersion` (or equivalent commit operation) is invoked.
-    - **MUST** allow repositories to maintain temporary in-memory or local caches for descriptors and blobs prior to commit.
-    - **MUST** clear such temporary state for the affected component version after successful commit.
-
-### 15.3 Descriptor Mapping
-
-1. For each `localBlob` resource, after ingestion:
-    - `localReference` **MUST** equal the digest of the selected OCI descriptor:
-        - If the `localBlob` is represented as an OCI manifest or index, `localReference` **MUST** be the digest of that manifest or index.
-        - If the `localBlob` is represented as a single layer, `localReference` **MUST** be the digest of that layer.
-
-    - If the `localBlob` declares `mediaType`, it:
-        - **MUST** match the descriptor’s media type if the descriptor is a layer.
-        - **MUST** match the manifest media type if the descriptor is a manifest.
-        - **MUST** be treated as authoritative when the descriptor type allows multiple interpretations.
-
-2. When a `localBlob` also exposes `globalAccess`:
-    - `globalAccess` **MUST** be a valid access object that can be resolved to an OCI artifact (for example, an `OCIImage` access).
-    - The artifact referenced by `globalAccess` **MUST** be content-identical to the artifact identified by `localReference`.
-
-### 15.4 Resolution of LocalBlob Descriptors
-
-1. To resolve a `localBlob` for a component version, the implementation:
-
-    - **MUST** load the top-level artifact (manifest or index) corresponding to the component version tag.
-    - **MUST** construct a set of candidate descriptors by:
-        - Including all `layers` from the top-level manifest.
-        - Including all `manifests` from the top-level index, if present.
-
-2. The implementation:
-    - **MUST** select the descriptor whose digest equals `localReference`.
-    - **MUST** treat the absence of a matching descriptor as an error.
-    - **MUST** treat the presence of multiple descriptors with the same digest as an error.
-
-3. Nested artifacts:
-    - **MAY** be discovered through recursive traversal when the selected descriptor is a manifest or index.
-    - **MUST** be included in retrieval when building OCI layouts, as specified in [Section 15.5](#155-retrieval-of-localblob-content).
-
-### 15.5 Retrieval of LocalBlob Content
-
-#### 15.5.1 Layer-Based LocalBlob
-
-1. If the selected descriptor is a layer descriptor:
-
-    - The implementation **MUST** fetch the blob from the OCI store using the descriptor.
-    - The implementation **MUST** verify that the fetched content’s digest equals the descriptor’s digest.
-    - The implementation **MUST** return the resulting artifact blob as an OCI Image Layout with a tar representation.
-      The implementation **MAY** declare the resulting blobs media type as `application/vnd.ocm.software.oci.layout.v1` with optional `+tar` and `+gzip` suffixes to indicate encoding.
-    - If a matching descriptor is found, but the support for OCI Image Layouts is not available,
-      the implementation **MAY** attempt to **synthesize** an OCM Artifact Set with a `main` artifact referencing the selected descriptor.
-
-#### 15.5.2 Manifest- or Index-Based LocalBlob (OCI Layout Reconstruction)
-
-1. If the selected descriptor is a manifest or index descriptor, and OCI Layout support is available:
-
-    - The implementation **MUST** resolve and fetch the complete artifact graph reachable from that descriptor:
-        - The manifest or index itself.
-        - All referenced manifests, indexes, configs, and layers.
-
-    - The implementation **MUST** reconstruct a valid OCI Image Layout in memory or on storage, including:
-        - A valid `oci-layout` file.
-        - A valid `index.json` that designates the root artifact.
-        - All blobs stored under `/blobs/<algorithm>/<hex>`.
-
-    - The implementation **MUST** return the reconstructed layout as a single blob (for example, an OCI layout tar archive).
-
-2. If completion of the artifact graph or reconstruction of the layout fails, the implementation **MUST** treat retrieval as an error.
-
-### 15.6 Interaction with Global Access
-
-1. If a `localBlob` has `globalAccess`:
-
-    - Retrieval implementations **MAY** use `globalAccess` to obtain the artifact if resolution via `localReference` is not possible in the current repository.
-    - When using `globalAccess`, the resolved artifact:
-        - **MUST** be content-identical to the artifact referenced by `localReference`.
-        - **MUST** be normalized to a canonical OCI reference of the form `<registry>/<repository>@<digest>` for internal processing.
-
-2. A `localBlob` that lacks `globalAccess`:
-    - **MUST** be retrievable solely by `localReference`.
-    - **MUST** cause retrieval to fail if the corresponding descriptor cannot be resolved from the component version’s artifact graph.
-
-### 15.7 Validation Requirements
-
-Implementations:
-
-1. **MUST** validate that each `localBlob`’s `localReference` refers to an existing OCI descriptor in the component version’s artifact graph before or during retrieval.
-2. **MUST** validate that any declared `mediaType` is consistent with the descriptor type and the content where such validation is possible.
-3. **MUST** validate that any `globalAccess` reference resolves to an artifact whose digest matches `localReference`.
-4. **MUST** treat as errors:
-    - Invalid OCI layouts used during ingestion.
-    - Inconsistent digests between descriptors and fetched content.
-    - Multiple candidate descriptors for a single `localReference`.
-    - Inability to determine a unique main artifact in an ingested OCI layout.
-
-## 16. OCIImage Digest Processing
-
-For a resource with an OCI Image access:
+*(References: [10.3 Resolution](#103-resolution))*
 
 ```
-access:
-  type: OCIImage
-  imageReference: <ref>
+localReference: sha256:beef1234
 ```
 
-The following additional processing conditions apply:
+Resolution steps:
 
-1. If descriptor lacks a digest:
-    * The resolved digest **MUST** be written back.
-2. If descriptor contains a digest:
-    * The digest **MUST** match the resolved manifest.
-3. If the reference includes an explicit digest:
-    * It **MUST** match the resolved manifest.
-4. After resolution:
-    * References **MUST** be canonicalized to `<fqdn>@<digest>`.
+1. Examine **all** layers, manifests, and index entries reachable from the component version.
+2. Find exactly **one** descriptor whose digest matches `sha256:beef1234`.
+3. If 0 or >1 matches → **fail** (§10.3).
 
+### Version Mapping
 
-## 17. Version Mapping Rules
+*(References: [12. Tag and Version Mapping Rules](#12-tag-and-version-mapping-rules))*
 
-OCI registries impose restrictions on valid tag formats:
-OCI tags **MUST NOT** contain the `+` character, while OCM semantic versions **MAY** include build metadata using `+`.
-
-This section defines the **canonical, lossless, and reversible transformation** between:
-
-* OCM component versions (semantic versions), and
-* OCI tag strings (registry-compliant identifiers).
-
-These rules **MUST** be applied consistently across all OCM implementations.
-
-### 17.1 BNF Grammar Definitions
-
-Any OCM Component Version can be represented as an OCI tag using the following grammar:
+OCM → OCI:
 
 ```
-<oci-tag> ::= <base-tag> | <base-tag> ".build-" <build-segments>
-
-<base-tag> ::= <core> <prerelease-opt>
+1.2.3+ci.42 → 1.2.3.build-ci.42
 ```
 
-Where `<core>`, `<prerelease-opt>`, and `<build-segments>` are as defined in the OCM version grammar, except:
-
-* No `+` is allowed.
-* Build metadata **must** use the `.build-` prefix.
-
-### 17.2 OCM Version → OCI Tag Transformation
-
-Given:
+OCI → OCM:
 
 ```
-<ocm-version> = <base-version>[+<buildmeta>]
+1.2.3.build-ci.42 → 1.2.3+ci.42
 ```
 
-Apply:
+Round-trip **MUST** be exact.
 
-1. **Preserve core version and prerelease components** unchanged.
-2. **Rewrite build metadata**:
+## Advanced End-to-End Examples
 
-```
-+<buildmeta> → .build-<buildmeta>
-```
+### Publishing a Component Version
 
-### 17.3 OCI Tag → OCM Version Transformation
+*(References: [5](#5-component-repository-mapping), [6.1](#61-manifest-representation), [7](#7-descriptor-selection-logic), [8](#8-component-index-referrer-anchor), [10](#10-localblob-processing), [12](#12-tag-and-version-mapping-rules))*
 
-Given:
+#### Scenario
 
-```
-<oci-tag> = <base-tag>[.build-<buildmeta>]
-```
+* Component: `github.com/acme/helloworld`
+* Version: `1.0.0+ci.5`
+* Registry: `ghcr.io/ocm/test`
+* LocalBlob digest: `sha256:beef1234`
 
-Apply:
+#### 1. Repository Mapping
 
 ```
-.build-<buildmeta> → +<buildmeta>
+ghcr.io/ocm/test/component-descriptors/github.com/acme/helloworld
 ```
 
-**Examples**
-
-| OCI Tag                   | OCM Version         |
-|---------------------------|---------------------|
-| `1.2.3`                   | `1.2.3`             |
-| `1.2.3.build-meta`        | `1.2.3+meta`        |
-| `1.2.3-alpha.build-ci.42` | `1.2.3-alpha+ci.42` |
-| `0.9.0.build-sha.abcd`    | `0.9.0+sha.abcd`    |
-
-Round-trip equivalence is **required** for all implementations.
-That is, applying both transformations in succession **MUST** yield the original input.
-
-### 17.4 Manifest Annotation `software.ocm.componentversion`
-
-Every top-level descriptor manifest (manifest- or index-based) **SHOULD** contain:
+#### 2. Version Tag Mapping
 
 ```
-software.ocm.componentversion: "<component-name>:<component-version>"
+1.0.0+ci.5 → 1.0.0.build-ci.5
 ```
 
-Where `<component-version>` is produced using the version mapping transformation described in this section.
+#### 3. Manifest Assembly
 
-This annotation enforces a strong filterable guarantee that can be used to differentiate
-component version manifests from other artifacts stored in the same OCI repository.
+Manifest includes:
 
-## 18. Blob Repository Mapping
+* Descriptor layer
+* LocalBlob layer (`sha256:beef1234`)
+* Config referencing the descriptor layer
 
-Any `localBlob` with an OCI artifact media type **MUST** map to:
+#### 4. Component Index Subject
+
+Manifest sets its `subject` to the Component Index descriptor.
+
+#### 5. LocalBlob Mapping
+
+Digest equality ensures the LocalBlob resolves exactly to one descriptor.
+
+### Subject Handling When Registry Rejects `subject`
+
+*(References: [8.2 Version Behavior](#82-version-behavior), [8.5.2 Publishing a Component Version](#852-publishing-a-component-version))*
+
+If the registry removes:
+
+```json
+"subject": { ... }
+```
+
+Then:
+
+* Publication **MUST** still succeed.
+* The Component Index **MUST NOT** be regenerated.
+* Discovery may use fallback (§8.5.5).
+
+### Full OCI Layout Reconstruction
+
+*(References: [10.4 Retrieval](#104-retrieval))*
+
+Given a manifest referencing:
+
+* several layers
+* a nested manifest
+
+Reconstruction produces a valid OCI Image Layout:
 
 ```
-<base-repository>/<reference-hint>
+index.json                          # includes only the root descriptor
+blobs/sha256/<digest-of-root>
+blobs/sha256/<each-layer>
+blobs/sha256/<nested-manifest>
 ```
 
-If no tag is available:
+Failure conditions:
 
-* Digest references **MUST** be used.
+* Missing blob
+* Digest mismatch
+* Incomplete graph
 
+Any of these **MUST** abort retrieval (§10.4).
 
-## 19. Compatibility Requirements
+### Index vs Manifest Fallback
 
-1. Both manifest-based and index-based storage **SHOULD** be supported by all clients, but write support **MAY** be limited to one of these formats.
-2. Legacy descriptor formats (YAML, JSON, TAR) **SHOULD** be supported by all clients. At least one format **MUST** be supported for writing.
-3. Index-based representation **MUST NOT** deprecate manifest-based representation.
-4. The Component Index referrers mechanism **MAY** be used when supported by the registry.
+*(References: [7 Descriptor Selection Logic](#7-descriptor-selection-logic))*
+
+If:
+
+```
+sha256:index1
+```
+
+contains **no** descriptor annotation:
+
+* **MUST** select `manifests[0]` as descriptor root.
+* All others remain artifacts.
+
+### LocalBlob → OCIArtifact/v1 Conversion
+
+*(References: [11.3 Translation of `localBlob` to `OCIArtifact/v1`](#113-translation-of-localblob-to-ociartifactv1))*
+
+Input:
+
+```
+localBlob:
+  mediaType: application/zip
+  localReference: sha256:beef
+```
+
+After ingestion + upload:
+
+```
+imageReference: ghcr.io/acme/repo@sha256:beef...
+```
+
+The access method becomes canonical digest form [11.2 Digest Resolution and Canonicalization Requirements](#112-digest-resolution-and-canonicalization-requirements).
