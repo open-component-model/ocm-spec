@@ -25,7 +25,11 @@ The specification also introduces a Component Index artifact used for referrer-b
   * [6. Component Version Storage Models](#6-component-version-storage-models)
     * [6.1. Manifest Representation](#61-manifest-representation)
     * [6.2. Index Representation](#62-index-representation)
-    * [6.3. Artifact-Level Annotations](#63-artifact-level-annotations)
+    * [6.3 Asset Annotations](#63-asset-annotations)
+      * [6.3.1 Normative Keys](#631-normative-keys)
+      * [6.3.2 Integrity Requirements](#632-integrity-requirements)
+      * [6.3.3 Verification of annotated artifacts](#633-verification-of-annotated-artifacts)
+      * [6.3.4 `ociArtifactDigest/v1` Normalization](#634-ociartifactdigestv1-normalization)
   * [7. Descriptor Selection Logic](#7-descriptor-selection-logic)
   * [8. Component Index (Referrer Anchor)](#8-component-index-referrer-anchor)
     * [8.1 Requirements](#81-requirements)
@@ -49,6 +53,9 @@ The specification also introduces a Component Index artifact used for referrer-b
     * [11.2 Digest Resolution and Canonicalization Requirements](#112-digest-resolution-and-canonicalization-requirements)
     * [11.3 Translation of `localBlob` to `OCIArtifact/v1`](#113-translation-of-localblob-to-ociartifactv1)
   * [12. Tag and Version Mapping Rules](#12-tag-and-version-mapping-rules)
+    * [12.1 Version Aliasing](#121-version-aliasing)
+      * [12.1.1 Resolution Rules](#1211-resolution-rules)
+      * [12.1.2 Interaction with Component Version Processing](#1212-interaction-with-component-version-processing)
   * [13. Compatibility Requirements](#13-compatibility-requirements)
   * [Examples (Informative)](#examples-informative)
     * [Simple Examples](#simple-examples)
@@ -321,22 +328,164 @@ An index representing a component version:
   * exactly one manifest or index whose digest equals its `localReference` located within the index.
     see [10. Local Blob Processing](#10-localblob-processing) for details.
 
-### 6.3. Artifact-Level Annotations
+### 6.3 Asset Annotations
 
-Artifact Entries in the manifest or index (see [6.1. Manifest Representation](#61-manifest-representation) and [6.2. Index Representation](#62-index-representation)) **MAY** include:
+When an OCI artifact (e.g., an OCI manifest or OCI index) is imported into a Component Version as a `resource` or `source`, OCM implementations **MAY** automatically add annotations to the artifact’s top-level manifest or index.
+These annotations allow consumers to derive which Component Version now started shipping the artifact,
+and which artifact within that Component Version is referencing this image, thus providing a form of "asset location".
 
-```text
-software.ocm.artifact: [{"identity": {...}, "kind": "resource|source"}]
+These annotations are optional and **MUST NOT** affect any descriptor selection, or resolution semantics elsewhere in this specification.
+
+#### 6.3.1 Normative Keys
+
+Writers **MAY** add the following annotations:
+
+| Annotation Key                   | Description                        |
+|----------------------------------|------------------------------------|
+| `software.ocm.component.name`    | Fully-qualified OCM component name |
+| `software.ocm.component.version` | OCM component version string       |
+| `software.ocm.artifact`          | Informational mapping of artifacts |
+
+If present, the annotation `software.ocm.component.name` **MUST** contain the exact component name as defined in the Component Descriptor.
+If present, the annotation `software.ocm.component.version` **MUST** contain the exact component version string as defined in the Component Descriptor.
+
+The annotation `software.ocm.artifact` **MUST** contain the **complete artifact identity** exactly as defined in the Component Descriptor:
+
+```json5
+{
+  "identity": {
+    "name": "<resource-name>",
+    "version": "<resource-version-or-empty>",
+    "arch": "amd64", // optional additional identity attributes
+    // ...
+  },
+  "kind": "resource"
+}
 ```
 
-This annotation:
+Rules:
 
-* **MUST NOT** affect resolution
-* **MUST NOT** override digest-based `localReference` logic
+* The `"identity"` object **MUST** contain **all identity attributes** of the artifact exactly as declared.
+* There **SHOULD** be an attribute called `kind` with value `resource` or `source` depending on the artifact type.
+* Writers **MUST NOT** omit or synthesize identity attributes. The entire artifact identity is declared at any time.
 
-Digest equality **MUST** govern all mapping and resolution.
+Annotation values for `software.ocm.resource` **MUST** be JSON-encoded strings because OCI annotation maps permit only string values.
+The JSON-encoded string **SHOULD** be canonicalized as per [JCS (RFC 8785)](https://www.rfc-editor.org/rfc/rfc8785) to ensure stable formatting.
 
-This annotation serves purely informational/discovery purposes and actual resolution **MUST** follow the rules in [10. Local Blob Processing](#10-localblob-processing).
+Annotations **MUST** be written to the **top-level descriptor** of the OCI artifact:
+
+* For manifest-based artifacts → `manifest.annotations`
+* For index-based artifacts → `index.annotations`
+
+Annotations **MUST NOT** be added to nested manifests or indexes within an artifact.
+Only the top-level descriptor **MAY** carry these annotations.
+
+#### 6.3.2 Integrity Requirements
+
+To avoid mutating immutable artifacts:
+
+1. If the artifact is newly created during import, for example during component creation,
+   writers **MAY** inject annotations freely.
+   In annotations are added on demand, writers **SHOULD** signal that the original digest was modified during import.
+
+2. If the artifact already exists in a different location and modifying annotations would change its digest,
+   writers **SHOULD NOT** add or modify annotations.
+   If they do, the origin digest **SHOULD** be preserved with the annotation `software.ocm.base.digest="<original-digest>"`.
+   In case of existing component version signatures, writers **SHOULD** reattest the modified artifact and its owning component version.
+   In case an artifact is annotated multiple times, each annotation event **MUST** preserve the original digest in `software.ocm.base.digest`.
+
+To ensure integrity, verifiers **MAY** decide to ignore annotations when verifying signatures or digests (see [6.3.3 Verification of annotated artifacts](#633-verification-of-annotated-artifacts)).
+The process to verify signatures **MUST** remain consistent regardless of annotation presence.
+
+#### 6.3.3 Verification of annotated artifacts
+
+When artifacts carry OCM-specific informational annotations, verifiers **MAY** ignore these annotations during verification.
+Doing so enables stable, annotation-independent digests and signatures.
+
+To perform verification in an annotation-tolerant way, verifiers **MAY** apply the following procedure:
+
+1. Retrieve the artifact manifest or index and verify its digest and signatures as usual.
+2. Check whether the artifact includes OCM-specific annotations such as
+   `software.ocm.component.name`, `software.ocm.component.version`, or `software.ocm.artifact`.
+3. If such annotations exist, create an in-memory copy of the artifact descriptor with these annotations removed.
+4. Recompute the descriptor digest. This digest **MUST** match the value recorded in `software.ocm.base.digest`.
+5. This recomputed digest **MAY** then be used for signature verification in place of the original artifact digest.
+
+This mechanism enables signature verification to remain stable regardless of the presence or absence of OCM-specific informational annotations.
+It also preserves the original component version digest when verifiers choose to ignore those annotations.
+
+This behavior is optional. Verifiers **MAY** instead choose to validate the artifact exactly as stored, including all annotations.
+If so, both the digest and signatures **MUST** correspond to the annotated artifact, and any modification or addition of annotations **MUST** trigger re-signing.
+
+#### 6.3.4 `ociArtifactDigest/v1` Normalization
+
+Based on the annotations defined above, an extension to the normalisation algorithm [`ociArtifactDigest/v1`](../04-algorithms/artifact-normalization-types.md) is defined.
+
+Component Version:
+
+```yaml
+component:
+  name: ocm.software/ocmcli
+  provider: ocm.software
+  version: 0.27.0
+resources:
+  - access:
+      localReference: sha256:64b586a57294adc5749324d0574df23499555de5168b4b1f1bd7ce9b06e2d49f
+      mediaType: application/octet-stream
+      type: localBlob
+    digest:
+      hashAlgorithm: SHA-256
+      normalisationAlgorithm: genericBlobDigest/v1
+      value: 64b586a57294adc5749324d0574df23499555de5168b4b1f1bd7ce9b06e2d49f
+    extraIdentity:
+      architecture: amd64
+      os: windows
+    labels:
+      - name: downloadName
+        value: ocm
+    name: ocmcli
+    relation: local
+    type: executable
+    version: 0.27.0
+```
+
+OCI manifest annotations based on `sha256:64b586a57294adc5749324d0574df23499555de5168b4b1f1bd7ce9b06e2d49f` (informational, not normalized):
+
+```json
+{
+  "annotations": {
+    "software.ocm.base.digest": "sha256:abcd1234efgh5678ijkl9012mnopqrstuvwx3456yzab7890cdef1234abcd5678",
+    "software.ocm.component.name": "ocm.software/ocmcli",
+    "software.ocm.component.version": "0.27.0",
+    "software.ocm.artifact": "[{\"identity\":{\"name\":\"ocmcli\",\"version\":\"0.27.0\",\"arch\":\"amd64\",\"os\":\"windows\"},\"kind\":\"resource\"}]"
+  }
+}
+```
+
+The value of `software.ocm.resource` contains the **full identity** (name, version + extra identity).
+If normalized and annotations are removed, the digest **MUST** equal the value in `software.ocm.base.digest`.
+
+A component descriptor may now declare a signature over the artifact without including the annotations in the signed content.
+This enables stable signatures regardless of annotation presence.
+
+Thus, a client that supports annotation-tolerant verification **MAY** verify the artifact against the digest:
+
+```yaml
+access:
+  localReference: sha256:64b586a57294adc5749324d0574df23499555de5168b4b1f1bd7ce9b06e2d49f
+  mediaType: application/octet-stream
+  type: localBlob
+digest:
+  hashAlgorithm: SHA-256
+  normalisationAlgorithm: ociArtifactDigest/v1
+  # original: 64b586a57294adc5749324d0574df23499555de5168b4b1f1bd7ce9b06e2d49f
+  value: abcd1234efgh5678ijkl9012mnopqrstuvwx3456yzab7890cdef1234abcd5678
+```
+
+Because the digest now ignores the annotations, the value corresponds to the base artifact without OCM-specific annotations.
+As the annotations were added after the component signature, the signature contains the value `abcd1234efgh5678ijkl9012mnopqrstuvwx3456yzab7890cdef1234abcd5678`.
+But because the client ignores the annotations during verification, the signature **MAY** still be verified, as
+the digest based on `software.ocm.base.digest` matches the signed content and is integral.
 
 ## 7. Descriptor Selection Logic
 
@@ -671,6 +820,69 @@ Tags **SHOULD** reference a manifest or index (see [6](#6-component-version-stor
 ```text
 software.ocm.componentversion: "<component>:<version>"
 ```
+
+### 12.1 Version Aliasing
+
+OCI tags such as `latest`, `stable`, or other user-defined symbolic names are not OCM versions.
+To support workflows that rely on floating pointers to versions, clients **MAY** implement *version aliasing*.
+An alias is an OCI tag whose meaning is defined by client-side resolution logic rather than by the OCM version string.
+
+Aliases map to a concrete OCM version based on deterministic selection rules.
+Clients **MAY** support any number of aliases (e.g., `latest`, `stable`, `dev`, `edge`, `production`, or custom project-specific aliases),
+but **MUST** document the behavior of each supported alias.
+
+Default recommended semantics:
+
+* `latest` → highest SemVer version (including prereleases)
+* `stable` → highest SemVer version without prereleases
+
+Aliases that rely on SemVer ordering:
+
+* **MUST** only consider SemVer-valid versions.
+* If no valid SemVer versions exist, alias resolution **MUST** fail.
+* Build metadata ordering **MUST** follow SemVer precedence.
+
+Aliases whose semantics do not rely on SemVer (e.g., `edge` → “most recently published”) **MAY** be supported, but clients **MUST** specify their selection criteria.
+
+#### 12.1.1 Resolution Rules
+
+Alias resolution **MUST** produce exactly one concrete version tag.
+Failure cases include:
+
+* Alias tag exists but points to a digest referencing no valid component version.
+* No candidate versions satisfy the alias's selection criteria.
+* Alias and version tag collide (e.g., a version literally named `latest`) but resolve to different digests → **MUST** fail.
+
+Aliases are mutable pointers:
+Clients **MUST NOT** assume stability across requests and **MUST NOT** cache alias resolutions without validation.
+
+#### 12.1.2 Interaction with Component Version Processing
+
+After an alias resolves to a concrete version tag:
+
+* Descriptor resolution **MUST** follow
+  [7. Descriptor Selection Logic](#7-descriptor-selection-logic).
+* Aliases **SHOULD NOT** appear in Component Descriptors.
+* Aliases **MUST NOT** be considered component versions in Component Index discovery.
+
+Aliases do not participate in round-trip version mapping rules defined in
+[12. Tag and Version Mapping Rules](#12-tag-and-version-mapping-rules).
+They serve only as indirections.
+
+Registries may treat tags differently. Clients **MUST** handle:
+
+* Missing alias tags → resolution **MUST** fail.
+* Alias tags pointing to non-existent descriptors → resolution **MUST** fail.
+* Registries that forbid tag overwriting → aliases may effectively become immutable.
+
+Under no circumstances may a client infer alias meaning from registry metadata beyond tag → descriptor mapping.
+
+Clients **SHOULD** reveal both:
+
+* the alias used, and
+* the resolved version,
+
+to ensure transparency and debuggability.
 
 ## 13. Compatibility Requirements
 
