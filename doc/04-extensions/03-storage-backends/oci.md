@@ -4,9 +4,9 @@ Status: **Proposal**
 
 _This specification is in proposal status as it is being unified with the rest of the OCM specifications._
 
-The specification defines how OCM repositories, component descriptors, and artifacts are stored and resolved inside OCI registries. 
-It standardizes the repository format, how component names map to OCI paths, and how versions are represented using either OCI manifests or OCI indexes. 
-It prescribes strict rules for descriptor selection, LocalBlob handling, digest validation, and version-to-tag mapping. 
+The specification defines how OCM repositories, component descriptors, and artifacts are stored and resolved inside OCI registries.
+It standardizes the repository format, how component names map to OCI paths, and how versions are represented using either OCI manifests or OCI indexes.
+It prescribes strict rules for descriptor selection, LocalBlob handling, digest validation, and version-to-tag mapping.
 The specification also introduces a Component Index artifact used for referrer-based version discovery and defines fallback mechanisms for registries lacking referrer support.
 
 <!-- TOC -->
@@ -122,7 +122,6 @@ componentNameMapping: <mapping-mode>   # OPTIONAL
 
 A repository specification determines the registry host, the optional subpath prefix, and how the OCM repository is rooted within the OCI namespace.
 
-
 ### 4.1 `type`
 
 The repository type **SHOULD** be exactly:
@@ -163,7 +162,7 @@ It MAY include an explicit scheme:
 
 If no scheme is present, clients **MUST** assume **HTTPS**.
 
-**Allowed Examples**
+Allowed Examples include:
 
 ```text
 https://registry.example.com
@@ -263,7 +262,7 @@ and serves as an informative reference for implementers.
 <port>           ::= <digit> { <digit> }
 <repo-path>      ::= <segment> { "/" <segment> }
 <segment>        ::= <alphanum> { <alphanum> | "-" | "_" | "." }
-<alphanum>       ::= "A".."Z" | "a".."z" | "0".."9" 
+<alphanum>       ::= "A".."Z" | "a".."z" | "0".."9"
 <digit>          ::= "0".."9"
 ```
 
