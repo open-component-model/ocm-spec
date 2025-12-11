@@ -50,34 +50,34 @@ The specification also introduces a Component Index artifact used for referrer-b
     * [11.3 Translation of `localBlob` to `OCIArtifact/v1`](#113-translation-of-localblob-to-ociartifactv1)
   * [12. Tag and Version Mapping Rules](#12-tag-and-version-mapping-rules)
   * [13. Compatibility Requirements](#13-compatibility-requirements)
-* [Examples (Informative)](#examples-informative)
-  * [Simple Examples](#simple-examples)
-    * [Repository Specification Examples](#repository-specification-examples)
-      * [A. Minimal HTTPS Example](#a-minimal-https-example)
-      * [B. OCI Scheme with Auto-Derived Subpath](#b-oci-scheme-with-auto-derived-subpath)
-      * [C. Explicit Subpath (No Auto-Extraction)](#c-explicit-subpath-no-auto-extraction)
-    * [Repository Grammar Validity](#repository-grammar-validity)
-      * [Valid References](#valid-references)
-      * [Invalid References](#invalid-references)
-    * [Component → Repository Mapping](#component--repository-mapping)
-  * [Intermediate Examples](#intermediate-examples)
-    * [Manifest Representation](#manifest-representation)
-    * [Index Representation](#index-representation)
-    * [Descriptor Selection Logic](#descriptor-selection-logic)
-    * [LocalBlob Resolution](#localblob-resolution)
-    * [Version Mapping](#version-mapping)
-  * [Advanced End-to-End Examples](#advanced-end-to-end-examples)
-    * [Publishing a Component Version](#publishing-a-component-version)
-      * [Scenario](#scenario)
-      * [1. Repository Mapping](#1-repository-mapping)
-      * [2. Version Tag Mapping](#2-version-tag-mapping)
-      * [3. Manifest Assembly](#3-manifest-assembly)
-      * [4. Component Index Subject](#4-component-index-subject)
-      * [5. LocalBlob Mapping](#5-localblob-mapping)
-    * [Subject Handling When Registry Rejects `subject`](#subject-handling-when-registry-rejects-subject)
-    * [Full OCI Layout Reconstruction](#full-oci-layout-reconstruction)
-    * [Index vs Manifest Fallback](#index-vs-manifest-fallback)
-    * [LocalBlob → OCIArtifact/v1 Conversion](#localblob--ociartifactv1-conversion)
+  * [Examples (Informative)](#examples-informative)
+    * [Simple Examples](#simple-examples)
+      * [Repository Specification Examples](#repository-specification-examples)
+        * [A. Minimal HTTPS Example](#a-minimal-https-example)
+        * [B. OCI Scheme with Auto-Derived Subpath](#b-oci-scheme-with-auto-derived-subpath)
+        * [C. Explicit Subpath (No Auto-Extraction)](#c-explicit-subpath-no-auto-extraction)
+      * [Repository Grammar Validity](#repository-grammar-validity)
+        * [Valid References](#valid-references)
+        * [Invalid References](#invalid-references)
+      * [Component → Repository Mapping](#component--repository-mapping)
+    * [Intermediate Examples](#intermediate-examples)
+      * [Manifest Representation](#manifest-representation)
+      * [Index Representation](#index-representation)
+      * [Descriptor Selection Logic](#descriptor-selection-logic)
+      * [LocalBlob Resolution](#localblob-resolution)
+      * [Version Mapping](#version-mapping)
+    * [Advanced End-to-End Examples](#advanced-end-to-end-examples)
+      * [Publishing a Component Version](#publishing-a-component-version)
+        * [Scenario](#scenario)
+        * [1. Repository Mapping](#1-repository-mapping)
+        * [2. Version Tag Mapping](#2-version-tag-mapping)
+        * [3. Manifest Assembly](#3-manifest-assembly)
+        * [4. Component Index Subject](#4-component-index-subject)
+        * [5. LocalBlob Mapping](#5-localblob-mapping)
+      * [Subject Handling When Registry Rejects `subject`](#subject-handling-when-registry-rejects-subject)
+      * [Full OCI Layout Reconstruction](#full-oci-layout-reconstruction)
+      * [Index vs Manifest Fallback](#index-vs-manifest-fallback)
+      * [LocalBlob → OCIArtifact/v1 Conversion](#localblob--ociartifactv1-conversion)
 <!-- TOC -->
 
 ## 1. Scope
@@ -679,7 +679,7 @@ software.ocm.componentversion: "<component>:<version>"
 * Index-based representation **MUST NOT** deprecate manifest-based.
 * Component Index semantics **MAY** rely on registry referrer support but MUST NOT require it.
 
-# Examples (Informative)
+## Examples (Informative)
 
 This section contains **non-normative** examples illustrating how the rules in this specification operate in practice.
 The structure, headings, and link anchors remain unchanged, but the example content has been rewritten for clarity and readability.
@@ -690,13 +690,13 @@ Examples are grouped into:
 * [Intermediate Examples](#intermediate-examples)
 * [Advanced End-to-End Examples](#advanced-end-to-end-examples)
 
-## Simple Examples
+### Simple Examples
 
-### Repository Specification Examples
+#### Repository Specification Examples
 
 *(References: [4. Repository Specification Format](#4-repository-specification-format))*
 
-#### A. Minimal HTTPS Example
+##### A. Minimal HTTPS Example
 
 ```text
 type: OCI/v1
@@ -711,7 +711,7 @@ Interpretation:
 * Component descriptors map under:
   `registry.example.com/component-descriptors/<component>`
 
-#### B. OCI Scheme with Auto-Derived Subpath
+##### B. OCI Scheme with Auto-Derived Subpath
 
 ```text
 type: OCI/v1
@@ -728,7 +728,7 @@ baseUrl: ghcr.io
 subPath: acme
 ```
 
-#### C. Explicit Subpath (No Auto-Extraction)
+##### C. Explicit Subpath (No Auto-Extraction)
 
 ```text
 type: OCI/v1
@@ -738,18 +738,18 @@ subPath: open-component-model/ocm
 
 Because `subPath` is explicitly provided, **no normalization** occurs ([4.3](#43-subpath)).
 
-### Repository Grammar Validity
+#### Repository Grammar Validity
 
 *(References: [4.5. Repository Reference Grammar](#45-string-reference-grammar))*
 
-#### Valid References
+##### Valid References
 
 | Reference                                        | Why valid                              |
 |--------------------------------------------------|----------------------------------------|
 | `ghcr.io/org/component`                          | Allowed hostname + valid path segments |
 | `https://registry.example.com:5000/repo/subrepo` | Valid scheme, host, port, and segments |
 
-#### Invalid References
+##### Invalid References
 
 | Reference       | Reason                               |
 |-----------------|--------------------------------------|
@@ -758,7 +758,7 @@ Because `subPath` is explicitly provided, **no normalization** occurs ([4.3](#43
 
 Invalid references **MUST** be rejected ([4.5](#45-string-reference-grammar)).
 
-### Component → Repository Mapping
+#### Component → Repository Mapping
 
 *(References: [5. Component Repository Mapping](#5-component-repository-mapping))*
 
@@ -778,9 +778,9 @@ ghcr.io/ocm/test/component-descriptors/github.com/acme/helloworld
 
 All versions reside under this repository.
 
-## Intermediate Examples
+### Intermediate Examples
 
-### Manifest Representation
+#### Manifest Representation
 
 *(References: [6.1. Manifest Representation](#61-manifest-representation))*
 
@@ -814,7 +814,7 @@ Key points:
 * **MUST** contain exactly one layer annotated software.ocm.descriptor="true"
 * Any `localBlob` with digest `sha256:deadbeef` must resolve to the second layer (([10.2](#102-mapping))).
 
-### Index Representation
+#### Index Representation
 
 *(References: [6.2. Index Representation](#62-index-representation))*
 
@@ -841,7 +841,7 @@ sha256:desc1
 
 Additional manifests are regular artifacts.
 
-### Descriptor Selection Logic
+#### Descriptor Selection Logic
 
 *(References: [7. Descriptor Selection Logic](#7-descriptor-selection-logic))*
 
@@ -862,7 +862,7 @@ sha256:aaa
 If two descriptor annotations exist → **resolution MUST fail** ([7](#7-descriptor-selection-logic)).
 If none exist → select the **first manifest** for compatibility ([7](#7-descriptor-selection-logic)).
 
-### LocalBlob Resolution
+#### LocalBlob Resolution
 
 *(References: [10.3 Resolution](#103-resolution))*
 
@@ -876,7 +876,7 @@ Resolution steps:
 2. Find exactly **one** descriptor whose digest matches `sha256:beef1234`.
 3. If 0 or >1 matches → **fail** ([10.3](#103-resolution)).
 
-### Version Mapping
+#### Version Mapping
 
 *(References: [12. Tag and Version Mapping Rules](#12-tag-and-version-mapping-rules))*
 
@@ -894,32 +894,32 @@ OCI → OCM:
 
 Round-trip **MUST** be exact.
 
-## Advanced End-to-End Examples
+### Advanced End-to-End Examples
 
-### Publishing a Component Version
+#### Publishing a Component Version
 
 *(References: [5](#5-component-repository-mapping), [6.1](#61-manifest-representation), [7](#7-descriptor-selection-logic), [8](#8-component-index-referrer-anchor), [10](#10-localblob-processing), [12](#12-tag-and-version-mapping-rules))*
 
-#### Scenario
+##### Scenario
 
 * Component: `github.com/acme/helloworld`
 * Version: `1.0.0+ci.5`
 * Registry: `ghcr.io/ocm/test`
 * LocalBlob digest: `sha256:beef1234`
 
-#### 1. Repository Mapping
+##### 1. Repository Mapping
 
 ```text
 ghcr.io/ocm/test/component-descriptors/github.com/acme/helloworld
 ```
 
-#### 2. Version Tag Mapping
+##### 2. Version Tag Mapping
 
 ```text
 1.0.0+ci.5 → 1.0.0.build-ci.5
 ```
 
-#### 3. Manifest Assembly
+##### 3. Manifest Assembly
 
 Manifest includes:
 
@@ -927,15 +927,15 @@ Manifest includes:
 * LocalBlob layer (`sha256:beef1234`)
 * Config referencing the descriptor layer
 
-#### 4. Component Index Subject
+##### 4. Component Index Subject
 
 Manifest sets its `subject` to the Component Index descriptor.
 
-#### 5. LocalBlob Mapping
+##### 5. LocalBlob Mapping
 
 Digest equality ensures the LocalBlob resolves exactly to one descriptor.
 
-### Subject Handling When Registry Rejects `subject`
+#### Subject Handling When Registry Rejects `subject`
 
 *(References: [8.2 Version Behavior](#82-version-behavior), [8.5.2 Publishing a Component Version](#852-publishing-a-component-version))*
 
@@ -951,7 +951,7 @@ Then:
 * The Component Index **MUST NOT** be regenerated.
 * Discovery may use fallback ([8.5.5](#855-fallback-behavior-on-registries-without-referrer-support)).
 
-### Full OCI Layout Reconstruction
+#### Full OCI Layout Reconstruction
 
 *(References: [10.4 Retrieval](#104-retrieval))*
 
@@ -977,7 +977,7 @@ Failure conditions:
 
 Any of these **MUST** abort retrieval ([10.4](#104-retrieval)).
 
-### Index vs Manifest Fallback
+#### Index vs Manifest Fallback
 
 *(References: [7 Descriptor Selection Logic](#7-descriptor-selection-logic))*
 
@@ -992,7 +992,7 @@ contains **no** descriptor annotation:
 * **MUST** select `manifests[0]` as descriptor root.
 * All others remain artifacts.
 
-### LocalBlob → OCIArtifact/v1 Conversion
+#### LocalBlob → OCIArtifact/v1 Conversion
 
 *(References: [11.3 Translation of `localBlob` to `OCIArtifact/v1`](#113-translation-of-localblob-to-ociartifactv1))*
 
