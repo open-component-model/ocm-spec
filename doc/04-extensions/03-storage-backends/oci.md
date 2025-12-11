@@ -342,7 +342,7 @@ This annotation serves purely informational/discovery purposes and actual resolu
 
 When resolving a component version reference:
 
-1. Resolve the tag to a descriptor, which **MUST** point to either a manifest or index. 
+1. Resolve the tag to a descriptor, which **MUST** point to either a manifest or index.
    The reference resolution must respect versioning rules defined in [12. Tag and Version Mapping Rules](#12-tag-and-version-mapping-rules).
 2. If manifest → it **MUST** be interpreted as the component descriptor root according to [6.1. Manifest Representation](#61-manifest-representation).
 3. If index → enumerate and find the manifest annotated `software.ocm.descriptor="true"`:
@@ -633,7 +633,7 @@ Digest processing for `OCIArtifact/v1` **MUST** satisfy all of the following:
    ```text
    <registry>/<repository>@<digest>
    ```
-   
+
 This form may be restored by clients after resolution, ingestion, or mapping.
 
 ### 11.3 Translation of `localBlob` to `OCIArtifact/v1`
@@ -645,6 +645,7 @@ After upload, the resulting digest reference **MUST** replace any tag-based or n
 but **SHOULD** retain its value if not modified.
 
 The resulting `OCIArtifact/v1` access method **MUST** include:
+
 * A digest-based `imageReference` pointing to the uploaded artifact.
 * The original media type of the artifact (manifest or index).
 
