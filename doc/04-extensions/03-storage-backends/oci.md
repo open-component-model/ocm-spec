@@ -113,7 +113,7 @@ An OCI registry used with OCM:
 
 An OCM repository backed by an OCI registry is described using the following structure:
 
-```
+```text
 type: <TYPE>[/VERSION]
 baseUrl: <registry-base-url>
 subPath: <optional-prefix>
@@ -127,7 +127,7 @@ A repository specification determines the registry host, the optional subpath pr
 
 The repository type **SHOULD** be exactly:
 
-```
+```text
 OCI/v1
 ```
 
@@ -138,7 +138,7 @@ Clients **SHOULD** accept the following identifiers for backward compatibility a
 
 **Deprecated forms:**
 
-```
+```text
 oci/v1
 OCIRegistry/v1
 ociRegistry/v1
@@ -165,7 +165,7 @@ If no scheme is present, clients **MUST** assume **HTTPS**.
 
 **Allowed Examples**
 
-```
+```text
 https://registry.example.com
 https://registry.example.com:5000
 oci://registry.example.com:5000
@@ -193,21 +193,21 @@ then clients **MUST** automatically normalize the specification by splitting the
 
 Input:
 
-```
+```text
 baseUrl = "ghcr.io/open-component-model/ocm"
 subPath = ""
 ```
 
 Normalized form:
 
-```
+```text
 baseUrl = "ghcr.io"
 subPath = "open-component-model/ocm"
 ```
 
 If a user supplies an explicit `subPath`, no auto-extraction occurs:
 
-```
+```text
 baseUrl = "ghcr.io"
 subPath = "open-component-model/ocm"
 ```
@@ -216,7 +216,7 @@ subPath = "open-component-model/ocm"
 
 componentNameMapping controls how a component identifier:
 
-```
+```text
 <id> ::= <segment>{"/"<segment>}
 ```
 
@@ -232,7 +232,7 @@ Deprecated mappings such as `sha256-digest` **MUST NOT** be used by writers but 
 
 An OCI repository string reference has the form:
 
-```
+```text
 [scheme://]<host>[:port][/<path>]
 ```
 
@@ -257,7 +257,7 @@ The following grammar defines the canonical structure of repository references.
 This grammar complements the parsing rules in [4.5](#45-string-reference-grammar)
 and serves as an informative reference for implementers.
 
-```
+```text
 <repository-ref> ::= [ <scheme> "://" ] <host> [ ":" <port> ] [ "/" <repo-path> ]
 <scheme>         ::= "http" | "https" | "oci"
 <host>           ::= <dns-label> { "." <dns-label> }
@@ -272,14 +272,14 @@ and serves as an informative reference for implementers.
 
 A component identifier:
 
-```
+```text
 <id> ::= <segment>{"/"<segment>}
 <segment> ::= [A-Za-z0-9._-]+
 ```
 
 **MUST** map to:
 
-```
+```text
 <base-repository>/component-descriptors/<component-id>
 ```
 
@@ -328,7 +328,7 @@ An index representing a component version:
 
 Artifact Entries in the manifest or index (see [6.1. Manifest Representation](#61-manifest-representation) and [6.2. Index Representation](#62-index-representation)) **MAY** include:
 
-```
+```text
 software.ocm.artifact: [{"identity": {...}, "kind": "resource|source"}]
 ```
 
@@ -394,7 +394,7 @@ The Component Index **MUST** match the exact manifest defined by the OCM impleme
 
 The canonical JSON for this manifest **MUST** produce the descriptor:
 
-```
+```text
 Digest: sha256:9717cda41c478af11cba7ed29f4aa3e4882bab769d006788169cbccafc0fcd05
 Size: 837
 MediaType: application/vnd.oci.image.manifest.v1+json
@@ -595,7 +595,7 @@ See [ociArtifact as an Access Type](../02-access-types/ociartifact.md).
 
 Clients **MUST** treat the following legacy identifiers exactly as `OCIArtifact/v1`:
 
-```
+```text
 OCIArtifact
 ociArtifact/v1
 ociArtifact
@@ -639,7 +639,7 @@ Digest processing for `OCIArtifact/v1` **MUST** satisfy all of the following:
 4. **Canonical reference formatting**
    The final resolved reference **MUST** be canonicalized in digest form:
 
-   ```
+   ```text
    <registry>/<repository>@<digest>
    ```
    
@@ -661,7 +661,7 @@ The resulting `OCIArtifact/v1` access method **MUST** include:
 
 Because OCI tags do not allow `+`, OCM versions with build metadata **MUST** encode it as:
 
-```
+```text
 .build-<build>
 ```
 
@@ -676,7 +676,7 @@ Examples:
 
 Tags **SHOULD** reference a manifest or index (see [6](#6-component-version-storage-models)) whose descriptor **MUST** include the annotation:
 
-```
+```text
 software.ocm.componentversion: "<component>:<version>"
 ```
 
@@ -706,7 +706,7 @@ Examples are grouped into:
 
 #### A. Minimal HTTPS Example
 
-```
+```text
 type: OCI/v1
 baseUrl: registry.example.com
 ```
@@ -721,7 +721,7 @@ Interpretation:
 
 #### B. OCI Scheme with Auto-Derived Subpath
 
-```
+```text
 type: OCI/v1
 baseUrl: oci://ghcr.io/acme
 ```
@@ -731,14 +731,14 @@ baseUrl: oci://ghcr.io/acme
 
 Normalized form:
 
-```
+```text
 baseUrl: ghcr.io
 subPath: acme
 ```
 
 #### C. Explicit Subpath (No Auto-Extraction)
 
-```
+```text
 type: OCI/v1
 baseUrl: ghcr.io
 subPath: open-component-model/ocm
@@ -772,7 +772,7 @@ Invalid references **MUST** be rejected (§4.5).
 
 Given:
 
-```
+```text
 Component ID: github.com/acme/helloworld
 baseUrl: ghcr.io
 subPath: ocm/test
@@ -780,7 +780,7 @@ subPath: ocm/test
 
 The mapped OCI repository becomes:
 
-```
+```text
 ghcr.io/ocm/test/component-descriptors/github.com/acme/helloworld
 ```
 
@@ -841,7 +841,7 @@ Key points:
 
 The descriptor root is:
 
-```
+```text
 sha256:desc1
 ```
 
@@ -861,7 +861,7 @@ Given an index:
 
 Selected descriptor:
 
-```
+```text
 sha256:aaa
 ```
 
@@ -872,7 +872,7 @@ If none exist → select the **first manifest** for compatibility (§7).
 
 *(References: [10.3 Resolution](#103-resolution))*
 
-```
+```text
 localReference: sha256:beef1234
 ```
 
@@ -888,13 +888,13 @@ Resolution steps:
 
 OCM → OCI:
 
-```
+```text
 1.2.3+ci.42 → 1.2.3.build-ci.42
 ```
 
 OCI → OCM:
 
-```
+```text
 1.2.3.build-ci.42 → 1.2.3+ci.42
 ```
 
@@ -915,13 +915,13 @@ Round-trip **MUST** be exact.
 
 #### 1. Repository Mapping
 
-```
+```text
 ghcr.io/ocm/test/component-descriptors/github.com/acme/helloworld
 ```
 
 #### 2. Version Tag Mapping
 
-```
+```text
 1.0.0+ci.5 → 1.0.0.build-ci.5
 ```
 
@@ -968,7 +968,7 @@ Given a manifest referencing:
 
 Reconstruction produces a valid OCI Image Layout:
 
-```
+```text
 index.json                          # includes only the root descriptor
 blobs/sha256/<digest-of-root>
 blobs/sha256/<each-layer>
@@ -989,7 +989,7 @@ Any of these **MUST** abort retrieval (§10.4).
 
 If:
 
-```
+```text
 sha256:index1
 ```
 
@@ -1004,7 +1004,7 @@ contains **no** descriptor annotation:
 
 Input:
 
-```
+```text
 localBlob:
   mediaType: application/zip
   localReference: sha256:beef
@@ -1012,7 +1012,7 @@ localBlob:
 
 After ingestion + upload:
 
-```
+```text
 imageReference: ghcr.io/acme/repo@sha256:beef...
 ```
 
