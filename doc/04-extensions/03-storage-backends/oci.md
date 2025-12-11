@@ -262,7 +262,8 @@ and serves as an informative reference for implementers.
 <port>           ::= <digit> { <digit> }
 <repo-path>      ::= <segment> { "/" <segment> }
 <segment>        ::= <alphanum> { <alphanum> | "-" | "_" | "." }
-<alphanum>       ::= "A".."Z" | "a".."z" | "0".."9" <digit>          ::= "0".."9"
+<alphanum>       ::= "A".."Z" | "a".."z" | "0".."9" 
+<digit>          ::= "0".."9"
 ```
 
 ## 5. Component Repository Mapping
