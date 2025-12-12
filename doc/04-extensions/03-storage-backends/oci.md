@@ -369,7 +369,7 @@ Rules:
 * There **SHOULD** be an attribute called `kind` with value `resource` or `source` depending on the artifact type.
 * Writers **MUST NOT** omit or synthesize identity attributes. The entire artifact identity is declared at any time.
 
-Annotation values for `software.ocm.resource` **MUST** be JSON-encoded strings because OCI annotation maps permit only string values.
+Annotation values for `software.ocm.artifact` **MUST** be JSON-encoded strings because OCI annotation maps permit only string values.
 The JSON-encoded string **SHOULD** be canonicalized as per [JCS (RFC 8785)](https://www.rfc-editor.org/rfc/rfc8785) to ensure stable formatting.
 
 Annotations **MUST** be written to the **top-level descriptor** of the OCI artifact:
@@ -815,10 +815,19 @@ Examples:
 | `1.2.3`             | `1.2.3`       |
 | `1.2.3.build-ci.42` | `1.2.3+ci.42` |
 
-Tags **SHOULD** reference a manifest or index (see [6](#6-component-version-storage-models)) whose descriptor **MUST** include the annotation:
+Tags **SHOULD** reference a manifest or index (see [6](#6-component-version-storage-models)),
+whose descriptor **MUST** include the (deprecated) annotation:
 
 ```text
 software.ocm.componentversion: "<component>:<version>"
+```
+
+The descriptor **MAY** also be identified by component key annotations from [6.3 Asset Annotations](#63-asset-annotations)
+as an alternative to the above annotation. Clients **MAY** use one of or both forms for verification:
+
+```text
+software.ocm.component.name: "<component>"
+software.ocm.component.version: "<version>"
 ```
 
 ### 12.1 Version Aliasing
