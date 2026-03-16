@@ -235,7 +235,7 @@ regardless by which component provider they are generated.
 To assure that this information has a globally unique interpretation or meaning,
 labels must comply with some naming scheme and use a common structure.
 
-Label types are covered by the OCM extension concept, so you can also find information [here](./07-extensions.md#label-types).
+Label types are covered by the OCM extension concept, so you can also find information in the [Label Types extension section](./07-extensions.md#label-types).
 
 ## Repository Contexts
 

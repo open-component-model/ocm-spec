@@ -10,7 +10,7 @@ A signature of a component version is based on digests of the involved elements.
 Therefore, there must be a defined way, how to calculate digests.
 This has to happen in a recursive way to handle aggregations.
 
-## Determing the Artifact Digests
+## Determining the Artifact Digests
 
 The content of every artifact is provided in a dedicated blob format by the various access methods.
 A digest can be calculated based on this blob. This is the default behaviour.  
@@ -53,7 +53,7 @@ If the digest algorithm `NO-DIGEST` is specified for an artifact,
 this artifact content is not included into the component version digest.
 This is typically configured for source artifacts, which are not deliverable.
 
-The artifact digest normalization algorithms are listed in the [extensions](../04-extensions/04-algorithms/README.md#artifact-normalization-types)
+The artifact digest normalization algorithms are listed in the [Artifact Normalization Types](../04-extensions/04-algorithms/artifact-normalization-types.md)
 section of the specification.
 
 ## Normalization Types

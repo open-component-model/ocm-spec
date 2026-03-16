@@ -28,7 +28,7 @@ Grouping multiple OCM component versions by referencing from a root component ve
 
 [Content](#content) described by a [component version](#component-version).
 
-### [Artifact Digest](02-processing/03-signing-process.md#determing-the-artifact-digests)<a id="artdigest"/>
+### [Artifact Digest](02-processing/03-signing-process.md#determining-the-artifact-digests)<a id="artdigest"/>
 
 The (logical) digest of an [artifact](#artifact).
 
@@ -50,7 +50,7 @@ The formal type of an [artifact](#artifact) described by a [component version](#
 
 An abstract entity describing a dedicated usage context or meaning for a provided piece of software.
 
-### [Component Constructor](https://ocm.software/docs/getting-started/create-component-version/)<a id="compconst"/>
+### [Component Constructor](https://ocm.software/docs/getting-started/create-component-versions/)<a id="compconst"/>
 
 A file that acts as input for the OCM CLI to construct one or multiple component version(s).
 
@@ -206,7 +206,7 @@ Using extra identities to express the assignment of an [artifact](#artifact) to 
 
 A reference to an element of the component model, see [artifact reference](#artref) or [component version reference](#compref).
 
-### [Relative Resource Refererences](02-processing/01-references.md#relative-artifact-references)<a id="relrefs"/>
+### [Relative Resource References](05-guidelines/03-references.md#relative-artifact-references)<a id="relrefs"/>
 
 A reference to an [artifact](#artifact) described by a [component version](#compvers) relative to a given component version exploiting the [aggregation feature](#aggregation) of the Open Component Model. It is part of the [model-tool contract](#contract).
 

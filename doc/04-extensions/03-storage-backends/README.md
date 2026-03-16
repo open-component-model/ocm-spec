@@ -62,8 +62,8 @@ binding to achieve interoperability among those implementations.
 <br>
 
 The specification for layer 1 is described in the [model element specification section](../../01-model/README.md).
-The specification of the extension points can be found [here](../../01-model/07-extensions.md).
-The storage backend extension specification is [here](../../01-model/07-extensions.md#storage-backends).
+The specification of the extension points can be found in the [Extensions section](../../01-model/07-extensions.md).
+The storage backend extension specification is in the [Storage Backends section](../../01-model/07-extensions.md#storage-backends).
 
 This sections describes the abstract model mapping for the storage backend extensions according to layer 3.
 Different implementations (for different language bindings) MUST implement this mapping

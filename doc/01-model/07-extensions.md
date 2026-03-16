@@ -42,9 +42,9 @@ There are two different kinds of extensions: functional and semantic.
 ## Component Descriptor Serialization
 
 The elements used to describe a component version can be represented in a serialized format,
-typically as yaml document. This document MUST contain a format specification version
+typically as YAML document. This document MUST contain a format specification version
 with the concrete representation of the model elements of a component version.
-The defined formats are described [here](../04-extensions/00-component-descriptor/README.md).
+The defined formats are described in the [Component Descriptor extension section](../04-extensions/00-component-descriptor/README.md).
 
 ## Storage Backends
 
@@ -98,7 +98,7 @@ Every OCM repository can therefore be described by such a *Repository Specificat
 This specification can be utilized by a language binding to access the repository.
 The type is employed to distinguish the backend implementation,
 and the additional attributes are leveraged by the implementation
-to faciliprovide access to the specific repository instance.
+to provide access to the specific repository instance.
 
 In a concrete environment all those repositories are usable, for which an
 implementation of the [abstract model operations](../03-persistence/01-operations.md) exists.
@@ -115,7 +115,7 @@ used to implement an OCM repository interface.
 The version is used to specify the attribute structure that describes
 the repository instance as part of the repository specification.
 
-Regardless of the creator of a component version, an access method must be uniquely identifyable.
+Regardless of the creator of a component version, an access method must be uniquely identifiable.
 Therefore, the names of access methods must be globally unique.
 
 There are two kinds of type name:
@@ -132,8 +132,7 @@ There are two kinds of type name:
   [A-Z][a-zA-Z0-9]*
   ```
 
-  The defined types with their meaning and formats can be found
-  [here](../04-extensions/03-storage-backends/README.md)
+  The defined types with their meaning and formats can be found in the [Storage Backends extension section](../04-extensions/03-storage-backends/README.md)
 
 - Vendor specific types
 
@@ -252,7 +251,7 @@ The task of an access method is to provide access to the physical content of an 
 The content is always provided as blob with a dedicated media type, either depending on the access method itself
 or the [artifact type](#artifact-types). To fulfill its task an access method gets an access specification.
 
-The list of centrally defined access methods types can be found [here](../04-extensions/02-access-types/README.md)
+The list of centrally defined access methods types can be found in the [Access Types extension section](../04-extensions/02-access-types/README.md)
 
 ### Access Specification
 
@@ -282,7 +281,7 @@ The version is used to specify the attribute structure used to describe
 the information to identify the artifact in sme repository as part of
 the access specification.
 
-Regardless of the creator of a component version, an access method must be uniquely identifyable.
+Regardless of the creator of a component version, an access method must be uniquely identifiable.
 Therefore, the names of access methods must be globally unique.
 
 There are two kinds of type name:
@@ -298,7 +297,7 @@ There are two kinds of type name:
   [a-z][a-zA-Z0-9]*
   ```
 
-  The defined types with their meaning and formats can be found in [here](../04-extensions/02-access-types/README.md)
+  The defined types with their meaning and formats can be found in the [Access Types extension section](../04-extensions/02-access-types/README.md)
 
 - Vendor specific types
 
@@ -401,7 +400,7 @@ and stream access for the denoted blob is required.
 ## Digest Algorithms
 
 Digest algorithms describe the way digests are calculated from a byte stream.
-The defined algorithms can be found [here](../04-extensions/04-algorithms/digest-algorithms.md).
+The defined algorithms can be found in the [Digest Algorithms extension section](../04-extensions/04-algorithms/digest-algorithms.md).
 
 ## Signing Algorithms
 
@@ -472,7 +471,7 @@ the normalization is a *digest specification* with the following fields
 
   The HEX encoded digest value.
 
-The already defined digesters can be found [here](../04-extensions/04-algorithms/artifact-normalization-types.md).
+The already defined digesters can be found in the [Artifact Normalization Types extension section](../04-extensions/04-algorithms/artifact-normalization-types.md).
 
 Example:
 
