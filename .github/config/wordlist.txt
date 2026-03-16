@@ -66,6 +66,7 @@ config
 conformant
 deployer
 deserialization
+descriptor's
 digester
 digesters
 directoryTree

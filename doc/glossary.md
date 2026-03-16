@@ -206,7 +206,7 @@ Using extra identities to express the assignment of an [artifact](#artifact) to 
 
 A reference to an element of the component model, see [artifact reference](#artref) or [component version reference](#compref).
 
-### [Relative Resource References](02-processing/01-references.md#relative-artifact-references)<a id="relrefs"/>
+### [Relative Resource References](05-guidelines/03-references.md#relative-artifact-references)<a id="relrefs"/>
 
 A reference to an [artifact](#artifact) described by a [component version](#compvers) relative to a given component version exploiting the [aggregation feature](#aggregation) of the Open Component Model. It is part of the [model-tool contract](#contract).
 
