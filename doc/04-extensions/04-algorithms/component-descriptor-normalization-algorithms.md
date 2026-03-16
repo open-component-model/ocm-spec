@@ -24,7 +24,7 @@ The normalization process is divided into two steps:
 ## `jsonNormalisationV1`
 
 The `JsonNormalisationV1` serialization format is based on the serialization format of the component descriptor.
-It uses an appropriate JSON object containing the relevant fields as contained in the component descriptors's serialization.
+It uses an appropriate JSON object containing the relevant fields as contained in the component descriptor's serialization.
 The format version fields are included. Therefore, the normalized form is depending on the chosen serialization format.
 Changing this format version would result in different digests.
 The resulting JSON object is serialized with the [OCM specific scheme](../../02-processing/05-component-descriptor-normalization.md#generic-normalization-format)
@@ -32,7 +32,7 @@ The resulting JSON object is serialized with the [OCM specific scheme](../../02-
 ## `jsonNormalisationV2`
 
 `JsonNormalisationV2` strictly uses only the relevant component descriptor
-information according to the field specification. It is independent of the serialization format used to store the component decsriptor in some storage backend. Therefore, the calculated digest is finally independent of the serialization format chosen for storing the component descriptor in a storage backend. It uses a standard scheme according to [RFC8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785)
+information according to the field specification. It is independent of the serialization format used to store the component descriptor in some storage backend. Therefore, the calculated digest is finally independent of the serialization format chosen for storing the component descriptor in a storage backend. It uses a standard scheme according to [RFC8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785)
 
 Relevant fields and their mapping to the normalized data structure for `JsonNormalisationV2` are:
 
@@ -128,8 +128,8 @@ Labels are treated specially across all label-bearing elements (component, resou
 - `value`
 - `signing`
 
-3. **Other label metadata** (e.g. `mergeAlgorithm`) is excluded.
-4. **If the resulting label array is empty after filtering, the entire `labels` field is omitted** (not serialized as `[]`).
+1. **Other label metadata** (e.g. `mergeAlgorithm`) is excluded.
+2. **If the resulting label array is empty after filtering, the entire `labels` field is omitted** (not serialized as `[]`).
 
 ### Serialization
 

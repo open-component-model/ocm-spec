@@ -2,8 +2,10 @@ APIs
 BACKEND
 Backend
 Backends
+CNCF
 CLI
 CTF
+Canonicalization
 CycloneDX
 DNS
 FileSystem
@@ -14,6 +16,7 @@ GOARCH
 GOOS
 GitOps
 Golang
+HTTPS
 JSON
 Kubernetes
 Lifecycle
@@ -22,6 +25,7 @@ NIST
 NPM
 NodeJS
 NormalisationAlgorithm
+ORAS
 OCI
 OCIArtifact
 OCIRegistry
@@ -32,6 +36,7 @@ RDF
 RSA
 RSASSA
 ReferenceHint
+SBOD
 SBOM
 SBOMs
 SHA
@@ -44,8 +49,10 @@ TCP
 TLS
 TOI
 URI
+UTF
 Uploaders
 Verifiers
+YAML
 amd
 autoscale
 backend
@@ -55,6 +62,7 @@ bool
 canonicalized
 codebase
 componentNameMapping
+config
 conformant
 deployer
 deserialization
@@ -88,6 +96,7 @@ localblob
 mariadb
 md
 mediatype
+multiarch
 namespace
 namespaced
 namespaces
@@ -116,9 +125,12 @@ templated
 tgz
 toolset
 untyped
+untrusted
 updatable
 uploader
 url
 verifiers
+wget
 whitespace
 whitespaces
+yaml

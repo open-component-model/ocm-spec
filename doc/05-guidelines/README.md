@@ -1,6 +1,6 @@
 # Guidelines (non-normative)
 
-This chapter contains context information to the OCM core specification. It contains common use-cases where OCM is used and conventions how to make best use of the information in ihe model.
+This chapter contains context information to the OCM core specification. It contains common use-cases where OCM is used and conventions how to make best use of the information in the model.
 
 The specification itself does not rely on the information of this chapter. For interoperability it is strongly recommended to follow the conventions outlined in this chapter.
 

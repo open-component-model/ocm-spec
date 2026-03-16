@@ -161,12 +161,12 @@ models for the OCI specification:
    described by this format. But language bindings basically have to support
    this additional type.
 
-# *Component Archive Format*
+## *Component Archive Format*
 
 This is a special filesystem based format to store the content of
 a single component version. It is intended to be used during a
 build process to incrementally compose a component version.
-Once finished it can be transfered to a regular OCM repository.
+Once finished it can be transferred to a regular OCM repository.
 
 It is a directory containing
 

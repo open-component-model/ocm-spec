@@ -4,7 +4,7 @@ This chapter describes the elements and data formats the Open Component Model de
 
 ## Introduction
 
-The Open Compoment Model consists of a core model plus extensions. The core model describes the key elements *Component*, *Component Version* being stored in *Component Registries*. *Component Versions* have a type and an identity, and consist of *sources*, *resources* and *references*. *Component Registries* are containers persisting component versions and may exist in various types for different storage technologies. Many parts of the Open-Component-Model can be extended to provide flexibility and adaption to different environments. Some of these extension are defined in this specification. Others may be defined customer-specific or for dedicated environments.
+The Open Component Model consists of a core model plus extensions. The core model describes the key elements *Component*, *Component Version* being stored in *Component Registries*. *Component Versions* have a type and an identity, and consist of *sources*, *resources* and *references*. *Component Registries* are containers persisting component versions and may exist in various types for different storage technologies. Many parts of the Open-Component-Model can be extended to provide flexibility and adaption to different environments. Some of these extension are defined in this specification. Others may be defined customer-specific or for dedicated environments.
 
 The following chapters will provide more details about these concepts.
 
@@ -12,7 +12,7 @@ The following chapters will provide more details about these concepts.
 
 Usually, complex software products are divided into logical units (called components in this specification). A component is typically maintained in a version control system. It has a build procedure generating binary artifacts from source code and a release process to make it available for consumers. Usually, releases are repeated from time to time, making new versions available. A component is a logical unit within a software product. It is a semantic bracket around software pieces belonging together because they fulfill a specific purpose. E.g. like, "This is the Frontend Component," "This is the Database component," and "This is the Kubernetes vertical autoscale component."
 
-In the Open Component Model, a *Component Version* is described by a *Component Descriptor*. It describes the resources, sources, and aggregated other Component Versions belonging to a particular Component Version. A Component Descriptor is stored in a yaml file following this [schema](https://github.com/open-component-model/ocm/blob/main/resources/component-descriptor-ocm-v3-schema.yaml).
+In the Open Component Model, a *Component Version* is described by a *Component Descriptor*. It describes the resources, sources, and aggregated other Component Versions belonging to a particular Component Version. A Component Descriptor is stored in a YAML file following this [schema](https://github.com/open-component-model/ocm/blob/main/resources/component-descriptor-ocm-v3-schema.yaml).
 
 A component itself is described by a globally unique identity. Each component version is described by the identity of the component plus a version number following the [semantic versioning](https://semver.org) specification.
 
