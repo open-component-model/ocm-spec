@@ -77,15 +77,15 @@ Within the `component` section, the following rules apply:
 | `component.name`     | Included  |
 | `component.version`  | Included  |
 | `component.provider` | Included — always serialized as a JSON object `{"name": "<value>"}`, even if the original descriptor stores the provider as a plain string |
-| `component.labels`   | Included, subject to [Label Rules](#label-rules-v3) |
+| `component.labels`   | Included, subject to [Label Rules](#label-rules) |
 | `component.repositoryContexts` | **Excluded** — transport-specific |
-| `component.resources` | Included as a JSON array (empty `[]` if absent), subject to [Resource Rules](#resource-rules-v3) |
-| `component.sources`  | Included as a JSON array (empty `[]` if absent), subject to [Source Rules](#source-rules-v3) |
-| `component.references` | Included as a JSON array (empty `[]` if absent), subject to [Reference Rules](#reference-rules-v3) |
+| `component.resources` | Included as a JSON array (empty `[]` if absent), subject to [Resource Rules](#resource-rules) |
+| `component.sources`  | Included as a JSON array (empty `[]` if absent), subject to [Source Rules](#source-rules) |
+| `component.references` | Included as a JSON array (empty `[]` if absent), subject to [Reference Rules](#reference-rules) |
 
 All list fields (`resources`, `sources`, `references`, `repositoryContexts`) default to an empty array `[]` when absent or `null`.
 
-#### Resource Rules {#resource-rules-v3}
+#### Resource Rules
 
 For each resource entry:
 
@@ -93,30 +93,30 @@ For each resource entry:
 |------------|-----------|
 | `access`   | **Excluded** — transport-specific |
 | `srcRefs`  | **Excluded** |
-| `labels`   | Subject to [Label Rules](#label-rules-v3) |
+| `labels`   | Subject to [Label Rules](#label-rules) |
 | `digest`   | Included, **except** for resources whose access type is `none` (or legacy `None`), where the `digest` field is removed |
 | All other fields | Included (e.g. `name`, `version`, `type`, `relation`, `extraIdentity`) |
 
-#### Source Rules {#source-rules-v3}
+#### Source Rules
 
 For each source entry:
 
 | Field    | Treatment |
 |----------|-----------|
 | `access` | **Excluded** — transport-specific |
-| `labels` | Subject to [Label Rules](#label-rules-v3) |
+| `labels` | Subject to [Label Rules](#label-rules) |
 | All other fields | Included |
 
-#### Reference Rules {#reference-rules-v3}
+#### Reference Rules
 
 For each reference entry:
 
 | Field    | Treatment |
 |----------|-----------|
-| `labels` | Subject to [Label Rules](#label-rules-v3) |
+| `labels` | Subject to [Label Rules](#label-rules) |
 | All other fields | Included |
 
-#### Label Rules {#label-rules-v3}
+#### Label Rules
 
 Labels are treated specially across all label-bearing elements (component, resources, sources, references):
 
