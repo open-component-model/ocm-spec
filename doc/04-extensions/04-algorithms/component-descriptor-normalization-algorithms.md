@@ -122,10 +122,12 @@ Labels are treated specially across all label-bearing elements (component, resou
 
 1. **Only signing-relevant labels are included.** A label is signing-relevant if and only if its `signing` field is set to `true` (boolean or the string `"true"`).Labels without `signing: true` are excluded.
 2. **For included labels, only these fields are preserved:**
-  - `name`
-  - `version`
-  - `value`
-  - `signing`
+
+- `name`
+- `version`
+- `value`
+- `signing`
+
 3. **Other label metadata** (e.g. `mergeAlgorithm`) is excluded.
 4. **If the resulting label array is empty after filtering, the entire `labels` field is omitted** (not serialized as `[]`).
 
@@ -133,6 +135,7 @@ Labels are treated specially across all label-bearing elements (component, resou
 
 After extracting the signing-relevant fields according to the rules above, 
 the resulting JSON structure is serialized using [RFC 8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785), which defines:
+
 - Lexicographic ordering of object keys
 - Specific number formatting (no trailing zeros, no positive sign for exponents)
 - Specific string escaping rules
