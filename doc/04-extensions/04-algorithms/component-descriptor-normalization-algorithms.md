@@ -133,7 +133,7 @@ Labels are treated specially across all label-bearing elements (component, resou
 
 ### Serialization
 
-After extracting the signing-relevant fields according to the rules above, 
+After extracting the signing-relevant fields according to the rules above,
 the resulting JSON structure is serialized using [RFC 8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785), which defines:
 
 - Lexicographic ordering of object keys
