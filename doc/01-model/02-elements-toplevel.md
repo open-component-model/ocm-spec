@@ -79,7 +79,7 @@ the access specification determines the concrete format given by a media type us
 For example, a helm chart (type `helmChart`) can be represented as OCI artifact
 or helm chart archive. Nevertheless, the technical meaning is the same.
 In both cases the artifact (resource)`type` will be `helmChart`.
-The acess specification however will be different. In the first case it will refer to the helm-chart archive.
+The access specification however will be different. In the first case it will refer to the helm-chart archive.
 In the second case the access method type will be `ociArtifact`.
 
 ```yaml
@@ -162,7 +162,7 @@ There are two kinds of types:
   ```
 
   [Artifact Types](../01-model/07-extensions.md#artifact-types) are an extension point within the OCM model.
-  All existing artifact types are listed [here](../04-extensions/01-artifact-types/README.md).
+  All existing artifact types are listed in the [Artifact Types extension section](../04-extensions/01-artifact-types/README.md).
 
 ## Sources
 
@@ -242,7 +242,7 @@ Example:
       type: ociArtefact
 ```
 
-The full list of resource types is [here](../04-extensions/01-artifact-types/README.md).
+The full list of resource types is in the [Artifact Types extension section](../04-extensions/01-artifact-types/README.md).
 
 ## References
 

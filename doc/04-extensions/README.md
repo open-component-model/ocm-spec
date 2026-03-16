@@ -3,7 +3,7 @@
 The core specification does not rely on a fixed set of certain fields.
 However, the specification defines a set of known values for certain types
 listed in the following sections. These sets can be extended by new specification versions,
-addendums or for customer-specific environments.
+addenda or for customer-specific environments.
 
 ## Table of Content
 
