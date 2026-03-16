@@ -2,7 +2,7 @@
 
 The following component descriptor normalization algorithms are defined:
 
-- `jsonNormalisationV1`: Legacy format that depends on the serialization format of the component descriptor. Uses the [OCM-specific generic normalization format](../../02-processing/05-component-descriptor-normalization.md#generic-normalization-format).
+- `jsonNormalisationV1`: Legacy format that depends on the serialization format of the component descriptor. Uses the [OCM-specific generic normalization format](../../02-processing/05-component-descriptor-normalization.md#generic-normalization-format). **Deprecated.**
 - `jsonNormalisationV2`: Format-independent normalization using [RFC 8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785). Includes legacy extra-identity defaulting. **Deprecated.**
 - `jsonNormalisationV3`: Identical to v2 but **without** legacy extra-identity defaulting. **Deprecated** — transparently mapped to `jsonNormalisationV4alpha1`.
 - `jsonNormalisationV4alpha1`: Clean-room reimplementation of v3. **Current default.**
