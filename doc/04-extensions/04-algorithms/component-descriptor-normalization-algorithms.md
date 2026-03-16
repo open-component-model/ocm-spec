@@ -1,25 +1,25 @@
 # Normalization Algorithms
 
-Currently the there are two different normalizations defined:
+The following component descriptor normalization algorithms are defined:
 
-- `jsonNormalisationV1`: This is a legacy format, which depends on the format of the
-  component descriptor
-- `jsonNormalisationV2`: This is the new format. which is independent of the
-  chosen representation format of the component descriptor.
+- `jsonNormalisationV1`: Legacy format that depends on the serialization format of the component descriptor. Uses the [OCM-specific generic normalization format](../../02-processing/05-component-descriptor-normalization.md#generic-normalization-format).
+- `jsonNormalisationV2`: Format-independent normalization using [RFC 8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785). Includes legacy extra-identity defaulting. **Deprecated.**
+- `jsonNormalisationV3`: Identical to v2 but **without** legacy extra-identity defaulting. **Deprecated** — transparently mapped to `jsonNormalisationV4alpha1`.
+- `jsonNormalisationV4alpha1`: Clean-room reimplementation of v3. **Current default.**
 
 The normalization process is divided into two steps:
 
-- *extraction of the signature relevant information from the component descriptor*
+- *extraction of the signing-relevant information from the component descriptor*
 
-  The result is basically a JSON object, which decsribed the relevant information.
+  The result is a JSON object which describes the relevant information.
 
 - *normalization of the resulting JSON object*
 
-  Here, the object is serialized to a unique and reproducable byte sequence, which is finally used to determine the digest.
+  The object is serialized to a unique and reproducible byte sequence, which is finally used to determine the digest.
 
-  There are two such normalization methods:
-  - `jsonNormalisationV1`
-  - `jsonNormalisationV2`
+  There are two serialization methods used across the algorithms:
+  - `jsonNormalisationV1` uses the [OCM-specific generic normalization format](../../02-processing/05-component-descriptor-normalization.md#generic-normalization-format) (dictionaries serialized as sorted single-entry lists)
+  - `jsonNormalisationV2`, `jsonNormalisationV3`, and `jsonNormalisationV4alpha1` use [RFC 8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785)
 
 ## `jsonNormalisationV1`
 
@@ -47,12 +47,16 @@ Relevant fields and their mapping to the normalized data structure for `JsonNorm
 ## `jsonNormalisationV3`
 
 > **Status:** Deprecated — transparently mapped to `jsonNormalisationV4alpha1`. Existing signatures using `jsonNormalisationV3` remain verifiable.
-`jsonNormalisationV3` builds on the same signing-relevant field selection as `jsonNormalisationV2` but introduces two major changes:
 
-1. **Standard JSON serialization via [RFC 8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785):**
-   Instead of the OCM-specific [generic normalization format](../../02-processing/05-component-descriptor-normalization.md#generic-normalization-format) (dictionaries serialized as sorted single-entry lists), this algorithm uses the JSON Canonicalization Scheme defined in RFC 8785. JCS produces deterministic JSON by specifying exact rules for key ordering, number representation, and string escaping, yielding a unique byte sequence for any given JSON value.
-2. **Refined field handling rules:**
-   The algorithm operates on the **v2 serialization** of the component descriptor as its baseline and applies the following transformation rules.
+`jsonNormalisationV3` uses the same serialization ([RFC 8785 / JCS](https://www.rfc-editor.org/rfc/rfc8785)), the same field selection, and the same exclusion rules as `jsonNormalisationV2`. The **only difference** is the removal of a legacy extra-identity defaulting behaviour:
+
+- **`jsonNormalisationV2`** automatically inserts the `version` field into `extraIdentity` when multiple resources (or sources) share the same `name` and identical `extraIdentity`. This was an accidental coupling of defaulting logic with normalization and could silently mutate the descriptor before digest calculation.
+- **`jsonNormalisationV3`** normalizes the component descriptor **as-is**, without any implicit defaulting. If resource identities are ambiguous the descriptor is taken at face value.
+
+Because the extra-identity defaulting only triggers when duplicate name + extraIdentity combinations exist, most component descriptors produce **identical digests** under v2 and v3.
+
+The algorithm operates on the **v2 serialization** of the component descriptor as its baseline and applies the following transformation rules.
+These extraction and exclusion rules are shared with `jsonNormalisationV2` (and `jsonNormalisationV4alpha1`); they are documented here in full detail.
 
 ### Extraction of Signing-Relevant Information
 
@@ -223,13 +227,14 @@ Excluded from this output:
 ## `jsonNormalisationV4alpha1`
 
 > **Status:** Current default algorithm.
-`jsonNormalisationV4alpha1` is a clean-room reimplementation of `jsonNormalisationV3`. It uses the same field selection rules, the same RFC 8785 (JCS) serialization, and produces **byte-identical output** for the same input.
+
+`jsonNormalisationV4alpha1` is a clean-room reimplementation of `jsonNormalisationV3`. It uses the same field selection rules, the same RFC 8785 (JCS) serialization, the same absence of legacy extra-identity defaulting, and produces **byte-identical output** for the same input.
 The algorithm exists to provide a well-tested, independently implemented normalization that is not tied to the legacy OCM v1 codebase. Conformance between v3 and v4alpha1 is verified by test suites that compare the output of both algorithms on real-world component descriptors.
 
 ### Differences from `jsonNormalisationV3`
 
 There are **no behavioral differences**. The field extraction rules, label handling, provider normalization, none-access resource handling,
-empty-list defaults, and JCS serialization are identical. The `v4alpha1` name reflects that:
+empty-list defaults, and JCS serialization are identical. Neither v3 nor v4alpha1 perform the legacy extra-identity defaulting that v2 applies. The `v4alpha1` name reflects that:
 
 1. It is part of the next-generation OCM bindings (hence the version bump).
 2. The `alpha1` suffix indicates that the algorithm name may be consolidated in a future specification version (e.g. to a final `v3` or `v4`).
