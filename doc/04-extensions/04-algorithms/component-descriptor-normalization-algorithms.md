@@ -123,13 +123,13 @@ Labels are treated specially across all label-bearing elements (component, resou
 1. **Only signing-relevant labels are included.** A label is signing-relevant if and only if its `signing` field is set to `true` (boolean or the string `"true"`).Labels without `signing: true` are excluded.
 2. **For included labels, only these fields are preserved:**
 
-- `name`
-- `version`
-- `value`
-- `signing`
+   - `name`
+   - `version`
+   - `value`
+   - `signing`
 
-1. **Other label metadata** (e.g. `mergeAlgorithm`) is excluded.
-2. **If the resulting label array is empty after filtering, the entire `labels` field is omitted** (not serialized as `[]`).
+3. **Other label metadata** (e.g. `mergeAlgorithm`) is excluded.
+4. **If the resulting label array is empty after filtering, the entire `labels` field is omitted** (not serialized as `[]`).
 
 ### Serialization
 
