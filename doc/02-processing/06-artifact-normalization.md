@@ -32,11 +32,11 @@ If multiple media types are possible for blobs, the digest of the artifact conte
 MUST be immutable to avoid invalidating signatures. In such a case a
 dedicated artifact normalization algorithm MUST be provided for such media types.
 
-Available artifact normalization types can be found [here](./03-signing-process.md#normalization-types).
+Available artifact normalization types can be found in the [Normalization Types section](./03-signing-process.md#normalization-types).
 
 ## Interaction of Local Blobs, Access Methods, Uploaders and Media Types
 
-The Open Component Model is desiged to support transports of artifacts.
+The Open Component Model is designed to support transports of artifacts.
 To assure the integrity of digests and signatures some rules must be obeyed by the involved model extensions.
 
 ### Access Methods

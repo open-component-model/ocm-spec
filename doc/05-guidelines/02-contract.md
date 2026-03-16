@@ -15,10 +15,10 @@ This contract consists of two parts:
 
 This has various consequences especially for deployment environments, but basically for all tools working with the component model and even the component model itself:
 
-- Deployment descriptions MUST be part of a component version. They have to be stored as additional resources with an appropriate (tool/technology specific) artifact type. There are too many deployment technologies to define them centrally. Deploment descriptions therefore use extensions.
+- Deployment descriptions MUST be part of a component version. They have to be stored as additional resources with an appropriate (tool/technology specific) artifact type. There are too many deployment technologies to define them centrally. Deployment descriptions therefore use extensions.
 - Those descriptions MUST use descriptive elements of the component model to locate and access artifacts. It is not allowed to use explicit, absolute or global direct artifact locations.
 - A component version MUST include all resources, either directly contained in the component version or by referring to other component versions using references. References can contain other references resulting in a graph. To avoid the need of describing always complete closed sets of artifacts in a single component version the model offers the [component reference/aggregation feature](../02-processing/01-references.md).
-- The artifacts must be resolvable in the context of the component version containing this description as artifact. See also [relative artifact references](../02-processing/01-references.md#relative-artifact-references)
+- The artifacts must be resolvable in the context of the component version containing this description as artifact. See also [relative artifact references](./03-references.md#relative-artifact-references)
 
 ## Example: Helm deployment
 
@@ -32,7 +32,7 @@ A tool used to deploy a component version with helm therefore requires several r
 
 - all the images required for the helm chart
 - the helm chart
-- a helm specific description containig a mapping of value names to image locations of the component version.
+- a helm specific description containing a mapping of value names to image locations of the component version.
 
 The OCM-compliant deploy tool (ocm-helm-adapter) must:
 
@@ -42,7 +42,7 @@ The OCM-compliant deploy tool (ocm-helm-adapter) must:
 The deploy tool can then call the native helm command using the helm chart location from the component version and the generated helm values.
 
 <div align="center">
-<img src="ocm-helm-simple.png" alt="OCM and Helm Deployments" width="800"/>
+<img src="../01-model/ocm-helm-simple.png" alt="OCM and Helm Deployments" width="800"/>
 </div>
 
 ### Example: Indirect Deployments
@@ -50,5 +50,5 @@ The deploy tool can then call the native helm command using the helm chart locat
 A deployed image may contain code to deploy pods to a Kubernetes cluster (for example, a Kubernetes operator managing some service instances). These image locations must also be taken from the component version requiring an additional indirection. For an OCM-compliant deployment, the executable of the image must accept some argument or configuration to pass these locations at runtime. The necessary mapping from resources of a component version to the configuration of the deployer executable must again be described in the description resource and processed by the adapter to generate the target configuration.
 
 <div align="center">
-<img src="ocm-helm-indirect.png" alt="OCM and Helm Deployments with indirect Deployments" width="800"/>
+<img src="../01-model/ocm-helm-indirect.png" alt="OCM and Helm Deployments with indirect Deployments" width="800"/>
 </div>

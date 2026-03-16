@@ -11,7 +11,7 @@ The model provided by OCM can be used to create a transport tool being able to t
 
 To support this, a component version includes the access information for the described artifacts. If no applicable storage system for an artifact type according to its access method is available it can be stored as local blob along with the component descriptor.
 
-The descriptor stored in the target repository has to be adapted accordingly  to reflect the new ocal location. In this way OCM allows to provide modifiable access information for artifacts.
+The descriptor stored in the target repository has to be adapted accordingly  to reflect the new local location. In this way OCM allows to provide modifiable access information for artifacts.
 
 The transport target might even be an archive or filesystem. This enables the transport of OCM content into fenced environments via data storage media (e.g USB stick).
 
@@ -34,12 +34,12 @@ A transport of a component version from one component repository into another on
 * directly from an OCM repository to another one: To support transport by value requires the availability of a blob state in the target environment.
 * indirectly using an intermediate file based format: This format must be capable to store blobs that have to be transported side-by-side with the component descriptors. In this format the component descriptor must be capable to describe the access to those locally stored blobs.
 
-To simplify and unify the handling of those two scenarios, and generally the handling of blobs in various environments, a component repository must also include support for storing blobs under the identity of the component descriptor. A repository implementation may forward this task to a predefinied other blob store or handle this part of the API in its own way.
+To simplify and unify the handling of those two scenarios, and generally the handling of blobs in various environments, a component repository must also include support for storing blobs under the identity of the component descriptor. A repository implementation may forward this task to a predefined other blob store or handle this part of the API in its own way.
 
 This enables:
 
 * a simple usage of a component repository to store any content without the need of always requiring other external stores for (possibly specific types of) resources, e.g. for storing simple configuration data along with the component descriptor.
-* providing a respository implementation for file system formats that can be used transparently by component tools.
+* providing a repository implementation for file system formats that can be used transparently by component tools.
 * the usage of a minimal repository environment on the target side of a transport by just using a dedicated component repository.
 
 Therefore, *Component Repositories* MUST provide the possibility to store technical artifacts together with the component descriptors in the component repository itself (as *local blobs*). The  general access method type `localBlob` MUST be supported by all repository implementations. This allows packing all component versions with their technical artifacts in a *Component Repository* as a completely self-contained package.

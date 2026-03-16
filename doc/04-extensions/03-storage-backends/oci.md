@@ -833,7 +833,7 @@ software.ocm.component.version: "<version>"
 ### 12.1 Version Aliasing
 
 OCI tags such as `latest`, `stable`, or other user-defined symbolic names are not OCM versions.
-To support workflows that rely on floating pointers to versions, clients **MAY** implement *version aliasing*.
+To support workflows that rely on floating pointers to versions, clients **MAY** implement _version aliasing_.
 An alias is an OCI tag whose meaning is defined by client-side resolution logic rather than by the OCM version string.
 
 Aliases map to a concrete OCM version based on deterministic selection rules.
@@ -915,7 +915,7 @@ Examples are grouped into:
 
 #### Repository Specification Examples
 
-*(References: [4. Repository Specification Format](#4-repository-specification-format))*
+_(References: [4. Repository Specification Format](#4-repository-specification-format))_
 
 ##### A. Minimal HTTPS Example
 
@@ -961,7 +961,7 @@ Because `subPath` is explicitly provided, **no normalization** occurs ([4.3](#43
 
 #### Repository Grammar Validity
 
-*(References: [4.5. Repository Reference Grammar](#45-string-reference-grammar))*
+_(References: [4.5. Repository Reference Grammar](#45-string-reference-grammar))_
 
 ##### Valid References
 
@@ -981,7 +981,7 @@ Invalid references **MUST** be rejected ([4.5](#45-string-reference-grammar)).
 
 #### Component → Repository Mapping
 
-*(References: [5. Component Repository Mapping](#5-component-repository-mapping))*
+_(References: [5. Component Repository Mapping](#5-component-repository-mapping))_
 
 Given:
 
@@ -1003,7 +1003,7 @@ All versions reside under this repository.
 
 #### Manifest Representation
 
-*(References: [6.1. Manifest Representation](#61-manifest-representation))*
+_(References: [6.1. Manifest Representation](#61-manifest-representation))_
 
 A manifest storing a component version may look like:
 
@@ -1037,7 +1037,7 @@ Key points:
 
 #### Index Representation
 
-*(References: [6.2. Index Representation](#62-index-representation))*
+_(References: [6.2. Index Representation](#62-index-representation))_
 
 ```json
 {
@@ -1064,7 +1064,7 @@ Additional manifests are regular artifacts.
 
 #### Descriptor Selection Logic
 
-*(References: [7. Descriptor Selection Logic](#7-descriptor-selection-logic))*
+_(References: [7. Descriptor Selection Logic](#7-descriptor-selection-logic))_
 
 Given an index:
 
@@ -1085,7 +1085,7 @@ If none exist → select the **first manifest** for compatibility ([7](#7-descri
 
 #### LocalBlob Resolution
 
-*(References: [10.3 Resolution](#103-resolution))*
+_(References: [10.3 Resolution](#103-resolution))_
 
 ```text
 localReference: sha256:beef1234
@@ -1099,7 +1099,7 @@ Resolution steps:
 
 #### Version Mapping
 
-*(References: [12. Tag and Version Mapping Rules](#12-tag-and-version-mapping-rules))*
+_(References: [12. Tag and Version Mapping Rules](#12-tag-and-version-mapping-rules))_
 
 OCM → OCI:
 
@@ -1119,7 +1119,7 @@ Round-trip **MUST** be exact.
 
 #### Publishing a Component Version
 
-*(References: [5](#5-component-repository-mapping), [6.1](#61-manifest-representation), [7](#7-descriptor-selection-logic), [8](#8-component-index-referrer-anchor), [10](#10-localblob-processing), [12](#12-tag-and-version-mapping-rules))*
+_(References: [5](#5-component-repository-mapping), [6.1](#61-manifest-representation), [7](#7-descriptor-selection-logic), [8](#8-component-index-referrer-anchor), [10](#10-localblob-processing), [12](#12-tag-and-version-mapping-rules))_
 
 ##### Scenario
 
@@ -1158,7 +1158,7 @@ Digest equality ensures the LocalBlob resolves exactly to one descriptor.
 
 #### Subject Handling When Registry Rejects `subject`
 
-*(References: [8.2 Version Behavior](#82-version-behavior), [8.5.2 Publishing a Component Version](#852-publishing-a-component-version))*
+_(References: [8.2 Version Behavior](#82-version-behavior), [8.5.2 Publishing a Component Version](#852-publishing-a-component-version))_
 
 If the registry removes:
 
@@ -1174,7 +1174,7 @@ Then:
 
 #### Full OCI Layout Reconstruction
 
-*(References: [10.4 Retrieval](#104-retrieval))*
+_(References: [10.4 Retrieval](#104-retrieval))_
 
 Given a manifest referencing:
 
@@ -1200,7 +1200,7 @@ Any of these **MUST** abort retrieval ([10.4](#104-retrieval)).
 
 #### Index vs Manifest Fallback
 
-*(References: [7 Descriptor Selection Logic](#7-descriptor-selection-logic))*
+_(References: [7 Descriptor Selection Logic](#7-descriptor-selection-logic))_
 
 If:
 
@@ -1215,7 +1215,7 @@ contains **no** descriptor annotation:
 
 #### LocalBlob → OCIArtifact/v1 Conversion
 
-*(References: [11.3 Translation of `localBlob` to `OCIArtifact/v1`](#113-translation-of-localblob-to-ociartifactv1))*
+_(References: [11.3 Translation of `localBlob` to `OCIArtifact/v1`](#113-translation-of-localblob-to-ociartifactv1))_
 
 Input:
 
