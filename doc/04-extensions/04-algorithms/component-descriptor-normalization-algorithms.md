@@ -5,7 +5,7 @@ The following component descriptor normalization algorithms are defined:
 - `jsonNormalisationV1`: Legacy format that depends on the serialization format of the component descriptor. Uses the [OCM-specific generic normalization format](../../02-processing/05-component-descriptor-normalization.md#generic-normalization-format). **Deprecated.**
 - `jsonNormalisationV2`: Format-independent normalization using [RFC 8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785). Includes legacy extra-identity defaulting. **Deprecated.**
 - `jsonNormalisationV3`: Identical to v2 but **without** legacy extra-identity defaulting. **Deprecated** — transparently mapped to `jsonNormalisationV4alpha1`.
-- `jsonNormalisationV4alpha1`: Clean-room reimplementation of v3. **Current default.**
+- `jsonNormalisationV4alpha1`: Clean reimplementation of v3. **Current default.**
 
 The normalization process is divided into two steps:
 
@@ -17,9 +17,9 @@ The normalization process is divided into two steps:
 
   The object is serialized to a unique and reproducible byte sequence, which is finally used to determine the digest.
 
-  There are two serialization methods used across the algorithms:
+  The following serialization methods are used across the algorithms:
   - `jsonNormalisationV1` uses the [OCM-specific generic normalization format](../../02-processing/05-component-descriptor-normalization.md#generic-normalization-format) (dictionaries serialized as sorted single-entry lists)
-  - `jsonNormalisationV2`, `jsonNormalisationV3`, and `jsonNormalisationV4alpha1` use [RFC 8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785)
+  - All other algorithms use [RFC 8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785)
 
 ## `jsonNormalisationV1`
 
