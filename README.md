@@ -135,5 +135,7 @@ OCM follows the [NeoNephos Code of Conduct](https://github.com/neonephos/.github
 ## Licensing
 
 Copyright 2022 SAP SE or an SAP affiliate company and Open Component Model contributors.
-Please see our [LICENSE](LICENSE) for copyright and license information.
+
+The OCM specification documents are licensed under the [Community Specification License 1.0](1._Community_Specification_License-v1.md). Source code in this repository is licensed under the [Apache License, Version 2.0](LICENSE). Please see [4._License.md](4._License.md) for details.
+
 Detailed information including third-party components and their licensing/copyright information is available [via the REUSE tool](https://api.reuse.software/info/github.com/open-component-model/ocm-spec).
