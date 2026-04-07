@@ -8,40 +8,5 @@ SPDX-PackageComment = "The code in this project may include calls to APIs (\"API
 path = "**"
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2025 SAP SE or an SAP affiliate company and Open Component Model contributors"
-SPDX-License-Identifier = "Apache-2.0"
-
-[[annotations]]
-path = "doc/**"
-precedence = "aggregate"
-SPDX-FileCopyrightText = "2025 SAP SE or an SAP affiliate company and Open Component Model contributors"
 SPDX-License-Identifier = "Community-Spec-1.0"
 
-[[annotations]]
-path = "1._Community_Specification_License-v1.md"
-precedence = "aggregate"
-SPDX-FileCopyrightText = "2020 Joint Development Foundation"
-SPDX-License-Identifier = "CC-BY-4.0"
-
-[[annotations]]
-path = ".0_CS_Contributor_License_Agreement.md"
-precedence = "aggregate"
-SPDX-FileCopyrightText = "2020 Joint Development Foundation"
-SPDX-License-Identifier = "CC-BY-4.0"
-
-[[annotations]]
-path = "2._Scope.md"
-precedence = "aggregate"
-SPDX-FileCopyrightText = "2025 SAP SE or an SAP affiliate company and Open Component Model contributors"
-SPDX-License-Identifier = "Community-Spec-1.0"
-
-[[annotations]]
-path = "3._Notices.md"
-precedence = "aggregate"
-SPDX-FileCopyrightText = "2025 SAP SE or an SAP affiliate company and Open Component Model contributors"
-SPDX-License-Identifier = "Community-Spec-1.0"
-
-[[annotations]]
-path = "4._License.md"
-precedence = "aggregate"
-SPDX-FileCopyrightText = "2025 SAP SE or an SAP affiliate company and Open Component Model contributors"
-SPDX-License-Identifier = "Community-Spec-1.0"
