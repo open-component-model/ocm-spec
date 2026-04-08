@@ -48,7 +48,7 @@ Inspired by [ANSI's Essential Requirements for Due Process](https://share.ansi.o
 
 **4.4. Publication and Submission.** Upon the designation of a Draft Specification as an Approved Specification, the Maintainer will publish the Approved Specification in a manner agreed upon by the Working Group Participants. The publication of an Approved Specification in a publicly accessible manner must include the terms under which it is being made available.
 
-**4.5. Submissions to Standards Bodies.** No Draft Specification or Approved Specification may be submitted to another standards development organization without Working Group Approval. Upon reaching Approval, the Maintainer will coordinate the submission. Working Group Participants that developed that specification agree to grant the copyright rights necessary to make those submissions.
+**4.5. Submissions to Standards Bodies.** No Draft Specification or Approved Specification may be submitted to another standards development organization without Working Group Approval. Upon reaching Approval, the Maintainers will coordinate the submission. Working Group Participants that developed that specification agree to grant the copyright rights necessary to make those submissions.
 
 ## 5. Non-Confidential, Restricted Disclosure
 
