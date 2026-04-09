@@ -18,9 +18,9 @@ Each Working Group may adopt additional roles so long as they are documented pub
 
 ## 2. Decision Making
 
-**2.1. Consensus-Based Decision Making.** Working Groups make decisions through a consensus process ("Approval" or "Approved"). While the agreement of all Participants is preferred, it is not required for consensus. Rather, the Maintainer will determine consensus based on their good faith consideration of a number of factors, including the dominant view of the Working Group Participants and the nature of support and objections. The Maintainer will document evidence of consensus in accordance with these requirements.
+**2.1. Consensus-Based Decision Making.** Working Groups make decisions through a consensus process ("Approval" or "Approved"). While the agreement of all Participants is preferred, it is not required for consensus. Rather, the Maintainers will determine consensus based on their good faith consideration of a number of factors, including the dominant view of the Working Group Participants and the nature of support and objections. The Maintainers will document evidence of consensus in accordance with these requirements.
 
-**2.2. Appeal Process.** Decisions may be appealed via a pull request or an issue, and that appeal will be considered by the Maintainer in good faith, who will respond in writing within a reasonable time. If the appeal cannot be resolved within the Working Group, it may be escalated to the TSC.
+**2.2. Appeal Process.** Decisions may be appealed via a pull request or an issue, and that appeal will be considered by the Maintainers in good faith, who will respond in writing within a reasonable time. If the appeal cannot be resolved within the Working Group, it may be escalated to the TSC.
 
 ## 3. Ways of Working
 
