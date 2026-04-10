@@ -10,10 +10,10 @@ The following access method types are centrally defined:
 
 | TYPE NAME                       | DESCRIPTION                                         |
 |---------------------------------|-----------------------------------------------------|
-| [`localBlob`](localblob.md)     | an artifact stored along with the component version |
-| [`ociArtifact`](ociartifact.md) | an artifact in a repository of an OCI registry      |
-| [`ociBlob`](ociblob.md)         | a blob in a repository of an OCI registry           |
-| [`helm`](helm.md)               | a Helm chart stored in a Helm Repository            |
+| [`localBlob`](localblob.md)       | an artifact stored along with the component version |
+| [`OCIImage`](ociartifact.md)      | an artifact in a repository of an OCI registry      |
+| [`OCIImageLayer`](ociblob.md)     | a blob in a repository of an OCI registry           |
+| [`Helm`](helm.md)                 | a Helm chart stored in a Helm Repository            |
 | [`gitHub`](github.md)           | a commit in a GitHub-based Git repository           |
 | [`s3`](s3.md)                   | a blob stored in an AWS S3 bucket                   |
 | [`npm`](npm.md)                 | a NodeJS package stored in an NPM repository        |
