@@ -10,7 +10,7 @@ The following access method types are centrally defined:
 
 | TYPE NAME                       | DESCRIPTION                                         |
 |---------------------------------|-----------------------------------------------------|
-| [`localBlob`](localblob.md)       | an artifact stored along with the component version |
+| [`LocalBlob`](localblob.md)       | an artifact stored along with the component version |
 | [`OCIImage`](ociartifact.md)      | an artifact in a repository of an OCI registry      |
 | [`OCIImageLayer`](ociblob.md)     | a blob in a repository of an OCI registry           |
 | [`Helm`](helm.md)                 | a Helm chart stored in a Helm Repository            |

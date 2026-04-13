@@ -7,7 +7,10 @@ type: OCIImage[/VERSION]
 [ATTRIBUTES]
 ```
 
-Legacy type name `ociArtifact` is supported as a backward-compatible alias.
+The following legacy type names are supported as backward-compatible aliases:
+- `ociArtifact` / `ociArtifact/v1`
+- `ociRegistry` / `ociRegistry/v1`
+- `ociImage` / `ociImage/v1`
 
 ## Description
 
