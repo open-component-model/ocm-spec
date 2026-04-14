@@ -144,3 +144,9 @@ wget
 whitespace
 whitespaces
 yaml
+SIG
+SIGs
+TSC
+ANSI's
+Pre
+LF
