@@ -6,7 +6,7 @@
 type: GitHub[/VERSION]
 ```
 
-Legacy type name `gitHub` / `gitHub/v1` is supported as a backward-compatible alias.
+Legacy type names `gitHub` / `gitHub/v1` and `github` / `github/v1` are supported as backward-compatible aliases.
 
 ## Description
 
