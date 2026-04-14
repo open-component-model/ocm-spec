@@ -150,3 +150,7 @@ TSC
 ANSI's
 Pre
 LF
+enablement
+stichting
+collegial
+Hyperledger
