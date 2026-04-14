@@ -1,11 +1,13 @@
-# wget — Blob hosted on an HTTP server
+# Wget — Blob hosted on an HTTP server
 
 ## Synopsis
 
 ```text
-type: wget[/VERSION]
+type: Wget[/VERSION]
 [ATTRIBUTES]
 ```
+
+Legacy type name `wget` / `wget/v1` is supported as a backward-compatible alias.
 
 ## Description
 

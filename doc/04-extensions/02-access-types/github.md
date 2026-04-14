@@ -1,10 +1,12 @@
-# gitHub — Git Commit hosted by GitHub
+# GitHub — Git Commit hosted by GitHub
 
 ## Synopsis
 
 ```text
-type: gitHub/v1
+type: GitHub[/VERSION]
 ```
+
+Legacy type name `gitHub` / `gitHub/v1` is supported as a backward-compatible alias.
 
 ## Description
 
