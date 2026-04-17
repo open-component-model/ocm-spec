@@ -1,4 +1,4 @@
-# OCIImage — Artifact hosted in OCI Repository
+# OCIImage — Image hosted in OCI Repository
 
 ## Synopsis
 
