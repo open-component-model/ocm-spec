@@ -7,7 +7,7 @@ type: OCIImageLayer[/VERSION]
 [ATTRIBUTES]
 ```
 
-Legacy type name `ociBlob` / `ociBlob/v1` is supported as a backward-compatible alias.
+Legacy type name `ociBlob` is supported as a backward-compatible alias.
 
 ## Description
 

@@ -7,7 +7,7 @@ type: LocalBlob[/VERSION]
 [ATTRIBUTES]
 ```
 
-Legacy type name `localBlob` / `localBlob/v1` is supported as a backward-compatible alias.
+Legacy type name `localBlob` is supported as a backward-compatible alias.
 
 ## Description
 

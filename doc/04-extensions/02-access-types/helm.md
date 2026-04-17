@@ -7,7 +7,7 @@ type: Helm[/VERSION]
 [ATTRIBUTES]
 ```
 
-Legacy type name `helm` / `helm/v1` is supported as a backward-compatible alias.
+Legacy type name `helm` is supported as a backward-compatible alias.
 
 ## Description
 

@@ -16,5 +16,5 @@ The following access method types are centrally defined:
 | [`Helm`](helm.md)                 | a Helm chart stored in a Helm Repository            |
 | [`GitHub`](github.md)           | a commit in a GitHub-based Git repository           |
 | [`S3`](s3.md)                   | a blob stored in an AWS S3 bucket                   |
-| [`Npm`](npm.md)                 | a NodeJS package stored in an NPM repository        |
+| [`NPM`](npm.md)                 | a NodeJS package stored in an NPM repository        |
 | [`Wget`](wget.md)               | a blob stored on an HTTP server                     |

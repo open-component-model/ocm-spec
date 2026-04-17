@@ -7,7 +7,7 @@ type: Wget[/VERSION]
 [ATTRIBUTES]
 ```
 
-Legacy type name `wget` / `wget/v1` is supported as a backward-compatible alias.
+Legacy type name `wget` is supported as a backward-compatible alias.
 
 ## Description
 
