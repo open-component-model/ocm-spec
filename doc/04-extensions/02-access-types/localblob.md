@@ -1,11 +1,13 @@
-# localBlob — Blob Hosted in OCM Repository
+# LocalBlob — Blob Hosted in OCM Repository
 
 ## Synopsis
 
 ```text
-type: localBlob/[VERSION]
+type: LocalBlob[/VERSION]
 [ATTRIBUTES]
 ```
+
+Legacy type name `localBlob` is supported as a backward-compatible alias.
 
 ## Description
 
