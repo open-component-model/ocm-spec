@@ -10,3 +10,7 @@ precedence = "aggregate"
 SPDX-FileCopyrightText = "2025 SAP SE or an SAP affiliate company and Open Component Model contributors"
 SPDX-License-Identifier = "Community-Spec-1.0"
 
+path = "scripts/**"
+precedence = "override"
+SPDX-FileCopyrightText = "2025 SAP SE or an SAP affiliate company and Open Component Model contributors"
+SPDX-License-Identifier = "Apache-2.0"
