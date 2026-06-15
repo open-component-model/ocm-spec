@@ -29,6 +29,7 @@ The specification also introduces a Component Index artifact used for referrer-b
       * [6.3.1 Normative Keys](#631-normative-keys)
       * [6.3.2 Integrity Requirements](#632-integrity-requirements)
       * [6.3.3 Verification of annotated artifacts](#633-verification-of-annotated-artifacts)
+      * [6.3.4 Garbage collection](#634-garbage-collection)
   * [7. Descriptor Selection Logic](#7-descriptor-selection-logic)
   * [8. Component Index (Referrer Anchor)](#8-component-index-referrer-anchor)
     * [8.1 Requirements](#81-requirements)
@@ -437,6 +438,16 @@ To verify that an ownership referrer is authentic, clients **MUST**:
 3. Confirm `software.ocm.component.name` and `software.ocm.component.version` match the expected Component Version.
 
 When transferring Component Versions between OCI registries or into an OCI Image Layout, implementations **MUST** carry ownership referrers alongside the artifact and maintain the tag fallback where applicable.
+
+#### 6.3.4 Garbage collection
+
+Ownership referrers require a registry with well-behaved garbage collection: an ownership referrer **MUST** stay available and discoverable for as long as its subject manifest exists.
+A registry **MAY** remove the referrer once the subject manifest has been deleted.
+
+Registries that may remove an ownership referrer while its subject manifest still exists are not supported.
+
+This is stricter than the OCI Image Specification, which defines the [`subject`](https://github.com/opencontainers/image-spec/blob/v1.1.1/manifest.md#image-manifest-property-descriptions) field as a weak association used for referrer discovery, without lifecycle guarantees.
+OCM relies on registries to preserve referrers while the subject exists — a safe assumption given how the OCI Referrers API is already used elsewhere.
 
 ## 7. Descriptor Selection Logic
 
