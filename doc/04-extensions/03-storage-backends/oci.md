@@ -437,7 +437,7 @@ To verify that an ownership referrer is authentic, clients **MUST**:
 
 3. Confirm `software.ocm.component.name` and `software.ocm.component.version` match the expected Component Version.
 
-When transferring Component Versions between OCI registries or into an OCI Image Layout, implementations **MUST** carry ownership referrers alongside the artifact and maintain the tag fallback where applicable.
+When transferring Component Versions between OCI registries or into an OCI Image Layout, implementations **MUST** carry ownership referrers alongside the artifact and maintain the [tag fallback](https://github.com/opencontainers/distribution-spec/blob/v1.1.1/spec.md#unavailable-referrers-api) where applicable.
 
 #### 6.3.4 Garbage collection
 
