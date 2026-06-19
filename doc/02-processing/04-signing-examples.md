@@ -26,7 +26,7 @@ spec:
     version: 0.1.0
   - access:
       imageReference: gcr.io/google_containers/echoserver:1.10
-      type: ociArtifact
+      type: OCIImage
     name: image
     relation: external
     type: ociImage
@@ -87,7 +87,7 @@ spec:
     version: 0.1.0
   - access:
       imageReference: gcr.io/google_containers/echoserver:1.10
-      type: ociArtifact
+      type: OCIImage
     digest:
       hashAlgorithm: SHA-256
       normalisationAlgorithm: ociArtifactDigest/v1
@@ -127,7 +127,7 @@ spec:
   resources:
   - access:
       imageReference: gcr.io/google_containers/pause:3.2
-      type: ociArtifact
+      type: OCIImage
     name: image
     relation: external
     type: ociImage
@@ -175,7 +175,7 @@ spec:
   resources:
   - access:
       imageReference: gcr.io/google_containers/pause:3.2
-      type: ociArtifact
+      type: OCIImage
     digest:
       hashAlgorithm: SHA-256
       normalisationAlgorithm: ociArtifactDigest/v1

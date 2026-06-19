@@ -1,11 +1,13 @@
-# npm — Node Package Manager archive
+# NPM — Node Package Manager archive
 
 ## Synopsis
 
 ```text
-type: npm[/VERSION]
+type: NPM[/VERSION]
 [ATTRIBUTES]
 ```
+
+Legacy type name `npm` is supported as a backward-compatible alias.
 
 ## Description
 

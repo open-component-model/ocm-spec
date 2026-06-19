@@ -1,11 +1,13 @@
-# ociBlob — Blob hosted in OCI Repository
+# OCIImageLayer — Blob hosted in OCI Repository
 
 ## Synopsis
 
 ```text
-type: ociBlob[/VERSION]
+type: OCIImageLayer[/VERSION]
 [ATTRIBUTES]
 ```
+
+Legacy type name `ociBlob` is supported as a backward-compatible alias.
 
 ## Description
 
