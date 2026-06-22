@@ -1,11 +1,17 @@
-# ociArtifact — Artifact hosted in OCI Repository
+# OCIImage — Image hosted in OCI Repository
 
 ## Synopsis
 
 ```text
-type: ociArtifact[/VERSION]
+type: OCIImage[/VERSION]
 [ATTRIBUTES]
 ```
+
+The following legacy type names are supported as backward-compatible aliases:
+
+- `ociArtifact`
+- `ociRegistry`
+- `ociImage`
 
 ## Description
 

@@ -1,11 +1,13 @@
-# helm — Helm Package in Helm Repository
+# Helm — Helm Package in Helm Repository
 
-*Synopsis:*
+## Synopsis
 
 ```text
-type: helm[/VERSION]
+type: Helm[/VERSION]
 [ATTRIBUTES]
 ```
+
+Legacy type name `helm` is supported as a backward-compatible alias.
 
 ## Description
 
