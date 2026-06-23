@@ -29,7 +29,7 @@ The specification also introduces a Component Index artifact used for referrer-b
       * [6.3.1 Normative Keys](#631-normative-keys)
       * [6.3.2 Integrity Requirements](#632-integrity-requirements)
       * [6.3.3 Verification of annotated artifacts](#633-verification-of-annotated-artifacts)
-      * [6.3.4 `ociArtifactDigest/v1` Normalization](#634-ociartifactdigestv1-normalization)
+      * [6.3.4 Garbage collection](#634-garbage-collection)
   * [7. Descriptor Selection Logic](#7-descriptor-selection-logic)
   * [8. Component Index (Referrer Anchor)](#8-component-index-referrer-anchor)
     * [8.1 Requirements](#81-requirements)
@@ -330,15 +330,58 @@ An index representing a component version:
 
 ### 6.3 Asset Annotations
 
-When an OCI artifact (e.g., an OCI manifest or OCI index) is imported into a Component Version as a `resource` or `source`, OCM implementations **MAY** automatically add annotations to the artifact’s top-level manifest or index.
+When an OCI artifact (e.g., an OCI manifest or OCI index) is imported into a Component Version as a `resource` or `source`, OCM implementations **MAY** publish a separate OCI manifest, the _ownership referrer_, that carries asset annotations and is linked to the artifact via the OCI [`subject`](https://github.com/opencontainers/image-spec/blob/v1.1.0/manifest.md#image-manifest-property-descriptions) field.
 These annotations allow consumers to derive which Component Version now started shipping the artifact,
 and which artifact within that Component Version is referencing this image, thus providing a form of "asset location".
 
+The referrer is discovered through the OCI [Referrers API](https://github.com/opencontainers/distribution-spec/blob/v1.1.1/spec.md#listing-referrers), which returns every manifest in a repository whose `subject` points at a given artifact. OCM marks its referrers with the artifact type `application/vnd.ocm.software.ownership.v1+json`: a small OCI manifest with no payload, used only to carry the asset annotations and link to the artifact.
+
 These annotations are optional and **MUST NOT** affect any descriptor selection, or resolution semantics elsewhere in this specification.
+
+The original artifact **MUST NOT** be modified. The artifact digest recorded in the Component Descriptor **MUST** remain identical to the digest produced before annotations were attached.
+
+The ownership referrer is a standard OCI image manifest with the following shape:
+
+```json
+{
+  "schemaVersion": 2,
+  "mediaType": "application/vnd.oci.image.manifest.v1+json",
+  "artifactType": "application/vnd.ocm.software.ownership.v1+json",
+  "config": {
+    "mediaType": "application/vnd.oci.empty.v1+json",
+    "digest": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "size": 2
+  },
+  "layers": [
+    {
+      "mediaType": "application/vnd.oci.empty.v1+json",
+      "digest": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "size": 2
+    }
+  ],
+  "subject": {
+    "mediaType": "<media type of the artifact manifest or index>",
+    "digest": "<digest of the artifact manifest or index>",
+    "size": <size of the artifact manifest or index>
+  },
+  "annotations": {
+    "software.ocm.component.name": "<component name>",
+    "software.ocm.component.version": "<component version>",
+    "software.ocm.artifact": "<JCS-canonicalized artifact identity>"
+  }
+}
+```
+
+The referrer manifest:
+
+* **MUST** use `artifactType` `application/vnd.ocm.software.ownership.v1+json`.
+* **MUST** set `subject` to the descriptor of the artifact's top-level manifest or index, using the unmodified artifact digest.
+* **MUST** be pushed into the same repository as the artifact.
+* **MUST** use the standard OCI empty `config` and a single empty `layers` entry per [OCI artifact guidance](https://github.com/opencontainers/image-spec/blob/v1.1.0/manifest.md#guidelines-for-artifact-usage).
 
 #### 6.3.1 Normative Keys
 
-Writers **MAY** add the following annotations:
+Writers **MAY** add the following annotations to the ownership referrer:
 
 | Annotation Key                   | Description                        |
 |----------------------------------|------------------------------------|
@@ -372,120 +415,39 @@ Rules:
 Annotation values for `software.ocm.artifact` **MUST** be JSON-encoded strings because OCI annotation maps permit only string values.
 The JSON-encoded string **SHOULD** be canonicalized as per [JCS (RFC 8785)](https://www.rfc-editor.org/rfc/rfc8785) to ensure stable formatting.
 
-Annotations **MUST** be written to the **top-level descriptor** of the OCI artifact:
-
-* For manifest-based artifacts → `manifest.annotations`
-* For index-based artifacts → `index.annotations`
-
-Annotations **MUST NOT** be added to nested manifests or indexes within an artifact.
-Only the top-level descriptor **MAY** carry these annotations.
+Annotations **MUST** be written to the **top-level descriptor** of the ownership referrer (`manifest.annotations`).
+Annotations **MUST NOT** be added to the original artifact, nor to nested manifests within the referrer.
 
 #### 6.3.2 Integrity Requirements
 
 To avoid mutating immutable artifacts:
 
-1. If the artifact is newly created during import, for example during component creation,
-   writers **MAY** inject annotations freely.
-   In annotations are added on demand, writers **SHOULD** signal that the original digest was modified during import.
-
-2. If the artifact already exists in a different location and modifying annotations would change its digest,
-   writers **SHOULD NOT** add or modify annotations.
-   If they do, the origin digest **SHOULD** be preserved with the annotation `software.ocm.base.digest="<original-digest>"`.
-   In case of existing component version signatures, writers **SHOULD** reattest the modified artifact and its owning component version.
-   In case an artifact is annotated multiple times, each annotation event **MUST** preserve the original digest in `software.ocm.base.digest`.
-
-To ensure integrity, verifiers **MAY** decide to ignore annotations when verifying signatures or digests (see [6.3.3 Verification of annotated artifacts](#633-verification-of-annotated-artifacts)).
-The process to verify signatures **MUST** remain consistent regardless of annotation presence.
+1. The original artifact **MUST NOT** be modified. Its digest **MUST** remain identical to the digest produced before the ownership referrer was attached.
+2. The ownership referrer **MUST** be a separate OCI manifest pushed into the same repository as the artifact, linked to it via the OCI `subject` field.
+3. Existing OCI-level signatures over the artifact **MUST** remain valid because the artifact bytes are unchanged.
+4. A single artifact **MAY** carry multiple ownership referrers when several Component Versions ship the same artifact.
 
 #### 6.3.3 Verification of annotated artifacts
 
-When artifacts carry OCM-specific informational annotations, verifiers **MAY** ignore these annotations during verification.
-Doing so enables stable, annotation-independent digests and signatures.
+To verify that an ownership referrer is authentic, clients **MUST**:
 
-To perform verification in an annotation-tolerant way, verifiers **MAY** apply the following procedure:
+1. Query the [OCI Referrers API](https://github.com/opencontainers/distribution-spec/blob/v1.1.1/spec.md#listing-referrers) for the artifact digest, filtered by `artifactType=application/vnd.ocm.software.ownership.v1+json`. Registries that do not support the Referrers API **MUST** be queried via the [referrers tag schema](https://github.com/opencontainers/distribution-spec/blob/v1.1.1/spec.md#unavailable-referrers-api) (`<algorithm>-<hex>` tag).
 
-1. Retrieve the artifact manifest or index and verify its digest and signatures as usual.
-2. Check whether the artifact includes OCM-specific annotations such as
-   `software.ocm.component.name`, `software.ocm.component.version`, or `software.ocm.artifact`.
-3. If such annotations exist, create an in-memory copy of the artifact descriptor with these annotations removed.
-4. Recompute the descriptor digest. This digest **MUST** match the value recorded in `software.ocm.base.digest`.
-5. This recomputed digest **MAY** then be used for signature verification in place of the original artifact digest.
+2. Confirm the referrer's `subject.digest` equals the artifact digest recorded in the Component Descriptor.
 
-This mechanism enables signature verification to remain stable regardless of the presence or absence of OCM-specific informational annotations.
-It also preserves the original component version digest when verifiers choose to ignore those annotations.
+3. Confirm `software.ocm.component.name` and `software.ocm.component.version` match the expected Component Version.
 
-This behavior is optional. Verifiers **MAY** instead choose to validate the artifact exactly as stored, including all annotations.
-If so, both the digest and signatures **MUST** correspond to the annotated artifact, and any modification or addition of annotations **MUST** trigger re-signing.
+When transferring Component Versions between OCI registries or into an OCI Image Layout, implementations **MUST** carry ownership referrers alongside the artifact and maintain the [tag fallback](https://github.com/opencontainers/distribution-spec/blob/v1.1.1/spec.md#unavailable-referrers-api) where applicable.
 
-#### 6.3.4 `ociArtifactDigest/v1` Normalization
+#### 6.3.4 Garbage collection
 
-Based on the annotations defined above, an extension to the normalisation algorithm [`ociArtifactDigest/v1`](../04-algorithms/artifact-normalization-types.md) is defined.
+Ownership referrers require a registry with well-behaved garbage collection: an ownership referrer **MUST** stay available and discoverable for as long as its subject manifest exists.
+A registry **MAY** remove the referrer once the subject manifest has been deleted.
 
-Component Version:
+Registries that may remove an ownership referrer while its subject manifest still exists are not supported.
 
-```yaml
-component:
-  name: ocm.software/ocmcli
-  provider: ocm.software
-  version: 0.27.0
-resources:
-  - access:
-      localReference: sha256:64b586a57294adc5749324d0574df23499555de5168b4b1f1bd7ce9b06e2d49f
-      mediaType: application/octet-stream
-      type: localBlob
-    digest:
-      hashAlgorithm: SHA-256
-      normalisationAlgorithm: genericBlobDigest/v1
-      value: 64b586a57294adc5749324d0574df23499555de5168b4b1f1bd7ce9b06e2d49f
-    extraIdentity:
-      architecture: amd64
-      os: windows
-    labels:
-      - name: downloadName
-        value: ocm
-    name: ocmcli
-    relation: local
-    type: executable
-    version: 0.27.0
-```
-
-OCI manifest annotations based on `sha256:64b586a57294adc5749324d0574df23499555de5168b4b1f1bd7ce9b06e2d49f` (informational, not normalized):
-
-```json
-{
-  "annotations": {
-    "software.ocm.base.digest": "sha256:abcd1234efgh5678ijkl9012mnopqrstuvwx3456yzab7890cdef1234abcd5678",
-    "software.ocm.component.name": "ocm.software/ocmcli",
-    "software.ocm.component.version": "0.27.0",
-    "software.ocm.artifact": "[{\"identity\":{\"name\":\"ocmcli\",\"version\":\"0.27.0\",\"arch\":\"amd64\",\"os\":\"windows\"},\"kind\":\"resource\"}]"
-  }
-}
-```
-
-The value of `software.ocm.resource` contains the **full identity** (name, version + extra identity).
-If normalized and annotations are removed, the digest **MUST** equal the value in `software.ocm.base.digest`.
-
-A component descriptor may now declare a signature over the artifact without including the annotations in the signed content.
-This enables stable signatures regardless of annotation presence.
-
-Thus, a client that supports annotation-tolerant verification **MAY** verify the artifact against the digest:
-
-```yaml
-access:
-  localReference: sha256:64b586a57294adc5749324d0574df23499555de5168b4b1f1bd7ce9b06e2d49f
-  mediaType: application/octet-stream
-  type: localBlob
-digest:
-  hashAlgorithm: SHA-256
-  normalisationAlgorithm: ociArtifactDigest/v1
-  # original: 64b586a57294adc5749324d0574df23499555de5168b4b1f1bd7ce9b06e2d49f
-  value: abcd1234efgh5678ijkl9012mnopqrstuvwx3456yzab7890cdef1234abcd5678
-```
-
-Because the digest now ignores the annotations, the value corresponds to the base artifact without OCM-specific annotations.
-As the annotations were added after the component signature, the signature contains the value `abcd1234efgh5678ijkl9012mnopqrstuvwx3456yzab7890cdef1234abcd5678`.
-But because the client ignores the annotations during verification, the signature **MAY** still be verified, as
-the digest based on `software.ocm.base.digest` matches the signed content and is integral.
+This is stricter than the OCI Image Specification, which defines the [`subject`](https://github.com/opencontainers/image-spec/blob/v1.1.1/manifest.md#image-manifest-property-descriptions) field as a weak association used for referrer discovery, without lifecycle guarantees.
+OCM relies on registries to preserve referrers while the subject exists — a safe assumption given how the OCI Referrers API is already used elsewhere.
 
 ## 7. Descriptor Selection Logic
 
