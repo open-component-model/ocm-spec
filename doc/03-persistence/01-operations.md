@@ -89,6 +89,26 @@ Optional operations might be:
   It should not only return component identities, that are direct children,
   but traverse the complete subtree.
 
+##### Version Alias Operations
+
+Storage backends **MAY** expose an extended interface
+for managing symbolic aliases (floating tags) that resolve to concrete component versions.
+
+An alias is a mutable, human-readable name (e.g., `latest`, `stable`, `production`)
+that resolves to exactly one component version at any point in time. Alias names
+**MUST NOT** be valid OCM version strings.
+
+- **`AddComponentVersionAlias(ComponentId, VersionOrAliasName, AliasName) error`**
+
+  Attach a symbolic alias to an existing component version (or to another alias, enabling
+  alias chains). `AliasName` **MUST NOT** be a valid OCM version string. If the alias
+  already exists it is updated to point to the new target.
+
+- **`RemoveComponentVersionAlias(ComponentId, AliasName) error`**
+
+  Remove an alias. Only the alias pointer is removed; the underlying component version
+  and its content are not affected. `AliasName` **MUST NOT** be a valid OCM version string.
+
 ### Access Method Operations
 
 There must be an implementation for all supported external access methods

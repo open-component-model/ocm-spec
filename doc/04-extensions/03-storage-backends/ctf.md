@@ -55,6 +55,26 @@ This format uses the `OCIRegistry` element mapping to map OCM elements to OCI el
 This format supports no dedicated blob mappings.
 Local blobs are always stored as blobs.
 
+## Alias Management Operations
+
+CTF archives support the optional version alias operations defined in
+[Version Alias Operations](../../../doc/03-persistence/01-operations.md#version-alias-operations).
+
+**`AddComponentVersionAlias`**
+
+The alias is recorded in `artifact-index.json` as a tag pointing to the same digest as the
+target component version. If the tag already exists it **MUST** be updated to point to the
+new digest. `AliasName` **MUST NOT** be a valid OCM version string.
+
+**`RemoveComponentVersionAlias`**
+
+The alias entry is removed from `artifact-index.json`. Only the index entry is removed; the
+manifest blob and all referenced content blobs remain in the CTF archive.
+
+Implementations **MUST** return an error if:
+* `AliasName` is a valid OCM version string.
+* No entry with the given tag exists in the repository.
+
 ## Examples
 
 ```text
