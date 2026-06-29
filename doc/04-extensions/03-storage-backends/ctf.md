@@ -72,6 +72,7 @@ The alias entry is removed from `artifact-index.json`. Only the index entry is r
 manifest blob and all referenced content blobs remain in the CTF archive.
 
 Implementations **MUST** return an error if:
+
 * `AliasName` is a valid OCM version string.
 * No entry with the given tag exists in the repository.
 

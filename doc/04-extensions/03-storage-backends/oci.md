@@ -888,6 +888,7 @@ deleting the underlying manifest or blobs, using the
 mechanism.
 
 Implementations **MUST** return an error if:
+
 * `AliasName` is a valid OCM version string.
 * The alias tag does not exist.
 * The resolved descriptor is not a valid OCM component version.
