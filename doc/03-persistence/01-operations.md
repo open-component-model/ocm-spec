@@ -100,9 +100,9 @@ that resolves to exactly one component version at any point in time. Alias names
 
 - **`AddComponentVersionAlias(ComponentId, VersionOrAliasName, AliasName) error`**
 
-  Attach a symbolic alias to an existing component version (or to another alias, enabling
-  alias chains). `AliasName` **MUST NOT** be a valid OCM version string. If the alias
-  already exists it is updated to point to the new target.
+  Attach a symbolic alias to an existing component version. `VersionOrAliasName` is either
+  a version or an existing alias; `AliasName` **MUST NOT** be a valid OCM version string.
+  If the alias already exists it is updated to point to the new target.
 
 - **`RemoveComponentVersionAlias(ComponentId, AliasName) error`**
 

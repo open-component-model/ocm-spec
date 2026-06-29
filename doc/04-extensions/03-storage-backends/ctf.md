@@ -57,13 +57,14 @@ Local blobs are always stored as blobs.
 
 ## Alias Management Operations
 
-CTF archives support the optional version alias operations defined in
+CTF archives **MAY** implement the optional version alias operations defined in
 [Version Alias Operations](../../../doc/03-persistence/01-operations.md#version-alias-operations).
+The following describes how each operation maps onto the CTF artifact index.
 
 **`AddComponentVersionAlias`**
 
-The alias is recorded in `artifact-index.json` as a tag pointing to the same digest as the
-target component version. If the tag already exists it **MUST** be updated to point to the
+The alias is recorded in `artifact-index.json` as a tag pointing to the same digest as
+`VersionOrAliasName` (a version or existing alias). If the tag already exists it **MUST** be updated to point to the
 new digest. `AliasName` **MUST NOT** be a valid OCM version string.
 
 **`RemoveComponentVersionAlias`**

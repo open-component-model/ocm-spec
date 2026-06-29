@@ -864,21 +864,16 @@ are implemented against an OCI registry.
 
 **`AddComponentVersionAlias`**
 
-Implementations **MUST** resolve `VersionOrAliasName` as an OCI tag or digest in the
-component's repository, validate that the resolved descriptor represents a valid OCM
-component version, and then push the alias as an OCI tag pointing to that descriptor
-using the [OCI Distribution Specification manifest push](https://github.com/opencontainers/distribution-spec/blob/v1.1.1/spec.md#pushing-manifests)
+Implementations **MUST** resolve `VersionOrAliasName` (a version or existing alias) as an OCI tag in the component's
+repository, validate that the resolved descriptor represents a valid OCM component version,
+and then push the alias as an OCI tag pointing to that descriptor using the
+[OCI Distribution Specification manifest push](https://github.com/opencontainers/distribution-spec/blob/v1.1.1/spec.md#pushing-manifests)
 mechanism.
 
 `AliasName` **MUST** be rejected if it is a valid OCM version string.
 
-Because `VersionOrAliasName` **MAY** itself be a non-version alias, implementations
-**MUST** accept non-semver names there and resolve them to their underlying descriptor
-before tagging. This enables alias chains: e.g., pointing `edge` to wherever `latest`
-currently resolves.
-
-After a successful push the alias tag in the registry **MUST** resolve to the descriptor
-identified by `VersionOrAliasName`. If the tag already pointed elsewhere it is overwritten.
+After a successful push the alias tag **MUST** resolve to the descriptor identified by
+`VersionOrAliasName`. If the tag already pointed elsewhere it is overwritten.
 
 **`RemoveComponentVersionAlias`**
 
