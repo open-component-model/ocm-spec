@@ -816,6 +816,11 @@ Aliases that rely on SemVer ordering:
 
 Aliases whose semantics do not rely on SemVer (e.g., `edge` → “most recently published”) **MAY** be supported, but clients **MUST** specify their selection criteria.
 
+Alias resolution uses the existing
+[`GetComponentVersion`](../../../doc/03-persistence/01-operations.md#repository-operations)
+operation — an alias name is passed where a version is expected and resolves via standard
+OCI tag lookup.
+
 #### 12.1.1 Resolution Rules
 
 Alias resolution **MUST** produce exactly one concrete version tag.
@@ -857,10 +862,6 @@ Clients **SHOULD** reveal both:
 to ensure transparency and debuggability.
 
 #### 12.1.3 Alias Management Operations
-
-This section defines how the optional version alias operations from
-[Version Alias Operations](../../../doc/03-persistence/01-operations.md#version-alias-operations)
-are implemented against an OCI registry.
 
 **`AddComponentVersionAlias`**
 

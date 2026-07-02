@@ -59,7 +59,12 @@ Local blobs are always stored as blobs.
 
 CTF archives **MAY** implement the optional version alias operations defined in
 [Version Alias Operations](../../../doc/03-persistence/01-operations.md#version-alias-operations).
-The following describes how each operation maps onto the CTF artifact index.
+Alias resolution uses the existing
+[`GetComponentVersion`](../../../doc/03-persistence/01-operations.md#repository-operations)
+operation — an alias name is passed where a version is expected and resolves via tag lookup
+in `artifact-index.json`.
+
+The following describes how each write operation maps onto the CTF artifact index.
 
 **`AddComponentVersionAlias`**
 
