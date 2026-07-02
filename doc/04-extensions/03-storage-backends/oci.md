@@ -56,6 +56,7 @@ The specification also introduces a Component Index artifact used for referrer-b
     * [12.1 Version Aliasing](#121-version-aliasing)
       * [12.1.1 Resolution Rules](#1211-resolution-rules)
       * [12.1.2 Interaction with Component Version Processing](#1212-interaction-with-component-version-processing)
+      * [12.1.3 Alias Management Operations](#1213-alias-management-operations)
   * [13. Compatibility Requirements](#13-compatibility-requirements)
   * [Examples (Informative)](#examples-informative)
     * [Simple Examples](#simple-examples)
@@ -815,6 +816,11 @@ Aliases that rely on SemVer ordering:
 
 Aliases whose semantics do not rely on SemVer (e.g., `edge` → “most recently published”) **MAY** be supported, but clients **MUST** specify their selection criteria.
 
+Alias resolution uses the existing
+[`GetComponentVersion`](../../../doc/03-persistence/01-operations.md#repository-operations)
+operation — an alias name is passed where a version is expected and resolves via standard
+OCI tag lookup.
+
 #### 12.1.1 Resolution Rules
 
 Alias resolution **MUST** produce exactly one concrete version tag.
@@ -854,6 +860,38 @@ Clients **SHOULD** reveal both:
 * the resolved version,
 
 to ensure transparency and debuggability.
+
+#### 12.1.3 Alias Management Operations
+
+**`AddComponentVersionAlias`**
+
+Implementations **MUST** resolve `VersionOrAliasName` (a version or existing alias) as an OCI tag in the component's
+repository, validate that the resolved descriptor represents a valid OCM component version,
+and then push the alias as an OCI tag pointing to that descriptor using the
+[OCI Distribution Specification manifest push](https://github.com/opencontainers/distribution-spec/blob/v1.1.1/spec.md#pushing-manifests)
+mechanism.
+
+`AliasName` **MUST** be rejected if it is a valid OCM version string.
+
+After a successful push the alias tag **MUST** resolve to the descriptor identified by
+`VersionOrAliasName`. If the tag already pointed elsewhere it is overwritten.
+
+**`RemoveComponentVersionAlias`**
+
+Implementations **MUST** remove the alias tag from the component's OCI repository without
+deleting the underlying manifest or blobs, using the
+[OCI Distribution Specification tag deletion](https://github.com/opencontainers/distribution-spec/blob/v1.1.1/spec.md#deleting-tags)
+mechanism.
+
+Implementations **MUST** return an error if:
+
+* `AliasName` is a valid OCM version string.
+* The alias tag does not exist.
+* The resolved descriptor is not a valid OCM component version.
+
+Implementations **SHOULD** propagate registry-level errors that indicate tag deletion is
+not supported (e.g., a `405 Method Not Allowed` response) as a distinct error to allow
+callers to handle the capability gap gracefully.
 
 ## 13. Compatibility Requirements
 
