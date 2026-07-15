@@ -29,3 +29,131 @@ If platform specific images are described as separate resources instead of using
 Usage scenarios for sets of described artifacts are best described by a dedicated description artifact with a dedicated tool-specific artifact type. Here, there is the complete freedom to describe the conditions and environments artifacts are to be used. The artifacts are described by [relative resource references](../05-guidelines/03-references.md#relative-artifact-references) in relation to the component version containing the description artifact.
 
 Another possibility is to use dedicated [labels](./03-elements-sub.md#labels) to describe the usage scenario for dedicated artifacts. Here, the tool working on a component versions does not read a description artifact, but has to analyse the label settings of all the provided artifacts. In both cases there is a dedicated OCM specific interpretation of content provided by the component model. But while the first solution allows to describe a closed scenario in a dedicated resource, where resources from dependent component version can be described by relative resource references and multiple scenarios can be separated by multiple flavors of this resource, the label-based approach is restricted to a local component version and a single scenario. Instead of an artifact type for the description, labels with a defined [name structure](./03-elements-sub.md#labels) are required.
+
+## Artefact-Linking Label
+
+This section defines a label convention for expressing cross-artefact relationships.
+For example, it can be used to indicate that an SBoM resource describes a specific
+OCI image resource within the same component version.
+
+### Label Name
+
+```
+odg.ocm.software/labels/artefact-ref/v1
+```
+
+The label follows the [vendor-specific label naming scheme](./07-extensions.md#label-types).
+The version suffix (`v1`) is encoded in the label name; consumers MUST NOT treat a
+label with a different version suffix as conforming to this convention.
+
+### Placement
+
+The label is placed on the **derived artefact**. The resource that is related to a
+subject artefact carries the label pointing back to that subject. The subject
+artefact itself requires no modification.
+
+```
+Component Descriptor
+├── Resource: my-image          ← subject artefact, unchanged
+└── Resource: my-image-sbom     ← derived artefact, carries the label
+```
+
+### Label Value
+
+The label value is a YAML object with the following fields:
+
+**`artefactReference`** (required) - identifies the subject artefact within the same
+component version:
+
+- `name` (required) *string* — resource name of the subject artefact.
+- `version` (optional) *string* — resource version. If omitted, any version matches.
+- `extraIdentity` (optional) *map[string]string* — extra identity key-value pairs.
+  Every entry listed here MUST be present and equal in the subject's `extraIdentity`.
+  Required when multiple resources share the same name (e.g. arch-specific image variants).
+
+**`metadata`** (optional) — additional context about the relationship:
+
+- `relation` (optional) *string* — token describing the nature of the relationship.
+  Recommended values:
+  - `describes` — the derived artefact describes the subject (e.g. an SBoM).
+  - `attests` — the derived artefact attests a property of the subject.
+
+  Additional values MAY be defined by tooling. Consumers that do not recognise a
+  value SHOULD treat the label as a generic artefact reference.
+
+### Examples
+
+An SBoM describing a single-variant image:
+
+```yaml
+resources:
+  - name: my-image
+    version: 1.2.3
+    type: ociImage
+
+  - name: my-image-sbom
+    version: 1.2.3
+    type: application/spdx+json
+    labels:
+      - name: odg.ocm.software/labels/artefact-ref/v1
+        value:
+          artefactReference:
+            name: my-image
+          metadata:
+            relation: describes
+```
+
+Two derived artefacts referencing a specific architecture variant via `extraIdentity`:
+
+```yaml
+resources:
+  - name: my-image
+    version: 1.2.3
+    type: ociImage
+    extraIdentity:
+      arch: amd64
+
+  - name: my-image-sbom
+    version: 1.2.3
+    type: application/spdx+json
+    labels:
+      - name: odg.ocm.software/labels/artefact-ref/v1
+        value:
+          artefactReference:
+            name: my-image
+            version: 1.2.3
+            extraIdentity:
+              arch: amd64
+          metadata:
+            relation: describes
+
+  - name: my-image-attestation
+    version: 1.2.3
+    type: application/vnd.in-toto+json
+    labels:
+      - name: odg.ocm.software/labels/artefact-ref/v1
+        value:
+          artefactReference:
+            name: my-image
+            version: 1.2.3
+            extraIdentity:
+              arch: amd64
+          metadata:
+            relation: attests
+```
+
+### Lookup Algorithm
+
+To find all artefacts related to a given subject resource:
+
+1. Determine the identity of the subject resource: its `name`, `version`, and `extraIdentity`.
+2. Iterate over all resources in the component descriptor.
+3. For each resource, check whether it carries a label named `odg.ocm.software/labels/artefact-ref/v1`.
+4. If present, apply the following matching rules against `artefactReference`:
+   - `name` MUST equal the subject's `name`.
+   - If `version` is set, it MUST equal the subject's `version`.
+   - If `extraIdentity` is set, every key-value pair it contains MUST be present
+     and equal in the subject's `extraIdentity`.
+5. Optionally filter the collected resources by `metadata.relation`.
+
+Resources that pass all checks are companions of the subject.
