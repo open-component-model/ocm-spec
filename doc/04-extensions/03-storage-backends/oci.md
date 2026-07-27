@@ -779,19 +779,24 @@ Examples:
 | `1.2.3.build-ci.42` | `1.2.3+ci.42` |
 
 Tags **SHOULD** reference a manifest or index (see [6](#6-component-version-storage-models)),
-whose descriptor **MUST** include the (deprecated) annotation:
+whose descriptor **MAY** include the (deprecated) annotation:
 
 ```text
 software.ocm.componentversion: "<component>:<version>"
 ```
 
 The descriptor **MAY** also be identified by component key annotations from [6.3 Asset Annotations](#63-asset-annotations)
-as an alternative to the above annotation. Clients **MAY** use one of or both forms for verification:
+as an alternative to the above annotation. Clients **SHOULD** use one of or both forms for verification:
 
 ```text
 software.ocm.component.name: "<component>"
 software.ocm.component.version: "<version>"
 ```
+
+When neither annotation form is present, clients **SHOULD** identify a component version
+by the manifest's config media type: the media type defined in
+[6.1 Manifest Representation](#61-manifest-representation), or one of the legacy media
+types listed in [13. Compatibility Requirements](#13-compatibility-requirements).
 
 ### 12.1 Version Aliasing
 
@@ -899,6 +904,12 @@ callers to handle the capability gap gracefully.
 * Descriptor formats (YAML, JSON, TAR) **SHOULD** be read; at least one **MUST** be written.
 * Index-based representation **MUST NOT** deprecate manifest-based.
 * Component Index semantics **MAY** rely on registry referrer support but MUST NOT require it.
+* Readers **SHOULD** accept the legacy (pre-OCM Gardener/cnudie) config media types
+  `application/vnd.gardener.cloud.cnudie.component.config.v1+json` and
+  `application/vnd.oci.gardener.cloud.cnudie.component-descriptor-metadata.config.v2+json`
+  as identifying a component version manifest (see
+  [12. Tag and Version Mapping Rules](#12-tag-and-version-mapping-rules)); writers
+  **MUST NOT** produce them.
 
 ## Examples (Informative)
 
