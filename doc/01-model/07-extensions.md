@@ -666,19 +666,17 @@ There are two flavors of labels:
 - labels with a predefined meaning within the component model.
 
   Those labels are used by the standard OCM library and tool set to control some behaviour.
-  Labels without a namespace are relevant for the component model itself.
-
-  Such labels use flat names following a camel case scheme with the first character in lower case.
+  Predefined labels use the `ocm.software` prefix and a kebab-case local name.
 
   Their format is described by the following regexp:
 
   ```regexp
-  [a-z][a-zA-Z0-9]*
+  ocm\.software/[a-z][a-z0-9-]*
   ```
 
 - vendor specific labels
 
-  any organization using the open component model may define own labels.
+  Any organization using the open component model may define own labels.
   Nevertheless, these names must be globally unique.
   Basically there may be multiple such labels provided by different organizations
   with the same meaning. Such label names MUST use a namespace.
@@ -686,14 +684,13 @@ There are two flavors of labels:
   To support a unique namespace vendor specific labels
   have to follow a hierarchical naming scheme based on DNS domain names.
   Every label name has to be preceded by a DNS domain owned by the providing
-  organization (for example `landscaper.gardener.cloud/blueprint`).
-  The local name MUST follow the above rules for centrally defined names
-  and is appended, separated by a slash (`/`).
+  organization (for example `odg.ocm.software/binary-scan-policy`).
+  The local name MUST use kebab-case and is appended, separated by a slash (`/`).
 
   So, the complete pattern looks as follows:
 
   ```regexp
-  <DNS domain name>/[a-z][a-zA-Z0-9]*
+  <DNS domain name>/[a-z][a-z0-9-]*
   ```
 
 ### Format Versions
@@ -709,4 +706,8 @@ v[0-9]+([a-z][a-z0-9]*)?
 
 #### Predefined Labels
 
-So far, no centrally predefined labels have been defined.
+The following labels are centrally defined:
+
+| Label name | Version | Description |
+|---|---|---|
+| `ocm.software/artefact-reference` | `v1` | Expresses a cross-artefact relationship within the same component version. See [Artefact-Linking Label](./06-conventions.md#artefact-linking-label). |

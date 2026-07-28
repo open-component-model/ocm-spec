@@ -39,10 +39,10 @@ OCI image resource within the same component version.
 ### Label Name
 
 ```
-ocm.software/artefactReference
+ocm.software/artefact-references
 ```
 
-The label follows the [vendor-specific label naming scheme](./07-extensions.md#label-types).
+The label is a predefined label within the component model (see [Label Types](./07-extensions.md#label-types)).
 The label version is expressed via the separate `version` field on the label object
 (e.g. `version: v1`); consumers MUST NOT treat a label with a different version as
 conforming to this convention.
@@ -61,16 +61,15 @@ Component Descriptor
 
 When multiple derived artefacts reference the same subject (e.g. two SBoMs produced
 by different tools for the same image), they MUST be told apart from each other by
-their own `extraIdentity`. The `identitySelector` in each label still points to the
+their own artefact identity. The `identity` in each label still points to the
 same subject; it is the derived artefact's own identity that makes the two resources
 unique within the component version.
 
 ### Label Value
 
-The label value is a YAML object with the following fields:
+The label value is a list of objects. Each object has the following field:
 
-**`identitySelector`** (required) - identifies the subject artefact within the same
-component version as a flat map of identity-relevant properties:
+**`identity`** (required) - a flat map of identity-relevant properties that identifies the subject artefact within the same component version:
 
 - `name` (required) *string* — resource name of the subject artefact.
 - `version` (optional) *string* — resource version. If omitted, any version matches.
@@ -92,11 +91,11 @@ resources:
     version: 1.2.3
     type: sbom
     labels:
-      - name: ocm.software/artefactReference
+      - name: ocm.software/artefact-references
         version: v1
         value:
-          identitySelector:
-            name: my-image
+          - identity:
+              name: my-image
 ```
 
 Two SBoMs referencing the same subject, told apart by their own `extraIdentity`:
@@ -115,13 +114,13 @@ resources:
     extraIdentity:
       architecture: amd64
     labels:
-      - name: ocm.software/artefactReference
+      - name: ocm.software/artefact-references
         version: v1
         value:
-          identitySelector:
-            name: my-image
-            version: 1.2.3
-            foo: bar
+          - identity:
+              name: my-image
+              version: 1.2.3
+              foo: bar
 
   - name: my-image-sbom
     version: 1.2.3
@@ -129,13 +128,13 @@ resources:
     extraIdentity:
       architecture: arm64
     labels:
-      - name: ocm.software/artefactReference
+      - name: ocm.software/artefact-references
         version: v1
         value:
-          identitySelector:
-            name: my-image
-            version: 1.2.3
-            foo: bar
+          - identity:
+              name: my-image
+              version: 1.2.3
+              foo: bar
 ```
 
 ### Lookup Algorithm
@@ -144,9 +143,11 @@ To find all artefacts related to a given subject resource:
 
 1. Determine the identity of the subject resource: its `name`, `version`, and `extraIdentity`.
 2. Iterate over all resources in the component descriptor.
-3. For each resource, check whether it carries a label named `ocm.software/artefactReference` with `version: v1`.
-4. If present, apply the following matching rules against `identitySelector`:
+3. For each resource, check whether it carries a label named `ocm.software/artefact-references` with `version: v1`.
+4. If present, apply the following matching rules against each `identity` entry in the label value:
    - `name` MUST equal the subject's `name`.
    - If `version` is set, it MUST equal the subject's `version`.
-   - Every additional key-value pair MUST be present and equal in the subject's `extraIdentity`.
+   - The set of additional key-value pairs MUST exactly match the subject's `extraIdentity`:
+     every key in the `identity` entry MUST be present and equal in the subject's `extraIdentity`,
+     and the subject's `extraIdentity` MUST NOT contain any keys not present in the `identity` entry.
 5. Resources that pass all checks are companions of the subject.
