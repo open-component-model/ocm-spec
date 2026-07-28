@@ -907,9 +907,12 @@ callers to handle the capability gap gracefully.
 * Readers **SHOULD** accept the legacy (pre-OCM Gardener/cnudie) config media types
   `application/vnd.gardener.cloud.cnudie.component.config.v1+json` and
   `application/vnd.oci.gardener.cloud.cnudie.component-descriptor-metadata.config.v2+json`
-  as identifying a component version manifest (see
-  [12. Tag and Version Mapping Rules](#12-tag-and-version-mapping-rules)); writers
-  **MUST NOT** produce them.
+  as identifying a component version manifest; writers **MUST NOT** produce them.
+* When a manifest carries both a legacy config media type and the
+  `software.ocm.componentversion` annotation, the annotation **MUST** take precedence:
+  readers **MUST** identify the component version from `software.ocm.componentversion`
+  (see [12. Tag and Version Mapping Rules](#12-tag-and-version-mapping-rules)) and
+  **MUST NOT** derive it from the legacy config media type.
 
 ## Examples (Informative)
 
