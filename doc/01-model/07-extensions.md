@@ -666,32 +666,18 @@ There are two flavors of labels:
 - labels with a predefined meaning within the component model.
 
   Those labels are used by the standard OCM library and tool set to control some behaviour.
-  Predefined labels use the `ocm.software` prefix and a kebab-case local name.
-
-  Their format is described by the following regexp:
-
-  ```regexp
-  ocm\.software/[a-z][a-z0-9-]*
-  ```
+  They use the reserved `ocm.software` DNS prefix.
 
 - vendor specific labels
 
   Any organization using the open component model may define own labels.
   Nevertheless, these names must be globally unique.
-  Basically there may be multiple such labels provided by different organizations
-  with the same meaning. Such label names MUST use a namespace.
 
-  To support a unique namespace vendor specific labels
-  have to follow a hierarchical naming scheme based on DNS domain names.
-  Every label name has to be preceded by a DNS domain owned by the providing
-  organization (for example `odg.ocm.software/binary-scan-policy`).
-  The local name MUST use kebab-case and is appended, separated by a slash (`/`).
-
-  So, the complete pattern looks as follows:
-
-  ```regexp
-  <DNS domain name>/[a-z][a-z0-9-]*
-  ```
+All label names follow a hierarchical naming scheme based on DNS domain names,
+conforming to the [Kubernetes label syntax and character set](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set).
+The label name is composed of a DNS domain owned by the providing organization,
+followed by a slash (`/`) and a kebab-case local name
+(for example `ocm.software/artefact-references` or `odg.ocm.software/binary-scan-policy`).
 
 ### Format Versions
 
@@ -710,4 +696,4 @@ The following labels are centrally defined:
 
 | Label name | Version | Description |
 |---|---|---|
-| `ocm.software/artefact-reference` | `v1` | Expresses a cross-artefact relationship within the same component version. See [Artefact-Linking Label](./06-conventions.md#artefact-linking-label). |
+| `ocm.software/artefact-references` | `v1` | Expresses a cross-artefact relationship within the same component version. See [Artefact-Linking Label](./06-conventions.md#artefact-linking-label). |

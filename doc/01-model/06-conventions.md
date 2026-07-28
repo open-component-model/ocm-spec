@@ -42,7 +42,7 @@ OCI image resource within the same component version.
 ocm.software/artefact-references
 ```
 
-The label is a predefined label within the component model (see [Label Types](./07-extensions.md#label-types)).
+The label is a predefined label within the open component model (see [Label Types](./07-extensions.md#label-types)).
 The label version is expressed via the separate `version` field on the label object
 (e.g. `version: v1`); consumers MUST NOT treat a label with a different version as
 conforming to this convention.
@@ -150,4 +150,4 @@ To find all artefacts related to a given subject resource:
    - The set of additional key-value pairs MUST exactly match the subject's `extraIdentity`:
      every key in the `identity` entry MUST be present and equal in the subject's `extraIdentity`,
      and the subject's `extraIdentity` MUST NOT contain any keys not present in the `identity` entry.
-5. Resources that pass all checks are companions of the subject.
+5. Resources that pass all checks are derived artefacts of the subject.
