@@ -39,12 +39,13 @@ OCI image resource within the same component version.
 ### Label Name
 
 ```
-odg.ocm.software/labels/artefact-ref/v1
+ocm.software/artefactReference
 ```
 
 The label follows the [vendor-specific label naming scheme](./07-extensions.md#label-types).
-The version suffix (`v1`) is encoded in the label name; consumers MUST NOT treat a
-label with a different version suffix as conforming to this convention.
+The label version is expressed via the separate `version` field on the label object
+(e.g. `version: v1`); consumers MUST NOT treat a label with a different version as
+conforming to this convention.
 
 ### Placement
 
@@ -58,28 +59,24 @@ Component Descriptor
 └── Resource: my-image-sbom     ← derived artefact, carries the label
 ```
 
+When multiple derived artefacts reference the same subject (e.g. two SBoMs produced
+by different tools for the same image), they MUST be told apart from each other by
+their own `extraIdentity`. The `identitySelector` in each label still points to the
+same subject; it is the derived artefact's own identity that makes the two resources
+unique within the component version.
+
 ### Label Value
 
 The label value is a YAML object with the following fields:
 
-**`artefactReference`** (required) - identifies the subject artefact within the same
-component version:
+**`identitySelector`** (required) - identifies the subject artefact within the same
+component version as a flat map of identity-relevant properties:
 
 - `name` (required) *string* — resource name of the subject artefact.
 - `version` (optional) *string* — resource version. If omitted, any version matches.
-- `extraIdentity` (optional) *map[string]string* — extra identity key-value pairs.
-  Every entry listed here MUST be present and equal in the subject's `extraIdentity`.
+- Any additional key-value pair is treated as an extra identity property.
+  Every such entry MUST be present and equal in the subject's `extraIdentity`.
   Required when multiple resources share the same name (e.g. arch-specific image variants).
-
-**`metadata`** (optional) — additional context about the relationship:
-
-- `relation` (optional) *string* — token describing the nature of the relationship.
-  Recommended values:
-  - `describes` — the derived artefact describes the subject (e.g. an SBoM).
-  - `attests` — the derived artefact attests a property of the subject.
-
-  Additional values MAY be defined by tooling. Consumers that do not recognise a
-  value SHOULD treat the label as a generic artefact reference.
 
 ### Examples
 
@@ -93,17 +90,16 @@ resources:
 
   - name: my-image-sbom
     version: 1.2.3
-    type: application/spdx+json
+    type: sbom
     labels:
-      - name: odg.ocm.software/labels/artefact-ref/v1
+      - name: ocm.software/artefactReference
+        version: v1
         value:
-          artefactReference:
+          identitySelector:
             name: my-image
-          metadata:
-            relation: describes
 ```
 
-Two derived artefacts referencing a specific architecture variant via `extraIdentity`:
+Two SBoMs referencing the same subject, told apart by their own `extraIdentity`:
 
 ```yaml
 resources:
@@ -111,35 +107,35 @@ resources:
     version: 1.2.3
     type: ociImage
     extraIdentity:
-      arch: amd64
+      foo: bar
 
   - name: my-image-sbom
     version: 1.2.3
-    type: application/spdx+json
+    type: sbom
+    extraIdentity:
+      architecture: amd64
     labels:
-      - name: odg.ocm.software/labels/artefact-ref/v1
+      - name: ocm.software/artefactReference
+        version: v1
         value:
-          artefactReference:
+          identitySelector:
             name: my-image
             version: 1.2.3
-            extraIdentity:
-              arch: amd64
-          metadata:
-            relation: describes
+            foo: bar
 
-  - name: my-image-attestation
+  - name: my-image-sbom
     version: 1.2.3
-    type: application/vnd.in-toto+json
+    type: sbom
+    extraIdentity:
+      architecture: arm64
     labels:
-      - name: odg.ocm.software/labels/artefact-ref/v1
+      - name: ocm.software/artefactReference
+        version: v1
         value:
-          artefactReference:
+          identitySelector:
             name: my-image
             version: 1.2.3
-            extraIdentity:
-              arch: amd64
-          metadata:
-            relation: attests
+            foo: bar
 ```
 
 ### Lookup Algorithm
@@ -148,12 +144,9 @@ To find all artefacts related to a given subject resource:
 
 1. Determine the identity of the subject resource: its `name`, `version`, and `extraIdentity`.
 2. Iterate over all resources in the component descriptor.
-3. For each resource, check whether it carries a label named `odg.ocm.software/labels/artefact-ref/v1`.
-4. If present, apply the following matching rules against `artefactReference`:
+3. For each resource, check whether it carries a label named `ocm.software/artefactReference` with `version: v1`.
+4. If present, apply the following matching rules against `identitySelector`:
    - `name` MUST equal the subject's `name`.
    - If `version` is set, it MUST equal the subject's `version`.
-   - If `extraIdentity` is set, every key-value pair it contains MUST be present
-     and equal in the subject's `extraIdentity`.
-5. Optionally filter the collected resources by `metadata.relation`.
-
-Resources that pass all checks are companions of the subject.
+   - Every additional key-value pair MUST be present and equal in the subject's `extraIdentity`.
+5. Resources that pass all checks are companions of the subject.
