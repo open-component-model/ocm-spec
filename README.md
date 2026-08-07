@@ -134,7 +134,7 @@ OCM follows the [LF Europe Code of Conduct](https://linuxfoundation.eu/policies/
 
 ## Licensing
 
-Copyright 2022 SAP SE or an SAP affiliate company and Open Component Model contributors.
+Copyright Contributors to the Open Component Model project.
 
 The OCM specification documents are licensed under the [Community Specification License 1.0](1._Community_Specification_License-v1.md). Source code in this repository is licensed under the [Apache License, Version 2.0](LICENSE). Please see [4._License.md](4._License.md) for details.
 
