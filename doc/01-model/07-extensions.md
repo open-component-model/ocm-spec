@@ -696,4 +696,4 @@ The following labels are centrally defined:
 
 | Label name | Version | Description |
 |---|---|---|
-| `ocm.software/artefact-references` | `v1` | Expresses a cross-artefact relationship within the same component version. See [Artefact-Linking Label](./06-conventions.md#artefact-linking-label). |
+| `ocm.software/artefact-references` | `v1alpha1` | Expresses a cross-artefact relationship within the same component version. See [Artefact-Linking Label](./06-conventions.md#artefact-linking-label). |

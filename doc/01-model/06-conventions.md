@@ -38,13 +38,13 @@ OCI image resource within the same component version.
 
 ### Label Name
 
-```
+```text
 ocm.software/artefact-references
 ```
 
 The label is a predefined label within the open component model (see [Label Types](./07-extensions.md#label-types)).
 The label version is expressed via the separate `version` field on the label object
-(e.g. `version: v1`); consumers MUST NOT treat a label with a different version as
+(e.g. `version: v1alpha1`); consumers MUST NOT treat a label with a different version as
 conforming to this convention.
 
 ### Placement
@@ -53,7 +53,7 @@ The label is placed on the **derived artefact**. The resource that is related to
 subject artefact carries the label pointing back to that subject. The subject
 artefact itself requires no modification.
 
-```
+```text
 Component Descriptor
 ├── Resource: my-image          ← subject artefact, unchanged
 └── Resource: my-image-sbom     ← derived artefact, carries the label
@@ -92,7 +92,7 @@ resources:
     type: sbom
     labels:
       - name: ocm.software/artefact-references
-        version: v1
+        version: v1alpha1
         value:
           - identity:
               name: my-image
@@ -115,7 +115,7 @@ resources:
       architecture: amd64
     labels:
       - name: ocm.software/artefact-references
-        version: v1
+        version: v1alpha1
         value:
           - identity:
               name: my-image
@@ -129,7 +129,7 @@ resources:
       architecture: arm64
     labels:
       - name: ocm.software/artefact-references
-        version: v1
+        version: v1alpha1
         value:
           - identity:
               name: my-image
@@ -143,7 +143,7 @@ To find all artefacts related to a given subject resource:
 
 1. Determine the identity of the subject resource: its `name`, `version`, and `extraIdentity`.
 2. Iterate over all resources in the component descriptor.
-3. For each resource, check whether it carries a label named `ocm.software/artefact-references` with `version: v1`.
+3. For each resource, check whether it carries a label named `ocm.software/artefact-references` with `version: v1alpha1`.
 4. If present, apply the following matching rules against each `identity` entry in the label value:
    - `name` MUST equal the subject's `name`.
    - If `version` is set, it MUST equal the subject's `version`.
