@@ -367,7 +367,7 @@ For example, the access method `ociBlob` requires the OCI repository reference a
 ```yaml
 ...
   access:
-    type: ociArtefact
+    type: ociArtifact
     imageReference: ghcr.io/jensh007/ctf/github.com/open-component-model/ocmechoserver/echoserver:0.1.0
 ```
 
@@ -677,7 +677,7 @@ All label names follow a hierarchical naming scheme based on DNS domain names,
 conforming to the [Kubernetes label syntax and character set](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set).
 The label name is composed of a DNS domain owned by the providing organization,
 followed by a slash (`/`) and a kebab-case local name
-(for example `ocm.software/artefact-references` or `odg.ocm.software/binary-scan-policy`).
+(for example `ocm.software/artifact-references` or `odg.ocm.software/binary-scan-policy`).
 
 ### Format Versions
 
@@ -696,4 +696,4 @@ The following labels are centrally defined:
 
 | Label name | Version | Description |
 |---|---|---|
-| `ocm.software/artefact-references` | `v1alpha1` | Expresses a cross-artefact relationship within the same component version. See [Artefact-Linking Label](./06-conventions.md#artefact-linking-label). |
+| `ocm.software/artifact-references` | `v1alpha1` | Expresses a cross-artifact relationship within the same component version. See [Artifact-Linking Label](./06-conventions.md#artifact-linking-label). |

@@ -164,7 +164,7 @@ For example, access method `ociBlob` requires the OCI repository reference and t
   resources:
   - ...
     access:
-      type: ociArtefact
+      type: ociArtifact
       imageReference: ghcr.io/jensh007/ctf/github.com/open-component-model/ocmechoserver/echoserver:0.1.0
 ```
 
