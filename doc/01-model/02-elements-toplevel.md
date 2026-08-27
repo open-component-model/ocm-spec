@@ -239,7 +239,7 @@ Example:
     version: 1.0.0
     access:
       imageReference: gcr.io/google_containers/echoserver:1.10
-      type: ociArtefact
+      type: ociArtifact
 ```
 
 The full list of resource types is in the [Artifact Types extension section](../04-extensions/01-artifact-types/README.md).
