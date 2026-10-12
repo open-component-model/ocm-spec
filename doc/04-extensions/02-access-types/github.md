@@ -8,6 +8,8 @@ type: GitHub[/VERSION]
 
 Legacy type names `gitHub` and `github` are supported as backward-compatible aliases.
 
+This access type is deprecated, use [`Git`](git.md) instead.
+
 ## Description
 
 Access to a commit in a Git repository.
