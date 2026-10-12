@@ -14,6 +14,7 @@ The following access method types are centrally defined:
 | [`OCIImage`](ociartifact.md)     | an artifact in a repository of an OCI registry      |
 | [`OCIImageLayer`](ociblob.md)    | a blob in a repository of an OCI registry           |
 | [`Helm`](helm.md)                | a Helm chart stored in a Helm Repository            |
+| [`Git`](git.md)                  | a commit in a Git repository                        |
 | [`GitHub`](github.md)            | a commit in a GitHub-based Git repository           |
 | [`S3`](s3.md)                    | a blob stored in an AWS S3 bucket                   |
 | [`NPM`](npm.md)                  | a NodeJS package stored in an NPM repository        |
