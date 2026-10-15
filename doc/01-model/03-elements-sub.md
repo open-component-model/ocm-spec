@@ -271,6 +271,13 @@ Every signature entry has the following formal fields:
 
   The signature for the specified digest.
 
+- **`timestamp`** (optional) *Timestamp Info*
+
+  A timestamp issued by a Time Stamping Authority (TSA) according to
+  [RFC 3161](https://www.rfc-editor.org/rfc/rfc3161).
+  It proves that the signature existed at the given time, so the signing
+  certificate can be validated as of that time instead of the current time.
+
 ## Digest Info
 
 A digest is specified by the following fields:
@@ -306,3 +313,29 @@ A signature is specified by the following fields:
 - **`issuer`** *string*
 
   The description of the issuer.
+
+## Timestamp Info
+
+A timestamp is specified by the following fields:
+
+- **`value`** (required) *string*
+
+  The PEM encoded timestamp token. The PEM block type determines the format
+  and the data covered by the token:
+
+  - `TIMESTAMP TOKEN`: a DER encoded RFC 3161 `TimeStampToken`.
+    Its message imprint is the hash of the signature value (the string
+    `value` of the Signature Info), calculated with the hash algorithm of
+    the signature digest.
+  - `TIMESTAMP INFO`: a DER encoded CMS `SignedData` with RFC 3161 `TSTInfo`
+    content. Its message imprint is the digest value of the signature,
+    with the hash algorithm of the signature digest.
+    This format is kept for compatibility. The digest is known before the
+    signature is created, so it does not prove when the signature was created.
+    New timestamps SHOULD use `TIMESTAMP TOKEN`.
+
+- **`time`** (optional) *string*
+
+  The generation time of the timestamp in RFC 3339 format. It is
+  informational only. Verifiers MUST use the time contained in the
+  verified token.
