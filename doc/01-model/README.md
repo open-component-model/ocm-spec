@@ -24,6 +24,7 @@ This chapter describes the elements of the Open Component Model and their syntax
   * 3.6.[Signatures](03-elements-sub.md#signatures)
   * 3.7.[Digest Info](03-elements-sub.md#digest-info)
   * 3.8.[Signature Info](03-elements-sub.md#signature-info)
+  * 3.9.[Timestamp Info](03-elements-sub.md#timestamp-info)
 * 4.[Example of a complete Component Version](04-example.md#example-of-a-complete-component-version)
 * 5.[Conventions](06-conventions.md#conventions)
   * 5.1.[Intended Environments](06-conventions.md#intended-environments)
