@@ -4,8 +4,10 @@ The following component descriptor normalization algorithms are defined:
 
 - `jsonNormalisationV1`: Legacy format that depends on the serialization format of the component descriptor. Uses the [OCM-specific generic normalization format](../../02-processing/05-component-descriptor-normalization.md#generic-normalization-format). **Deprecated.**
 - `jsonNormalisationV2`: Format-independent normalization using [RFC 8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785). Includes legacy extra-identity defaulting. **Deprecated.**
-- `jsonNormalisationV3`: Identical to v2 but **without** legacy extra-identity defaulting. **Deprecated** — transparently mapped to `jsonNormalisationV4alpha1`.
-- `jsonNormalisationV4alpha1`: Clean reimplementation of v3. **Current default.**
+- `jsonNormalisationV3`: Identical to v2 but **without** legacy extra-identity defaulting. **Deprecated** — transparently mapped to `jsonNormalisationV4alpha2`.
+- `jsonNormalisationV4alpha1`: Reimplementation of v3 that drops label versions. **Frozen.**
+- `jsonNormalisationV4alpha2`: Byte-identical reimplementation of v3.
+- `jsonNormalisationV4alpha3`: v4alpha2 with reference labels filtered like all other labels. **Current default.**
 
 The normalization process is divided into two steps:
 
@@ -46,7 +48,7 @@ Relevant fields and their mapping to the normalized data structure for `JsonNorm
 
 ## `jsonNormalisationV3`
 
-> **Status:** Deprecated — transparently mapped to `jsonNormalisationV4alpha1`. Existing signatures using `jsonNormalisationV3` remain verifiable.
+> **Status:** Deprecated — transparently mapped to `jsonNormalisationV4alpha2`. Existing signatures using `jsonNormalisationV3` remain verifiable.
 
 `jsonNormalisationV3` uses the same serialization ([RFC 8785 / JCS](https://www.rfc-editor.org/rfc/rfc8785)), the same field selection, and the same exclusion rules as `jsonNormalisationV2`. The **only difference** is the removal of a legacy extra-identity defaulting behaviour:
 
@@ -56,7 +58,7 @@ Relevant fields and their mapping to the normalized data structure for `JsonNorm
 Because the extra-identity defaulting only triggers when duplicate name + extraIdentity combinations exist, most component descriptors produce **identical digests** under v2 and v3.
 
 The algorithm operates on the **v2 serialization** of the component descriptor as its baseline and applies the following transformation rules.
-These extraction and exclusion rules are shared with `jsonNormalisationV2` (and `jsonNormalisationV4alpha1`); they are documented here in full detail.
+These extraction and exclusion rules are shared with `jsonNormalisationV2` and reproduced exactly by `jsonNormalisationV4alpha2`; they are documented here in full detail. The other `jsonNormalisationV4alpha*` algorithms are defined by their differences from them.
 
 ### Extraction of Signing-Relevant Information
 
@@ -81,9 +83,9 @@ Within the `component` section, the following rules apply:
 | `component.repositoryContexts` | **Excluded** — transport-specific |
 | `component.resources` | Included as a JSON array (empty `[]` if absent), subject to [Resource Rules](#resource-rules) |
 | `component.sources`  | Included as a JSON array (empty `[]` if absent), subject to [Source Rules](#source-rules) |
-| `component.references` | Included as a JSON array (empty `[]` if absent), subject to [Reference Rules](#reference-rules) |
+| `component.componentReferences` | Included as a JSON array (empty `[]` if absent), subject to [Reference Rules](#reference-rules) |
 
-All list fields (`resources`, `sources`, `references`, `repositoryContexts`) default to an empty array `[]` when absent or `null`.
+All list fields (`resources`, `sources`, `componentReferences`, `repositoryContexts`) default to an empty array `[]` when absent or `null`.
 
 #### Resource Rules
 
@@ -109,16 +111,19 @@ For each source entry:
 
 #### Reference Rules
 
-For each reference entry:
+For each reference entry, all fields are included, **including all of its labels with all of their fields**. The
+[Label Rules](#label-rules) do **not** apply to reference labels: a label without `signing: true` is included, and so
+are label fields other than `name`, `version`, `value` and `signing` (such as `merge`).
 
-| Field    | Treatment |
-|----------|-----------|
-| `labels` | Subject to [Label Rules](#label-rules) |
-| All other fields | Included |
+> **Note:** The implementations of `jsonNormalisationV2` and `jsonNormalisationV3` declare the label rules for the key
+> `references`, while the v2 serialization stores references under `componentReferences`. The rules therefore never
+> match, and the resulting unfiltered reference labels are part of every existing v2 and v3 digest. Filtering them is
+> the change introduced by [`jsonNormalisationV4alpha3`](#jsonnormalisationv4alpha3).
 
 #### Label Rules
 
-Labels are treated specially across all label-bearing elements (component, resources, sources, references):
+Labels are treated specially across the label-bearing elements component, provider, resources and sources (see
+[Reference Rules](#reference-rules) for reference labels):
 
 1. **Only signing-relevant labels are included.** A label is signing-relevant if and only if its `signing` field is set to `true` (boolean or the string `"true"`).Labels without `signing: true` are excluded.
 2. **For included labels, only these fields are preserved:**
@@ -176,7 +181,7 @@ component:
           value: def456...
           signing: true
   sources: []
-  references: []
+  componentReferences: []
 signatures: []
 ```
 
@@ -185,11 +190,11 @@ The normalized form (formatted for readability) is:
 ```json
 {
   "component": {
+    "componentReferences": [],
     "name": "ocm.software/example",
     "provider": {
       "name": "acme.org"
     },
-    "references": [],
     "resources": [
       {
         "digest": {
@@ -229,29 +234,68 @@ Excluded from this output:
 
 ## `jsonNormalisationV4alpha1`
 
+> **Status:** Frozen. Existing digests remain verifiable. New signatures and component reference digests SHOULD use
+> [`jsonNormalisationV4alpha3`](#jsonnormalisationv4alpha3).
+
+`jsonNormalisationV4alpha1` is a reimplementation of `jsonNormalisationV3` in the next-generation OCM bindings. It uses
+the same RFC 8785 (JCS) serialization, the same field selection and the same absence of legacy extra-identity
+defaulting, with one difference in label handling:
+
+- **Label versions are dropped.** For every label included by the [Label Rules](#label-rules) (component, provider,
+  resources, sources), only `name`, `value` and `signing` are preserved; `version` is excluded.
+- **Reference labels** are included unfiltered, as in `jsonNormalisationV3` (see [Reference Rules](#reference-rules)),
+  except that `version` is excluded from each of them.
+
+Its output is therefore byte-identical to `jsonNormalisationV3` only for component descriptors in which no label
+carries a `version`.
+
+## `jsonNormalisationV4alpha2`
+
+> **Status:** Target of the `jsonNormalisationV3` mapping. Existing digests remain verifiable. New signatures and
+> component reference digests SHOULD use [`jsonNormalisationV4alpha3`](#jsonnormalisationv4alpha3).
+
+`jsonNormalisationV4alpha2` is a reimplementation of `jsonNormalisationV3` that produces **byte-identical output** for
+the same input. It applies the rules of `jsonNormalisationV3` as documented above, including the
+[Reference Rules](#reference-rules): reference labels are included unfiltered, with all their fields.
+
+The only known exception is the `merge` attribute of reference labels: implementations whose component descriptor
+model does not carry it cannot reproduce a `jsonNormalisationV3` digest over a reference label that sets `merge`.
+Such a digest fails verification; it is never accepted.
+
+## `jsonNormalisationV4alpha3`
+
 > **Status:** Current default algorithm.
 
-`jsonNormalisationV4alpha1` is a clean-room reimplementation of `jsonNormalisationV3`. It uses the same field selection rules, the same RFC 8785 (JCS) serialization, the same absence of legacy extra-identity defaulting, and produces **byte-identical output** for the same input.
-The algorithm exists to provide a well-tested, independently implemented normalization that is not tied to the legacy OCM v1 codebase. Conformance between v3 and v4alpha1 is verified by test suites that compare the output of both algorithms on real-world component descriptors.
+`jsonNormalisationV4alpha3` is `jsonNormalisationV4alpha2` with one difference: the [Label Rules](#label-rules) apply to
+reference labels as well. For each reference entry:
 
-### Differences from `jsonNormalisationV3`
+| Field            | Treatment                                |
+|------------------|------------------------------------------|
+| `labels`         | Subject to [Label Rules](#label-rules)   |
+| All other fields | Included                                 |
 
-There are **no behavioral differences**. The field extraction rules, label handling, provider normalization, none-access resource handling,
-empty-list defaults, and JCS serialization are identical. Neither v3 nor v4alpha1 perform the legacy extra-identity defaulting that v2 applies. The `v4alpha1` name reflects that:
+Reference labels are therefore treated like all other labels: only labels with `signing: true` are included, only their
+`name`, `version`, `value` and `signing` fields are preserved, and an empty `labels` field is omitted.
 
-1. It is part of the next-generation OCM bindings (hence the version bump).
-2. The `alpha1` suffix indicates that the algorithm name may be consolidated in a future specification version (e.g. to a final `v3` or `v4`).
+## Compatibility
 
-### Backward Compatibility
+- Every digest records the normalization algorithm it was computed with, and MUST be verified with that algorithm. A
+  component version and the component versions it references MAY use different algorithms.
+- When a digest references `jsonNormalisationV3`, implementations SHOULD compute it with `jsonNormalisationV4alpha2`.
+- New signatures and component reference digests SHOULD use `jsonNormalisationV4alpha3`. `jsonNormalisationV1`
+  SHOULD only be used to verify existing digests.
 
-When a signature or digest references `jsonNormalisationV3`, implementations SHOULD transparently use the `jsonNormalisationV4alpha1` algorithm for both signing and verification.
-The two algorithms are interchangeable.
+The `alpha` suffix of the `jsonNormalisationV4alpha*` algorithms indicates that the algorithm names may be consolidated
+in a future specification version. Each name identifies exactly one, unchanging normalization: once published, the
+rules of an algorithm are never changed, and changed rules get a new name.
 
 ### Reference Implementation
 
 The reference implementation can be found in the [Open Component Model repository](https://github.com/open-component-model/open-component-model):
 
-- Algorithm registration and exclusion rules: `bindings/go/descriptor/normalisation/json/v4alpha1/normalisation.go`
+- Algorithm registration and exclusion rules: `bindings/go/descriptor/normalisation/json/v4alpha1/`, `.../v4alpha2/`
+  and `.../v4alpha3/` (`normalisation.go`)
 - JCS engine (RFC 8785): `bindings/go/descriptor/normalisation/engine/jcs/`
-- Legacy v3 → v4alpha1 mapping: `bindings/go/signing/digest.go`
-- Conformance test data (v3 compatibility): `bindings/go/descriptor/normalisation/json/v4alpha1/testdata/conformance/legacy/jsonNormalisation/v3/`
+- Legacy v3 → v4alpha2 mapping and the default algorithm: `bindings/go/descriptor/normalisation/algorithms/`
+- Conformance tests against legacy `jsonNormalisationV3` output: `bindings/go/descriptor/normalisation/json/v4alpha2/`
+  (`conformance_test.go`, `fixtures_test.go`)
