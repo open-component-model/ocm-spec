@@ -102,8 +102,8 @@ The following chapters provide a formal description of the format to describe so
   * 4.3.4 [AWS S3](doc/04-extensions/03-storage-backends/s3.md)
 * 4.4 [Algorithms](doc/04-extensions/04-algorithms/README.md)
   * 4.4.1 [Artifact Normalization](doc/04-extensions/04-algorithms/artifact-normalization-types.md)
-  * 4.4.2 [Digest Algorithms](doc/04-extensions/04-algorithms/label-merge-algorithms.md)
-  * 4.4.3 [Label Merge Algorithm](doc/04-extensions/04-algorithms/digest-algorithms.md)
+  * 4.4.2 [Digest Algorithms](doc/04-extensions/04-algorithms/digest-algorithms.md)
+  * 4.4.3 [Label Merge Algorithm](doc/04-extensions/04-algorithms/label-merge-algorithms.md) (deprecated)
   * 4.4.4 [Component Descriptor Normalization Algorithms](doc/04-extensions/04-algorithms/component-descriptor-normalization-algorithms.md)
   * 4.4.5 [Signing Algorithms](doc/04-extensions/04-algorithms/signing-algorithms.md)
 

@@ -1,5 +1,10 @@
 # Label Merge Algorithms
 
+> **Status:** Deprecated — the label `merge` field and label merge algorithms are deprecated
+> and will be removed in a future version of this specification.
+> Writers **SHOULD NOT** emit the `merge` field. Implementations are not required to support it;
+> readers **MAY** ignore or drop it.
+
 There is a set of globally defined standard algorithms:
 
 - `default` just decide for one side or reject the transfer.

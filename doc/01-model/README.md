@@ -50,7 +50,7 @@ This chapter describes the elements of the Open Component Model and their syntax
     * 6.7.3.[Labels](07-extensions.md#labels)
     * 6.7.4.[References](07-extensions.md#references)
     * 6.7.5.[Applying Normalization Algorithms](07-extensions.md#applying-normalization-algorithms)
-  * 6.8.[Label Merge Algorithms](07-extensions.md#label-merge-algorithms)
+  * 6.8.[Label Merge Algorithms](07-extensions.md#label-merge-algorithms) (deprecated)
   * 6.9.[Artifact Types](07-extensions.md#artifact-types)
   * 6.10.[Label Types](07-extensions.md#label-types)
     * 6.10.1.[Format Versions](07-extensions.md#format-versions)

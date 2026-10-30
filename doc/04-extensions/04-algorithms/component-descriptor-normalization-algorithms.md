@@ -133,7 +133,7 @@ Labels are treated specially across the label-bearing elements component, provid
    - `value`
    - `signing`
 
-3. **Other label metadata** (e.g. `mergeAlgorithm`) is excluded.
+3. **Other label metadata** (e.g. the deprecated `merge` field) is excluded.
 4. **If the resulting label array is empty after filtering, the entire `labels` field is omitted** (not serialized as `[]`).
 
 ### Serialization

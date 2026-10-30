@@ -24,7 +24,7 @@ There are two different kinds of extensions: functional and semantic.
 - [Signing Algorithms](#signing-algorithms)
 - [Artifact Normalization](#artifact-normalization)
 - [Component Descriptor Normalization](#component-descriptor-normalization)
-- [Label Merge Algorithms](#label-merge-algorithms)
+- [Label Merge Algorithms](#label-merge-algorithms) (deprecated)
 
 ### Semantic extensions
   
@@ -585,6 +585,11 @@ Afterwards the resulting byte stream is hashed using a [digest algorithm](#diges
 The resulting digest is the digest of the component version.
 
 ## Label Merge Algorithms
+
+> **Status:** Deprecated — the label `merge` field and label merge algorithms are deprecated
+> and will be removed in a future version of this specification.
+> Writers **SHOULD NOT** emit the `merge` field. Implementations are not required to support it;
+> readers **MAY** ignore or drop it.
 
 Value merge algorithms are used during a transfer of a component version into a target repository
 to merge label values, in case the transferred version is already present

@@ -208,7 +208,11 @@ attributes are not allowed at the label entry level.
 
   By default, labels are not part of the signature.
 
-- `merge` (optional) *merge spec*
+- `merge` (optional, deprecated) *merge spec*
+
+  **Deprecated** — this field will be removed in a future version of this specification.
+  Writers **SHOULD NOT** emit it. Implementations are not required to support it;
+  readers **MAY** ignore or drop it. See [Label Merge Algorithms](./07-extensions.md#label-merge-algorithms).
 
   non-signature relevant labels (the default) can be modified without breaking a potential signature.
   They can be changed in any repository the component version has been transferred to.
