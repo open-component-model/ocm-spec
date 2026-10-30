@@ -588,8 +588,8 @@ The resulting digest is the digest of the component version.
 
 > **Status:** Deprecated — the label `merge` field and label merge algorithms are deprecated
 > and will be removed in a future version of this specification.
-> Writers **SHOULD NOT** emit the `merge` field. Readers **MUST** still accept it
-> for backward compatibility and **MAY** ignore it.
+> Writers **SHOULD NOT** emit the `merge` field. Implementations are not required to support it;
+> readers **MAY** ignore or drop it.
 
 Value merge algorithms are used during a transfer of a component version into a target repository
 to merge label values, in case the transferred version is already present

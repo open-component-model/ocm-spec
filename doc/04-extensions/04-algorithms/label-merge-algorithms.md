@@ -2,8 +2,8 @@
 
 > **Status:** Deprecated — the label `merge` field and label merge algorithms are deprecated
 > and will be removed in a future version of this specification.
-> Writers **SHOULD NOT** emit the `merge` field. Readers **MUST** still accept it
-> for backward compatibility and **MAY** ignore it.
+> Writers **SHOULD NOT** emit the `merge` field. Implementations are not required to support it;
+> readers **MAY** ignore or drop it.
 
 There is a set of globally defined standard algorithms:
 
