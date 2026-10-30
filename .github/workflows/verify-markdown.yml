@@ -7,6 +7,8 @@ on:
       - website/**
     paths:
       - '**/*.md'
+      - '.github/workflows/verify-markdown.yml'
+      - '.github/config/**'
 
 permissions:
   contents: read
