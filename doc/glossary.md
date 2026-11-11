@@ -44,6 +44,12 @@ A relative or absolute reference to an [artifact](#artifact) described by a [com
 
 The formal type of an [artifact](#artifact) described by a [component version](#compvers). The type implies the logical interpretation of the artifact.
 
+## B
+
+### [Build Flavor Convention](01-model/06-conventions.md#build-flavor) <a id="flavor"/>
+
+Using the extra identity `flavor` to distinguish builds of the same [artifact](#artifact) version for the same platform, for example FIPS compliant builds.
+
 ## C
 
 ### [Component](01-model/01-model.md#components-and-component-versions)<a id="component"/>
