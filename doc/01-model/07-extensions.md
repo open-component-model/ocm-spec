@@ -699,6 +699,6 @@ v[0-9]+([a-z][a-z0-9]*)?
 
 The following labels are centrally defined:
 
-| Label name | Version | Description |
-|---|---|---|
-| `ocm.software/artifact-references` | `v1alpha1` | Expresses a cross-artifact relationship within the same component version. See [Artifact-Linking Label](./06-conventions.md#artifact-linking-label). |
+| Label name                         | Version    | Description                                                                                                                                                                  |
+|------------------------------------|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `ocm.software/artifact-references` | `v1alpha1` | Expresses a cross-artifact relationship within the same component version. See [`ocm.software/artifact-references`](../04-extensions/05-label-types/artifact-references.md). |
