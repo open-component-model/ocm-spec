@@ -106,6 +106,8 @@ The following chapters provide a formal description of the format to describe so
   * 4.4.3 [Label Merge Algorithm](doc/04-extensions/04-algorithms/label-merge-algorithms.md) (deprecated)
   * 4.4.4 [Component Descriptor Normalization Algorithms](doc/04-extensions/04-algorithms/component-descriptor-normalization-algorithms.md)
   * 4.4.5 [Signing Algorithms](doc/04-extensions/04-algorithms/signing-algorithms.md)
+* 4.5 [Label Types](doc/04-extensions/05-label-types/README.md)
+  * 4.5.1 [ocm.software/artifact-references](doc/04-extensions/05-label-types/artifact-references.md)
 
 ### Guidelines and Conventions
 

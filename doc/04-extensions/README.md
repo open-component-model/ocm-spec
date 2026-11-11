@@ -37,3 +37,5 @@ addenda or for customer-specific environments.
   * 4.3 [Label Merge Algorithm](04-algorithms/label-merge-algorithms.md) (deprecated)
   * 4.4 [Component Descriptor Normalization Algorithms](04-algorithms/component-descriptor-normalization-algorithms.md)
   * 4.5 [Signing Algorithms](04-algorithms/signing-algorithms.md)
+* 5 [Label Types](05-label-types/README.md)
+  * 5.1 [ocm.software/artifact-references](05-label-types/artifact-references.md)

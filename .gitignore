@@ -6,3 +6,6 @@
 **/__index__.md*
 /scripts/test
 /.project
+
+# pyspelling compiled wordlist
+dictionary.dic
