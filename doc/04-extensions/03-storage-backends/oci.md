@@ -225,7 +225,7 @@ componentNameMapping controls how a component identifier:
 <id> ::= <segment>{"/"<segment>}
 ```
 
-is mapped into the underlying OCI repository path.
+is mapped into the underlying OCI repository path. The identifier is lowercase and follows the grammar defined in [5. Component Repository Mapping](#5-component-repository-mapping).
 
 Supported value: `urlPath`
 
@@ -279,8 +279,10 @@ and serves as an informative reference for implementers.
 A component identifier:
 
 ```text
-<id> ::= <segment>{"/"<segment>}
-<segment> ::= [A-Za-z0-9._-]+
+<component-id> ::= <segment> { "/" <segment> }
+<segment>      ::= <alphanum> { <separator> <alphanum> }
+<alphanum>     ::= ( "a".."z" | "0".."9" )+
+<separator>    ::= "." | "_" | "__" | "-"+
 ```
 
 **MUST** map to:
@@ -288,6 +290,8 @@ A component identifier:
 ```text
 <base-repository>/component-descriptors/<component-id>
 ```
+
+Component identifiers are lowercase. A segment **MAY** start with a digit and **MAY** consist of digits only. The `component-descriptors` segment is reserved for this mapping and **MUST NOT** appear in a component identifier. The normative component name grammar, including the mandatory [RFC 1123](https://www.rfc-editor.org/rfc/rfc1123) DNS domain prefix, is defined in [Component Identity](../../01-model/02-elements-toplevel.md#component-name-grammar).
 
 All versions of a component reside in this repository.
 

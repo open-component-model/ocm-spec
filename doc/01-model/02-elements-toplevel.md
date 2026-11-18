@@ -35,6 +35,26 @@ A component version has a unique identity composed of the component identity
 and a version name following the [semantic versioning](https://semver.org)
 specification (e.g. `github.com/gardener/external-dns-management:0.15.1`).
 
+### Component Name Grammar
+
+A component name is an [RFC 1123](https://www.rfc-editor.org/rfc/rfc1123) DNS domain, with lowercase labels and an alphabetic top-level label, followed by one or more path segments. Each path segment follows the repository path-component grammar of the [OCI distribution specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md). A component name therefore maps without change to an OCI repository path below the reserved `component-descriptors` namespace. See the [OCI storage backend](../04-extensions/03-storage-backends/oci.md#5-component-repository-mapping).
+
+A component name MUST match the following regular expression and MUST NOT be longer than 255 characters:
+
+```text
+^[a-z0-9]([-a-z0-9]*[a-z0-9])?([.][a-z0-9]([-a-z0-9]*[a-z0-9])?)*[.][a-z]{2,}(/[a-z0-9]+(([.]|_|__|-+)[a-z0-9]+)*)+$
+```
+
+In addition, a component name MUST NOT contain a `component-descriptors` path segment, which is reserved for the storage mapping. This reservation is expressed as the pattern `(^|/)component-descriptors(/|$)`, which a component name MUST NOT match.
+
+The following rules apply:
+
+- Component names are lowercase only. Uppercase letters are not allowed, because OCI repository names are lowercase.
+- A DNS label or a path segment MAY start with a digit, and a path segment MAY consist of digits only. Examples are `1password.com/cli`, `acme.org/1`, and `acme.org/v1/2`.
+- A separator inside a path segment (`.`, `_`, `__`, or one or more `-`) MUST sit between two non-empty alphanumeric runs. A name that is not a valid OCI repository path, for example `acme.org/foo-`, `acme.org/a_-b`, or `acme.org/a___b`, is rejected.
+
+The same grammar applies to the `componentName` of a component reference (see below).
+
 ## Artifacts (Resources and Sources)
 
 The Open Component Model distinguishes two kinds of artifacts:
