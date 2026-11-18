@@ -55,6 +55,8 @@ The following rules apply:
 - A DNS label or a path segment MAY start with a digit, and a path segment MAY consist of digits only. Examples are `1password.com/cli`, `acme.org/1`, and `acme.org/v1/2`.
 - A separator inside a path segment (`.`, `_`, `__`, or one or more `-`) MUST sit between two non-empty alphanumeric runs. A name that is not a valid OCI repository path, for example `acme.org/foo-`, `acme.org/a_-b`, or `acme.org/a___b`, is rejected.
 
+The 255 character limit bounds the component name itself. A component version is stored at the OCI repository path `<subPath>/component-descriptors/<name>`, and OCI distribution registries bound the repository path after the registry host at 255 characters, with no per-segment limit. The `component-descriptors/` prefix (22 characters) and any repository `subPath` therefore reduce the usable name length. A name that is valid on its own MAY still be rejected by a registry when the full path exceeds that limit. This path length is enforced at the storage backend, not by this grammar.
+
 The same grammar applies to the `componentName` of a component reference (see below).
 
 ## Artifacts (Resources and Sources)
