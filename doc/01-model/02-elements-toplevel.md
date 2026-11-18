@@ -37,7 +37,9 @@ specification (e.g. `github.com/gardener/external-dns-management:0.15.1`).
 
 ### Component Name Grammar
 
-A component name is an [RFC 1123](https://www.rfc-editor.org/rfc/rfc1123) DNS domain, with lowercase labels and an alphabetic top-level label, followed by one or more path segments. Each path segment follows the repository path-component grammar of the [OCI distribution specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md). A component name therefore maps without change to an OCI repository path below the reserved `component-descriptors` namespace. See the [OCI storage backend](../04-extensions/03-storage-backends/oci.md#5-component-repository-mapping).
+A component name is a DNS-style domain name, with lowercase labels and an alphabetic top-level label, followed by one or more path segments. Both the labels and the path segments follow the repository path-component grammar of the [OCI distribution specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md), the one real constraint: a component name maps without change to an OCI repository path below the reserved `component-descriptors` namespace. See the [OCI storage backend](../04-extensions/03-storage-backends/oci.md#5-component-repository-mapping).
+
+The grammar resembles an [RFC 1123](https://www.rfc-editor.org/rfc/rfc1123) DNS name, but it intentionally does not enforce the RFC 1035 per-label length limit of 63 octets. OCI repository path components are not DNS labels, and OCI accepts longer segments, so a DNS-style label here is not length-bounded on its own. Only the overall name length is bounded (see below).
 
 A component name MUST match the following regular expression and MUST NOT be longer than 255 characters:
 

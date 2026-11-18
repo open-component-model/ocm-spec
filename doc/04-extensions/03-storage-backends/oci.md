@@ -291,7 +291,7 @@ A component identifier:
 <base-repository>/component-descriptors/<component-id>
 ```
 
-Component identifiers are lowercase. A segment **MAY** start with a digit and **MAY** consist of digits only. The `component-descriptors` segment is reserved for this mapping and **MUST NOT** appear in a component identifier. The normative component name grammar, including the mandatory [RFC 1123](https://www.rfc-editor.org/rfc/rfc1123) DNS domain prefix, is defined in [Component Identity](../../01-model/02-elements-toplevel.md#component-name-grammar).
+Component identifiers are lowercase. A segment **MAY** start with a digit and **MAY** consist of digits only. The `component-descriptors` segment is reserved for this mapping and **MUST NOT** appear in a component identifier. The normative component name grammar, including the mandatory DNS-style domain prefix, is defined in [Component Identity](../../01-model/02-elements-toplevel.md#component-name-grammar).
 
 All versions of a component reside in this repository.
 
