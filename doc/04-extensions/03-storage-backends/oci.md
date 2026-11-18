@@ -219,13 +219,7 @@ subPath = "open-component-model/ocm"
 
 ### 4.4. `componentNameMapping`
 
-componentNameMapping controls how a component identifier:
-
-```text
-<id> ::= <segment>{"/"<segment>}
-```
-
-is mapped into the underlying OCI repository path. The identifier is lowercase and follows the grammar defined in [5. Component Repository Mapping](#5-component-repository-mapping).
+componentNameMapping controls how a component identifier (`<component-id>`, defined in [5. Component Repository Mapping](#5-component-repository-mapping)) is mapped into the underlying OCI repository path. The identifier is lowercase.
 
 Supported value: `urlPath`
 
@@ -249,7 +243,7 @@ In this case the repository reference **MUST** be parsed according to the follow
 * If `scheme://` is missing, assume `https://`.
 * `<host>` **MUST** be a valid DNS hostname.
 * `:port` **MAY** be omitted; if present, it **MUST** be a valid TCP port number.
-* `<path>` **MAY** be omitted; if present, it **MUST** consist of slash-separated segments of `[A-Za-z0-9._-]+`.
+* `<path>` **MAY** be omitted; if present, it **MUST** consist of slash-separated lowercase OCI path components (the `<path-segment>` grammar in [4.6](#46-formal-grammar-informative)).
 * The entire reference **MUST** conform to URI syntax rules.
 * Invalid references **MUST** be rejected.
 * The parsed reference **MUST** be converted into a repository specification with:
@@ -268,11 +262,15 @@ and serves as an informative reference for implementers.
 <host>           ::= <dns-label> { "." <dns-label> }
 <dns-label>      ::= <alphanum> { <alphanum> | "-" }
 <port>           ::= <digit> { <digit> }
-<repo-path>      ::= <segment> { "/" <segment> }
-<segment>        ::= <alphanum> { <alphanum> | "-" | "_" | "." }
+<repo-path>      ::= <path-segment> { "/" <path-segment> }
+<path-segment>   ::= <lower-alphanum> { <separator> <lower-alphanum> }
+<separator>      ::= "." | "_" | "__" | "-"+
 <alphanum>       ::= "A".."Z" | "a".."z" | "0".."9"
+<lower-alphanum> ::= ( "a".."z" | "0".."9" )+
 <digit>          ::= "0".."9"
 ```
+
+The `<host>` is a registry hostname and is case-insensitive, as in DNS. The `<repo-path>`, which becomes the `subPath`, is the prefix of every OCM repository path and so **MUST** be lowercase and use the same path-component grammar as a component identifier (section 5).
 
 ## 5. Component Repository Mapping
 

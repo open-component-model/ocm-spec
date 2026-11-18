@@ -3,8 +3,8 @@
 The following section describes how a component (version) is specified in more detail.
 Please note that this section intends to give an overview and explain the principal
 elements and their structure. It is not a complete specification.
-See the [schemas](https://github.com/open-component-model/ocm/tree/main/resources)
-for a full definition.
+See the [schemas](https://github.com/open-component-model/open-component-model/tree/main/bindings/go/descriptor/v2/resources)
+for a full definition. Legacy OCM (v1) tooling validates against a deliberately broader superset of this grammar for backward compatibility.
 
 A component version describes artifacts, using several core elements.
 
