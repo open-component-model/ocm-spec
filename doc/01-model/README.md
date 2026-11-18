@@ -29,6 +29,7 @@ This chapter describes the elements of the Open Component Model and their syntax
 * 5.[Conventions](06-conventions.md#conventions)
   * 5.1.[Intended Environments](06-conventions.md#intended-environments)
     * 5.1.1.[Operating System and CPU Architecture](06-conventions.md#operating-system-and-cpu-architecture)
+    * 5.1.2.[Build Flavor](06-conventions.md#build-flavor)
   * 5.2.[Selection of Usage Scenarios](06-conventions.md#selection-of-usage-scenarios)
 * 6.[Extending the Open Component Model](07-extensions.md#extending-the-open-component-model)
   * 6.1.[Component Descriptor Serialization](07-extensions.md#component-descriptor-serialization)
