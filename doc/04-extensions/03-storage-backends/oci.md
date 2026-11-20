@@ -219,13 +219,7 @@ subPath = "open-component-model/ocm"
 
 ### 4.4. `componentNameMapping`
 
-componentNameMapping controls how a component identifier:
-
-```text
-<id> ::= <segment>{"/"<segment>}
-```
-
-is mapped into the underlying OCI repository path.
+componentNameMapping controls how a component identifier (`<component-id>`, defined in [5. Component Repository Mapping](#5-component-repository-mapping)) is mapped into the underlying OCI repository path. The identifier is lowercase.
 
 Supported value: `urlPath`
 
@@ -249,7 +243,7 @@ In this case the repository reference **MUST** be parsed according to the follow
 * If `scheme://` is missing, assume `https://`.
 * `<host>` **MUST** be a valid DNS hostname.
 * `:port` **MAY** be omitted; if present, it **MUST** be a valid TCP port number.
-* `<path>` **MAY** be omitted; if present, it **MUST** consist of slash-separated segments of `[A-Za-z0-9._-]+`.
+* `<path>` **MAY** be omitted; if present, it **MUST** consist of slash-separated lowercase OCI path components (the `<path-segment>` grammar in [4.6](#46-formal-grammar-informative)).
 * The entire reference **MUST** conform to URI syntax rules.
 * Invalid references **MUST** be rejected.
 * The parsed reference **MUST** be converted into a repository specification with:
@@ -268,26 +262,31 @@ and serves as an informative reference for implementers.
 <host>           ::= <dns-label> { "." <dns-label> }
 <dns-label>      ::= <alphanum> { <alphanum> | "-" }
 <port>           ::= <digit> { <digit> }
-<repo-path>      ::= <segment> { "/" <segment> }
-<segment>        ::= <alphanum> { <alphanum> | "-" | "_" | "." }
+<repo-path>      ::= <path-segment> { "/" <path-segment> }
+<path-segment>   ::= <lower-alphanum> { <separator> <lower-alphanum> }
+<separator>      ::= "." | "_" | "__" | "-"+
 <alphanum>       ::= "A".."Z" | "a".."z" | "0".."9"
+<lower-alphanum> ::= ( "a".."z" | "0".."9" )+
 <digit>          ::= "0".."9"
 ```
+
+The `<host>` is a registry hostname and is case-insensitive, as in DNS. The `<repo-path>`, which becomes the `subPath`, is the prefix of every OCM repository path and so **MUST** be lowercase and use the same path-component grammar as a component identifier (section 5).
 
 ## 5. Component Repository Mapping
 
 A component identifier:
 
 ```text
-<id> ::= <segment>{"/"<segment>}
-<segment> ::= [A-Za-z0-9._-]+
+<component-id> ::= <path-segment> { "/" <path-segment> }
 ```
 
-**MUST** map to:
+reuses the lowercase `<path-segment>` grammar from [4.6](#46-formal-grammar-informative) and **MUST** map to:
 
 ```text
 <base-repository>/component-descriptors/<component-id>
 ```
+
+Component identifiers are lowercase. A segment **MAY** start with a digit and **MAY** consist of digits only. The `component-descriptors` segment is reserved for this mapping and **MUST NOT** appear in a component identifier. The normative component name grammar, including the mandatory DNS-style domain prefix, is defined in [Component Identity](../../01-model/02-elements-toplevel.md#component-name-grammar).
 
 All versions of a component reside in this repository.
 

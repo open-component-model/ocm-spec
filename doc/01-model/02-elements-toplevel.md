@@ -3,8 +3,8 @@
 The following section describes how a component (version) is specified in more detail.
 Please note that this section intends to give an overview and explain the principal
 elements and their structure. It is not a complete specification.
-See the [schemas](https://github.com/open-component-model/ocm/tree/main/resources)
-for a full definition.
+See the [schemas](https://github.com/open-component-model/open-component-model/tree/main/bindings/go/descriptor/v2/resources)
+for a full definition. Legacy OCM (v1) tooling validates against a deliberately broader superset of this grammar for backward compatibility.
 
 A component version describes artifacts, using several core elements.
 
@@ -34,6 +34,30 @@ The component acts as a namespace to host multiple *Component Versions*.
 A component version has a unique identity composed of the component identity
 and a version name following the [semantic versioning](https://semver.org)
 specification (e.g. `github.com/gardener/external-dns-management:0.15.1`).
+
+### Component Name Grammar
+
+A component name is a DNS-style domain name, with lowercase labels and an alphabetic top-level label, followed by one or more path segments. Both the labels and the path segments follow the repository path-component grammar of the [OCI distribution specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md), the one real constraint: a component name maps without change to an OCI repository path below the reserved `component-descriptors` namespace. See the [OCI storage backend](../04-extensions/03-storage-backends/oci.md#5-component-repository-mapping).
+
+The grammar resembles an [RFC 1123](https://www.rfc-editor.org/rfc/rfc1123) DNS name, but it intentionally does not enforce the RFC 1035 per-label length limit of 63 octets. OCI repository path components are not DNS labels, and OCI accepts longer segments, so a DNS-style label here is not length-bounded on its own. Only the overall name length is bounded (see below).
+
+A component name MUST match the following regular expression and MUST NOT be longer than 255 characters:
+
+```text
+^[a-z0-9]([-a-z0-9]*[a-z0-9])?([.][a-z0-9]([-a-z0-9]*[a-z0-9])?)*[.][a-z]{2,}(/[a-z0-9]+(([.]|_|__|-+)[a-z0-9]+)*)+$
+```
+
+In addition, a component name MUST NOT contain a `component-descriptors` path segment, which is reserved for the storage mapping. This reservation is expressed as the pattern `(^|/)component-descriptors(/|$)`, which a component name MUST NOT match.
+
+The following rules apply:
+
+- Component names are lowercase only. Uppercase letters are not allowed, because OCI repository names are lowercase.
+- A DNS label or a path segment MAY start with a digit, and a path segment MAY consist of digits only. Examples are `1password.com/cli`, `acme.org/1`, and `acme.org/v1/2`.
+- A separator inside a path segment (`.`, `_`, `__`, or one or more `-`) MUST sit between two non-empty alphanumeric runs. A name that is not a valid OCI repository path, for example `acme.org/foo-`, `acme.org/a_-b`, or `acme.org/a___b`, is rejected.
+
+The 255 character limit bounds the component name itself. A component version is stored at the OCI repository path `<subPath>/component-descriptors/<name>`, and OCI distribution registries bound the repository path after the registry host at 255 characters, with no per-segment limit. The `component-descriptors/` prefix (22 characters) and any repository `subPath` therefore reduce the usable name length. A name that is valid on its own MAY still be rejected by a registry when the full path exceeds that limit. This path length is enforced at the storage backend, not by this grammar.
+
+The same grammar applies to the `componentName` of a component reference (see below).
 
 ## Artifacts (Resources and Sources)
 

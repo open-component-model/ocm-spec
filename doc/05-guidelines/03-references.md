@@ -12,7 +12,7 @@ Component Version: `A:1.0.0`:
 apiVersion: ocm.software/v3alpha1
 kind: ComponentVersion
 metadata:
-  name: github.com/acme/A
+  name: github.com/acme/a
   version: 1.0.0
   ...
 spec:
@@ -24,7 +24,7 @@ spec:
       ...
   references:
   - name: ref_to_b
-    componentName: github.com/acme/B
+    componentName: github.com/acme/b
     version: 1.0.0
 ...
 ```
@@ -37,7 +37,7 @@ Then we have a second component `B:1.0.0` with on OCI image resource:
 apiVersion: ocm.software/v3alpha1
 kind: ComponentVersion
 metadata:
-  name: github.com/acme/B
+  name: github.com/acme/b
   version: 1.0.0
   ...
 spec:
