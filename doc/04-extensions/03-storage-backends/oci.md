@@ -277,13 +277,10 @@ The `<host>` is a registry hostname and is case-insensitive, as in DNS. The `<re
 A component identifier:
 
 ```text
-<component-id> ::= <segment> { "/" <segment> }
-<segment>      ::= <alphanum> { <separator> <alphanum> }
-<alphanum>     ::= ( "a".."z" | "0".."9" )+
-<separator>    ::= "." | "_" | "__" | "-"+
+<component-id> ::= <path-segment> { "/" <path-segment> }
 ```
 
-**MUST** map to:
+reuses the lowercase `<path-segment>` grammar from [4.6](#46-formal-grammar-informative) and **MUST** map to:
 
 ```text
 <base-repository>/component-descriptors/<component-id>
